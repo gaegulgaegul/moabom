@@ -74,6 +74,33 @@ module Photos
     end
 
     # ========================================
+    # 6.5.5: 긴 댓글 입력 처리
+    # ========================================
+
+    test "should reject comment exceeding max length with html format" do
+      long_body = "가" * 1001
+      assert_no_difference "Comment.count" do
+        post family_photo_comments_path(@family, @photo), params: {
+          comment: { body: long_body }
+        }
+      end
+
+      assert_redirected_to family_photo_path(@family, @photo)
+      assert flash[:alert].present?, "에러 메시지가 있어야 함"
+    end
+
+    test "should reject comment exceeding max length with json format" do
+      long_body = "가" * 1001
+      post family_photo_comments_path(@family, @photo), params: {
+        comment: { body: long_body }
+      }, as: :json
+
+      assert_response :unprocessable_entity
+      json = JSON.parse(response.body)
+      assert json["errors"].present?
+    end
+
+    # ========================================
     # 댓글 삭제 테스트
     # ========================================
 
