@@ -19,12 +19,23 @@
 ```
 
 **워크플로우:**
-1. 코드베이스 탐색 → 관련 모델/컨트롤러 검색
-2. PRD 섹션 생성 → 미리보기 후 확인
-3. ARCHITECTURE 섹션 생성 → 미리보기 후 확인
-4. API_DESIGN 섹션 생성 → 미리보기 후 확인
-5. WIREFRAME 섹션 생성 → 미리보기 후 확인
-6. 규칙 문서 필요 여부 → 필요시 생성
+1. 폴더 생성 → `docs/features/[기능명]/`
+2. 코드베이스 탐색 → 관련 모델/컨트롤러 검색
+3. PRD.md 생성 → 미리보기 후 확인
+4. ARCHITECTURE.md 생성 → 미리보기 후 확인
+5. API_DESIGN.md 생성 → 미리보기 후 확인
+6. WIREFRAME.md 생성 → 미리보기 후 확인
+7. 규칙 문서 필요 여부 → 필요시 RULES.md 생성
+
+**생성되는 폴더 구조:**
+```
+docs/features/[기능명]/
+├── PRD.md           # 요구사항 정의
+├── ARCHITECTURE.md  # 아키텍처 설계
+├── API_DESIGN.md    # API 설계
+├── WIREFRAME.md     # 화면 설계
+└── RULES.md         # 규칙 문서 (선택)
+```
 
 ---
 
