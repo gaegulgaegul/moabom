@@ -195,40 +195,41 @@
 
 ### 4.1 가족 정보
 
-- [ ] **RED**: 가족 정보 테스트
-  - [ ] 가족 정보 조회
-  - [ ] 가족 이름 수정
-- [ ] **GREEN**: FamiliesController 구현
-- [ ] **REFACTOR**: 필요시 코드 정리
+- [x] **RED**: 가족 정보 테스트 ✅
+  - [x] 가족 정보 조회
+  - [x] 가족 이름 수정
+  - [x] 권한 체크 (멤버만 조회, owner/admin만 수정)
+- [x] **GREEN**: FamiliesController 구현 ✅
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
 
 ### 4.2 구성원 관리
 
-- [ ] **RED**: 구성원 관리 테스트
-  - [ ] 구성원 목록 조회
-  - [ ] 역할 변경 (owner/admin만)
-  - [ ] 구성원 내보내기
-- [ ] **GREEN**: Families::MembersController 구현
-- [ ] **REFACTOR**: 필요시 코드 정리
+- [x] **RED**: 구성원 관리 테스트 ✅
+  - [x] 구성원 목록 조회
+  - [x] 역할 변경 (owner/admin만)
+  - [x] 구성원 내보내기
+  - [x] 자신의 역할 변경/내보내기 방지
+- [x] **GREEN**: Families::MembersController 구현 ✅
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
 
 ### 4.3 초대 시스템
 
-- [ ] **RED**: 초대 시스템 테스트
-  - [ ] 초대 링크 생성
-  - [ ] 초대 수락 (로그인 상태)
-  - [ ] 초대 수락 (비로그인 → 로그인 후 수락)
-  - [ ] 만료된 초대 처리
-- [ ] **GREEN**: InvitationsController 구현
-- [ ] **REFACTOR**: 필요시 코드 정리
+> Phase 3.5.2에서 InvitationsController 구현 완료
+
+- [x] **RED**: 초대 시스템 테스트 ✅ (Phase 3.5.2)
+- [x] **GREEN**: InvitationsController 구현 ✅ (Phase 3.5.2)
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (Phase 3.5.2)
 
 ### 4.4 아이 관리
 
-- [ ] **RED**: 아이 관리 테스트
-  - [ ] 아이 목록 조회
-  - [ ] 아이 추가
-  - [ ] 아이 정보 수정
-  - [ ] 아이 삭제
-- [ ] **GREEN**: Families::ChildrenController 구현
-- [ ] **REFACTOR**: 필요시 코드 정리
+- [x] **RED**: 아이 관리 테스트 ✅
+  - [x] 아이 목록 조회
+  - [x] 아이 추가
+  - [x] 아이 정보 수정
+  - [x] 아이 삭제
+  - [x] 권한 체크 (owner/admin만 수정/삭제)
+- [x] **GREEN**: Families::ChildrenController 구현 ✅
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
 
 ---
 
@@ -383,7 +384,7 @@
 | Phase 2: 인증 시스템 | ✅ 완료 | 2025-12-14 |
 | Phase 3: 온보딩 | ✅ 완료 | 2025-12-14 |
 | Phase 3.5: 온보딩 보완 | ✅ 완료 | 2025-12-14 |
-| Phase 4: 가족 관리 | ⏳ 대기 | - |
+| Phase 4: 가족 관리 | ✅ 완료 | 2025-12-14 |
 | Phase 5: 사진 기능 | ⏳ 대기 | - |
 | Phase 6: 반응/댓글 | ⏳ 대기 | - |
 | Phase 7: 설정 | ⏳ 대기 | - |

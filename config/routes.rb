@@ -12,6 +12,12 @@ Rails.application.routes.draw do
   # Dashboard (protected)
   get "dashboard", to: "dashboard#index"
 
+  # Families
+  resources :families, only: [ :show, :update ] do
+    resources :members, controller: "families/members", only: [ :index, :update, :destroy ]
+    resources :children, controller: "families/children"
+  end
+
   # Onboarding
   namespace :onboarding do
     resource :profile, only: [ :show, :update ]

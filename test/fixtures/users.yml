@@ -28,3 +28,11 @@ incomplete_onboarding_user:
   provider: kakao
   uid: "100003"
   onboarding_completed_at: <%= nil %>
+
+# 다른 가족 구성원 (kim_family 접근 불가)
+other_family_user:
+  email: other@example.com
+  nickname: 다른가족
+  provider: kakao
+  uid: "100004"
+  onboarding_completed_at: <%= 1.day.ago %>

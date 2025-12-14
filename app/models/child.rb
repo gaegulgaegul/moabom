@@ -2,6 +2,7 @@
 
 class Child < ApplicationRecord
   belongs_to :family
+  has_many :photos, dependent: :nullify
 
   enum :gender, { male: 0, female: 1 }
 
