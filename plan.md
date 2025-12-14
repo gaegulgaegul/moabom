@@ -233,6 +233,46 @@
 
 ---
 
+## Phase 4.5: 에러 처리 및 보안 강화 (P0 즉시)
+
+> gap-scan Phase 4 분석 결과 - P0 항목 반영
+
+### 4.5.1 글로벌 에러 핸들러
+
+- [ ] **RED**: 에러 핸들러 테스트
+  - [ ] RecordNotFound → 404 응답
+  - [ ] ParameterMissing → 400 응답
+  - [ ] InvalidAuthenticityToken → 적절한 처리
+  - [ ] HTML/JSON 응답 형식 분기
+- [ ] **GREEN**: ApplicationController에 rescue_from 구현
+  - [ ] rescue_from 블록 추가
+  - [ ] 에러 페이지 뷰 생성 (errors/404, errors/500)
+- [ ] **REFACTOR**: 필요시 코드 정리
+
+### 4.5.2 Photo 파일 검증
+
+- [ ] **RED**: 파일 검증 테스트
+  - [ ] 파일 크기 50MB 초과 시 거부
+  - [ ] 허용되지 않은 파일 타입 거부
+  - [ ] 허용된 파일 타입 (jpeg, png, heic, webp) 통과
+- [ ] **GREEN**: Photo 모델에 파일 검증 추가
+  - [ ] content_type 검증
+  - [ ] size 검증 (50MB 제한)
+- [ ] **REFACTOR**: 필요시 코드 정리
+
+### 4.5.3 초대 링크 재사용
+
+- [ ] **RED**: 초대 링크 재사용 테스트
+  - [ ] 유효한 기존 초대가 있으면 재사용
+  - [ ] 만료된 초대만 있으면 새로 생성
+  - [ ] 초대가 없으면 새로 생성
+- [ ] **GREEN**: InvitesController에 find_or_create 로직 구현
+  - [ ] active 스코프 활용
+  - [ ] 기존 초대 재사용 로직
+- [ ] **REFACTOR**: 필요시 코드 정리
+
+---
+
 ## Phase 5: 사진 기능 (MVP 핵심)
 
 ### 5.1 사진 타임라인
@@ -385,6 +425,7 @@
 | Phase 3: 온보딩 | ✅ 완료 | 2025-12-14 |
 | Phase 3.5: 온보딩 보완 | ✅ 완료 | 2025-12-14 |
 | Phase 4: 가족 관리 | ✅ 완료 | 2025-12-14 |
+| Phase 4.5: 에러/보안 강화 | 🔴 P0 대기 | - |
 | Phase 5: 사진 기능 | ⏳ 대기 | - |
 | Phase 6: 반응/댓글 | ⏳ 대기 | - |
 | Phase 7: 설정 | ⏳ 대기 | - |
@@ -395,39 +436,93 @@
 
 ## 기술 부채 및 향후 개선 사항
 
-> 상세 분석: [IMPLEMENTATION_GAPS.md](/docs/features/IMPLEMENTATION_GAPS.md)
+> 상세 분석: [docs/gaps/phase-4/](./docs/gaps/phase-4/)
 
-### MVP 출시 전 필요
+### P1: 다음 스프린트 (MVP 출시 전)
 
-| 항목 | 현재 상태 | 필요 작업 |
-|-----|----------|----------|
-| 이용약관 동의 | 미구현 | User 모델 필드 추가, 동의 페이지 구현 |
-| 프로필 아바타 | 미구현 | Active Storage 연동, 업로드 UI |
-| 가족 내 관계 설정 | role만 있음 | FamilyMembership에 relation enum 추가 |
-
-### 출시 후 개선
+#### 의도적 단순화
 
 | 항목 | 현재 상태 | 필요 작업 |
 |-----|----------|----------|
-| Apple/Google 로그인 | 카카오만 구현 | omniauth 전략 추가 |
-| 카카오톡 공유 | 링크 복사만 | Kakao SDK 연동 |
-| QR 코드 공유 | 미구현 | rqrcode gem 추가 |
-| 초대 링크 재사용 | 매번 새 생성 | 기존 유효 초대 재사용 로직 |
+| 알림 시스템 | 미구현 | Notification 모델, FCM/APNs 연동 |
+| 이용약관 동의 | 미구현 | User에 terms_agreed_at 필드, 동의 페이지 |
+| 프로필 아바타 | OAuth URL만 저장 | Active Storage 연동, 업로드 UI |
 
-### 기술 부채
+#### 임시 구현
 
-| 항목 | 현재 상태 | 개선 필요 |
+| 항목 | 현재 상태 | 필요 작업 |
 |-----|----------|----------|
-| 에러 처리 | 기본 Rails 에러 | 사용자 친화적 메시지 |
-| 뷰 디자인 | 기본 HTML | TailwindCSS 스타일링 |
-| 테스트 커버리지 | 기본 테스트 | 엣지 케이스 추가 |
+| 인가 로직 중복 | 3개 컨트롤러 반복 | FamilyAuthorizable concern 추출 |
+| 테스트용 세션 보안 | 환경 체크 없음 | 컨트롤러에 Rails.env.test? 체크 추가 |
+
+#### 에러 처리
+
+| 항목 | 현재 상태 | 필요 작업 |
+|-----|----------|----------|
+| HTTP 상태 코드 | 권한 없음에 302 | 403/401 응답 적용 |
+| Email 포맷 검증 | presence만 검증 | URI::MailTo::EMAIL_REGEXP 적용 |
+| Comment 길이 제한 | 무제한 | length: { maximum: 1000 } |
+| OAuth 실패 처리 | 기본 처리만 | failure 액션 및 에러 처리 추가 |
+
+#### 미구현 항목
+
+| 항목 | Phase | 필요 작업 |
+|-----|-------|----------|
+| 에러 페이지 뷰 | 4.5 | errors/404, 500, 403 생성 |
+| System Tests | 9 | 온보딩, 사진 업로드 E2E 테스트 |
+
+#### 하드코딩
+
+| 항목 | 위치 | 필요 작업 |
+|-----|-----|----------|
+| 성별 표시 텍스트 | children/index | i18n 적용 |
+
+---
+
+### P2: 백로그 (출시 후 개선)
+
+#### 의도적 단순화
+
+| 항목 | 현재 상태 | 필요 작업 |
+|-----|----------|----------|
+| OAuth 제공자 확장 | 카카오만 | Apple, Google omniauth 추가 |
+| 초대 공유 방법 | URL 복사만 | 카카오톡 공유, QR 코드 |
+| 검색 기능 | 미구현 | 사진 검색 UI, Photo 스코프 |
+| 앨범 기능 | 미구현 | Album 모델, AlbumsController |
+
+#### 하드코딩
+
+| 항목 | 위치 | 필요 작업 |
+|-----|-----|----------|
+| 초대 만료 기간 | Invitation 모델 | config 또는 상수로 추출 |
+| 가족 이름 기본값 | ChildrenController | i18n 적용 |
+| 버튼/Flash 텍스트 | Views, Controllers | i18n 적용 |
+| 토큰 길이 | Invitation 모델 | 상수로 추출 |
+
+#### 에러 처리
+
+| 항목 | 현재 상태 | 필요 작업 |
+|-----|----------|----------|
+| Reaction 이모지 검증 | 아무 문자열 허용 | ALLOWED_EMOJIS inclusion 검증 |
+| 동시 요청 처리 | 중복 생성 시 에러 | find_or_create_by 사용 |
+| 로깅 개선 | Rails 기본만 | 주요 액션에 감사 로깅 추가 |
+
+#### 미구현 항목
+
+| 항목 | Phase | 필요 작업 |
+|-----|-------|----------|
+| NotificationsController | 7 | 알림 설정 CRUD |
+| Api::Native::* | 8 | Sync, PushTokens API |
+| relation enum | - | FamilyMembership에 관계 추가 |
+| 빈 상태 화면 | 9 | empty state UI |
+| Edge Case Tests | - | 대용량 파일, 동시 요청 테스트 |
 
 ---
 
 ## 참고 문서
 
-- [PRD](/docs/features/PRD.md)
-- [아키텍처](/docs/features/ARCHITECTURE.md)
-- [API 설계](/docs/features/API_DESIGN.md)
-- [화면 설계](/docs/features/WIREFRAME.md)
-- [구현 현황 분석](/docs/features/IMPLEMENTATION_GAPS.md)
+- [PRD](/docs/features/mvp/PRD.md)
+- [아키텍처](/docs/features/mvp/ARCHITECTURE.md)
+- [API 설계](/docs/features/mvp/API_DESIGN.md)
+- [화면 설계](/docs/features/mvp/WIREFRAME.md)
+- [구현 현황 분석](/docs/features/mvp/IMPLEMENTATION_GAPS.md)

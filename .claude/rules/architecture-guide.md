@@ -515,4 +515,4 @@ end
 - [Rails Architecture - Martin Fowler](https://martinfowler.com/articles/railsArch.html)
 - [Domain-Driven Rails](https://blog.arkency.com/domain-driven-rails/)
 - [Tidy First? - Kent Beck](https://www.oreilly.com/library/view/tidy-first/9781098151232/)
-- [모아봄 상세 아키텍처](/docs/features/ARCHITECTURE.md)
+- [모아봄 상세 아키텍처](/docs/features/mvp/ARCHITECTURE.md)

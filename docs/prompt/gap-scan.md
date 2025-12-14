@@ -49,7 +49,7 @@ docs/gaps/[작업명]/
 
 ## IMPLEMENTATION_GAPS.md 기반 plan.md 업데이트
 ```text
-@docs/gaps/[작업명]/ 폴더의 모든 파일을 분석하고 @plan.md 에 반영해줘.
+@docs/gaps/[작업명]/ 폴더의 모든 파일을 분석하고 우선 작업할 수 있도록 @plan.md 에 반영해줘.
 
 수행할 작업:
 1. 각 파일에서 P0(즉시 반영) 항목 추출
