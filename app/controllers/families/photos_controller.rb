@@ -4,10 +4,13 @@ module Families
   class PhotosController < ApplicationController
     include FamilyAccessible
 
+    MAX_BATCH_SIZE = 100
+
     before_action :authenticate_user!
     before_action :require_onboarding!
     before_action :set_family
     before_action :set_photo, only: [ :show, :edit, :update, :destroy ]
+    before_action :validate_batch_params, only: [ :batch ]
     before_action :authorize_upload, only: [ :create, :batch ]
     before_action :authorize_delete, only: [ :destroy ]
 
@@ -111,6 +114,50 @@ module Families
       unless membership&.can_delete_photo?(@photo)
         redirect_to root_path, alert: "권한이 없습니다."
       end
+    end
+
+    def validate_batch_params
+      photos_param = params[:photos]
+
+      # photos 파라미터 존재 여부 확인
+      if photos_param.nil?
+        return render json: {
+          error: {
+            code: "bad_request",
+            message: "photos 파라미터가 없습니다."
+          }
+        }, status: :bad_request
+      end
+
+      # 배열 타입 검증
+      unless photos_param.is_a?(Array)
+        return render json: {
+          error: {
+            code: "bad_request",
+            message: "photos는 배열 형식이어야 합니다."
+          }
+        }, status: :bad_request
+      end
+
+      # 빈 배열 체크
+      if photos_param.empty?
+        return render json: {
+          error: {
+            code: "bad_request",
+            message: "업로드할 사진이 비어있습니다."
+          }
+        }, status: :bad_request
+      end
+
+      # 최대 개수 초과 체크
+      return if photos_param.size <= MAX_BATCH_SIZE
+
+      render json: {
+        error: {
+          code: "bad_request",
+          message: "최대 #{MAX_BATCH_SIZE}개까지 업로드 가능합니다. (현재: #{photos_param.size}개)"
+        }
+      }, status: :bad_request
     end
   end
 end
