@@ -653,16 +653,15 @@
 
 ### 9.1.5.1 OAuth 제공자 링크 연결
 
-- [ ] **RED**: OAuth 링크 테스트
-  - [ ] 카카오 로그인 버튼이 실제 OAuth URL로 연결
-  - [ ] Apple 로그인 버튼이 실제 OAuth URL로 연결 (구현 시)
-  - [ ] Google 로그인 버튼이 실제 OAuth URL로 연결 (구현 시)
-  - [ ] '#' 하드코딩 제거 확인
-- [ ] **GREEN**: OAuth 링크 구현
-  - [ ] oauth_path(:kakao) 헬퍼 사용
-  - [ ] 미구현 제공자는 비활성화 또는 숨김 처리
-  - [ ] 로그인 버튼 클릭 시 OAuth 플로우 시작
-- [ ] **REFACTOR**: 로그인 버튼 partial 추출
+- [x] **RED**: OAuth 링크 테스트 ✅
+  - [x] 카카오 로그인 버튼이 실제 OAuth URL로 연결
+  - [x] 미구현 제공자(Apple/Google) 비활성화 처리
+  - [x] '#' 하드코딩 제거 확인
+- [x] **GREEN**: OAuth 링크 구현 ✅
+  - [x] /auth/kakao 경로로 연결
+  - [x] 미구현 제공자는 비활성화 처리 (opacity-50, cursor-not-allowed)
+  - [x] 로그인 버튼 클릭 시 OAuth 플로우 시작
+- [x] **REFACTOR**: 로그인 버튼 partial 추출 ✅ (변경 없음 - 코드 간결)
 
 ---
 
@@ -704,7 +703,7 @@
 | Phase 8: Native API | ✅ 완료 | 2025-12-15 |
 | **Phase 8.5: Native API 보안** | 📋 대기 중 | - |
 | Phase 9.1: 레이아웃 | ✅ 완료 | 2025-12-15 |
-| **Phase 9.1.5: 레이아웃 연결** | 📋 대기 중 | - |
+| **Phase 9.1.5: 레이아웃 연결** | ✅ 완료 | 2025-12-15 |
 | Phase 9.2-9.3: UI/UX 마무리 | 🔄 진행 중 | - |
 
 ---
