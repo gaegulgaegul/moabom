@@ -2,7 +2,7 @@
 <html>
   <head>
     <title><%= content_for(:title) || "Moabom" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Moabom">
     <meta name="mobile-web-app-capable" content="yes">
@@ -23,9 +23,25 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <body class="bg-gray-50">
+    <%= render "shared/header" %>
+
+    <main class="<%= logged_in? ? 'pt-14 pb-16' : 'pt-14' %> min-h-screen">
+      <% if flash[:notice] %>
+        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
+          <p><%= flash[:notice] %></p>
+        </div>
+      <% end %>
+
+      <% if flash[:alert] %>
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
+          <p><%= flash[:alert] %></p>
+        </div>
+      <% end %>
+
       <%= yield %>
     </main>
+
+    <%= render "shared/tabbar" if logged_in? %>
   </body>
 </html>

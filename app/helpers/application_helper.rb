@@ -7,4 +7,21 @@ module ApplicationHelper
     membership = current_user.family_memberships.find_by(family: @family)
     membership&.role_owner? || membership&.role_admin?
   end
+
+  def current_page_tab?(tab_name)
+    case tab_name
+    when :home
+      current_page?(root_path) || controller_path == "dashboard"
+    when :albums
+      false # 앨범 기능은 Phase 5에서 구현
+    when :upload
+      false # 업로드 기능은 Phase 4에서 구현
+    when :notifications
+      false # 알림 기능은 Phase 6에서 구현
+    when :settings
+      controller_path.start_with?("settings/")
+    else
+      false
+    end ? "text-pink-500" : "text-gray-600"
+  end
 end
