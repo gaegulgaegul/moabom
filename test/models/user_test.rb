@@ -192,4 +192,52 @@ class UserTest < ActiveSupport::TestCase
       assert_includes user.errors[:nickname], "이(가) 올바르지 않습니다"
     end
   end
+
+  # 아바타 파일 검증 (7.5.6)
+  test "should accept valid avatar image types" do
+    user = users(:mom)
+    valid_types = %w[image/jpeg image/png image/webp]
+
+    valid_types.each do |type|
+      file = fixture_file_upload("test_image.jpg", type)
+      user.avatar.attach(file)
+      assert user.valid?, "Avatar with type '#{type}' should be valid"
+      user.avatar.purge
+    end
+  end
+
+  test "should reject invalid avatar file types" do
+    user = users(:mom)
+    invalid_types = %w[image/gif image/bmp application/pdf text/plain]
+
+    invalid_types.each do |type|
+      file = fixture_file_upload("test_image.jpg", type)
+      user.avatar.attach(file)
+      assert_not user.valid?, "Avatar with type '#{type}' should be rejected"
+      assert_includes user.errors[:avatar], "허용되지 않는 파일 형식입니다"
+      user.avatar.purge
+    end
+  end
+
+  test "should reject avatar larger than 5MB" do
+    user = users(:mom)
+    # Stub byte_size to simulate large file
+    file = fixture_file_upload("test_image.jpg", "image/jpeg")
+    user.avatar.attach(file)
+
+    user.avatar.blob.stub :byte_size, 6.megabytes do
+      assert_not user.valid?
+      assert_includes user.errors[:avatar], "파일 크기가 5MB를 초과합니다"
+    end
+  end
+
+  test "should accept avatar within 5MB limit" do
+    user = users(:mom)
+    file = fixture_file_upload("test_image.jpg", "image/jpeg")
+    user.avatar.attach(file)
+
+    user.avatar.blob.stub :byte_size, 4.megabytes do
+      assert user.valid?
+    end
+  end
 end
