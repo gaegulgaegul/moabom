@@ -64,7 +64,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "mkdir -p \"$CLAUDE_PROJECT_DIR/docs/logs\" && jq -r '.transcript_path' | xargs -I {} ruby \"$CLAUDE_PROJECT_DIR/scripts/session_to_md.rb\" {} 2>/dev/null || true"
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && ruby scripts/session_to_md.rb 2>/dev/null || true"
           }
         ]
       }
