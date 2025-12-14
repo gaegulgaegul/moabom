@@ -92,6 +92,31 @@ module Photos
     end
 
     # ========================================
+    # 6.5.4: 잘못된 이모지 입력 처리
+    # ========================================
+
+    test "should reject invalid emoji with html format" do
+      assert_no_difference "Reaction.count" do
+        post family_photo_reactions_path(@family, @photo), params: {
+          reaction: { emoji: "invalid" }
+        }
+      end
+
+      assert_redirected_to family_photo_path(@family, @photo)
+      assert flash[:alert].present?, "에러 메시지가 있어야 함"
+    end
+
+    test "should reject invalid emoji with json format" do
+      post family_photo_reactions_path(@family, @photo), params: {
+        reaction: { emoji: "🚫" }
+      }, as: :json
+
+      assert_response :unprocessable_entity
+      json = JSON.parse(response.body)
+      assert json["errors"].present?
+    end
+
+    # ========================================
     # 인증 테스트
     # ========================================
 

@@ -3,6 +3,7 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
+  include ActionDispatch::TestProcess::FixtureFile
   test "should be valid with all required attributes" do
     user = User.new(
       email: "test@example.com",
