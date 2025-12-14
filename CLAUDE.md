@@ -97,6 +97,10 @@ Types: feat, fix, refactor, test, docs, chore, perf
 2. `rubocop` - No lint errors
 3. No debug code (puts, binding.pry, debugger)
 4. No commented-out code
+5. **설계 문서 확인**:
+   - PRD.md의 해당 기능 요구사항 충족
+   - API_DESIGN.md의 엔드포인트 규격 준수
+   - ARCHITECTURE.md의 레이어 책임 준수
 
 ## Reference Docs
 

@@ -1,8 +1,138 @@
 # Omakase Ruby styling for Rails
 inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+# =============================================================================
+# 모아봄 프로젝트 커스텀 규칙
+# CODING_GUIDE.md 기반 설정
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 제외 경로
+# -----------------------------------------------------------------------------
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.2
+  Exclude:
+    - "bin/**/*"
+    - "db/schema.rb"
+    - "node_modules/**/*"
+    - "vendor/**/*"
+    - "tmp/**/*"
+    - "storage/**/*"
+
+# -----------------------------------------------------------------------------
+# Layout (코드 포맷팅)
+# -----------------------------------------------------------------------------
+
+# 최대 줄 길이: 120자 (CODING_GUIDE.md 기준)
+Layout/LineLength:
+  Max: 120
+  AllowedPatterns:
+    - "^\\s*#"  # 주석은 예외
+    - "https?://"  # URL은 예외
+
+# -----------------------------------------------------------------------------
+# Style (코드 스타일)
+# -----------------------------------------------------------------------------
+
+# 한글 주석 허용
+Style/AsciiComments:
+  Enabled: false
+
+# 문서화 강제 비활성화 (개발 초기 단계)
+Style/Documentation:
+  Enabled: false
+
+# frozen_string_literal 매직 코멘트 (Rails 8은 기본 활성화)
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always
+
+# 빈 메서드는 한 줄로
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+# 해시 스타일: Ruby 3.1+ 단축 문법 허용
+Style/HashSyntax:
+  EnforcedShorthandSyntax: either
+
+# -----------------------------------------------------------------------------
+# Metrics (복잡도 검사)
+# -----------------------------------------------------------------------------
+
+# 메서드 길이 제한
+Metrics/MethodLength:
+  Max: 20
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
+  Exclude:
+    - "db/migrate/**/*"
+
+# 클래스 길이 제한
+Metrics/ClassLength:
+  Max: 150
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
+
+# 블록 길이 제한
+Metrics/BlockLength:
+  Exclude:
+    - "config/**/*"
+    - "spec/**/*"
+    - "test/**/*"
+    - "db/migrate/**/*"
+    - "lib/tasks/**/*"
+
+# ABC 복잡도
+Metrics/AbcSize:
+  Max: 20
+  Exclude:
+    - "db/migrate/**/*"
+
+# 순환 복잡도
+Metrics/CyclomaticComplexity:
+  Max: 8
+
+# 파라미터 개수 (키워드 인자 권장)
+Metrics/ParameterLists:
+  Max: 5
+  CountKeywordArgs: false
+
+# -----------------------------------------------------------------------------
+# Rails 특화 규칙
+# -----------------------------------------------------------------------------
+
+# 유효성 검증에서 presence 대신 validates :attr, presence: true 사용
+Rails/Validation:
+  Enabled: true
+
+# 동적 find_by 메서드 사용 금지
+Rails/DynamicFindBy:
+  Enabled: true
+
+# inverse_of 명시 (N+1 방지)
+Rails/InverseOf:
+  Enabled: true
+
+# 안전하지 않은 SQL 탐지
+Rails/SquishedSQLHeredocs:
+  Enabled: true
+
+# -----------------------------------------------------------------------------
+# Performance (성능)
+# -----------------------------------------------------------------------------
+
+# count vs size vs length 최적화
+Performance/Count:
+  Enabled: true
+
+Performance/Size:
+  Enabled: true
+
+# 불필요한 블록 탐지
+Performance/RedundantBlockCall:
+  Enabled: true
