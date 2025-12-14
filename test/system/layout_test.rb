@@ -75,8 +75,8 @@ class LayoutTest < ApplicationSystemTestCase
     # 카카오 로그인 버튼 찾기
     kakao_button = find("a", text: "카카오로 계속하기")
 
-    # /auth/kakao 경로로 연결되는지 확인
-    assert_equal "/auth/kakao", kakao_button[:href]
+    # /auth/kakao 경로로 연결되는지 확인 (전체 URL에서 경로만 추출)
+    assert kakao_button[:href].end_with?("/auth/kakao"), "Expected href to end with /auth/kakao, but got #{kakao_button[:href]}"
   end
 
   test "미구현 OAuth 제공자는 비활성화 처리" do
