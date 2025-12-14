@@ -1,0 +1,23 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-6">사진 타임라인</h1>
+
+  <div class="mb-4 flex gap-4">
+    <%= link_to "전체", family_photos_path(@family), class: "text-blue-600" %>
+    <% @family.children.each do |child| %>
+      <%= link_to child.name, family_photos_path(@family, child_id: child.id), class: "text-blue-600" %>
+    <% end %>
+  </div>
+
+  <% if @photos.any? %>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <% @photos.each do |photo| %>
+        <%= render partial: "families/photos/photo", locals: { photo: photo } %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-12 text-gray-500">
+      <p>아직 사진이 없습니다.</p>
+      <%= link_to "첫 사진 업로드하기", new_family_photo_path(@family), class: "text-blue-600 mt-2 inline-block" %>
+    </div>
+  <% end %>
+</div>

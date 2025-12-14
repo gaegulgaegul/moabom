@@ -1,0 +1,19 @@
+<%= turbo_frame_tag dom_id(photo) do %>
+  <article class="photo-card bg-white rounded-lg shadow overflow-hidden">
+    <%= link_to family_photo_path(photo.family, photo) do %>
+      <% if photo.image.attached? %>
+        <%= image_tag photo.image, class: "w-full h-48 object-cover", loading: "lazy", alt: photo.caption %>
+      <% else %>
+        <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+          <span class="text-gray-400">이미지 없음</span>
+        </div>
+      <% end %>
+    <% end %>
+    <div class="p-3">
+      <% if photo.caption.present? %>
+        <p class="text-sm text-gray-700 truncate"><%= photo.caption %></p>
+      <% end %>
+      <p class="text-xs text-gray-500 mt-1"><%= l(photo.taken_at, format: :short) if photo.taken_at %></p>
+    </div>
+  </article>
+<% end %>

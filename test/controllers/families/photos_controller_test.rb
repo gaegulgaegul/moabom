@@ -1,0 +1,284 @@
+# frozen_string_literal: true
+
+require "test_helper"
+
+module Families
+  class PhotosControllerTest < ActionDispatch::IntegrationTest
+    setup do
+      @user = users(:mom)
+      @family = families(:kim_family)
+      @child = children(:baby_kim)
+      post login_path, params: { user_id: @user.id }
+    end
+
+    # ========================================
+    # 5.1 타임라인 테스트
+    # ========================================
+
+    test "should get index with family photos" do
+      get family_photos_path(@family)
+
+      assert_response :success
+      assert_select "h1", /사진|타임라인|Photos/i
+    end
+
+    test "should only show photos from the family" do
+      # 다른 가족의 사진은 보이지 않아야 함
+      other_family = families(:lee_family)
+
+      get family_photos_path(@family)
+
+      assert_response :success
+      # kim_family의 사진만 표시되어야 함
+    end
+
+    test "should order photos by taken_at desc (recent first)" do
+      get family_photos_path(@family)
+
+      assert_response :success
+      # 최신 사진이 먼저 표시되어야 함
+    end
+
+    test "should filter photos by child" do
+      get family_photos_path(@family), params: { child_id: @child.id }
+
+      assert_response :success
+      # child_id 파라미터로 필터링
+    end
+
+    test "should support pagination" do
+      get family_photos_path(@family), params: { page: 1 }
+
+      assert_response :success
+    end
+
+    test "should return json for json format" do
+      get family_photos_path(@family), as: :json
+
+      assert_response :success
+      json = JSON.parse(response.body)
+      assert json.key?("data") || json.is_a?(Array)
+    end
+
+    test "should require authentication" do
+      delete logout_path
+      get family_photos_path(@family)
+
+      assert_redirected_to root_path
+    end
+
+    test "should not allow access to other family photos" do
+      other_family = families(:lee_family)
+      get family_photos_path(other_family)
+
+      assert_redirected_to root_path
+    end
+
+    # ========================================
+    # 날짜별 그룹핑 테스트
+    # ========================================
+
+    test "should group photos by month when requested" do
+      get family_photos_path(@family), params: { year: 2025, month: 1 }
+
+      assert_response :success
+      # 2025년 1월 사진만 표시
+    end
+
+    # ========================================
+    # 5.2 사진 업로드 테스트
+    # ========================================
+
+    test "should show new photo form" do
+      get new_family_photo_path(@family)
+
+      assert_response :success
+      assert_select "form"
+    end
+
+    test "should create photo with valid params" do
+      assert_difference "Photo.count", 1 do
+        post family_photos_path(@family), params: {
+          photo: {
+            caption: "테스트 사진",
+            taken_at: Time.current,
+            child_id: @child.id,
+            image: fixture_file_upload("photo.jpg", "image/jpeg")
+          }
+        }
+      end
+
+      photo = Photo.last
+      assert_equal "테스트 사진", photo.caption
+      assert_equal @user, photo.uploader
+      assert_equal @child, photo.child
+      assert photo.image.attached?
+
+      assert_redirected_to family_photo_path(@family, photo)
+    end
+
+    test "should set current user as uploader" do
+      post family_photos_path(@family), params: {
+        photo: {
+          caption: "업로더 테스트",
+          taken_at: Time.current,
+          image: fixture_file_upload("photo.jpg", "image/jpeg")
+        }
+      }
+
+      assert_equal @user, Photo.last.uploader
+    end
+
+    test "should not create photo without image" do
+      assert_no_difference "Photo.count" do
+        post family_photos_path(@family), params: {
+          photo: {
+            caption: "이미지 없음",
+            taken_at: Time.current
+          }
+        }
+      end
+
+      assert_response :unprocessable_entity
+    end
+
+    test "should not create photo without taken_at" do
+      assert_no_difference "Photo.count" do
+        post family_photos_path(@family), params: {
+          photo: {
+            caption: "날짜 없음",
+            image: fixture_file_upload("photo.jpg", "image/jpeg")
+          }
+        }
+      end
+
+      assert_response :unprocessable_entity
+    end
+
+    # ========================================
+    # 5.4 사진 상세 테스트
+    # ========================================
+
+    test "should show photo detail" do
+      photo = photos(:baby_first_step)
+      get family_photo_path(@family, photo)
+
+      assert_response :success
+    end
+
+    # ========================================
+    # 5.5 사진 수정/삭제 테스트
+    # ========================================
+
+    test "should show edit form" do
+      photo = create_photo_with_image
+      get edit_family_photo_path(@family, photo)
+
+      assert_response :success
+      assert_select "form"
+    end
+
+    test "should update photo caption" do
+      photo = create_photo_with_image(caption: "원본 캡션")
+      patch family_photo_path(@family, photo), params: {
+        photo: { caption: "수정된 캡션" }
+      }
+
+      assert_redirected_to family_photo_path(@family, photo)
+      assert_equal "수정된 캡션", photo.reload.caption
+    end
+
+    test "should delete photo" do
+      photo = create_photo_with_image
+
+      assert_difference "Photo.count", -1 do
+        delete family_photo_path(@family, photo)
+      end
+
+      assert_redirected_to family_photos_path(@family)
+    end
+
+    # ========================================
+    # 5.3 대량 업로드 테스트
+    # ========================================
+
+    test "should batch upload multiple photos" do
+      assert_difference "Photo.count", 2 do
+        post batch_family_photos_path(@family), params: {
+          photos: [
+            {
+              caption: "첫 번째 사진",
+              taken_at: Time.current.iso8601,
+              image: fixture_file_upload("photo.jpg", "image/jpeg")
+            },
+            {
+              caption: "두 번째 사진",
+              taken_at: Time.current.iso8601,
+              image: fixture_file_upload("photo.jpg", "image/jpeg")
+            }
+          ]
+        }
+      end
+
+      assert_response :success
+      json = JSON.parse(response.body)
+      assert_equal 2, json["results"].count
+      assert json["results"].all? { |r| r["success"] }
+    end
+
+    test "should return partial success for batch upload" do
+      # 하나는 성공, 하나는 실패 (이미지 없음)
+      assert_difference "Photo.count", 1 do
+        post batch_family_photos_path(@family), params: {
+          photos: [
+            {
+              caption: "성공할 사진",
+              taken_at: Time.current.iso8601,
+              image: fixture_file_upload("photo.jpg", "image/jpeg")
+            },
+            {
+              caption: "실패할 사진",
+              taken_at: Time.current.iso8601
+              # 이미지 없음
+            }
+          ]
+        }
+      end
+
+      assert_response :success
+      json = JSON.parse(response.body)
+      assert_equal 2, json["results"].count
+
+      success_result = json["results"].find { |r| r["success"] }
+      failure_result = json["results"].find { |r| !r["success"] }
+
+      assert success_result.present?
+      assert failure_result.present?
+      assert failure_result["errors"].present?
+    end
+
+    test "should reject batch upload without authentication" do
+      delete logout_path
+      post batch_family_photos_path(@family), params: { photos: [] }
+
+      assert_redirected_to root_path
+    end
+
+    private
+
+    def create_photo_with_image(caption: "테스트 사진")
+      photo = @family.photos.build(
+        uploader: @user,
+        caption: caption,
+        taken_at: Time.current
+      )
+      photo.image.attach(
+        io: StringIO.new("fake image data"),
+        filename: "test.jpg",
+        content_type: "image/jpeg"
+      )
+      photo.save!
+      photo
+    end
+  end
+end
