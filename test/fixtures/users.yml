@@ -5,15 +5,26 @@ mom:
   nickname: 엄마
   provider: kakao
   uid: "100001"
+  onboarding_completed_at: <%= 1.day.ago %>
 
 dad:
   email: dad@example.com
   nickname: 아빠
   provider: kakao
   uid: "100002"
+  onboarding_completed_at: <%= 1.day.ago %>
 
 grandma:
   email: grandma@example.com
   nickname: 할머니
   provider: apple
   uid: "200001"
+  onboarding_completed_at: <%= 1.day.ago %>
+
+# 온보딩 미완료 사용자 (테스트용)
+incomplete_onboarding_user:
+  email: incomplete@example.com
+  nickname: 미완료유저
+  provider: kakao
+  uid: "100003"
+  onboarding_completed_at: <%= nil %>

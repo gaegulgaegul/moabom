@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   # Invitation (short URL)
   get "i/:token", to: "invitations#show", as: :accept_invitation
+  post "i/:token", to: "invitations#accept"
 
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check

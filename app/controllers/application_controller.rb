@@ -23,5 +23,12 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: "로그인이 필요합니다."
   end
 
+  def require_onboarding!
+    return unless logged_in?
+    return if current_user.onboarding_completed?
+
+    redirect_to onboarding_profile_path, alert: "온보딩을 완료해주세요."
+  end
+
   helper_method :current_user, :logged_in?
 end

@@ -158,6 +158,39 @@
 
 ---
 
+## Phase 3.5: 온보딩 보완 (Phase 4 시작 전 필수)
+
+> IMPLEMENTATION_GAPS.md 분석 결과 반영
+
+### 3.5.1 온보딩 완료 추적
+
+- [x] **RED**: 온보딩 완료 추적 테스트 ✅
+  - [x] User 모델에 onboarding_completed_at 필드 존재
+  - [x] 온보딩 완료 시 필드 업데이트
+  - [x] 미완료 사용자 온보딩으로 리다이렉트
+- [x] **GREEN**: 온보딩 완료 추적 구현 ✅
+  - [x] 마이그레이션: users 테이블에 onboarding_completed_at 추가
+  - [x] ApplicationController에 require_onboarding! 필터
+  - [x] InvitationsController에서 온보딩 완료 처리 (Phase 3.5.2에서 구현)
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
+
+### 3.5.2 초대 수락 컨트롤러
+
+- [x] **RED**: 초대 수락 테스트 ✅
+  - [x] 유효한 초대 토큰으로 페이지 접근
+  - [x] 로그인 상태에서 초대 수락
+  - [x] 비로그인 상태에서 초대 수락 (로그인 후 처리)
+  - [x] 만료된 초대 처리
+  - [x] 이미 가족 구성원인 경우 처리
+- [x] **GREEN**: InvitationsController#show, #accept 구현 ✅
+  - [x] 초대 정보 표시 페이지
+  - [x] 초대 수락 처리 (FamilyMembership 생성)
+  - [x] 세션에 pending_invitation 저장 (비로그인 시)
+  - [x] 온보딩 완료 처리 (complete_onboarding!)
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
+
+---
+
 ## Phase 4: 가족 관리
 
 ### 4.1 가족 정보
@@ -349,6 +382,7 @@
 | Phase 1: 기본 모델 | ✅ 완료 | 2025-12-14 |
 | Phase 2: 인증 시스템 | ✅ 완료 | 2025-12-14 |
 | Phase 3: 온보딩 | ✅ 완료 | 2025-12-14 |
+| Phase 3.5: 온보딩 보완 | ✅ 완료 | 2025-12-14 |
 | Phase 4: 가족 관리 | ⏳ 대기 | - |
 | Phase 5: 사진 기능 | ⏳ 대기 | - |
 | Phase 6: 반응/댓글 | ⏳ 대기 | - |
@@ -358,9 +392,41 @@
 
 ---
 
+## 기술 부채 및 향후 개선 사항
+
+> 상세 분석: [IMPLEMENTATION_GAPS.md](/docs/IMPLEMENTATION_GAPS.md)
+
+### MVP 출시 전 필요
+
+| 항목 | 현재 상태 | 필요 작업 |
+|-----|----------|----------|
+| 이용약관 동의 | 미구현 | User 모델 필드 추가, 동의 페이지 구현 |
+| 프로필 아바타 | 미구현 | Active Storage 연동, 업로드 UI |
+| 가족 내 관계 설정 | role만 있음 | FamilyMembership에 relation enum 추가 |
+
+### 출시 후 개선
+
+| 항목 | 현재 상태 | 필요 작업 |
+|-----|----------|----------|
+| Apple/Google 로그인 | 카카오만 구현 | omniauth 전략 추가 |
+| 카카오톡 공유 | 링크 복사만 | Kakao SDK 연동 |
+| QR 코드 공유 | 미구현 | rqrcode gem 추가 |
+| 초대 링크 재사용 | 매번 새 생성 | 기존 유효 초대 재사용 로직 |
+
+### 기술 부채
+
+| 항목 | 현재 상태 | 개선 필요 |
+|-----|----------|----------|
+| 에러 처리 | 기본 Rails 에러 | 사용자 친화적 메시지 |
+| 뷰 디자인 | 기본 HTML | TailwindCSS 스타일링 |
+| 테스트 커버리지 | 기본 테스트 | 엣지 케이스 추가 |
+
+---
+
 ## 참고 문서
 
 - [PRD](/docs/PRD.md)
 - [아키텍처](/docs/ARCHITECTURE.md)
 - [API 설계](/docs/API_DESIGN.md)
 - [화면 설계](/docs/WIREFRAME.md)
+- [구현 현황 분석](/docs/IMPLEMENTATION_GAPS.md)

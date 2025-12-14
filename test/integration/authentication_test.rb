@@ -53,4 +53,24 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+
+  # 온보딩 완료 추적 테스트
+  test "user without completed onboarding should be redirected to onboarding" do
+    user = users(:incomplete_onboarding_user)
+    post login_path, params: { user_id: user.id }
+
+    get dashboard_path
+
+    assert_redirected_to onboarding_profile_path
+    assert_equal "온보딩을 완료해주세요.", flash[:alert]
+  end
+
+  test "user with completed onboarding should access dashboard" do
+    user = users(:mom)  # mom fixture has completed onboarding
+    post login_path, params: { user_id: user.id }
+
+    get dashboard_path
+
+    assert_response :success
+  end
 end

@@ -67,4 +67,36 @@ class UserTest < ActiveSupport::TestCase
     )
     assert apple_user.valid?
   end
+
+  # 온보딩 완료 추적 테스트
+  test "should have onboarding_completed_at attribute" do
+    user = users(:mom)
+    assert_respond_to user, :onboarding_completed_at
+  end
+
+  test "onboarding_completed? should return false when onboarding_completed_at is nil" do
+    user = User.new(
+      email: "test@example.com",
+      nickname: "테스트",
+      provider: "kakao",
+      uid: "99999"
+    )
+    assert_not user.onboarding_completed?
+  end
+
+  test "onboarding_completed? should return true when onboarding_completed_at is set" do
+    user = users(:mom)
+    user.onboarding_completed_at = Time.current
+    assert user.onboarding_completed?
+  end
+
+  test "complete_onboarding! should set onboarding_completed_at" do
+    user = users(:mom)
+    user.onboarding_completed_at = nil
+    user.save!
+
+    assert_nil user.onboarding_completed_at
+    user.complete_onboarding!
+    assert_not_nil user.onboarding_completed_at
+  end
 end

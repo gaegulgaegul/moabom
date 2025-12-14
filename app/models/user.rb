@@ -16,4 +16,12 @@ class User < ApplicationRecord
       user.avatar_url = auth.info.image
     end
   end
+
+  def onboarding_completed?
+    onboarding_completed_at.present?
+  end
+
+  def complete_onboarding!
+    update!(onboarding_completed_at: Time.current)
+  end
 end
