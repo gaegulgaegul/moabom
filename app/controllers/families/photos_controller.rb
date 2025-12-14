@@ -139,8 +139,8 @@ module Families
         }, status: :bad_request
       end
 
-      # 빈 배열 체크
-      if photos_param.empty?
+      # 빈 배열 체크 (빈 배열이거나 빈 문자열만 포함한 경우)
+      if photos_param.empty? || photos_param.all? { |p| p.blank? }
         return render json: {
           error: {
             code: "bad_request",
