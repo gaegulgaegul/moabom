@@ -1,0 +1,76 @@
+# CodeRabbit Configuration
+# https://docs.coderabbit.ai/guides/configure-coderabbit
+
+language: ko-KR
+
+early_access: false
+
+reviews:
+  # 리뷰 스타일: chill, assertive, nitpicky
+  profile: assertive
+
+  # 리뷰 요청 설정
+  request_changes_workflow: false
+  high_level_summary: true
+  high_level_summary_placeholder: "@coderabbitai summary"
+
+  # 자동 리뷰
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - main
+
+  # 리뷰 제외 경로
+  path_filters:
+    - "!**/*.lock"
+    - "!**/node_modules/**"
+    - "!**/vendor/**"
+    - "!db/schema.rb"
+    - "!config/credentials.yml.enc"
+    - "!tmp/**"
+    - "!log/**"
+    - "!storage/**"
+    - "!public/assets/**"
+
+  # 리뷰 도구 설정
+  tools:
+    rubocop:
+      enabled: true
+    shellcheck:
+      enabled: true
+    markdownlint:
+      enabled: true
+
+chat:
+  auto_reply: true
+
+# 커스텀 지침
+instructions:
+  pull_request_review: |
+    ## 리뷰 기준
+
+    ### Rails 컨벤션
+    - Controller는 thin하게 유지, 비즈니스 로직은 Service로
+    - Model에는 validation, association, scope만
+    - N+1 쿼리 방지 (includes 사용)
+    - Strong Parameters 필수
+
+    ### 코드 스타일
+    - 2 spaces 들여쓰기
+    - snake_case (메서드/변수), PascalCase (클래스)
+    - guard clause 선호
+    - &. (safe navigation) 사용
+
+    ### 보안
+    - SQL injection 방지 (parameterized query)
+    - XSS 방지 (escape 처리)
+    - 리소스 접근은 current_user scope 사용
+
+    ### 테스트
+    - TDD 워크플로우 (Red-Green-Refactor)
+    - 모든 public 메서드 테스트 필수
+
+    ### 커밋
+    - feat/fix/refactor/test/docs/chore 타입 사용
+    - 구조적 변경(refactor)과 동작적 변경(feat/fix) 분리
