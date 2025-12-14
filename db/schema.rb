@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_14_111043) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_14_155114) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -57,6 +57,21 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_14_111043) do
     t.integer "user_id", null: false
     t.index ["photo_id"], name: "index_comments_on_photo_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "devices", force: :cascade do |t|
+    t.string "app_version"
+    t.datetime "created_at", null: false
+    t.string "device_id", null: false
+    t.datetime "last_active_at"
+    t.string "os_version"
+    t.string "platform", null: false
+    t.string "push_token"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["push_token"], name: "index_devices_on_push_token"
+    t.index ["user_id", "device_id"], name: "index_devices_on_user_id_and_device_id", unique: true
+    t.index ["user_id"], name: "index_devices_on_user_id"
   end
 
   create_table "families", force: :cascade do |t|
@@ -119,6 +134,9 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_14_111043) do
     t.datetime "created_at", null: false
     t.string "email", null: false
     t.string "nickname", null: false
+    t.boolean "notify_on_comment", default: true, null: false
+    t.boolean "notify_on_new_photo", default: true, null: false
+    t.boolean "notify_on_reaction", default: true, null: false
     t.datetime "onboarding_completed_at"
     t.string "provider", null: false
     t.string "uid", null: false
@@ -132,6 +150,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_14_111043) do
   add_foreign_key "children", "families"
   add_foreign_key "comments", "photos"
   add_foreign_key "comments", "users"
+  add_foreign_key "devices", "users"
   add_foreign_key "family_memberships", "families"
   add_foreign_key "family_memberships", "users"
   add_foreign_key "invitations", "families"

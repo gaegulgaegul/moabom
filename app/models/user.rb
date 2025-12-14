@@ -3,6 +3,7 @@
 class User < ApplicationRecord
   has_many :family_memberships, dependent: :destroy
   has_many :families, through: :family_memberships
+  has_many :devices, dependent: :destroy
 
   validates :email, presence: true
   validates :nickname, presence: true

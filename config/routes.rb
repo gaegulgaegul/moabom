@@ -16,6 +16,13 @@ Rails.application.routes.draw do
   resources :families, only: [ :show, :update ] do
     resources :members, controller: "families/members", only: [ :index, :update, :destroy ]
     resources :children, controller: "families/children"
+    resources :photos, controller: "families/photos" do
+      collection do
+        post :batch
+      end
+      resources :reactions, controller: "photos/reactions", only: [ :create, :destroy ]
+      resources :comments, controller: "photos/comments", only: [ :index, :create, :destroy ]
+    end
   end
 
   # Onboarding
@@ -23,6 +30,20 @@ Rails.application.routes.draw do
     resource :profile, only: [ :show, :update ]
     resource :child, only: [ :show, :create ]
     resource :invite, only: [ :show ]
+  end
+
+  # Settings (Phase 7)
+  namespace :settings do
+    resource :profile, only: [ :show, :update ]
+    resource :notifications, only: [ :show, :update ]
+  end
+
+  # Native API (Phase 8)
+  namespace :api do
+    namespace :native do
+      resource :sync, only: [ :show ]
+      resources :push_tokens, only: [ :create, :destroy ]
+    end
   end
 
   # Invitation (short URL)

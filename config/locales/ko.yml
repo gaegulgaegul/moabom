@@ -1,4 +1,14 @@
 ko:
+  date:
+    formats:
+      default: "%Y년 %m월 %d일"
+      short: "%m월 %d일"
+      long: "%Y년 %m월 %d일 %A"
+  time:
+    formats:
+      default: "%Y년 %m월 %d일 %H:%M"
+      short: "%m/%d %H:%M"
+      long: "%Y년 %m월 %d일 %H:%M"
   activerecord:
     models:
       user: 사용자
