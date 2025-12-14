@@ -24,8 +24,8 @@ docs/gaps/
 
 ## 빠른 링크
 
-- [전체 갭 분석 목록](./gaps/README.md)
-- [Phase 4 분석](./gaps/phase-4/README.md)
+- [전체 갭 분석 목록](../gaps/README.md)
+- [Phase 4 분석](../gaps/phase-4/README.md)
 
 ---
 

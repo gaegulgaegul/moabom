@@ -395,7 +395,7 @@
 
 ## 기술 부채 및 향후 개선 사항
 
-> 상세 분석: [IMPLEMENTATION_GAPS.md](/docs/IMPLEMENTATION_GAPS.md)
+> 상세 분석: [IMPLEMENTATION_GAPS.md](/docs/features/IMPLEMENTATION_GAPS.md)
 
 ### MVP 출시 전 필요
 
@@ -426,8 +426,8 @@
 
 ## 참고 문서
 
-- [PRD](/docs/PRD.md)
-- [아키텍처](/docs/ARCHITECTURE.md)
-- [API 설계](/docs/API_DESIGN.md)
-- [화면 설계](/docs/WIREFRAME.md)
-- [구현 현황 분석](/docs/IMPLEMENTATION_GAPS.md)
+- [PRD](/docs/features/PRD.md)
+- [아키텍처](/docs/features/ARCHITECTURE.md)
+- [API 설계](/docs/features/API_DESIGN.md)
+- [화면 설계](/docs/features/WIREFRAME.md)
+- [구현 현황 분석](/docs/features/IMPLEMENTATION_GAPS.md)
