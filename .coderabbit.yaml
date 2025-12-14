@@ -48,6 +48,8 @@ chat:
 # 커스텀 지침
 instructions:
   pull_request_review: |
+    **중요: 모든 리뷰 코멘트는 반드시 한글(Korean)로 작성해주세요.**
+
     ## 리뷰 기준
 
     ### Rails 컨벤션
