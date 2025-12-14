@@ -9,7 +9,7 @@ class Api::Native::PushTokensControllerTest < ActionDispatch::IntegrationTest
 
   # Authentication tests
   test "create should require authentication" do
-    post api_native_push_tokens_path, params: valid_params, as: :json
+    post api_native_push_tokens_path, params: valid_params, as: :json, headers: api_headers
 
     assert_response :unauthorized
     json_response = JSON.parse(response.body)
@@ -17,7 +17,7 @@ class Api::Native::PushTokensControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "destroy should require authentication" do
-    delete api_native_push_token_path(id: 1), as: :json
+    delete api_native_push_token_path(id: 1), as: :json, headers: api_headers
 
     assert_response :unauthorized
   end
@@ -27,7 +27,7 @@ class Api::Native::PushTokensControllerTest < ActionDispatch::IntegrationTest
     login_as(@user)
 
     assert_difference("Device.count", 1) do
-      post api_native_push_tokens_path, params: valid_params, as: :json
+      post api_native_push_tokens_path, params: valid_params, as: :json, headers: api_headers
     end
 
     assert_response :created
@@ -52,7 +52,8 @@ class Api::Native::PushTokensControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference("Device.count") do
       post api_native_push_tokens_path,
            params: valid_params.merge(push_token: "new-token"),
-           as: :json
+           as: :json,
+           headers: api_headers
     end
 
     assert_response :created
@@ -65,7 +66,8 @@ class Api::Native::PushTokensControllerTest < ActionDispatch::IntegrationTest
 
     post api_native_push_tokens_path,
          params: { platform: "ios" }, # missing device_id
-         as: :json
+         as: :json,
+         headers: api_headers
 
     assert_response :bad_request
   end
@@ -75,7 +77,8 @@ class Api::Native::PushTokensControllerTest < ActionDispatch::IntegrationTest
 
     post api_native_push_tokens_path,
          params: valid_params.merge(platform: "windows"),
-         as: :json
+         as: :json,
+         headers: api_headers
 
     assert_response :unprocessable_entity
   end
@@ -91,7 +94,7 @@ class Api::Native::PushTokensControllerTest < ActionDispatch::IntegrationTest
     )
 
     assert_difference("Device.count", -1) do
-      delete api_native_push_token_path(id: device.device_id), as: :json
+      delete api_native_push_token_path(id: device.device_id), as: :json, headers: api_headers
     end
 
     assert_response :success
@@ -102,7 +105,7 @@ class Api::Native::PushTokensControllerTest < ActionDispatch::IntegrationTest
   test "should return not_found for non-existent device" do
     login_as(@user)
 
-    delete api_native_push_token_path(id: "non-existent"), as: :json
+    delete api_native_push_token_path(id: "non-existent"), as: :json, headers: api_headers
 
     assert_response :not_found
   end
@@ -118,7 +121,7 @@ class Api::Native::PushTokensControllerTest < ActionDispatch::IntegrationTest
     )
 
     assert_no_difference("Device.count") do
-      delete api_native_push_token_path(id: device.device_id), as: :json
+      delete api_native_push_token_path(id: device.device_id), as: :json, headers: api_headers
     end
 
     assert_response :not_found

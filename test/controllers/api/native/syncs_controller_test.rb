@@ -9,7 +9,7 @@ class Api::Native::SyncsControllerTest < ActionDispatch::IntegrationTest
 
   # Authentication tests
   test "should require authentication" do
-    get api_native_sync_path, as: :json
+    get api_native_sync_path, as: :json, headers: api_headers
 
     assert_response :unauthorized
     json_response = JSON.parse(response.body)
@@ -20,7 +20,7 @@ class Api::Native::SyncsControllerTest < ActionDispatch::IntegrationTest
   test "should return sync data when authenticated" do
     login_as(@user)
 
-    get api_native_sync_path, as: :json
+    get api_native_sync_path, as: :json, headers: api_headers
 
     assert_response :success
     json_response = JSON.parse(response.body)
@@ -49,7 +49,7 @@ class Api::Native::SyncsControllerTest < ActionDispatch::IntegrationTest
   test "should include family memberships in families data" do
     login_as(@user)
 
-    get api_native_sync_path, as: :json
+    get api_native_sync_path, as: :json, headers: api_headers
 
     assert_response :success
     json_response = JSON.parse(response.body)
@@ -62,7 +62,7 @@ class Api::Native::SyncsControllerTest < ActionDispatch::IntegrationTest
   test "should include child details" do
     login_as(@user)
 
-    get api_native_sync_path, as: :json
+    get api_native_sync_path, as: :json, headers: api_headers
 
     assert_response :success
     json_response = JSON.parse(response.body)
