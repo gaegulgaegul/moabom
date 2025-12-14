@@ -547,10 +547,9 @@
 Backend:
   Framework: Ruby on Rails 8
   Language: Ruby 3.3+
-  Database: PostgreSQL 16
-  Cache/Queue: Solid Cache, Solid Queue (SQLite 기반)
-  Real-time: Solid Cable (Action Cable)
-  Storage: Active Storage + S3 (또는 Cloudinary)
+  Database: SQLite (Railway Volume)
+  Cache/Queue/Cable: Solid Stack (SQLite 기반 통합)
+  Storage: Active Storage + Cloudflare R2
 
 Frontend (Web):
   Framework: Hotwire (Turbo + Stimulus)
@@ -563,8 +562,8 @@ Mobile:
   공유: 웹뷰 기반 + 네이티브 컴포넌트 혼합
 
 Infrastructure:
-  Server: VPS (Hetzner / DigitalOcean / AWS Lightsail)
-  Deploy: Kamal 2
+  Platform: Railway (~$5/월)
+  Storage: Railway Volume (SQLite) + Cloudflare R2 (파일)
   CDN: Cloudflare
   Monitoring: Rails 내장 + Sentry
 ```
@@ -661,9 +660,10 @@ gem "sentry-rails"
 | **Rails 8** | Convention over Configuration, 빠른 MVP 개발 |
 | **Turbo Native** | 웹 코드 90% 재사용, 앱스토어 배포 가능 |
 | **Hotwire** | SPA 같은 UX, JavaScript 최소화 |
-| **PostgreSQL** | 안정성, JSON 지원, 확장성 |
-| **Kamal 2** | Docker 기반 간편 배포, PaaS 비용 절감 |
-| **Solid Stack** | Redis 불필요, 인프라 단순화 |
+| **SQLite** | MVP 단순화, Solid Stack 통합, 무료 (스케일 시 PostgreSQL) |
+| **Railway** | git push 배포, Volume 지원, 월 $5 (스케일 시 Kamal 2) |
+| **Solid Stack** | Redis 불필요, SQLite 기반 Cache/Queue/Cable 통합 |
+| **Cloudflare R2** | S3 호환, 무료 10GB, Active Storage 연동 |
 
 ### 8.7 개발 환경
 
@@ -671,7 +671,7 @@ gem "sentry-rails"
 로컬 개발:
   Ruby: 3.3+ (rbenv / asdf)
   Node: 20+ (asset 빌드용)
-  Database: PostgreSQL 16
+  Database: SQLite 3 (개발/프로덕션 동일)
   IDE: VS Code + Ruby LSP / RubyMine
 
 iOS 개발:
@@ -688,12 +688,17 @@ Android 개발:
 ### 8.8 배포 구성
 
 ```yaml
-Production:
-  Server: Hetzner CX21 (2 vCPU, 4GB RAM) - 월 €5~
-  Database: Managed PostgreSQL 또는 Self-hosted
-  Storage: S3 호환 (Cloudflare R2 / Backblaze B2)
+Production (Phase 1 - MVP):
+  Platform: Railway (~$5/월)
+  Database: SQLite (Railway Volume, $0.25/GB)
+  File Storage: Cloudflare R2 (무료 10GB)
   CDN: Cloudflare (무료)
-  SSL: Let's Encrypt (자동)
+  SSL: 자동 (Railway 제공)
+
+Production (Phase 2+ - 스케일):
+  Platform: VPS (Hetzner/DigitalOcean)
+  Database: PostgreSQL
+  File Storage: S3 호환 (R2/B2)
   Deploy: Kamal 2 (Docker)
 
 앱 배포:
