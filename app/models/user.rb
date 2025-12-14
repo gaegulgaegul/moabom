@@ -36,6 +36,10 @@ class User < ApplicationRecord
     update!(onboarding_completed_at: Time.current)
   end
 
+  def membership_for(family)
+    family_memberships.find_by(family: family)
+  end
+
   private
 
   def nickname_not_forbidden

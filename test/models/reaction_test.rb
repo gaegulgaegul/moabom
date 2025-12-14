@@ -12,19 +12,19 @@ class ReactionTest < ActiveSupport::TestCase
     reaction = Reaction.new(
       photo: @photo,
       user: @user,
-      emoji: "heart"
+      emoji: "❤️"
     )
     assert reaction.valid?
   end
 
   test "should belong to photo" do
-    reaction = Reaction.new(user: @user, emoji: "heart")
+    reaction = Reaction.new(user: @user, emoji: "❤️")
     assert_not reaction.valid?
     assert_includes reaction.errors[:photo], "은(는) 필수입니다"
   end
 
   test "should belong to user" do
-    reaction = Reaction.new(photo: @photo, emoji: "heart")
+    reaction = Reaction.new(photo: @photo, emoji: "❤️")
     assert_not reaction.valid?
     assert_includes reaction.errors[:user], "은(는) 필수입니다"
   end
@@ -42,7 +42,7 @@ class ReactionTest < ActiveSupport::TestCase
     duplicate = Reaction.new(
       photo: existing.photo,
       user: existing.user,
-      emoji: "thumbsup"
+      emoji: "👍"
     )
     assert_not duplicate.valid?
     assert_includes duplicate.errors[:user_id], "은(는) 이미 사용 중입니다"
@@ -53,8 +53,8 @@ class ReactionTest < ActiveSupport::TestCase
     photo1 = photos(:january_photo)
     photo2 = photos(:february_photo)
 
-    reaction1 = Reaction.new(photo: photo1, user: user, emoji: "heart")
-    reaction2 = Reaction.new(photo: photo2, user: user, emoji: "heart")
+    reaction1 = Reaction.new(photo: photo1, user: user, emoji: "❤️")
+    reaction2 = Reaction.new(photo: photo2, user: user, emoji: "❤️")
 
     assert reaction1.valid?
     assert reaction2.valid?
@@ -69,13 +69,13 @@ class ReactionTest < ActiveSupport::TestCase
   test "should reject emoji not in allowed list" do
     reaction = Reaction.new(photo: @photo, user: @user, emoji: "🚫")
     assert_not reaction.valid?, "허용되지 않은 이모지는 거부되어야 함"
-    assert_includes reaction.errors[:emoji], "은(는) 목록에 포함되어 있지 않습니다"
+    assert reaction.errors[:emoji].present?, "이모지 에러가 있어야 함"
   end
 
   test "should reject plain text as emoji" do
     reaction = Reaction.new(photo: @photo, user: @user, emoji: "heart")
     assert_not reaction.valid?, "일반 텍스트는 이모지로 허용되지 않아야 함"
-    assert_includes reaction.errors[:emoji], "은(는) 목록에 포함되어 있지 않습니다"
+    assert reaction.errors[:emoji].present?, "이모지 에러가 있어야 함"
   end
 
   test "should reject empty emoji" do

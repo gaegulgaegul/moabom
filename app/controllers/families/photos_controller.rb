@@ -8,6 +8,8 @@ module Families
     before_action :require_onboarding!
     before_action :set_family
     before_action :set_photo, only: [ :show, :edit, :update, :destroy ]
+    before_action :authorize_upload, only: [ :create, :batch ]
+    before_action :authorize_delete, only: [ :destroy ]
 
     def index
       @photos = @family.photos.includes(:uploader, :child).recent
@@ -95,6 +97,20 @@ module Families
 
     def photo_params
       params.require(:photo).permit(:image, :caption, :taken_at, :child_id)
+    end
+
+    def authorize_upload
+      membership = current_user.membership_for(@family)
+      unless membership&.can_upload?
+        redirect_to root_path, alert: "권한이 없습니다."
+      end
+    end
+
+    def authorize_delete
+      membership = current_user.membership_for(@family)
+      unless membership&.can_delete_photo?(@photo)
+        redirect_to root_path, alert: "권한이 없습니다."
+      end
     end
   end
 end

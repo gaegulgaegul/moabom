@@ -28,5 +28,10 @@ module ActionDispatch
     def sign_out
       delete logout_url
     end
+
+    # Default headers for API requests
+    def api_headers
+      { "Origin" => "capacitor://localhost" }
+    end
   end
 end

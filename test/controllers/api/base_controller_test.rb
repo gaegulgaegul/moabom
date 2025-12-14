@@ -14,10 +14,11 @@ module Api
     test "should reject request without Origin header" do
       sign_in @user
 
-      get api_native_sync_url, headers: { "Origin" => nil }
+      get api_native_sync_url
 
       assert_response :forbidden
       assert_equal "forbidden", response.parsed_body["error"]["code"]
+      assert_equal "Origin 헤더가 필요합니다.", response.parsed_body["error"]["message"]
     end
 
     test "should reject request with invalid Origin header" do
