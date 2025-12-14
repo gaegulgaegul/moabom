@@ -1,0 +1,26 @@
+<h1>프로필 설정</h1>
+
+<%= form_with model: current_user, url: settings_profile_path, method: :patch do |form| %>
+  <% if current_user.errors.any? %>
+    <div class="error">
+      <% current_user.errors.full_messages.each do |message| %>
+        <p><%= message %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :email, "이메일" %>
+    <%= form.text_field :email, disabled: true %>
+    <small>소셜 로그인으로 가입한 이메일은 변경할 수 없습니다.</small>
+  </div>
+
+  <div>
+    <%= form.label :nickname, "닉네임" %>
+    <%= form.text_field :nickname %>
+  </div>
+
+  <div>
+    <%= form.submit "저장" %>
+  </div>
+<% end %>

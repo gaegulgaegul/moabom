@@ -1,0 +1,30 @@
+<h1>알림 설정</h1>
+
+<%= form_with model: current_user, url: settings_notifications_path, method: :patch do |form| %>
+  <% if current_user.errors.any? %>
+    <div class="error">
+      <% current_user.errors.full_messages.each do |message| %>
+        <p><%= message %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :notify_on_new_photo, "새 사진 업로드 알림" %>
+    <%= form.check_box :notify_on_new_photo %>
+  </div>
+
+  <div>
+    <%= form.label :notify_on_comment, "댓글 작성 알림" %>
+    <%= form.check_box :notify_on_comment %>
+  </div>
+
+  <div>
+    <%= form.label :notify_on_reaction, "반응 추가 알림" %>
+    <%= form.check_box :notify_on_reaction %>
+  </div>
+
+  <div>
+    <%= form.submit "저장" %>
+  </div>
+<% end %>
