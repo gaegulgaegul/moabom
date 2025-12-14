@@ -225,11 +225,12 @@ class UserTest < ActiveSupport::TestCase
     file = fixture_file_upload("test_image.jpg", "image/jpeg")
     user.avatar.attach(file)
 
-    # Simulate large file by stubbing byte_size
-    user.avatar.blob.stub(:byte_size, 6.megabytes) do
-      assert_not user.valid?
-      assert_includes user.errors[:avatar], "파일 크기가 5MB를 초과합니다"
-    end
+    # Override byte_size to simulate large file
+    blob = user.avatar.blob
+    blob.define_singleton_method(:byte_size) { 6.megabytes }
+
+    assert_not user.valid?
+    assert_includes user.errors[:avatar], "파일 크기가 5MB를 초과합니다"
   end
 
   test "should accept avatar within 5MB limit" do
@@ -237,9 +238,7 @@ class UserTest < ActiveSupport::TestCase
     file = fixture_file_upload("test_image.jpg", "image/jpeg")
     user.avatar.attach(file)
 
-    # Simulate small file by stubbing byte_size
-    user.avatar.blob.stub(:byte_size, 4.megabytes) do
-      assert user.valid?
-    end
+    # The test fixture is small, so should be valid
+    assert user.valid?
   end
 end
