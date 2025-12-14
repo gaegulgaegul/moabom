@@ -17,5 +17,6 @@ class Reaction < ApplicationRecord
   belongs_to :user
 
   validates :emoji, presence: true
+  validates :emoji, inclusion: { in: ALLOWED_EMOJIS }
   validates :user_id, uniqueness: { scope: :photo_id }
 end

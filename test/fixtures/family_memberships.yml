@@ -14,3 +14,8 @@ grandma_kim_family:
   user: grandma
   family: kim_family
   role: 0  # viewer
+
+uncle_kim_family:
+  user: uncle
+  family: kim_family
+  role: 1  # member

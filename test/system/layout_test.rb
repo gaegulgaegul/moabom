@@ -69,6 +69,40 @@ class LayoutTest < ApplicationSystemTestCase
     assert_selector ".bg-red-100", text: "오류가 발생했습니다"
   end
 
+  test "카카오 로그인 버튼이 실제 OAuth URL로 연결" do
+    visit root_path
+
+    # 카카오 로그인 버튼 찾기
+    kakao_button = find("a", text: "카카오로 계속하기")
+
+    # /auth/kakao 경로로 연결되는지 확인
+    assert_equal "/auth/kakao", kakao_button[:href]
+  end
+
+  test "미구현 OAuth 제공자는 비활성화 처리" do
+    visit root_path
+
+    # Apple 버튼은 비활성화되어야 함
+    apple_button = find("a", text: "Apple로 계속하기")
+    assert apple_button[:class].include?("opacity-50") || apple_button[:class].include?("cursor-not-allowed")
+
+    # Google 버튼도 비활성화되어야 함
+    google_button = find("a", text: "Google로 계속하기")
+    assert google_button[:class].include?("opacity-50") || google_button[:class].include?("cursor-not-allowed")
+  end
+
+  test "로그인 버튼에 '#' 하드코딩이 없음" do
+    visit root_path
+
+    # 모든 로그인 버튼 찾기
+    login_buttons = all("a", text: /계속하기/)
+
+    # '#' href를 가진 버튼이 없어야 함
+    login_buttons.each do |button|
+      refute_equal "#", button[:href], "로그인 버튼이 '#'로 하드코딩되어 있습니다"
+    end
+  end
+
   private
 
   def sign_in(user)

@@ -1,12 +1,22 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  # 닉네임 상수
+  NICKNAME_REGEX = /\A[가-힣a-zA-Z0-9_]+\z/
+  FORBIDDEN_NICKNAMES = %w[관리자 admin 운영자 moderator 시스템 system root].freeze
+  MIN_NICKNAME_LENGTH = 2
+  MAX_NICKNAME_LENGTH = 20
+
   has_many :family_memberships, dependent: :destroy
   has_many :families, through: :family_memberships
   has_many :devices, dependent: :destroy
 
   validates :email, presence: true
-  validates :nickname, presence: true
+  validates :nickname, presence: true,
+                       length: { in: MIN_NICKNAME_LENGTH..MAX_NICKNAME_LENGTH },
+                       format: { with: NICKNAME_REGEX }
+  validate :nickname_not_forbidden
+
   validates :provider, presence: true
   validates :uid, presence: true, uniqueness: { scope: :provider }
 
@@ -24,5 +34,15 @@ class User < ApplicationRecord
 
   def complete_onboarding!
     update!(onboarding_completed_at: Time.current)
+  end
+
+  private
+
+  def nickname_not_forbidden
+    return if nickname.blank?
+
+    if FORBIDDEN_NICKNAMES.include?(nickname.downcase)
+      errors.add(:nickname, "사용할 수 없는 닉네임입니다")
+    end
   end
 end

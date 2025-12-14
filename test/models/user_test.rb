@@ -99,4 +99,97 @@ class UserTest < ActiveSupport::TestCase
     user.complete_onboarding!
     assert_not_nil user.onboarding_completed_at
   end
+
+  # 닉네임 검증 강화 (7.5.2)
+  test "should reject nickname shorter than 2 characters" do
+    user = User.new(
+      email: "test@example.com",
+      nickname: "a",
+      provider: "kakao",
+      uid: "12345"
+    )
+    assert_not user.valid?
+    assert_includes user.errors[:nickname], "이(가) 너무 짧습니다 (최소 2자)"
+  end
+
+  test "should reject nickname longer than 20 characters" do
+    user = User.new(
+      email: "test@example.com",
+      nickname: "a" * 21,
+      provider: "kakao",
+      uid: "12345"
+    )
+    assert_not user.valid?
+    assert_includes user.errors[:nickname], "이(가) 너무 깁니다 (최대 20자)"
+  end
+
+  test "should accept nickname with valid characters (Korean, English, numbers, underscore)" do
+    valid_nicknames = [ "엄마", "Mom", "엄마123", "mom_123", "엄마_Mom" ]
+    valid_nicknames.each do |nickname|
+      user = User.new(
+        email: "test@example.com",
+        nickname: nickname,
+        provider: "kakao",
+        uid: "unique_#{nickname}"
+      )
+      assert user.valid?, "Nickname '#{nickname}' should be valid"
+    end
+  end
+
+  test "should reject nickname with invalid characters" do
+    invalid_nicknames = [ "엄마!", "mom@", "테스트#", "user$", "닉네임%" ]
+    invalid_nicknames.each do |nickname|
+      user = User.new(
+        email: "test@example.com",
+        nickname: nickname,
+        provider: "kakao",
+        uid: "unique_#{nickname}"
+      )
+      assert_not user.valid?, "Nickname '#{nickname}' should be invalid"
+      assert_includes user.errors[:nickname], "이(가) 올바르지 않습니다"
+    end
+  end
+
+  test "should reject nickname with forbidden words" do
+    forbidden_nicknames = [ "관리자", "admin", "운영자", "moderator" ]
+    forbidden_nicknames.each do |nickname|
+      user = User.new(
+        email: "test@example.com",
+        nickname: nickname,
+        provider: "kakao",
+        uid: "unique_#{nickname}"
+      )
+      assert_not user.valid?, "Nickname '#{nickname}' should be rejected as forbidden"
+      assert_includes user.errors[:nickname], "사용할 수 없는 닉네임입니다"
+    end
+  end
+
+  # 닉네임 보안 검증 (7.5.5)
+  test "should reject nickname with HTML tags (XSS prevention)" do
+    malicious_nicknames = [ "<script>alert('xss')</script>", "<img src=x>", "<a href='#'>link</a>" ]
+    malicious_nicknames.each do |nickname|
+      user = User.new(
+        email: "test@example.com",
+        nickname: nickname,
+        provider: "kakao",
+        uid: "unique_#{nickname}"
+      )
+      assert_not user.valid?, "Nickname '#{nickname}' should be rejected (XSS)"
+      assert_includes user.errors[:nickname], "이(가) 올바르지 않습니다"
+    end
+  end
+
+  test "should reject nickname with SQL injection patterns" do
+    sql_nicknames = [ "admin'--", "1' OR '1'='1", "'; DROP TABLE users;--" ]
+    sql_nicknames.each do |nickname|
+      user = User.new(
+        email: "test@example.com",
+        nickname: nickname,
+        provider: "kakao",
+        uid: "unique_#{nickname}"
+      )
+      assert_not user.valid?, "Nickname '#{nickname}' should be rejected (SQL injection)"
+      assert_includes user.errors[:nickname], "이(가) 올바르지 않습니다"
+    end
+  end
 end

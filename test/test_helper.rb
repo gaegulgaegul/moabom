@@ -18,3 +18,15 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
   end
 end
+
+module ActionDispatch
+  class IntegrationTest
+    def sign_in(user)
+      post login_url, params: { user_id: user.id }
+    end
+
+    def sign_out
+      delete logout_url
+    end
+  end
+end

@@ -264,6 +264,143 @@ module Families
       assert_redirected_to root_path
     end
 
+    # ========================================
+    # 5.6.1 역할 기반 권한 체크 테스트
+    # ========================================
+
+    test "viewer cannot upload photos" do
+      # grandma는 viewer 역할
+      grandma = users(:grandma)
+      delete logout_path
+      post login_path, params: { user_id: grandma.id }
+
+      assert_no_difference "Photo.count" do
+        post family_photos_path(@family), params: {
+          photo: {
+            caption: "Viewer 업로드 시도",
+            taken_at: Time.current,
+            image: fixture_file_upload("photo.jpg", "image/jpeg")
+          }
+        }
+      end
+
+      assert_redirected_to root_path
+      assert_equal "권한이 없습니다.", flash[:alert]
+    end
+
+    test "member can upload photos" do
+      # uncle은 member 역할
+      uncle = users(:uncle)
+      delete logout_path
+      post login_path, params: { user_id: uncle.id }
+
+      assert_difference "Photo.count", 1 do
+        post family_photos_path(@family), params: {
+          photo: {
+            caption: "Member 업로드",
+            taken_at: Time.current,
+            image: fixture_file_upload("photo.jpg", "image/jpeg")
+          }
+        }
+      end
+
+      assert_redirected_to family_photo_path(@family, Photo.last)
+    end
+
+    test "uploader can delete their own photo" do
+      photo = create_photo_with_image
+      # @user (mom, owner)가 업로드한 사진
+
+      assert_difference "Photo.count", -1 do
+        delete family_photo_path(@family, photo)
+      end
+
+      assert_redirected_to family_photos_path(@family)
+    end
+
+    test "owner can delete other users photos" do
+      # uncle (member)이 업로드한 사진
+      uncle = users(:uncle)
+      photo = @family.photos.build(
+        uploader: uncle,
+        caption: "Uncle의 사진",
+        taken_at: Time.current
+      )
+      photo.image.attach(
+        io: StringIO.new("fake image data"),
+        filename: "test.jpg",
+        content_type: "image/jpeg"
+      )
+      photo.save!
+
+      # @user는 owner이므로 삭제 가능
+      assert_difference "Photo.count", -1 do
+        delete family_photo_path(@family, photo)
+      end
+
+      assert_redirected_to family_photos_path(@family)
+    end
+
+    test "admin can delete other users photos" do
+      # uncle (member)이 업로드한 사진
+      uncle = users(:uncle)
+      photo = @family.photos.build(
+        uploader: uncle,
+        caption: "Uncle의 사진",
+        taken_at: Time.current
+      )
+      photo.image.attach(
+        io: StringIO.new("fake image data"),
+        filename: "test.jpg",
+        content_type: "image/jpeg"
+      )
+      photo.save!
+
+      # dad는 admin이므로 삭제 가능
+      delete logout_path
+      post login_path, params: { user_id: users(:dad).id }
+
+      assert_difference "Photo.count", -1 do
+        delete family_photo_path(@family, photo)
+      end
+
+      assert_redirected_to family_photos_path(@family)
+    end
+
+    test "member cannot delete other users photos" do
+      # mom (owner)이 업로드한 사진
+      photo = create_photo_with_image
+
+      # uncle (member)로 로그인
+      delete logout_path
+      uncle = users(:uncle)
+      post login_path, params: { user_id: uncle.id }
+
+      assert_no_difference "Photo.count" do
+        delete family_photo_path(@family, photo)
+      end
+
+      assert_redirected_to root_path
+      assert_equal "권한이 없습니다.", flash[:alert]
+    end
+
+    test "viewer cannot delete any photos" do
+      # mom (owner)이 업로드한 사진
+      photo = create_photo_with_image
+
+      # grandma (viewer)로 로그인
+      delete logout_path
+      grandma = users(:grandma)
+      post login_path, params: { user_id: grandma.id }
+
+      assert_no_difference "Photo.count" do
+        delete family_photo_path(@family, photo)
+      end
+
+      assert_redirected_to root_path
+      assert_equal "권한이 없습니다.", flash[:alert]
+    end
+
     private
 
     def create_photo_with_image(caption: "테스트 사진")
