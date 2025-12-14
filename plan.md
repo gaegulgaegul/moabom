@@ -239,37 +239,37 @@
 
 ### 4.5.1 글로벌 에러 핸들러
 
-- [ ] **RED**: 에러 핸들러 테스트
-  - [ ] RecordNotFound → 404 응답
-  - [ ] ParameterMissing → 400 응답
-  - [ ] InvalidAuthenticityToken → 적절한 처리
-  - [ ] HTML/JSON 응답 형식 분기
-- [ ] **GREEN**: ApplicationController에 rescue_from 구현
-  - [ ] rescue_from 블록 추가
-  - [ ] 에러 페이지 뷰 생성 (errors/404, errors/500)
-- [ ] **REFACTOR**: 필요시 코드 정리
+- [x] **RED**: 에러 핸들러 테스트 ✅
+  - [x] RecordNotFound → 404 응답
+  - [x] ParameterMissing → 400 응답
+  - [x] InvalidAuthenticityToken → 적절한 처리
+  - [x] HTML/JSON 응답 형식 분기
+- [x] **GREEN**: ApplicationController에 rescue_from 구현 ✅
+  - [x] rescue_from 블록 추가
+  - [x] 에러 페이지 뷰 생성 (errors/not_found, errors/bad_request)
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
 
 ### 4.5.2 Photo 파일 검증
 
-- [ ] **RED**: 파일 검증 테스트
-  - [ ] 파일 크기 50MB 초과 시 거부
-  - [ ] 허용되지 않은 파일 타입 거부
-  - [ ] 허용된 파일 타입 (jpeg, png, heic, webp) 통과
-- [ ] **GREEN**: Photo 모델에 파일 검증 추가
-  - [ ] content_type 검증
-  - [ ] size 검증 (50MB 제한)
-- [ ] **REFACTOR**: 필요시 코드 정리
+- [x] **RED**: 파일 검증 테스트 ✅
+  - [x] 파일 크기 50MB 초과 시 거부
+  - [x] 허용되지 않은 파일 타입 거부
+  - [x] 허용된 파일 타입 (jpeg, png, heic, webp) 통과
+- [x] **GREEN**: Photo 모델에 파일 검증 추가 ✅
+  - [x] content_type 검증
+  - [x] size 검증 (50MB 제한)
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
 
 ### 4.5.3 초대 링크 재사용
 
-- [ ] **RED**: 초대 링크 재사용 테스트
-  - [ ] 유효한 기존 초대가 있으면 재사용
-  - [ ] 만료된 초대만 있으면 새로 생성
-  - [ ] 초대가 없으면 새로 생성
-- [ ] **GREEN**: InvitesController에 find_or_create 로직 구현
-  - [ ] active 스코프 활용
-  - [ ] 기존 초대 재사용 로직
-- [ ] **REFACTOR**: 필요시 코드 정리
+- [x] **RED**: 초대 링크 재사용 테스트 ✅
+  - [x] 유효한 기존 초대가 있으면 재사용
+  - [x] 만료된 초대만 있으면 새로 생성
+  - [x] 초대가 없으면 새로 생성
+- [x] **GREEN**: InvitesController에 find_or_create 로직 구현 ✅
+  - [x] active 스코프 활용
+  - [x] 기존 초대 재사용 로직
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
 
 ---
 
@@ -425,7 +425,7 @@
 | Phase 3: 온보딩 | ✅ 완료 | 2025-12-14 |
 | Phase 3.5: 온보딩 보완 | ✅ 완료 | 2025-12-14 |
 | Phase 4: 가족 관리 | ✅ 완료 | 2025-12-14 |
-| Phase 4.5: 에러/보안 강화 | 🔴 P0 대기 | - |
+| Phase 4.5: 에러/보안 강화 | ✅ 완료 | 2025-12-15 |
 | Phase 5: 사진 기능 | ⏳ 대기 | - |
 | Phase 6: 반응/댓글 | ⏳ 대기 | - |
 | Phase 7: 설정 | ⏳ 대기 | - |

@@ -25,7 +25,10 @@ module Onboarding
       assert_select "[data-invite-link]"
     end
 
-    test "should create invitation for user's family" do
+    test "should create invitation when none exists" do
+      # 기존 초대 삭제
+      @family.invitations.destroy_all
+
       assert_difference "Invitation.count", 1 do
         get onboarding_invite_path
       end
@@ -33,6 +36,39 @@ module Onboarding
       invitation = Invitation.last
       assert_equal @family, invitation.family
       assert_equal @user, invitation.inviter
+    end
+
+    test "should reuse active invitation" do
+      # 기존 초대 삭제 후 활성 초대 생성
+      @family.invitations.destroy_all
+      existing_invitation = @family.invitations.create!(
+        inviter: @user,
+        role: :member,
+        expires_at: 7.days.from_now
+      )
+
+      assert_no_difference "Invitation.count" do
+        get onboarding_invite_path
+      end
+
+      assert_select "input[value*='#{existing_invitation.token}']"
+    end
+
+    test "should create new invitation when only expired exists" do
+      # 기존 초대 삭제 후 만료된 초대만 생성
+      @family.invitations.destroy_all
+      @family.invitations.create!(
+        inviter: @user,
+        role: :member,
+        expires_at: 1.day.ago
+      )
+
+      assert_difference "Invitation.count", 1 do
+        get onboarding_invite_path
+      end
+
+      new_invitation = Invitation.last
+      assert new_invitation.expires_at > Time.current
     end
 
     test "should require authentication" do

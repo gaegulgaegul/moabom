@@ -6,11 +6,17 @@ module Onboarding
 
     def show
       @family = current_user.families.first
-      @invitation = @family.invitations.create!(
+      @invitation = find_or_create_invitation
+      @invite_url = accept_invitation_url(@invitation.token)
+    end
+
+    private
+
+    def find_or_create_invitation
+      @family.invitations.active.first || @family.invitations.create!(
         inviter: current_user,
         role: :member
       )
-      @invite_url = accept_invitation_url(@invitation.token)
     end
   end
 end
