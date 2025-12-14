@@ -40,4 +40,23 @@ class CommentTest < ActiveSupport::TestCase
     second_comment = Comment.new(photo: @photo, user: @user, body: "두 번째 댓글")
     assert second_comment.valid?
   end
+
+  # 6.5.2: 댓글 길이 제한
+  test "should accept comment within length limit" do
+    comment = Comment.new(photo: @photo, user: @user, body: "좋은 사진이에요!" * 50)
+    assert comment.valid?, "1000자 이하 댓글은 저장 가능해야 함"
+  end
+
+  test "should reject comment exceeding 1000 characters" do
+    long_body = "가" * 1001
+    comment = Comment.new(photo: @photo, user: @user, body: long_body)
+    assert_not comment.valid?, "1000자 초과 댓글은 거부되어야 함"
+    assert comment.errors[:body].present?, "body 에러가 있어야 함"
+  end
+
+  test "should accept comment at exactly 1000 characters" do
+    exact_body = "가" * 1000
+    comment = Comment.new(photo: @photo, user: @user, body: exact_body)
+    assert comment.valid?, "정확히 1000자 댓글은 허용되어야 함"
+  end
 end
