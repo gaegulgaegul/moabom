@@ -222,11 +222,11 @@ class UserTest < ActiveSupport::TestCase
 
   test "should reject avatar larger than 5MB" do
     user = users(:mom)
-    # Stub byte_size to simulate large file
     file = fixture_file_upload("test_image.jpg", "image/jpeg")
     user.avatar.attach(file)
 
-    user.avatar.blob.stub :byte_size, 6.megabytes do
+    # Simulate large file by stubbing byte_size
+    user.avatar.blob.stub(:byte_size, 6.megabytes) do
       assert_not user.valid?
       assert_includes user.errors[:avatar], "파일 크기가 5MB를 초과합니다"
     end
@@ -237,7 +237,8 @@ class UserTest < ActiveSupport::TestCase
     file = fixture_file_upload("test_image.jpg", "image/jpeg")
     user.avatar.attach(file)
 
-    user.avatar.blob.stub :byte_size, 4.megabytes do
+    # Simulate small file by stubbing byte_size
+    user.avatar.blob.stub(:byte_size, 4.megabytes) do
       assert user.valid?
     end
   end

@@ -401,6 +401,46 @@ module Families
       assert_equal "권한이 없습니다.", flash[:alert]
     end
 
+    # ========================================
+    # 5.6.2 배치 업로드 검증 테스트
+    # ========================================
+
+    test "should reject empty array batch upload" do
+      post batch_family_photos_path(@family), params: { photos: [] }
+
+      assert_response :bad_request
+      json = JSON.parse(response.body)
+      assert json["error"].present?
+      assert_match(/비어있습니다|없습니다/, json["error"]["message"])
+    end
+
+    test "should reject non-array batch upload" do
+      post batch_family_photos_path(@family), params: { photos: "not an array" }
+
+      assert_response :bad_request
+      json = JSON.parse(response.body)
+      assert json["error"].present?
+      assert_match(/배열|형식/, json["error"]["message"])
+    end
+
+    test "should reject batch upload exceeding max size" do
+      # 최대 개수보다 많은 사진 업로드 시도
+      photos = (1..101).map do |i|
+        {
+          caption: "사진 #{i}",
+          taken_at: Time.current.iso8601,
+          image: fixture_file_upload("photo.jpg", "image/jpeg")
+        }
+      end
+
+      post batch_family_photos_path(@family), params: { photos: photos }
+
+      assert_response :bad_request
+      json = JSON.parse(response.body)
+      assert json["error"].present?
+      assert_match(/최대|초과/, json["error"]["message"])
+    end
+
     private
 
     def create_photo_with_image(caption: "테스트 사진")

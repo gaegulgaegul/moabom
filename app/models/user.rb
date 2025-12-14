@@ -55,4 +55,16 @@ class User < ApplicationRecord
       errors.add(:nickname, "사용할 수 없는 닉네임입니다")
     end
   end
+
+  def acceptable_avatar
+    return unless avatar.attached?
+
+    unless AVATAR_CONTENT_TYPES.include?(avatar.content_type)
+      errors.add(:avatar, "허용되지 않는 파일 형식입니다")
+    end
+
+    if avatar.blob.byte_size > AVATAR_MAX_SIZE
+      errors.add(:avatar, "파일 크기가 5MB를 초과합니다")
+    end
+  end
 end
