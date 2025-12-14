@@ -4,8 +4,6 @@
 ```text
 지금까지 작업한 내용 중에 의도적으로 작업을 단순화하거나 작업하지 않은 부분을 분석해줘.
 
-작업명: [작업명]
-
 먼저 폴더를 생성해줘:
 mkdir -p docs/gaps/[작업명]
 
@@ -47,7 +45,7 @@ docs/gaps/[작업명]/
 
 ---
 
-## IMPLEMENTATION_GAPS.md 기반 plan.md 업데이트
+## gaps 기반 plan.md 업데이트
 ```text
 @docs/gaps/[작업명]/ 폴더의 모든 파일을 분석하고 우선 작업할 수 있도록 @plan.md 에 반영해줘.
 
@@ -59,6 +57,29 @@ docs/gaps/[작업명]/
 3. P1/P2 항목은 plan.md 하단 "Future Work" 섹션에 정리
 
 업데이트 후 변경 사항 요약해줘.
+```
+
+```text
+서브 에이전트에게 대상 폴더 하위의 파일을 분석하고 우선 작업할 수 있도록 @plan.md 에 반영해줘.
+
+# gap 대상 폴더
+@docs/gaps/phase-5/
+@docs/gaps/phase-6/
+@docs/gaps/phase-7/
+@docs/gaps/phase-8/
+@docs/gaps/phase-9.1/
+
+---
+
+수행할 작업:
+1. 각 파일에서 P0(즉시 반영) 항목 추출
+2. plan.md에 해당 작업을 TDD 사이클로 추가
+   - 각 항목을 RED/GREEN/REFACTOR 단계로 분해
+   - 기존 Phase 흐름에 맞게 배치
+3. P1/P2 항목은 plan.md 하단 "Future Work" 섹션에 정리
+4. 각 기능의 연관관계를 파악해서 작업 우선순위 설정
+
+업데이트 후 할당해서 변경 사항 요약해줘.
 ```
 
 ---
