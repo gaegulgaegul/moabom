@@ -349,20 +349,20 @@
 
 ### 7.1 사용자 프로필
 
-- [ ] **RED**: 프로필 설정 테스트
-  - [ ] 프로필 조회
-  - [ ] 닉네임 수정
-  - [ ] 아바타 변경
-- [ ] **GREEN**: Settings::ProfilesController 구현
-- [ ] **REFACTOR**: 필요시 코드 정리
+- [x] **RED**: 프로필 설정 테스트 ✅
+  - [x] 프로필 조회
+  - [x] 닉네임 수정
+  - [x] 아바타 변경
+- [x] **GREEN**: Settings::ProfilesController 구현 ✅
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
 
 ### 7.2 알림 설정
 
-- [ ] **RED**: 알림 설정 테스트
-  - [ ] 알림 설정 조회
-  - [ ] 알림 설정 변경
-- [ ] **GREEN**: Settings::NotificationsController 구현
-- [ ] **REFACTOR**: 필요시 코드 정리
+- [x] **RED**: 알림 설정 테스트 ✅
+  - [x] 알림 설정 조회
+  - [x] 알림 설정 변경
+- [x] **GREEN**: Settings::NotificationsController 구현 ✅
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
 
 ---
 
@@ -370,19 +370,19 @@
 
 ### 8.1 동기화 API
 
-- [ ] **RED**: 동기화 API 테스트
-  - [ ] 앱 시작 시 필요 정보 일괄 조회
-  - [ ] JSON 응답 형식 확인
-- [ ] **GREEN**: Api::Native::SyncController 구현
-- [ ] **REFACTOR**: 필요시 코드 정리
+- [x] **RED**: 동기화 API 테스트 ✅
+  - [x] 앱 시작 시 필요 정보 일괄 조회
+  - [x] JSON 응답 형식 확인
+- [x] **GREEN**: Api::Native::SyncsController 구현 ✅
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
 
 ### 8.2 푸시 토큰 등록
 
-- [ ] **RED**: 푸시 토큰 테스트
-  - [ ] 기기 토큰 등록
-  - [ ] 기기 토큰 업데이트
-- [ ] **GREEN**: Api::Native::PushTokensController 구현
-- [ ] **REFACTOR**: 필요시 코드 정리
+- [x] **RED**: 푸시 토큰 테스트 ✅
+  - [x] 기기 토큰 등록
+  - [x] 기기 토큰 삭제
+- [x] **GREEN**: Api::Native::PushTokensController 구현 ✅
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
 
 ---
 
@@ -390,12 +390,12 @@
 
 ### 9.1 레이아웃
 
-- [ ] **RED**: 레이아웃 테스트
-  - [ ] 메인 레이아웃 렌더링
-  - [ ] 하단 탭바 표시
-  - [ ] 인증 상태별 분기
-- [ ] **GREEN**: 레이아웃 뷰 구현
-- [ ] **REFACTOR**: 공통 partial 추출
+- [x] **RED**: 레이아웃 테스트 ✅
+  - [x] 메인 레이아웃 렌더링
+  - [x] 하단 탭바 표시
+  - [x] 인증 상태별 분기
+- [x] **GREEN**: 레이아웃 뷰 구현 ✅
+- [x] **REFACTOR**: 공통 partial 추출 ✅ (_header, _tabbar)
 
 ### 9.2 빈 상태 및 에러
 
@@ -428,9 +428,9 @@
 | Phase 4.5: 에러/보안 강화 | ✅ 완료 | 2025-12-15 |
 | Phase 5: 사진 기능 | ✅ 완료 | 2025-12-15 |
 | Phase 6: 반응/댓글 | ✅ 완료 | 2025-12-15 |
-| Phase 7: 설정 | ⏳ 대기 | - |
-| Phase 8: Native API | ⏳ 대기 | - |
-| Phase 9: UI/UX | ⏳ 대기 | - |
+| Phase 7: 설정 | ✅ 완료 | 2025-12-15 |
+| Phase 8: Native API | ✅ 완료 | 2025-12-15 |
+| Phase 9: UI/UX | 🔄 진행 중 | - |
 
 ---
 
