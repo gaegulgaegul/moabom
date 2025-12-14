@@ -7,15 +7,21 @@ class User < ApplicationRecord
   MIN_NICKNAME_LENGTH = 2
   MAX_NICKNAME_LENGTH = 20
 
+  # 아바타 상수
+  AVATAR_MAX_SIZE = 5.megabytes
+  AVATAR_CONTENT_TYPES = %w[image/jpeg image/png image/webp].freeze
+
   has_many :family_memberships, dependent: :destroy
   has_many :families, through: :family_memberships
   has_many :devices, dependent: :destroy
+  has_one_attached :avatar
 
   validates :email, presence: true
   validates :nickname, presence: true,
                        length: { in: MIN_NICKNAME_LENGTH..MAX_NICKNAME_LENGTH },
                        format: { with: NICKNAME_REGEX }
   validate :nickname_not_forbidden
+  validate :acceptable_avatar
 
   validates :provider, presence: true
   validates :uid, presence: true, uniqueness: { scope: :provider }

@@ -328,14 +328,14 @@
 
 ### 5.6.1 역할 기반 권한 체크
 
-- [ ] **RED**: 역할 기반 권한 테스트
-  - [ ] viewer는 사진 업로드 불가
-  - [ ] member 이상만 업로드 가능
-  - [ ] owner/admin만 다른 사용자 사진 삭제 가능
-- [ ] **GREEN**: FamilyAuthorizable concern 구현
-  - [ ] can_upload?, can_delete? 메서드 추가
-  - [ ] PhotosController에 권한 체크 적용
-- [ ] **REFACTOR**: 권한 로직 concern으로 추출
+- [x] **RED**: 역할 기반 권한 테스트 ✅
+  - [x] viewer는 사진 업로드 불가
+  - [x] member 이상만 업로드 가능
+  - [x] owner/admin만 다른 사용자 사진 삭제 가능
+- [x] **GREEN**: FamilyMembership에 권한 메서드 구현 ✅
+  - [x] can_upload?, can_delete_photo? 메서드 추가
+  - [x] PhotosController에 권한 체크 적용
+- [x] **REFACTOR**: 변경 없음 (코드 간결) ✅
 
 ### 5.6.2 배치 업로드 검증
 
