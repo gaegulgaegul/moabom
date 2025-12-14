@@ -26,6 +26,10 @@ module Moabom
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # Localization
+    config.i18n.default_locale = :ko
+    config.i18n.available_locales = [ :ko, :en ]
+
     # OmniAuth middleware
     require_relative "../lib/omniauth/strategies/kakao"
 

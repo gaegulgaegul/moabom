@@ -1,0 +1,30 @@
+<h1>아이 등록</h1>
+
+<%= form_with model: @child, url: onboarding_child_path, method: :post do |form| %>
+  <% if @child.errors.any? %>
+    <div class="error">
+      <% @child.errors.full_messages.each do |message| %>
+        <p><%= message %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, "이름" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :birthdate, "생년월일" %>
+    <%= form.date_field :birthdate %>
+  </div>
+
+  <div>
+    <%= form.label :gender, "성별" %>
+    <%= form.select :gender, [["남자", "male"], ["여자", "female"]], prompt: "선택하세요" %>
+  </div>
+
+  <div>
+    <%= form.submit "다음" %>
+  </div>
+<% end %>

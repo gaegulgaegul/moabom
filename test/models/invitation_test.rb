@@ -20,13 +20,13 @@ class InvitationTest < ActiveSupport::TestCase
   test "should belong to family" do
     invitation = Invitation.new(inviter: @user, role: :member)
     assert_not invitation.valid?
-    assert_includes invitation.errors[:family], "must exist"
+    assert_includes invitation.errors[:family], "은(는) 필수입니다"
   end
 
   test "should belong to inviter" do
     invitation = Invitation.new(family: @family, role: :member)
     assert_not invitation.valid?
-    assert_includes invitation.errors[:inviter], "must exist"
+    assert_includes invitation.errors[:inviter], "은(는) 필수입니다"
   end
 
   test "should auto-generate token before create" do

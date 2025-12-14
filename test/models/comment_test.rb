@@ -20,19 +20,19 @@ class CommentTest < ActiveSupport::TestCase
   test "should belong to photo" do
     comment = Comment.new(user: @user, body: "테스트")
     assert_not comment.valid?
-    assert_includes comment.errors[:photo], "must exist"
+    assert_includes comment.errors[:photo], "은(는) 필수입니다"
   end
 
   test "should belong to user" do
     comment = Comment.new(photo: @photo, body: "테스트")
     assert_not comment.valid?
-    assert_includes comment.errors[:user], "must exist"
+    assert_includes comment.errors[:user], "은(는) 필수입니다"
   end
 
   test "should require body" do
     comment = Comment.new(photo: @photo, user: @user)
     assert_not comment.valid?
-    assert_includes comment.errors[:body], "can't be blank"
+    assert_includes comment.errors[:body], "을(를) 입력해주세요"
   end
 
   test "should allow multiple comments from same user on same photo" do

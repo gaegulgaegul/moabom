@@ -132,29 +132,29 @@
 
 ### 3.1 프로필 설정
 
-- [ ] **RED**: 프로필 설정 테스트
-  - [ ] 프로필 폼 표시
-  - [ ] 닉네임, 아바타 저장
-  - [ ] 다음 단계로 리다이렉트
-- [ ] **GREEN**: Onboarding::ProfilesController 구현
-- [ ] **REFACTOR**: 필요시 코드 정리
+- [x] **RED**: 프로필 설정 테스트 ✅
+  - [x] 프로필 폼 표시
+  - [x] 닉네임 저장
+  - [x] 다음 단계로 리다이렉트
+- [x] **GREEN**: Onboarding::ProfilesController 구현 ✅
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
 
 ### 3.2 아이 등록
 
-- [ ] **RED**: 아이 등록 테스트
-  - [ ] 아이 등록 폼 표시
-  - [ ] 아이 정보 저장
-  - [ ] Family 자동 생성
-- [ ] **GREEN**: Onboarding::ChildrenController 구현
-- [ ] **REFACTOR**: 필요시 코드 정리
+- [x] **RED**: 아이 등록 테스트 ✅
+  - [x] 아이 등록 폼 표시
+  - [x] 아이 정보 저장
+  - [x] Family 자동 생성
+- [x] **GREEN**: Onboarding::ChildrenController 구현 ✅
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
 
 ### 3.3 가족 초대
 
-- [ ] **RED**: 가족 초대 테스트
-  - [ ] 초대 링크 생성
-  - [ ] 링크 표시
-- [ ] **GREEN**: Onboarding::InvitesController 구현
-- [ ] **REFACTOR**: 필요시 코드 정리
+- [x] **RED**: 가족 초대 테스트 ✅
+  - [x] 초대 링크 생성
+  - [x] 링크 표시
+- [x] **GREEN**: Onboarding::InvitesController 구현 ✅
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
 
 ---
 
@@ -348,7 +348,7 @@
 |-------|------|-------|
 | Phase 1: 기본 모델 | ✅ 완료 | 2025-12-14 |
 | Phase 2: 인증 시스템 | ✅ 완료 | 2025-12-14 |
-| Phase 3: 온보딩 | ⏳ 대기 | - |
+| Phase 3: 온보딩 | ✅ 완료 | 2025-12-14 |
 | Phase 4: 가족 관리 | ⏳ 대기 | - |
 | Phase 5: 사진 기능 | ⏳ 대기 | - |
 | Phase 6: 반응/댓글 | ⏳ 대기 | - |

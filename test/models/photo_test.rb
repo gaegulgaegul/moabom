@@ -26,13 +26,13 @@ class PhotoTest < ActiveSupport::TestCase
   test "should belong to family" do
     photo = Photo.new(uploader: @user, taken_at: Time.current)
     assert_not photo.valid?
-    assert_includes photo.errors[:family], "must exist"
+    assert_includes photo.errors[:family], "은(는) 필수입니다"
   end
 
   test "should belong to uploader" do
     photo = Photo.new(family: @family, taken_at: Time.current)
     assert_not photo.valid?
-    assert_includes photo.errors[:uploader], "must exist"
+    assert_includes photo.errors[:uploader], "은(는) 필수입니다"
   end
 
   test "should optionally belong to child" do
@@ -69,13 +69,13 @@ class PhotoTest < ActiveSupport::TestCase
   test "should require taken_at" do
     photo = Photo.new(family: @family, uploader: @user)
     assert_not photo.valid?
-    assert_includes photo.errors[:taken_at], "can't be blank"
+    assert_includes photo.errors[:taken_at], "을(를) 입력해주세요"
   end
 
   test "should require image" do
     photo = Photo.new(family: @family, uploader: @user, taken_at: Time.current)
     assert_not photo.valid?
-    assert_includes photo.errors[:image], "can't be blank"
+    assert_includes photo.errors[:image], "을(를) 입력해주세요"
   end
 
   test "should scope recent in descending order" do

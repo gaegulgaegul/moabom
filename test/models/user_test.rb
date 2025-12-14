@@ -20,7 +20,7 @@ class UserTest < ActiveSupport::TestCase
       uid: "12345"
     )
     assert_not user.valid?
-    assert_includes user.errors[:email], "can't be blank"
+    assert_includes user.errors[:email], "을(를) 입력해주세요"
   end
 
   test "should require nickname" do
@@ -30,7 +30,7 @@ class UserTest < ActiveSupport::TestCase
       uid: "12345"
     )
     assert_not user.valid?
-    assert_includes user.errors[:nickname], "can't be blank"
+    assert_includes user.errors[:nickname], "을(를) 입력해주세요"
   end
 
   test "should require unique provider and uid combination" do
@@ -48,7 +48,7 @@ class UserTest < ActiveSupport::TestCase
       uid: "12345"
     )
     assert_not duplicate.valid?
-    assert_includes duplicate.errors[:uid], "has already been taken"
+    assert_includes duplicate.errors[:uid], "은(는) 이미 사용 중입니다"
   end
 
   test "should allow same uid with different provider" do

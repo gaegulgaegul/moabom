@@ -20,19 +20,19 @@ class ChildTest < ActiveSupport::TestCase
   test "should belong to family" do
     child = Child.new(name: "아기", birthdate: Date.current, gender: :female)
     assert_not child.valid?
-    assert_includes child.errors[:family], "must exist"
+    assert_includes child.errors[:family], "은(는) 필수입니다"
   end
 
   test "should require name" do
     child = Child.new(family: @family, birthdate: Date.current, gender: :male)
     assert_not child.valid?
-    assert_includes child.errors[:name], "can't be blank"
+    assert_includes child.errors[:name], "을(를) 입력해주세요"
   end
 
   test "should require birthdate" do
     child = Child.new(family: @family, name: "아기", gender: :male)
     assert_not child.valid?
-    assert_includes child.errors[:birthdate], "can't be blank"
+    assert_includes child.errors[:birthdate], "을(를) 입력해주세요"
   end
 
   test "should have gender enum with correct values" do

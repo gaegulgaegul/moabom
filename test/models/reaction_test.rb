@@ -20,19 +20,19 @@ class ReactionTest < ActiveSupport::TestCase
   test "should belong to photo" do
     reaction = Reaction.new(user: @user, emoji: "heart")
     assert_not reaction.valid?
-    assert_includes reaction.errors[:photo], "must exist"
+    assert_includes reaction.errors[:photo], "은(는) 필수입니다"
   end
 
   test "should belong to user" do
     reaction = Reaction.new(photo: @photo, emoji: "heart")
     assert_not reaction.valid?
-    assert_includes reaction.errors[:user], "must exist"
+    assert_includes reaction.errors[:user], "은(는) 필수입니다"
   end
 
   test "should require emoji" do
     reaction = Reaction.new(photo: @photo, user: @user)
     assert_not reaction.valid?
-    assert_includes reaction.errors[:emoji], "can't be blank"
+    assert_includes reaction.errors[:emoji], "을(를) 입력해주세요"
   end
 
   test "should enforce unique user per photo" do
@@ -45,7 +45,7 @@ class ReactionTest < ActiveSupport::TestCase
       emoji: "thumbsup"
     )
     assert_not duplicate.valid?
-    assert_includes duplicate.errors[:user_id], "has already been taken"
+    assert_includes duplicate.errors[:user_id], "은(는) 이미 사용 중입니다"
   end
 
   test "should allow same user to react to different photos" do

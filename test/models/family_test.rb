@@ -11,7 +11,7 @@ class FamilyTest < ActiveSupport::TestCase
   test "should require name" do
     family = Family.new
     assert_not family.valid?
-    assert_includes family.errors[:name], "can't be blank"
+    assert_includes family.errors[:name], "을(를) 입력해주세요"
   end
 
   test "should have many users through family_memberships" do

@@ -16,13 +16,13 @@ class FamilyMembershipTest < ActiveSupport::TestCase
   test "should require user" do
     membership = FamilyMembership.new(family: @family, role: :member)
     assert_not membership.valid?
-    assert_includes membership.errors[:user], "must exist"
+    assert_includes membership.errors[:user], "은(는) 필수입니다"
   end
 
   test "should require family" do
     membership = FamilyMembership.new(user: @user, role: :member)
     assert_not membership.valid?
-    assert_includes membership.errors[:family], "must exist"
+    assert_includes membership.errors[:family], "은(는) 필수입니다"
   end
 
   test "should have role enum with correct values" do
@@ -38,7 +38,7 @@ class FamilyMembershipTest < ActiveSupport::TestCase
     # Use existing fixture relationship
     duplicate = FamilyMembership.new(user: users(:mom), family: families(:kim_family), role: :member)
     assert_not duplicate.valid?
-    assert_includes duplicate.errors[:user_id], "has already been taken"
+    assert_includes duplicate.errors[:user_id], "은(는) 이미 사용 중입니다"
   end
 
   test "should allow same user in different families" do
