@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+mom_comment:
+  photo: baby_first_step
+  user: mom
+  body: 너무 귀엽다!
+
+dad_comment:
+  photo: baby_first_step
+  user: dad
+  body: 우리 아기 최고!

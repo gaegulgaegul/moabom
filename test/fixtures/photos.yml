@@ -1,0 +1,20 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+baby_first_step:
+  family: kim_family
+  uploader: mom
+  child: baby_kim
+  caption: 첫 걸음!
+  taken_at: <%= 1.week.ago %>
+
+january_photo:
+  family: kim_family
+  uploader: dad
+  caption: 새해 첫날
+  taken_at: <%= Date.new(2025, 1, 15) %>
+
+february_photo:
+  family: kim_family
+  uploader: mom
+  caption: 설날
+  taken_at: <%= Date.new(2025, 2, 1) %>

@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+mom:
+  email: mom@example.com
+  nickname: 엄마
+  provider: kakao
+  uid: "100001"
+
+dad:
+  email: dad@example.com
+  nickname: 아빠
+  provider: kakao
+  uid: "100002"
+
+grandma:
+  email: grandma@example.com
+  nickname: 할머니
+  provider: apple
+  uid: "200001"
