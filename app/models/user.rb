@@ -8,4 +8,12 @@ class User < ApplicationRecord
   validates :nickname, presence: true
   validates :provider, presence: true
   validates :uid, presence: true, uniqueness: { scope: :provider }
+
+  def self.find_or_create_from_oauth(auth)
+    find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
+      user.email = auth.info.email
+      user.nickname = auth.info.nickname || auth.info.name
+      user.avatar_url = auth.info.image
+    end
+  end
 end

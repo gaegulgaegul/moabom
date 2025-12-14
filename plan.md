@@ -94,29 +94,37 @@
 
 ### 2.1 OAuth 기본 설정
 
-- [ ] **RED**: OAuth 콜백 처리 테스트
-  - [ ] 카카오 OAuth 콜백
-  - [ ] 신규 사용자 생성
-  - [ ] 기존 사용자 로그인
-- [ ] **GREEN**: OmniAuth 설정 및 OauthController 구현
-- [ ] **REFACTOR**: 필요시 코드 정리
+- [x] **RED**: OAuth 콜백 처리 테스트 ✅
+  - [x] 카카오 OAuth 콜백
+  - [x] 신규 사용자 생성
+  - [x] 기존 사용자 로그인
+- [x] **GREEN**: OmniAuth 설정 및 OauthController 구현 ✅
+  - [x] omniauth-oauth2 기반 커스텀 Kakao 전략 구현
+  - [x] OauthCallbacksController 구현
+  - [x] User.find_or_create_from_oauth 메서드 구현
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
 
 ### 2.2 세션 관리
 
-- [ ] **RED**: 세션 관리 테스트
-  - [ ] 로그인 세션 생성
-  - [ ] current_user 헬퍼
-  - [ ] 로그아웃
-- [ ] **GREEN**: SessionsController 구현
-- [ ] **REFACTOR**: ApplicationController에 인증 헬퍼 추출
+- [x] **RED**: 세션 관리 테스트 ✅
+  - [x] 로그인 세션 생성
+  - [x] current_user 헬퍼
+  - [x] 로그아웃
+- [x] **GREEN**: SessionsController 구현 ✅
+  - [x] SessionsController#create (테스트용 로그인)
+  - [x] SessionsController#destroy (로그아웃)
+  - [x] current_user, logged_in? 헬퍼 추가
+- [x] **REFACTOR**: ApplicationController에 인증 헬퍼 추출 ✅ (이미 구현됨)
 
 ### 2.3 인증 필터
 
-- [ ] **RED**: 인증 필터 테스트
-  - [ ] 미인증 사용자 리다이렉트
-  - [ ] 인증 사용자 접근 허용
-- [ ] **GREEN**: before_action :authenticate_user! 구현
-- [ ] **REFACTOR**: 필요시 코드 정리
+- [x] **RED**: 인증 필터 테스트 ✅
+  - [x] 미인증 사용자 리다이렉트
+  - [x] 인증 사용자 접근 허용
+- [x] **GREEN**: before_action :authenticate_user! 구현 ✅
+  - [x] authenticate_user! 메서드 추가
+  - [x] DashboardController에 인증 필터 적용
+- [x] **REFACTOR**: 필요시 코드 정리 ✅ (변경 없음 - 코드 간결)
 
 ---
 
@@ -339,7 +347,7 @@
 | Phase | 상태 | 완료일 |
 |-------|------|-------|
 | Phase 1: 기본 모델 | ✅ 완료 | 2025-12-14 |
-| Phase 2: 인증 시스템 | ⏳ 대기 | - |
+| Phase 2: 인증 시스템 | ✅ 완료 | 2025-12-14 |
 | Phase 3: 온보딩 | ⏳ 대기 | - |
 | Phase 4: 가족 관리 | ⏳ 대기 | - |
 | Phase 5: 사진 기능 | ⏳ 대기 | - |
