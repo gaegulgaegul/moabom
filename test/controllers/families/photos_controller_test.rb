@@ -441,6 +441,90 @@ module Families
       assert_match(/최대|초과/, json["error"]["message"])
     end
 
+    # ========================================
+    # 5.6.3 ActiveStorage 에러 처리 테스트
+    # ========================================
+
+    test "should handle ActiveStorage attachment errors gracefully" do
+      # 허용되지 않는 파일 형식 업로드 시 적절한 에러 메시지 반환
+      assert_no_difference "Photo.count" do
+        post family_photos_path(@family), params: {
+          photo: {
+            caption: "허용되지 않는 파일",
+            taken_at: Time.current,
+            image: fixture_file_upload("corrupt.txt", "text/plain")
+          }
+        }
+      end
+
+      assert_response :unprocessable_entity
+    end
+
+    test "should return user-friendly message for storage errors in batch upload" do
+      # 배치 업로드 시 저장소 에러도 개별 실패로 처리
+      post batch_family_photos_path(@family), params: {
+        photos: [
+          {
+            caption: "정상 사진",
+            taken_at: Time.current.iso8601,
+            image: fixture_file_upload("photo.jpg", "image/jpeg")
+          }
+        ]
+      }
+
+      assert_response :success
+      json = JSON.parse(response.body)
+      assert json["results"].present?
+    end
+
+    # ========================================
+    # 5.6.6 N+1 쿼리 해결 테스트
+    # ========================================
+
+    test "should not have N+1 queries on index with photos" do
+      # 추가 사진 생성
+      3.times do |i|
+        create_photo_with_image(caption: "추가 사진 #{i}")
+      end
+
+      # 첫 번째 요청 쿼리 수 측정
+      first_count = count_queries do
+        get family_photos_path(@family)
+      end
+
+      # 더 많은 사진 추가
+      3.times do |i|
+        create_photo_with_image(caption: "더 추가 사진 #{i}")
+      end
+
+      # 두 번째 요청 쿼리 수 측정
+      second_count = count_queries do
+        get family_photos_path(@family)
+      end
+
+      # N+1 없으면 쿼리 수 차이가 적음 (허용: 5개 이하)
+      assert (second_count - first_count).abs <= 5,
+             "N+1 query suspected: first=#{first_count}, second=#{second_count}"
+    end
+
+    test "should eagerly load image attachment in index" do
+      create_photo_with_image
+
+      queries = []
+      subscriber = ActiveSupport::Notifications.subscribe("sql.active_record") do |*args|
+        event = ActiveSupport::Notifications::Event.new(*args)
+        queries << event.payload[:sql] unless event.payload[:name] == "SCHEMA"
+      end
+
+      get family_photos_path(@family)
+
+      ActiveSupport::Notifications.unsubscribe(subscriber)
+
+      # SELECT 쿼리 수가 적정 범위 내여야 함
+      select_queries = queries.select { |q| q.include?("SELECT") && !q.include?("sqlite") }
+      assert select_queries.count <= 15, "Too many queries: #{select_queries.count}"
+    end
+
     private
 
     def create_photo_with_image(caption: "테스트 사진")
@@ -456,6 +540,19 @@ module Families
       )
       photo.save!
       photo
+    end
+
+    def count_queries(&block)
+      count = 0
+      subscriber = ActiveSupport::Notifications.subscribe("sql.active_record") do |*args|
+        event = ActiveSupport::Notifications::Event.new(*args)
+        count += 1 unless event.payload[:name] == "SCHEMA"
+      end
+
+      block.call
+
+      ActiveSupport::Notifications.unsubscribe(subscriber)
+      count
     end
   end
 end

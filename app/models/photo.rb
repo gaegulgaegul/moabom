@@ -18,6 +18,7 @@ class Photo < ApplicationRecord
   validate :acceptable_image
 
   scope :recent, -> { order(taken_at: :desc) }
+  scope :with_eager_loaded_image, -> { includes(image_attachment: :blob) }
   scope :by_month, ->(year, month) {
     start_date = Date.new(year, month, 1)
     end_date = start_date.end_of_month

@@ -15,7 +15,7 @@ module Families
     before_action :authorize_delete, only: [ :destroy ]
 
     def index
-      @photos = @family.photos.includes(:uploader, :child).recent
+      @photos = @family.photos.includes(:uploader, :child).with_eager_loaded_image.recent
 
       # 아이별 필터링
       @photos = @photos.where(child_id: params[:child_id]) if params[:child_id].present?
