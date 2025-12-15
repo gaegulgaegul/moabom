@@ -1,4 +1,4 @@
-<%= form_with model: [@family, photo], class: "space-y-4 max-w-lg" do |form| %>
+<%= form_with model: [@family, photo], class: "space-y-4 max-w-lg", data: { controller: "direct-upload" } do |form| %>
   <% if photo.errors.any? %>
     <div class="bg-red-50 border border-red-200 rounded p-4">
       <h2 class="text-red-800 font-medium"><%= pluralize(photo.errors.count, "오류") %>가 있습니다:</h2>
@@ -10,12 +10,27 @@
     </div>
   <% end %>
 
+  <%# Direct Upload 에러 표시 영역 %>
+  <div data-direct-upload-target="error" class="hidden bg-red-50 border border-red-200 rounded p-4">
+    <div class="flex items-center justify-between">
+      <span class="text-red-800 text-sm"></span>
+      <button type="button" data-action="direct-upload#retry" class="text-red-600 hover:text-red-800 text-sm font-medium">
+        다시 시도
+      </button>
+    </div>
+  </div>
+
   <% unless photo.persisted? %>
     <div>
       <%= form.label :image, "사진", class: "block text-sm font-medium text-gray-700" %>
       <%= form.file_field :image, accept: "image/jpeg,image/png,image/heic,image/webp",
           class: "mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100",
-          direct_upload: true %>
+          direct_upload: true,
+          data: { direct_upload_target: "input" } %>
+      <%# 업로드 진행률 표시 %>
+      <div data-direct-upload-target="progress" class="hidden mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div class="h-full bg-blue-600 transition-all duration-300" style="width: 0%"></div>
+      </div>
     </div>
   <% end %>
 
