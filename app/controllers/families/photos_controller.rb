@@ -48,9 +48,15 @@ module Families
       @photo.uploader = current_user
 
       if @photo.save
-        redirect_to family_photo_path(@family, @photo), notice: "사진이 업로드되었습니다."
+        respond_to do |format|
+          format.html { redirect_to family_photo_path(@family, @photo), notice: "사진이 업로드되었습니다." }
+          format.json { render json: @photo, status: :created }
+        end
       else
-        render :new, status: :unprocessable_entity
+        respond_to do |format|
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: { errors: @photo.errors }, status: :unprocessable_entity }
+        end
       end
     end
 

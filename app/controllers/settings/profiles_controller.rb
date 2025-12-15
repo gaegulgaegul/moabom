@@ -9,9 +9,15 @@ module Settings
 
     def update
       if current_user.update(profile_params)
-        redirect_to settings_profile_path, notice: "프로필이 업데이트되었습니다."
+        respond_to do |format|
+          format.html { redirect_to settings_profile_path, notice: "프로필이 업데이트되었습니다." }
+          format.json { render json: current_user }
+        end
       else
-        render :show, status: :unprocessable_entity
+        respond_to do |format|
+          format.html { render :show, status: :unprocessable_entity }
+          format.json { render json: { errors: current_user.errors }, status: :unprocessable_entity }
+        end
       end
     end
 

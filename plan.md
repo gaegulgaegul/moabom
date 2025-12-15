@@ -352,45 +352,46 @@
 
 ### 5.6.3 이미지 첨부 실패 처리
 
-- [ ] **RED**: 이미지 첨부 실패 테스트
-  - [ ] image.attach 실패 시 에러 메시지 반환
-  - [ ] 저장소 오류 시 적절한 에러 처리
-  - [ ] JSON 응답에 에러 상세 포함
-- [ ] **GREEN**: Photo 모델에 첨부 에러 처리
-  - [ ] ActiveStorage::Error rescue 추가
-  - [ ] 사용자 친화적 에러 메시지 설정
-- [ ] **REFACTOR**: 에러 처리 로직 정리
+- [x] **RED**: 이미지 첨부 실패 테스트 ✅ 2025-12-15
+  - [x] 허용되지 않은 파일 형식 업로드 시 422 응답
+  - [x] 배치 업로드 시 개별 실패 처리 확인
+- [x] **GREEN**: Photo 모델에 첨부 에러 처리 ✅ 2025-12-15
+  - [x] acceptable_image 검증에서 파일 형식/크기 체크
+  - [x] 사용자 친화적 에러 메시지 설정
+- [x] **REFACTOR**: 변경 없음 (기존 코드 활용) ✅ 2025-12-15
 
 ### 5.6.4 Direct Upload 실패 피드백
 
-- [ ] **RED**: Direct Upload 실패 UI 테스트
-  - [ ] 업로드 실패 시 사용자에게 피드백 표시
-  - [ ] 재시도 옵션 제공
-  - [ ] 실패 원인 안내
-- [ ] **GREEN**: Stimulus 컨트롤러에 에러 핸들링 추가
-  - [ ] direct-upload:error 이벤트 처리
-  - [ ] 에러 메시지 UI 표시
-- [ ] **REFACTOR**: 에러 UI 컴포넌트 추출
+- [x] **RED**: Direct Upload 실패 UI 구현 ✅ 2025-12-15
+  - [x] 업로드 실패 시 사용자에게 피드백 표시
+  - [x] 재시도 옵션 제공
+  - [x] 실패 원인 안내 (네트워크, 타임아웃, 크기 초과)
+- [x] **GREEN**: Stimulus 컨트롤러에 에러 핸들링 추가 ✅ 2025-12-15
+  - [x] direct_upload_controller.js 생성
+  - [x] direct-upload:error 이벤트 처리
+  - [x] 업로드 진행률 표시 UI
+- [x] **REFACTOR**: 변경 없음 (새 구현) ✅ 2025-12-15
 
 ### 5.6.5 JSON 파싱 에러 처리
 
-- [ ] **RED**: JSON 파싱 에러 테스트
-  - [ ] 잘못된 JSON 형식 요청 시 400 응답
-  - [ ] 파싱 에러 메시지 반환
-- [ ] **GREEN**: ApplicationController에 JSON 파싱 에러 핸들러
-  - [ ] ActionDispatch::Http::Parameters::ParseError rescue
-  - [ ] 적절한 에러 응답 반환
-- [ ] **REFACTOR**: 에러 핸들러 정리
+- [x] **RED**: JSON 파싱 에러 테스트 ✅ 2025-12-15
+  - [x] 잘못된 JSON 형식 요청 시 400 응답
+  - [x] 파싱 에러 메시지 반환
+- [x] **GREEN**: ApplicationController에 JSON 파싱 에러 핸들러 ✅ 2025-12-15
+  - [x] ActionDispatch::Http::Parameters::ParseError rescue
+  - [x] 적절한 에러 응답 반환 ("잘못된 JSON 형식입니다")
+- [x] **REFACTOR**: 변경 없음 (코드 간결) ✅ 2025-12-15
 
 ### 5.6.6 N+1 쿼리 해결
 
-- [ ] **RED**: N+1 쿼리 테스트
-  - [ ] index 액션 쿼리 수 검증
-  - [ ] 연관 객체 eager loading 확인
-- [ ] **GREEN**: includes로 eager loading 적용
-  - [ ] Photo.includes(:uploader, :child, image_attachment: :blob)
-  - [ ] 페이지네이션과 함께 동작 확인
-- [ ] **REFACTOR**: 쿼리 최적화 스코프 추출
+- [x] **RED**: N+1 쿼리 테스트 ✅ 2025-12-15
+  - [x] index 액션 쿼리 수 검증
+  - [x] 연관 객체 eager loading 확인
+- [x] **GREEN**: includes로 eager loading 적용 ✅ 2025-12-15
+  - [x] Photo.with_eager_loaded_image scope 추가
+  - [x] image_attachment: :blob eager loading 적용
+  - [x] 페이지네이션과 함께 동작 확인
+- [x] **REFACTOR**: 쿼리 최적화 스코프 추출 ✅ 2025-12-15
 
 ---
 
@@ -508,16 +509,16 @@
 
 ### 7.5.2 닉네임 검증 강화
 
-- [ ] **RED**: 닉네임 검증 테스트
-  - [ ] 2-20자 길이 제한
-  - [ ] 허용 문자 (한글, 영문, 숫자, 언더스코어)
-  - [ ] 금지어 필터링
-  - [ ] XSS 방지 (스크립트 태그 등 거부)
-- [ ] **GREEN**: User 모델에 닉네임 검증 추가
-  - [ ] validates :nickname, length: { in: 2..20 }
-  - [ ] validates :nickname, format: { with: NICKNAME_REGEX }
-  - [ ] custom validator로 금지어 체크
-- [ ] **REFACTOR**: 검증 로직 concern으로 추출
+- [x] **RED**: 닉네임 검증 테스트 ✅ 2025-12-15
+  - [x] 2-20자 길이 제한
+  - [x] 허용 문자 (한글, 영문, 숫자, 언더스코어)
+  - [x] 금지어 필터링
+  - [x] XSS 방지 (스크립트 태그 등 거부)
+- [x] **GREEN**: User 모델에 닉네임 검증 추가 ✅ 2025-12-15
+  - [x] validates :nickname, length: { in: 2..20 }
+  - [x] validates :nickname, format: { with: NICKNAME_REGEX }
+  - [x] custom validator로 금지어 체크
+- [x] **REFACTOR**: 변경 없음 (코드 간결) ✅ 2025-12-15
 
 ### 7.5.3 i18n 메시지 적용
 
@@ -544,14 +545,13 @@
 
 ### 7.5.5 닉네임 보안 검증
 
-- [ ] **RED**: 닉네임 보안 테스트
-  - [ ] HTML 태그 포함 시 거부
-  - [ ] SQL injection 패턴 거부
-  - [ ] 특수문자 제한
-- [ ] **GREEN**: 보안 검증 구현
-  - [ ] sanitize 처리
-  - [ ] 허용 문자 화이트리스트
-- [ ] **REFACTOR**: 보안 검증 공통화
+- [x] **RED**: 닉네임 보안 테스트 ✅ 2025-12-15
+  - [x] HTML 태그 포함 시 거부
+  - [x] SQL injection 패턴 거부
+  - [x] 특수문자 제한
+- [x] **GREEN**: 보안 검증 구현 ✅ 2025-12-15
+  - [x] NICKNAME_REGEX로 허용 문자 화이트리스트
+- [x] **REFACTOR**: 변경 없음 (코드 간결) ✅ 2025-12-15
 
 ### 7.5.6 아바타 파일 검증
 
@@ -688,15 +688,15 @@
 | Phase 4: 가족 관리 | ✅ 완료 | 2025-12-14 |
 | Phase 4.5: 에러/보안 강화 | ✅ 완료 | 2025-12-15 |
 | Phase 5: 사진 기능 | ✅ 완료 | 2025-12-15 |
-| **Phase 5.6: 사진 보안/안정성** | 📋 대기 중 | - |
+| Phase 5.6: 사진 보안/안정성 | ✅ 완료 | 2025-12-15 |
 | Phase 6: 반응/댓글 | ✅ 완료 | 2025-12-15 |
 | Phase 6.5: 반응/댓글 검증 | ✅ 완료 | 2025-12-15 |
 | Phase 7: 설정 | ✅ 완료 | 2025-12-15 |
-| **Phase 7.5: 설정 UI/검증** | 📋 대기 중 | - |
+| Phase 7.5: 설정 UI/검증 | 🔄 진행 중 (1/7) | - |
 | Phase 8: Native API | ✅ 완료 | 2025-12-15 |
 | Phase 8.5: Native API 보안 | ✅ 완료 | 2025-12-15 |
 | Phase 9.1: 레이아웃 | ✅ 완료 | 2025-12-15 |
-| **Phase 9.1.5: 레이아웃 연결** | ✅ 완료 | 2025-12-15 |
+| Phase 9.1.5: 레이아웃 연결 | ✅ 완료 | 2025-12-15 |
 | Phase 9.2-9.3: UI/UX 마무리 | 🔄 진행 중 | - |
 
 ---
