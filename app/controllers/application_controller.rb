@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from ActionController::ParameterMissing, with: :bad_request
   rescue_from ActionController::InvalidAuthenticityToken, with: :unprocessable_entity
+  rescue_from ActionDispatch::Http::Parameters::ParseError, with: :json_parse_error
 
   private
 
@@ -58,5 +59,14 @@ class ApplicationController < ActionController::Base
       format.html { redirect_to root_path, alert: "세션이 만료되었습니다. 다시 시도해주세요." }
       format.json { render json: { error: { code: "unprocessable_entity", message: "요청을 처리할 수 없습니다." } }, status: :unprocessable_entity }
     end
+  end
+
+  def json_parse_error
+    render json: {
+      error: {
+        code: "bad_request",
+        message: "잘못된 JSON 형식입니다. 요청 데이터를 확인해주세요."
+      }
+    }, status: :bad_request
   end
 end
