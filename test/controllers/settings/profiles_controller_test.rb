@@ -35,7 +35,8 @@ module Settings
       }
 
       assert_response :unprocessable_entity
-      assert_select ".error", /닉네임/
+      # TailwindCSS 스타일링된 에러 영역 확인
+      assert_select "[class*='bg-red']", /닉네임/
     end
 
     test "should require authentication" do

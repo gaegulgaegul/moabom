@@ -566,14 +566,15 @@
 
 ### 7.5.7 API 에러 응답 표준화
 
-- [ ] **RED**: API 에러 응답 테스트
-  - [ ] 검증 실패 시 표준 JSON 형식
-  - [ ] 필드별 에러 메시지 포함
-  - [ ] HTTP 상태 코드 적절성
-- [ ] **GREEN**: 에러 응답 포맷 구현
-  - [ ] render_validation_errors 헬퍼
-  - [ ] { errors: { field: [messages] } } 형식
-- [ ] **REFACTOR**: API 응답 헬퍼 모듈화
+- [x] **RED**: API 에러 응답 테스트 ✅ 2025-12-15
+  - [x] 검증 실패 시 표준 JSON 형식
+  - [x] 필드별 에러 메시지 포함
+  - [x] HTTP 상태 코드 적절성
+- [x] **GREEN**: 에러 응답 포맷 구현 ✅ 2025-12-15
+  - [x] ProfilesController에 JSON 응답 추가
+  - [x] PhotosController에 JSON 응답 추가
+  - [x] { errors: { field: [messages] } } 형식
+- [x] **REFACTOR**: 변경 없음 (코드 간결) ✅ 2025-12-15
 
 ---
 
@@ -692,7 +693,7 @@
 | Phase 6: 반응/댓글 | ✅ 완료 | 2025-12-15 |
 | Phase 6.5: 반응/댓글 검증 | ✅ 완료 | 2025-12-15 |
 | Phase 7: 설정 | ✅ 완료 | 2025-12-15 |
-| Phase 7.5: 설정 UI/검증 | 🔄 진행 중 (1/7) | - |
+| Phase 7.5: 설정 UI/검증 | 🔄 진행 중 (4/7) | - |
 | Phase 8: Native API | ✅ 완료 | 2025-12-15 |
 | Phase 8.5: Native API 보안 | ✅ 완료 | 2025-12-15 |
 | Phase 9.1: 레이아웃 | ✅ 완료 | 2025-12-15 |
