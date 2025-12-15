@@ -1,4 +1,28 @@
 ko:
+  helpers:
+    submit:
+      save: 저장
+      create: 생성
+      update: 저장
+  settings:
+    profiles:
+      show:
+        title: 프로필 설정
+        email_help: 소셜 로그인으로 가입한 이메일은 변경할 수 없습니다.
+        nickname_help: 2-20자, 한글/영문/숫자/언더스코어만 사용 가능
+      update:
+        success: 프로필이 업데이트되었습니다.
+    notifications:
+      show:
+        title: 알림 설정
+        notify_on_new_photo: 새 사진 업로드 알림
+        notify_on_new_photo_help: 가족이 새 사진을 올리면 알림을 받습니다.
+        notify_on_comment: 댓글 작성 알림
+        notify_on_comment_help: 내 사진에 댓글이 달리면 알림을 받습니다.
+        notify_on_reaction: 반응 추가 알림
+        notify_on_reaction_help: 내 사진에 반응이 추가되면 알림을 받습니다.
+      update:
+        success: 알림 설정이 업데이트되었습니다.
   date:
     formats:
       default: "%Y년 %m월 %d일"

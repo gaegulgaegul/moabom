@@ -10,7 +10,7 @@ module Settings
     def update
       if current_user.update(profile_params)
         respond_to do |format|
-          format.html { redirect_to settings_profile_path, notice: "프로필이 업데이트되었습니다." }
+          format.html { redirect_to settings_profile_path, notice: t(".success") }
           format.json { render json: current_user }
         end
       else

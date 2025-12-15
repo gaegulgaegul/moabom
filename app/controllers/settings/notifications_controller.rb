@@ -9,7 +9,7 @@ module Settings
 
     def update
       if current_user.update(notification_params)
-        redirect_to settings_notifications_path, notice: "알림 설정이 업데이트되었습니다."
+        redirect_to settings_notifications_path, notice: t(".success")
       else
         render :show, status: :unprocessable_entity
       end

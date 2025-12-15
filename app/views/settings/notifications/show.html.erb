@@ -1,5 +1,5 @@
 <div class="max-w-lg mx-auto">
-  <h1 class="text-2xl font-bold text-gray-900 mb-6">알림 설정</h1>
+  <h1 class="text-2xl font-bold text-gray-900 mb-6"><%= t(".title") %></h1>
 
   <%= form_with model: current_user, url: settings_notifications_path, method: :patch, class: "space-y-6" do |form| %>
     <% if current_user.errors.any? %>
@@ -16,10 +16,8 @@
     <div class="space-y-4">
       <div class="flex items-center justify-between p-4 bg-white rounded-lg border border-gray-200">
         <div>
-          <%= form.label :notify_on_new_photo, class: "text-sm font-medium text-gray-900" do %>
-            새 사진 업로드 알림
-          <% end %>
-          <p class="text-sm text-gray-500">가족이 새 사진을 올리면 알림을 받습니다.</p>
+          <%= form.label :notify_on_new_photo, t(".notify_on_new_photo"), class: "text-sm font-medium text-gray-900" %>
+          <p class="text-sm text-gray-500"><%= t(".notify_on_new_photo_help") %></p>
         </div>
         <%= form.check_box :notify_on_new_photo,
             class: "h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
@@ -27,10 +25,8 @@
 
       <div class="flex items-center justify-between p-4 bg-white rounded-lg border border-gray-200">
         <div>
-          <%= form.label :notify_on_comment, class: "text-sm font-medium text-gray-900" do %>
-            댓글 작성 알림
-          <% end %>
-          <p class="text-sm text-gray-500">내 사진에 댓글이 달리면 알림을 받습니다.</p>
+          <%= form.label :notify_on_comment, t(".notify_on_comment"), class: "text-sm font-medium text-gray-900" %>
+          <p class="text-sm text-gray-500"><%= t(".notify_on_comment_help") %></p>
         </div>
         <%= form.check_box :notify_on_comment,
             class: "h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
@@ -38,10 +34,8 @@
 
       <div class="flex items-center justify-between p-4 bg-white rounded-lg border border-gray-200">
         <div>
-          <%= form.label :notify_on_reaction, class: "text-sm font-medium text-gray-900" do %>
-            반응 추가 알림
-          <% end %>
-          <p class="text-sm text-gray-500">내 사진에 반응이 추가되면 알림을 받습니다.</p>
+          <%= form.label :notify_on_reaction, t(".notify_on_reaction"), class: "text-sm font-medium text-gray-900" %>
+          <p class="text-sm text-gray-500"><%= t(".notify_on_reaction_help") %></p>
         </div>
         <%= form.check_box :notify_on_reaction,
             class: "h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
@@ -49,7 +43,7 @@
     </div>
 
     <div>
-      <%= form.submit "저장",
+      <%= form.submit t("helpers.submit.save"),
           class: "w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer" %>
     </div>
   <% end %>
