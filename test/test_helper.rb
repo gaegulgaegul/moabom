@@ -4,6 +4,9 @@ ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
 
+# Load support files
+Dir[Rails.root.join("test/support/**/*.rb")].each { |f| require f }
+
 # OmniAuth test mode
 OmniAuth.config.test_mode = true
 
