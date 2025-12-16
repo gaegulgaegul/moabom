@@ -47,32 +47,33 @@ chat:
 
 # 커스텀 지침 (CodeRabbit v2)
 knowledge_base:
-  learnings: |
-    ## 중요: 모든 리뷰 코멘트는 반드시 한국어로 작성할 것
-
-    리뷰 시 다음 기준을 적용하세요:
-
-    ### Rails 컨벤션
-    - Controller는 thin하게 유지, 비즈니스 로직은 Service로 분리
-    - Model에는 validation, association, scope만 포함
-    - N+1 쿼리 방지 (includes 사용 필수)
-    - Strong Parameters 필수
-
-    ### 코드 스타일
-    - 2 spaces 들여쓰기
-    - snake_case (메서드/변수), PascalCase (클래스)
-    - guard clause 선호
-    - &. (safe navigation) 사용
-
-    ### 보안
-    - SQL injection 방지 (parameterized query)
-    - XSS 방지 (escape 처리)
-    - 리소스 접근은 current_user scope 사용
-
-    ### 테스트
-    - TDD 워크플로우 (Red-Green-Refactor)
-    - 모든 public 메서드 테스트 필수
-
-    ### 커밋
-    - feat/fix/refactor/test/docs/chore 타입 사용
-    - 구조적 변경(refactor)과 동작적 변경(feat/fix) 분리
+  learnings:
+    - |
+      ## 🌏 언어 설정 (CRITICAL)
+      모든 리뷰 코멘트는 **반드시 한국어로 작성**해야 합니다.
+      All review comments MUST be written in Korean language.
+    - |
+      ## Rails 컨벤션
+      Controller는 thin하게 유지하고, 비즈니스 로직은 Service로 분리합니다.
+      Model에는 validation, association, scope만 포함합니다.
+      N+1 쿼리를 방지하기 위해 includes를 사용해야 합니다.
+      Strong Parameters는 필수입니다.
+    - |
+      ## 코드 스타일
+      들여쓰기는 2 spaces를 사용합니다.
+      메서드와 변수는 snake_case, 클래스는 PascalCase를 사용합니다.
+      guard clause를 선호합니다.
+      safe navigation operator (&.)를 사용합니다.
+    - |
+      ## 보안 규칙
+      SQL injection을 방지하기 위해 parameterized query를 사용합니다.
+      XSS를 방지하기 위해 escape 처리를 합니다.
+      리소스 접근은 반드시 current_user scope를 통해야 합니다.
+    - |
+      ## 테스트 요구사항
+      TDD 워크플로우 (Red-Green-Refactor)를 따릅니다.
+      모든 public 메서드에 대한 테스트가 필수입니다.
+    - |
+      ## 커밋 컨벤션
+      타입은 feat/fix/refactor/test/docs/chore를 사용합니다.
+      구조적 변경(refactor)과 동작적 변경(feat/fix)은 반드시 분리합니다.
