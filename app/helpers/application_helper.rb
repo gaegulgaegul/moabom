@@ -19,7 +19,7 @@ module ApplicationHelper
     when :notifications
       false # 알림 기능은 Phase 6에서 구현
     when :settings
-      controller_path.start_with?("settings/")
+      controller.class.module_parent_name == "Settings"
     else
       false
     end ? "text-pink-500" : "text-gray-600"
