@@ -1,0 +1,35 @@
+<div class="max-w-lg mx-auto">
+  <h1 class="text-2xl font-bold text-gray-900 mb-6"><%= t(".title") %></h1>
+
+  <%= form_with model: current_user, url: settings_profile_path, method: :patch, class: "space-y-6" do |form| %>
+    <% if current_user.errors.any? %>
+      <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+        <h2 class="text-red-800 font-medium text-sm"><%= pluralize(current_user.errors.count, "오류") %>가 있습니다:</h2>
+        <ul class="list-disc list-inside text-red-700 text-sm mt-2">
+          <% current_user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div>
+      <%= form.label :email, User.human_attribute_name(:email), class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :email, disabled: true,
+          class: "mt-1 block w-full rounded-md border-gray-300 bg-gray-100 shadow-sm text-gray-500 cursor-not-allowed" %>
+      <p class="mt-1 text-sm text-gray-500"><%= t(".email_help") %></p>
+    </div>
+
+    <div>
+      <%= form.label :nickname, User.human_attribute_name(:nickname), class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :nickname,
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+      <p class="mt-1 text-sm text-gray-500"><%= t(".nickname_help") %></p>
+    </div>
+
+    <div>
+      <%= form.submit t("helpers.submit.save"),
+          class: "w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer" %>
+    </div>
+  <% end %>
+</div>

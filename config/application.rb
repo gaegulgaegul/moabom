@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "boot"
 
 require "rails/all"
@@ -23,5 +25,19 @@ module Moabom
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Localization
+    config.i18n.default_locale = :ko
+    config.i18n.available_locales = [ :ko, :en ]
+
+    # OmniAuth middleware
+    require_relative "../lib/omniauth/strategies/kakao"
+
+    config.middleware.use OmniAuth::Builder do
+      kakao_client_id = Rails.application.credentials.dig(:kakao, :client_id) || "test_client_id"
+      kakao_client_secret = Rails.application.credentials.dig(:kakao, :client_secret) || "test_client_secret"
+
+      provider :kakao, kakao_client_id, kakao_client_secret
+    end
   end
 end

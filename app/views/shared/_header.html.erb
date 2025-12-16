@@ -1,0 +1,20 @@
+<header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-10">
+  <div class="flex items-center justify-between px-4 h-14">
+    <div class="flex items-center space-x-2">
+      <%= link_to root_path, class: "flex items-center space-x-2" do %>
+        <span class="text-2xl">🌸</span>
+        <span class="text-lg font-bold text-gray-900">모아봄</span>
+      <% end %>
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <% if logged_in? %>
+        <%= button_to logout_path, method: :delete, class: "text-sm text-gray-600 hover:text-gray-900" do %>
+          로그아웃
+        <% end %>
+      <% else %>
+        <%= link_to "로그인", root_path, class: "text-sm text-gray-600 hover:text-gray-900" %>
+      <% end %>
+    </div>
+  </div>
+</header>

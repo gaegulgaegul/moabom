@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+baby_kim:
+  family: kim_family
+  name: 김아기
+  birthdate: <%= 18.months.ago.to_date %>
+  gender: 0  # male
+
+sister_kim:
+  family: kim_family
+  name: 김누나
+  birthdate: <%= 3.years.ago.to_date %>
+  gender: 1  # female

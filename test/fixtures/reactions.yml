@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+mom_heart:
+  photo: baby_first_step
+  user: mom
+  emoji: ❤️
+
+dad_thumbsup:
+  photo: baby_first_step
+  user: dad
+  emoji: 👍

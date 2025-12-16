@@ -1,0 +1,27 @@
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 safe-area-inset-bottom z-10">
+  <div class="flex items-center justify-around h-16">
+    <%= link_to root_path, class: "flex flex-col items-center justify-center flex-1 py-2 #{current_page_tab?(:home)}" do %>
+      <span class="text-2xl mb-1">🏠</span>
+      <span class="text-xs">홈</span>
+    <% end %>
+
+    <%= link_to "#", class: "flex flex-col items-center justify-center flex-1 py-2 #{current_page_tab?(:albums)}" do %>
+      <span class="text-2xl mb-1">📅</span>
+      <span class="text-xs">앨범</span>
+    <% end %>
+
+    <%= link_to "#", class: "flex flex-col items-center justify-center flex-1 py-2 #{current_page_tab?(:upload)}" do %>
+      <span class="text-3xl">⊕</span>
+    <% end %>
+
+    <%= link_to "#", class: "flex flex-col items-center justify-center flex-1 py-2 #{current_page_tab?(:notifications)}" do %>
+      <span class="text-2xl mb-1">🔔</span>
+      <span class="text-xs">알림</span>
+    <% end %>
+
+    <%= link_to settings_profile_path, class: "flex flex-col items-center justify-center flex-1 py-2 #{current_page_tab?(:settings)}" do %>
+      <span class="text-2xl mb-1">⚙️</span>
+      <span class="text-xs">설정</span>
+    <% end %>
+  </div>
+</nav>

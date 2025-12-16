@@ -1,14 +1,59 @@
-Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+# frozen_string_literal: true
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+Rails.application.routes.draw do
+  # OAuth
+  get "auth/:provider/callback", to: "oauth_callbacks#create"
+  get "auth/failure", to: "oauth_callbacks#failure"
+
+  # Sessions
+  post "login", to: "sessions#create"
+  delete "logout", to: "sessions#destroy"
+  post "dev_login", to: "sessions#dev_login" if Rails.env.development?
+
+  # Dashboard (protected)
+  get "dashboard", to: "dashboard#index"
+
+  # Families
+  resources :families, only: [ :show, :update ] do
+    resources :members, controller: "families/members", only: [ :index, :update, :destroy ]
+    resources :children, controller: "families/children"
+    resources :photos, controller: "families/photos" do
+      collection do
+        post :batch
+      end
+      resources :reactions, controller: "photos/reactions", only: [ :create, :destroy ]
+      resources :comments, controller: "photos/comments", only: [ :index, :create, :destroy ]
+    end
+  end
+
+  # Onboarding
+  namespace :onboarding do
+    resource :profile, only: [ :show, :update ]
+    resource :child, only: [ :show, :create ]
+    resource :invite, only: [ :show ]
+  end
+
+  # Settings (Phase 7)
+  namespace :settings do
+    resource :profile, only: [ :show, :update ]
+    resource :notifications, only: [ :show, :update ]
+  end
+
+  # Native API (Phase 8)
+  namespace :api do
+    namespace :native do
+      resource :sync, only: [ :show ]
+      resources :push_tokens, only: [ :create, :destroy ]
+    end
+  end
+
+  # Invitation (short URL)
+  get "i/:token", to: "invitations#show", as: :accept_invitation
+  post "i/:token", to: "invitations#accept"
+
+  # Health check
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # Root
+  root "home#index"
 end

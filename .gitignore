@@ -39,3 +39,7 @@
 
 # IDE
 .idea/
+.DS_Store
+
+# Claude Code session logs
+/docs/logs/

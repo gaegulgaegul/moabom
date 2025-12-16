@@ -1,0 +1,71 @@
+ko:
+  helpers:
+    submit:
+      save: 저장
+      create: 생성
+      update: 저장
+  settings:
+    profiles:
+      show:
+        title: 프로필 설정
+        email_help: 소셜 로그인으로 가입한 이메일은 변경할 수 없습니다.
+        nickname_help: 2-20자, 한글/영문/숫자/언더스코어만 사용 가능
+      update:
+        success: 프로필이 업데이트되었습니다.
+    notifications:
+      show:
+        title: 알림 설정
+        notify_on_new_photo: 새 사진 업로드 알림
+        notify_on_new_photo_help: 가족이 새 사진을 올리면 알림을 받습니다.
+        notify_on_comment: 댓글 작성 알림
+        notify_on_comment_help: 내 사진에 댓글이 달리면 알림을 받습니다.
+        notify_on_reaction: 반응 추가 알림
+        notify_on_reaction_help: 내 사진에 반응이 추가되면 알림을 받습니다.
+      update:
+        success: 알림 설정이 업데이트되었습니다.
+  date:
+    formats:
+      default: "%Y년 %m월 %d일"
+      short: "%m월 %d일"
+      long: "%Y년 %m월 %d일 %A"
+  time:
+    formats:
+      default: "%Y년 %m월 %d일 %H:%M"
+      short: "%m/%d %H:%M"
+      long: "%Y년 %m월 %d일 %H:%M"
+  activerecord:
+    models:
+      user: 사용자
+      family: 가족
+      family_membership: 가족 구성원
+      child: 아이
+      photo: 사진
+      reaction: 반응
+      comment: 댓글
+      invitation: 초대
+    attributes:
+      user:
+        email: 이메일
+        nickname: 닉네임
+        avatar_url: 프로필 사진
+        provider: 로그인 제공자
+        uid: 고유 ID
+      family:
+        name: 가족 이름
+      child:
+        name: 이름
+        birthdate: 생년월일
+        gender: 성별
+      photo:
+        caption: 설명
+        taken_at: 촬영일
+      comment:
+        body: 내용
+    errors:
+      messages:
+        blank: "을(를) 입력해주세요"
+        taken: "은(는) 이미 사용 중입니다"
+        invalid: "이(가) 올바르지 않습니다"
+        too_short: "이(가) 너무 짧습니다 (최소 %{count}자)"
+        too_long: "이(가) 너무 깁니다 (최대 %{count}자)"
+        required: "은(는) 필수입니다"

@@ -64,7 +64,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "mkdir -p \"$CLAUDE_PROJECT_DIR/docs/logs\" && LOGFILE=\"$CLAUDE_PROJECT_DIR/docs/logs/$(date +%Y%m%d_%H%M%S).jsonl\" && jq -r '.transcript_path' | xargs -I {} cp {} \"$LOGFILE\" 2>/dev/null && ruby \"$CLAUDE_PROJECT_DIR/scripts/session_to_md.rb\" \"$LOGFILE\" 2>/dev/null || true"
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && CLAUDE_PROJECT_DIR=\"$CLAUDE_PROJECT_DIR\" CLAUDE_SESSION_ID=\"$CLAUDE_SESSION_ID\" ruby scripts/session_to_md.rb 2>&1 || true"
           }
         ]
       }
