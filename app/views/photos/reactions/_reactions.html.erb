@@ -1,0 +1,9 @@
+<%= turbo_frame_tag dom_id(photo, :reactions) do %>
+  <div class="reactions flex items-center gap-2">
+    <% photo.reactions.includes(:user).each do |reaction| %>
+      <span class="reaction" title="<%= reaction.user.nickname %>">
+        <%= reaction.emoji %>
+      </span>
+    <% end %>
+  </div>
+<% end %>

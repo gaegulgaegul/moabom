@@ -1,0 +1,14 @@
+<h1>가족 초대</h1>
+
+<p>아래 링크를 가족에게 공유하세요!</p>
+
+<div data-invite-link>
+  <input type="text" readonly value="<%= @invite_url %>" class="invite-link-input">
+  <button type="button" onclick="navigator.clipboard.writeText('<%= @invite_url %>')">
+    복사
+  </button>
+</div>
+
+<p>
+  <%= link_to "완료", dashboard_path, class: "btn-primary" %>
+</p>

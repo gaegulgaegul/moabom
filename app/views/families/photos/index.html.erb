@@ -1,0 +1,29 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-6">사진 타임라인</h1>
+
+  <div class="mb-4 flex gap-4">
+    <%= link_to "전체", family_photos_path(@family), class: "text-blue-600" %>
+    <% @family.children.each do |child| %>
+      <%= link_to child.name, family_photos_path(@family, child_id: child.id), class: "text-blue-600" %>
+    <% end %>
+  </div>
+
+  <% if @photos.any? %>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <% @photos.each do |photo| %>
+        <%= render partial: "families/photos/photo", locals: { photo: photo } %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty-state text-center py-12">
+      <svg class="mx-auto h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+      <h3 class="mt-4 text-lg font-medium text-gray-900">아직 사진이 없어요</h3>
+      <p class="mt-2 text-gray-500">소중한 순간을 가족과 공유해보세요.</p>
+      <%= link_to new_family_photo_path(@family), class: "mt-4 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" do %>
+        첫 사진 업로드
+      <% end %>
+    </div>
+  <% end %>
+</div>

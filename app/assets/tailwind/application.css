@@ -1,1 +1,330 @@
 @import "tailwindcss";
+
+/* ============================================
+   모아봄 디자인 시스템 - TailwindCSS v4 설정
+   ============================================ */
+
+/* --------------------------------------------
+   1. 커스텀 색상 테마
+   -------------------------------------------- */
+@theme {
+  /* Primary - 살구/연분홍 (따뜻함, 사랑) */
+  --color-primary-50: #FFF5F0;
+  --color-primary-100: #FFE8DE;
+  --color-primary-200: #FFD4C4;
+  --color-primary-300: #FFBDA6;
+  --color-primary-400: #FFA488;
+  --color-primary-500: #FF8B66;
+  --color-primary-600: #E67350;
+  --color-primary-700: #CC5C3D;
+  --color-primary-800: #B3472C;
+  --color-primary-900: #99341D;
+
+  /* Secondary - 민트 (신선함, 성장) */
+  --color-secondary-50: #EDFCFB;
+  --color-secondary-100: #D4F7F4;
+  --color-secondary-200: #A9EFE9;
+  --color-secondary-300: #7DE7DE;
+  --color-secondary-400: #52DFD3;
+  --color-secondary-500: #4ECDC4;
+  --color-secondary-600: #3EB5AD;
+  --color-secondary-700: #2F9D96;
+  --color-secondary-800: #1F857F;
+  --color-secondary-900: #106D68;
+
+  /* Accent - 핑크 (특별한 순간) */
+  --color-accent-50: #FFF0F5;
+  --color-accent-100: #FFE0EB;
+  --color-accent-200: #FFC2D7;
+  --color-accent-300: #FFA3C3;
+  --color-accent-400: #FF85AF;
+  --color-accent-500: #FF6B9D;
+  --color-accent-600: #E6557E;
+  --color-accent-700: #CC4060;
+  --color-accent-800: #B32B44;
+  --color-accent-900: #991829;
+
+  /* Cream - 배경색 */
+  --color-cream-50: #FFFDFB;
+  --color-cream-100: #FFF9F5;
+  --color-cream-200: #FFF3EB;
+  --color-cream-300: #FFEDE1;
+  --color-cream-400: #FFE7D7;
+  --color-cream-500: #FFE1CD;
+
+  /* Warm Gray - 텍스트/중립 */
+  --color-warm-gray-50: #FAFAF9;
+  --color-warm-gray-100: #F5F5F4;
+  --color-warm-gray-200: #E7E5E4;
+  --color-warm-gray-300: #D6D3D1;
+  --color-warm-gray-400: #A8A29E;
+  --color-warm-gray-500: #78716C;
+  --color-warm-gray-600: #57534E;
+  --color-warm-gray-700: #44403C;
+  --color-warm-gray-800: #292524;
+  --color-warm-gray-900: #1C1917;
+}
+
+/* --------------------------------------------
+   2. 컴포넌트 스타일
+   -------------------------------------------- */
+@layer components {
+  /* Glassmorphism 효과 */
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-lg;
+  }
+
+  .glass-dark {
+    @apply bg-warm-gray-800/70 backdrop-blur-md border border-white/10 shadow-lg;
+  }
+
+  /* 버튼 - Primary */
+  .btn-primary {
+    @apply inline-flex items-center justify-center
+           bg-primary-500 text-white
+           py-3 px-6 rounded-2xl
+           font-semibold text-base
+           hover:bg-primary-600 active:bg-primary-700
+           transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* 버튼 - Secondary */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center
+           bg-secondary-500 text-white
+           py-3 px-6 rounded-2xl
+           font-semibold text-base
+           hover:bg-secondary-600 active:bg-secondary-700
+           transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* 버튼 - Ghost (투명) */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center
+           bg-transparent text-warm-gray-700
+           py-3 px-6 rounded-2xl
+           font-semibold text-base
+           hover:bg-warm-gray-100 active:bg-warm-gray-200
+           transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-warm-gray-300 focus:ring-offset-2;
+  }
+
+  /* 버튼 - Outline */
+  .btn-outline {
+    @apply inline-flex items-center justify-center
+           bg-transparent text-primary-500
+           border-2 border-primary-500
+           py-3 px-6 rounded-2xl
+           font-semibold text-base
+           hover:bg-primary-50 active:bg-primary-100
+           transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+
+  /* 버튼 크기 변형 */
+  .btn-sm {
+    @apply py-2 px-4 text-sm rounded-xl;
+  }
+
+  .btn-lg {
+    @apply py-4 px-8 text-lg rounded-3xl;
+  }
+
+  /* 카드 - Glass */
+  .card-glass {
+    @apply bg-white/70 backdrop-blur-md
+           border border-white/20
+           rounded-2xl shadow-lg
+           p-4;
+  }
+
+  /* 카드 - Solid */
+  .card-solid {
+    @apply bg-white
+           rounded-2xl shadow-md
+           p-4;
+  }
+
+  /* 카드 - Flat */
+  .card-flat {
+    @apply bg-cream-100
+           rounded-2xl
+           p-4;
+  }
+
+  /* 입력 필드 */
+  .input-text {
+    @apply w-full px-4 py-3
+           bg-cream-100 border border-cream-300
+           rounded-xl
+           text-warm-gray-800 placeholder-warm-gray-400
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
+           transition-all duration-200;
+  }
+
+  /* Textarea */
+  .input-textarea {
+    @apply w-full px-4 py-3
+           bg-cream-100 border border-cream-300
+           rounded-xl
+           text-warm-gray-800 placeholder-warm-gray-400
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
+           transition-all duration-200
+           resize-none;
+  }
+
+  /* Select */
+  .input-select {
+    @apply w-full px-4 py-3
+           bg-cream-100 border border-cream-300
+           rounded-xl
+           text-warm-gray-800
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
+           transition-all duration-200
+           appearance-none cursor-pointer;
+  }
+
+  /* 알림 - Success */
+  .alert-success {
+    @apply bg-green-50 border border-green-200
+           text-green-800
+           rounded-xl p-4;
+  }
+
+  /* 알림 - Warning */
+  .alert-warning {
+    @apply bg-yellow-50 border border-yellow-200
+           text-yellow-800
+           rounded-xl p-4;
+  }
+
+  /* 알림 - Error */
+  .alert-error {
+    @apply bg-red-50 border border-red-200
+           text-red-800
+           rounded-xl p-4;
+  }
+
+  /* 알림 - Info */
+  .alert-info {
+    @apply bg-blue-50 border border-blue-200
+           text-blue-800
+           rounded-xl p-4;
+  }
+
+  /* 빈 상태 컨테이너 */
+  .empty-state {
+    @apply flex flex-col items-center justify-center
+           text-center py-12 px-6;
+  }
+
+  /* 아바타 */
+  .avatar {
+    @apply w-12 h-12 rounded-full
+           bg-cream-200
+           flex items-center justify-center
+           overflow-hidden;
+  }
+
+  .avatar-sm {
+    @apply w-8 h-8;
+  }
+
+  .avatar-lg {
+    @apply w-16 h-16;
+  }
+
+  /* 뱃지 */
+  .badge {
+    @apply inline-flex items-center
+           px-2 py-1 rounded-full
+           text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply bg-primary-100 text-primary-700;
+  }
+
+  .badge-secondary {
+    @apply bg-secondary-100 text-secondary-700;
+  }
+
+  .badge-accent {
+    @apply bg-accent-100 text-accent-700;
+  }
+}
+
+/* --------------------------------------------
+   3. 유틸리티 클래스
+   -------------------------------------------- */
+@layer utilities {
+  /* Safe Area Inset for iOS devices */
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-inset-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  /* 텍스트 그라디언트 */
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent;
+  }
+
+  /* 배경 그라디언트 */
+  .bg-gradient-warm {
+    @apply bg-gradient-to-br from-cream-50 via-primary-50 to-secondary-50;
+  }
+
+  /* 스크롤바 숨김 */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 터치 하이라이트 제거 (모바일) */
+  .tap-highlight-none {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* --------------------------------------------
+   4. 다크 모드 지원 (향후 활성화)
+   -------------------------------------------- */
+/*
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-cream-50: #1C1917;
+    --color-cream-100: #292524;
+    --color-warm-gray-800: #F5F5F4;
+    --color-warm-gray-700: #E7E5E4;
+  }
+
+  .glass {
+    @apply bg-warm-gray-800/70 border-white/10;
+  }
+
+  .card-solid {
+    @apply bg-warm-gray-800;
+  }
+
+  .card-flat {
+    @apply bg-warm-gray-900;
+  }
+
+  .input-text,
+  .input-textarea,
+  .input-select {
+    @apply bg-warm-gray-800 border-warm-gray-700 text-warm-gray-100;
+  }
+}
+*/

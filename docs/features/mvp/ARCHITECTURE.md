@@ -41,10 +41,11 @@
 └────────┬────────────────┬────────────────┬──────────────┘
          │                │                │
          ▼                ▼                ▼
-┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐
-│ PostgreSQL  │  │  S3/R2      │  │  SQLite (Solid)     │
-│ (Primary)   │  │  (Storage)  │  │  Cache/Queue/Cable  │
-└─────────────┘  └─────────────┘  └─────────────────────┘
+┌─────────────────────┐  ┌─────────────┐
+│  SQLite             │  │Cloudflare R2│
+│  (Primary DB +      │  │  (Storage)  │
+│   Solid Stack)      │  │  사진/동영상 │
+└─────────────────────┘  └─────────────┘
 ```
 
 ---
@@ -97,14 +98,18 @@
     ┌─────────────────┼─────────────────┬─────────────────┐
     │                 │                 │                 │
     ▼                 ▼                 ▼                 ▼
-┌────────┐      ┌──────────┐     ┌───────────┐    ┌─────────────┐
-│PostgreSQL     │ S3 / R2  │     │  SQLite   │    │ APNs / FCM  │
-│        │      │ Storage  │     │(Solid Stack)   │Push Service │
-│ Users  │      │          │     │           │    │             │
-│ Photos │      │ Photos   │     │ - Cache   │    │             │
-│ Groups │      │ Videos   │     │ - Queue   │    │             │
-│  ...   │      │ Thumbs   │     │ - Cable   │    │             │
-└────────┘      └──────────┘     └───────────┘    └─────────────┘
+┌───────────────┐    ┌──────────────┐    ┌─────────────┐
+│    SQLite     │    │ Cloudflare   │    │ APNs / FCM  │
+│  (Primary DB  │    │     R2       │    │Push Service │
+│ + Solid Stack)│    │   Storage    │    │             │
+│               │    │              │    │             │
+│ - Users       │    │ - Photos     │    │             │
+│ - Photos      │    │ - Videos     │    │             │
+│ - Groups      │    │ - Thumbnails │    │             │
+│ - Cache       │    │              │    │             │
+│ - Queue       │    │              │    │             │
+│ - Cable       │    │              │    │             │
+└───────────────┘    └──────────────┘    └─────────────┘
 ```
 
 ### 2.2 컴포넌트 설명
@@ -116,9 +121,8 @@
 | **CDN** | 정적 자산, 이미지 캐싱 | Cloudflare |
 | **Load Balancer** | 트래픽 분산, SSL 종료 | Kamal (Traefik) |
 | **Rails App** | 비즈니스 로직, 뷰 렌더링 | Rails 8, Puma |
-| **PostgreSQL** | 주 데이터베이스 | PostgreSQL 16 |
-| **Object Storage** | 사진/영상 저장 | S3 / Cloudflare R2 |
-| **Solid Stack** | 캐시, 큐, 웹소켓 | SQLite 기반 |
+| **SQLite** | 주 데이터베이스 + Solid Stack | SQLite (Railway Volume) |
+| **Object Storage** | 사진/영상 저장 | Cloudflare R2 |
 | **Push Service** | 푸시 알림 | APNs (iOS), FCM (Android) |
 
 ---
@@ -253,10 +257,14 @@ moabom/
 │  └──────┬──────┘  └──────┬──────┘  └────────┬────────┘  │
 └─────────┼────────────────┼──────────────────┼───────────┘
           │                │                  │
-          ▼                ▼                  ▼
-┌─────────────┐      ┌───────────┐      ┌───────────┐
-│ PostgreSQL  │      │  S3 / R2  │      │  SQLite   │
-└─────────────┘      └───────────┘      └───────────┘
+          └────────┬───────┴──────────┬───────┘
+                   │                  │
+                   ▼                  ▼
+          ┌───────────────┐    ┌──────────────┐
+          │    SQLite     │    │ Cloudflare   │
+          │ (Primary DB + │    │     R2       │
+          │  Solid Stack) │    │  (Storage)   │
+          └───────────────┘    └──────────────┘
 ```
 
 ### 3.3 주요 Concern
@@ -391,6 +399,17 @@ end
 ```
 
 ### 4.2 테이블 상세 정의
+
+> **참고**: 아래 SQL은 개념적 스키마입니다. 실제 구현은 SQLite를 사용하며,
+> Rails 마이그레이션이 적절한 타입 변환을 처리합니다.
+>
+> | PostgreSQL | SQLite (실제) |
+> |------------|---------------|
+> | `BIGSERIAL` | `INTEGER PRIMARY KEY` |
+> | `JSONB` | `JSON` (TEXT 저장) |
+> | `VARCHAR(n)` | `TEXT` |
+> | `TIMESTAMP` | `DATETIME` |
+> | `DECIMAL` | `REAL` |
 
 #### users (사용자)
 ```sql
@@ -950,11 +969,11 @@ Railway 무료/Pro   Railway Pro         VPS or K8s
 $0~5/월           $20~50/월           $100+/월
 ```
 
-### 7.2 Phase 1: Railway (현재 목표)
+### 7.2 Phase 1: Railway + R2 (현재 목표)
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                    Railway                           │
+│               Railway (~$5/월)                       │
 │                                                      │
 │  ┌─────────────────────────────────────────────┐    │
 │  │              Rails App                       │    │
@@ -962,16 +981,25 @@ $0~5/월           $20~50/월           $100+/월
 │  │  - Puma (Web Server)                        │    │
 │  │  - Solid Queue (Background Jobs)            │    │
 │  │  - Solid Cable (WebSocket)                  │    │
+│  │  - Solid Cache                              │    │
 │  │                                              │    │
 │  └──────────────────┬──────────────────────────┘    │
 │                     │                                │
-│           ┌─────────┴─────────┐                     │
-│           │                   │                     │
-│  ┌────────▼────────┐ ┌───────▼────────┐            │
-│  │   PostgreSQL    │ │   Volume       │            │
-│  │   (Add-on)      │ │   (Storage)    │            │
-│  │   무료 500MB    │ │   또는 S3      │            │
-│  └─────────────────┘ └────────────────┘            │
+│           ┌─────────▼─────────┐                     │
+│           │   Railway Volume  │                     │
+│           │     (SQLite)      │                     │
+│           │    $0.25/GB/월    │                     │
+│           └───────────────────┘                     │
+│                                                      │
+└─────────────────────────────────────────────────────┘
+                      │
+                      ▼
+┌─────────────────────────────────────────────────────┐
+│            Cloudflare R2 (무료 티어)                 │
+│                                                      │
+│  - 사진/동영상 저장 (Active Storage)                │
+│  - 10GB 무료 저장                                   │
+│  - 월 1,000만 요청 무료                             │
 │                                                      │
 └─────────────────────────────────────────────────────┘
 ```
@@ -1003,11 +1031,16 @@ worker: bundle exec rake solid_queue:start
 # Railway Dashboard에서 설정
 RAILS_ENV=production
 RAILS_MASTER_KEY=xxxxx
-DATABASE_URL=postgresql://...  # Railway가 자동 주입
 SECRET_KEY_BASE=xxxxx
 
-# 스토리지 (Phase 1: 로컬 볼륨)
-ACTIVE_STORAGE_SERVICE=local
+# SQLite (Railway Volume 경로)
+DATABASE_PATH=/app/storage/production.sqlite3
+
+# Cloudflare R2 (Active Storage)
+R2_ACCESS_KEY_ID=xxxxx
+R2_SECRET_ACCESS_KEY=xxxxx
+R2_BUCKET=moabom-production
+R2_ENDPOINT=https://<account_id>.r2.cloudflarestorage.com
 
 # 스토리지 (Phase 2: S3 호환)
 # AWS_ACCESS_KEY_ID=xxxxx
@@ -1018,11 +1051,11 @@ ACTIVE_STORAGE_SERVICE=local
 
 ### 7.5 스토리지 전략
 
-| Phase | 방식 | 용량 | 비용 |
-|-------|------|------|------|
-| **1. 가족** | Railway Volume | 1GB | 무료 |
-| **2. 확장** | Cloudflare R2 | 10GB | ~$0.50/월 |
-| **3. 성장** | S3 + CloudFront | 무제한 | 사용량 기반 |
+| 구분 | 저장소 | 용도 | 비용 |
+|------|--------|------|------|
+| **Database** | Railway Volume (SQLite) | 사용자, 가족, 메타데이터 | ~$0.25/GB |
+| **파일** | Cloudflare R2 | 사진/동영상 저장 | 10GB 무료 |
+| **Phase 2+** | PostgreSQL + S3 | 스케일 확장 시 | 사용량 기반 |
 
 ### 7.6 단계별 스케일링
 
@@ -1052,7 +1085,7 @@ ACTIVE_STORAGE_SERVICE=local
 |-----|------|
 | **간편한 배포** | `git push`만으로 자동 배포 |
 | **무료 시작** | 월 $5 크레딧 (Hobby), 충분함 |
-| **PostgreSQL 내장** | 별도 설정 불필요 |
+| **Volume 지원** | SQLite + Solid Stack을 위한 영구 스토리지 |
 | **자동 SSL** | HTTPS 자동 설정 |
 | **쉬운 환경변수** | Dashboard에서 클릭으로 설정 |
 | **로그/모니터링** | 기본 제공 |

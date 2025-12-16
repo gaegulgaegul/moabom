@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+mom_kim_family:
+  user: mom
+  family: kim_family
+  role: 3  # owner
+
+dad_kim_family:
+  user: dad
+  family: kim_family
+  role: 2  # admin
+
+grandma_kim_family:
+  user: grandma
+  family: kim_family
+  role: 0  # viewer
+
+uncle_kim_family:
+  user: uncle
+  family: kim_family
+  role: 1  # member
