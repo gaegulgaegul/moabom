@@ -9,14 +9,14 @@
 ## 1.1 Heroicons gem 설치 및 설정
 
 ### 작업 내용
-- [ ] **RED**: heroicon helper 사용 테스트 작성
+- [x] **RED**: heroicon helper 사용 테스트 작성 ✅ 2025-12-16
   ```ruby
   # test/helpers/heroicon_helper_test.rb
   test "heroicon helper renders svg" do
     # heroicon "home" 호출 시 SVG 반환 확인
   end
   ```
-- [ ] **GREEN**: Gemfile에 heroicon gem 추가 및 설치
+- [x] **GREEN**: Gemfile에 heroicon gem 추가 및 설치 ✅ 2025-12-16
   ```ruby
   # Gemfile
   gem "heroicon"
@@ -24,7 +24,7 @@
   ```bash
   bundle install
   ```
-- [ ] **REFACTOR**: 필요시 설정 조정
+- [x] **REFACTOR**: 필요시 설정 조정 ✅ 2025-12-16 (추가 설정 불필요)
 
 ### 완료 기준
 - `<%= heroicon "home", variant: :outline %>` 호출 시 SVG 렌더링
@@ -66,5 +66,5 @@
 ---
 
 ## 참고
-- [DESIGN_GUIDE.md](../references/DESIGN_GUIDE.md)
-- [design-system.md](../../.claude/rules/design-system.md)
+- [DESIGN_GUIDE.md](docs/references/DESIGN_GUIDE.md)
+- [design-system.md](.claude/rules/design-system.md)
