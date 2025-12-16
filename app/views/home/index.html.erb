@@ -29,6 +29,13 @@
         <p class="text-xs text-gray-500 text-center mt-4">
           로그인 시 이용약관 및 개인정보 처리방침에 동의하게 됩니다.
         </p>
+
+        <% if Rails.env.development? %>
+          <div class="mt-6 pt-4 border-t border-gray-200">
+            <%= button_to "🚀 개발 모드로 빠른 진입", dev_login_path, method: :post, class: "w-full bg-purple-600 text-white text-center py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors" %>
+            <p class="text-xs text-gray-400 text-center mt-2">개발 환경 전용</p>
+          </div>
+        <% end %>
       </div>
     </div>
   <% else %>

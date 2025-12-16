@@ -17,4 +17,26 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     redirect_to root_path, notice: "로그아웃되었습니다."
   end
+
+  # Development only - quick login without OAuth
+  def dev_login
+    unless Rails.env.development?
+      redirect_to root_path, alert: "개발 환경에서만 사용 가능합니다."
+      return
+    end
+
+    user = User.find_or_create_by!(provider: "dev", uid: "dev_user") do |u|
+      u.email = "dev@example.com"
+      u.nickname = "개발자"
+    end
+
+    # Ensure user has a family
+    if user.families.empty?
+      family = Family.create!(name: "#{user.nickname}의 가족")
+      user.family_memberships.create!(family: family, role: :owner)
+    end
+
+    session[:user_id] = user.id
+    redirect_to dashboard_path, notice: "개발 모드로 진입했습니다."
+  end
 end

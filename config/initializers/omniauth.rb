@@ -9,3 +9,10 @@ OmniAuth.config.test_mode = Rails.env.test?
 OmniAuth.config.on_failure = proc do |env|
   OauthCallbacksController.action(:failure).call(env)
 end
+
+# Register OmniAuth providers
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :kakao,
+    Rails.application.credentials.dig(:kakao, :client_id),
+    Rails.application.credentials.dig(:kakao, :client_secret)
+end

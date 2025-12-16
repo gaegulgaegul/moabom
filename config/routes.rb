@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # Sessions
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
+  post "dev_login", to: "sessions#dev_login" if Rails.env.development?
 
   # Dashboard (protected)
   get "dashboard", to: "dashboard#index"
