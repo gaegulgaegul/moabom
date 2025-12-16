@@ -45,34 +45,35 @@ reviews:
 chat:
   auto_reply: true
 
-# 커스텀 지침
-instructions:
-  pull_request_review: |
-    **중요: 모든 리뷰 코멘트는 반드시 한글(Korean)로 작성해주세요.**
+# 커스텀 지침 (CodeRabbit v2 형식)
+knowledge_base:
+  learnings:
+    - |
+      **중요: 모든 리뷰 코멘트는 반드시 한글(Korean)로 작성해주세요.**
 
-    ## 리뷰 기준
+      ## 리뷰 기준
 
-    ### Rails 컨벤션
-    - Controller는 thin하게 유지, 비즈니스 로직은 Service로
-    - Model에는 validation, association, scope만
-    - N+1 쿼리 방지 (includes 사용)
-    - Strong Parameters 필수
+      ### Rails 컨벤션
+      - Controller는 thin하게 유지, 비즈니스 로직은 Service로
+      - Model에는 validation, association, scope만
+      - N+1 쿼리 방지 (includes 사용)
+      - Strong Parameters 필수
 
-    ### 코드 스타일
-    - 2 spaces 들여쓰기
-    - snake_case (메서드/변수), PascalCase (클래스)
-    - guard clause 선호
-    - &. (safe navigation) 사용
+      ### 코드 스타일
+      - 2 spaces 들여쓰기
+      - snake_case (메서드/변수), PascalCase (클래스)
+      - guard clause 선호
+      - &. (safe navigation) 사용
 
-    ### 보안
-    - SQL injection 방지 (parameterized query)
-    - XSS 방지 (escape 처리)
-    - 리소스 접근은 current_user scope 사용
+      ### 보안
+      - SQL injection 방지 (parameterized query)
+      - XSS 방지 (escape 처리)
+      - 리소스 접근은 current_user scope 사용
 
-    ### 테스트
-    - TDD 워크플로우 (Red-Green-Refactor)
-    - 모든 public 메서드 테스트 필수
+      ### 테스트
+      - TDD 워크플로우 (Red-Green-Refactor)
+      - 모든 public 메서드 테스트 필수
 
-    ### 커밋
-    - feat/fix/refactor/test/docs/chore 타입 사용
-    - 구조적 변경(refactor)과 동작적 변경(feat/fix) 분리
+      ### 커밋
+      - feat/fix/refactor/test/docs/chore 타입 사용
+      - 구조적 변경(refactor)과 동작적 변경(feat/fix) 분리
