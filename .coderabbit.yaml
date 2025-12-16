@@ -45,15 +45,17 @@ reviews:
 chat:
   auto_reply: true
 
-# 커스텀 지침
-instructions:
-  pull_request_review: |
-    ## 리뷰 기준
+# 커스텀 지침 (CodeRabbit v2)
+knowledge_base:
+  learnings: |
+    ## 중요: 모든 리뷰 코멘트는 반드시 한국어로 작성할 것
+
+    리뷰 시 다음 기준을 적용하세요:
 
     ### Rails 컨벤션
-    - Controller는 thin하게 유지, 비즈니스 로직은 Service로
-    - Model에는 validation, association, scope만
-    - N+1 쿼리 방지 (includes 사용)
+    - Controller는 thin하게 유지, 비즈니스 로직은 Service로 분리
+    - Model에는 validation, association, scope만 포함
+    - N+1 쿼리 방지 (includes 사용 필수)
     - Strong Parameters 필수
 
     ### 코드 스타일
