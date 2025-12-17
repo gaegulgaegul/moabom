@@ -3,7 +3,9 @@
 class Child < ApplicationRecord
   belongs_to :family
   has_many :photos, dependent: :nullify
-  has_one_attached :profile_photo
+  has_one_attached :profile_photo do |attachable|
+    attachable.variant :thumbnail, resize_to_limit: [ 100, 100 ]
+  end
 
   enum :gender, { male: 0, female: 1 }
 
