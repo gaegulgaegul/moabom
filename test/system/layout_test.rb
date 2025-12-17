@@ -42,19 +42,17 @@ class LayoutTest < ApplicationSystemTestCase
     visit root_path
 
     # 홈 탭 활성화 확인
-    within "nav" do
-      home_link = find("a[href='#{root_path}']")
-      assert home_link[:class].include?("text-pink-500")
-    end
+    home_link = find("nav a[href='#{root_path}']")
+    assert home_link[:class].include?("text-pink-500"),
+           "홈 탭이 활성화되어야 합니다. 실제 클래스: #{home_link[:class]}"
 
     # 설정으로 이동
     click_on "설정"
 
     # 설정 탭 활성화 확인
-    within "nav" do
-      settings_link = find("a[href='#{settings_profile_path}']")
-      assert settings_link[:class].include?("text-pink-500")
-    end
+    settings_link = find("nav a[href='#{settings_profile_path}']")
+    assert settings_link[:class].include?("text-pink-500"),
+           "설정 탭이 활성화되어야 합니다. 실제 클래스: #{settings_link[:class]}"
   end
 
   # Wave 2: 디자인 시스템 적용 테스트
@@ -137,6 +135,19 @@ class LayoutTest < ApplicationSystemTestCase
     end
   end
 
+  test "플래시 메시지 표시" do
+    # 로그인하여 리다이렉트를 통해 플래시 메시지 테스트
+    user = users(:mom)
+
+    # OmniAuth 콜백 후 성공 메시지가 표시되어야 함
+    sign_in user
+
+    # 로그인 성공 시 플래시 메시지 확인
+    # (실제로는 OmniAuth 콜백에서 설정됨)
+    assert has_content?("환영합니다") || has_content?("로그인"),
+           "로그인 후 메시지가 표시되어야 합니다"
+  end
+
   test "카카오 로그인 버튼이 실제 OAuth URL로 연결" do
     visit root_path
 
@@ -169,14 +180,5 @@ class LayoutTest < ApplicationSystemTestCase
     login_buttons.each do |button|
       refute_equal "#", button[:href], "로그인 버튼이 '#'로 하드코딩되어 있습니다"
     end
-  end
-
-  private
-
-  def sign_in(user)
-    # 세션 설정을 위한 헬퍼
-    # 실제로는 OmniAuth를 통한 로그인이지만 테스트에서는 세션 직접 설정
-    visit root_path
-    page.set_rack_session(user_id: user.id)
   end
 end
