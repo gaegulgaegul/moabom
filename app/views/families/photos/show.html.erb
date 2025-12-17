@@ -1,25 +1,61 @@
-<div class="container mx-auto px-4 py-8">
-  <div class="mb-4">
-    <%= link_to "← 타임라인으로", family_photos_path(@family), class: "text-blue-600" %>
+<div class="min-h-screen bg-warm-gray-900">
+  <!-- 투명 헤더 -->
+  <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 h-14 safe-area-inset-top">
+    <button onclick="history.back()" class="p-2 bg-black/30 rounded-full backdrop-blur-sm">
+      <%= heroicon "arrow-left", variant: :outline, options: { class: "w-6 h-6 text-white" } %>
+    </button>
+    <button class="p-2 bg-black/30 rounded-full backdrop-blur-sm">
+      <%= heroicon "ellipsis-horizontal", variant: :outline, options: { class: "w-6 h-6 text-white" } %>
+    </button>
+  </header>
+
+  <!-- 사진 -->
+  <div class="w-full aspect-square pt-14">
+    <% if @photo.image.attached? %>
+      <%= image_tag @photo.image, class: "w-full h-full object-contain bg-black", alt: @photo.caption %>
+    <% end %>
   </div>
 
-  <div class="max-w-2xl mx-auto">
-    <% if @photo.image.attached? %>
-      <%= image_tag @photo.image, class: "w-full rounded-lg shadow", alt: @photo.caption %>
-    <% end %>
+  <!-- 정보 영역 -->
+  <div class="bg-white rounded-t-3xl -mt-6 relative z-10 min-h-[50vh]">
+    <div class="px-4 py-6">
+      <!-- 반응 & 날짜 -->
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-4">
+          <%= render "photos/reactions/reactions", photo: @photo %>
+        </div>
+        <span class="text-sm text-warm-gray-400">
+          <%= l @photo.taken_at, format: :short if @photo.taken_at %>
+        </span>
+      </div>
 
-    <div class="mt-4">
+      <!-- 캡션 -->
       <% if @photo.caption.present? %>
-        <p class="text-lg"><%= @photo.caption %></p>
+        <p class="text-warm-gray-800 mb-6"><%= @photo.caption %></p>
       <% end %>
 
-      <div class="mt-2 text-sm text-gray-500">
-        <p>촬영: <%= l(@photo.taken_at, format: :long) if @photo.taken_at %></p>
+      <!-- 메타 정보 -->
+      <div class="text-sm text-warm-gray-500 mb-6">
         <p>업로드: <%= @photo.uploader.nickname %></p>
         <% if @photo.child %>
           <p>아이: <%= @photo.child.name %></p>
         <% end %>
       </div>
+
+      <!-- 댓글 -->
+      <div class="space-y-4">
+        <% @photo.comments.each do |comment| %>
+          <%= render "photos/comments/comment", comment: comment %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- 댓글 입력 -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-warm-gray-100 px-4 py-3 safe-area-inset-bottom">
+      <%= form_with url: family_photo_comments_path(@family, @photo), class: "flex items-center gap-3" do |form| %>
+        <%= form.text_field :content, placeholder: "댓글 작성...", class: "input-text flex-1" %>
+        <%= form.submit "전송", class: "btn-primary btn-sm" %>
+      <% end %>
     </div>
   </div>
 </div>
