@@ -25,7 +25,7 @@ class LayoutTest < ApplicationSystemTestCase
     # 헤더 확인
     assert_selector "header", count: 1
     assert_text "모아봄"
-    assert_button "로그아웃"
+    assert_selector "header button[aria-label='알림']" # 알림 버튼 확인
 
     # 탭바 확인
     assert_selector "nav", count: 1
@@ -42,17 +42,104 @@ class LayoutTest < ApplicationSystemTestCase
     visit root_path
 
     # 홈 탭 활성화 확인
-    home_link = find("nav a[href='#{root_path}']")
-    assert home_link[:class].include?("text-pink-500"),
-           "홈 탭이 활성화되어야 합니다. 실제 클래스: #{home_link[:class]}"
+    within "nav" do
+      home_link = find("a", text: "홈")
+      assert home_link[:class]&.include?("tab-item-active"),
+             "홈 탭이 활성화되어야 합니다. 실제 클래스: #{home_link[:class]}"
+    end
 
     # 설정으로 이동
-    click_on "설정"
+    within "nav" do
+      click_on "설정"
+    end
 
     # 설정 탭 활성화 확인
-    settings_link = find("nav a[href='#{settings_profile_path}']")
-    assert settings_link[:class].include?("text-pink-500"),
-           "설정 탭이 활성화되어야 합니다. 실제 클래스: #{settings_link[:class]}"
+    assert_current_path settings_profile_path
+    within "nav" do
+      settings_link = find("a", text: "설정")
+      assert settings_link[:class]&.include?("tab-item-active"),
+             "설정 탭이 활성화되어야 합니다. 실제 클래스: #{settings_link[:class]}"
+    end
+  end
+
+  # Wave 2: 디자인 시스템 적용 테스트
+  test "body에 cream-50 배경색 적용" do
+    visit root_path
+
+    # body 태그에 bg-cream-50 클래스가 있는지 확인
+    assert_selector "body.bg-cream-50"
+  end
+
+  test "로그인 사용자의 main 영역 패딩 확인" do
+    user = users(:mom)
+    sign_in user
+    visit root_path
+
+    # main 태그에 pt-14 pb-20 클래스가 있는지 확인
+    assert_selector "main.pt-14.pb-20.min-h-screen"
+  end
+
+  test "비로그인 사용자의 main 영역 패딩 확인" do
+    visit root_path
+
+    # main 태그에 pt-14만 있고 pb-20은 없는지 확인
+    assert_selector "main.pt-14.min-h-screen"
+    assert_no_selector "main.pb-20"
+  end
+
+  # Wave 2: Header 재디자인 테스트
+  test "header에 glass 효과 적용" do
+    visit root_path
+
+    # header에 glassmorphism 효과 클래스 확인
+    assert_selector "header.bg-white\\/80.backdrop-blur-md"
+    assert_selector "header.border-b.border-cream-200"
+  end
+
+  test "로그인 사용자에게 알림 아이콘 표시" do
+    user = users(:mom)
+    sign_in user
+    visit root_path
+
+    # 알림 버튼과 heroicon bell 확인
+    within "header" do
+      assert_selector "button svg"  # heroicon
+      # 알림 뱃지 확인
+      assert_selector ".bg-accent-500.rounded-full"
+    end
+  end
+
+  # Wave 2: Tab Bar 재디자인 테스트
+  test "탭바에 glass 효과 적용" do
+    user = users(:mom)
+    sign_in user
+    visit root_path
+
+    # nav에 glassmorphism 효과 클래스 확인
+    assert_selector "nav.bg-white\\/90.backdrop-blur-md"
+    assert_selector "nav.border-t.border-cream-200"
+  end
+
+  test "탭바 아이콘이 heroicon으로 표시" do
+    user = users(:mom)
+    sign_in user
+    visit root_path
+
+    # nav 내부에 여러 개의 svg (heroicon)가 있어야 함
+    within "nav" do
+      assert_selector "svg", minimum: 5  # 홈, 앨범, 업로드, 알림, 설정
+    end
+  end
+
+  test "중앙 FAB 버튼 스타일링" do
+    user = users(:mom)
+    sign_in user
+    visit root_path
+
+    # FAB 버튼 확인 (bg-primary-500, rounded-full)
+    within "nav" do
+      assert_selector ".bg-primary-500.rounded-full"
+    end
   end
 
   test "플래시 메시지 표시" do
