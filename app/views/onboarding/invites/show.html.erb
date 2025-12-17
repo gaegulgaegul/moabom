@@ -1,14 +1,57 @@
-<h1>가족 초대</h1>
+<div class="fixed inset-0 bg-cream-50 flex flex-col z-[100]">
+  <!-- 헤더 (진행률 3/3) -->
+  <%= render "onboarding/header", step: 3 %>
 
-<p>아래 링크를 가족에게 공유하세요!</p>
+  <div class="flex-1 px-6 py-8 pb-24">
+    <div class="w-20 h-20 mx-auto mb-6 bg-accent-100 rounded-full flex items-center justify-center">
+      <%= heroicon "user-group", variant: :outline, options: { class: "w-10 h-10 text-accent-500" } %>
+    </div>
 
-<div data-invite-link>
-  <input type="text" readonly value="<%= @invite_url %>" class="invite-link-input">
-  <button type="button" onclick="navigator.clipboard.writeText('<%= @invite_url %>')">
-    복사
-  </button>
+    <h1 class="text-2xl font-bold text-warm-gray-800 text-center mb-2">
+      가족을 초대해보세요
+    </h1>
+    <p class="text-warm-gray-500 text-center mb-8">
+      함께 추억을 공유할 수 있어요
+    </p>
+
+    <!-- 초대 링크 카드 -->
+    <div class="bg-white/70 backdrop-blur-md border border-white/20 shadow-lg rounded-2xl p-4 card-glass">
+      <p class="text-sm text-warm-gray-500 mb-3">초대 링크</p>
+      <div class="flex items-center gap-2">
+        <input type="text" value="<%= @invite_url %>" readonly
+               class="input-text flex-1 text-sm">
+        <button class="btn-primary shrink-0 py-3 px-4"
+                type="button"
+                onclick="navigator.clipboard.writeText('<%= @invite_url %>'); alert('링크가 복사되었습니다!')">
+          <%= heroicon "clipboard-document", variant: :outline, options: { class: "w-5 h-5" } %>
+        </button>
+      </div>
+    </div>
+
+    <!-- 공유 버튼들 -->
+    <div class="flex justify-center gap-4 mt-6">
+      <button class="flex flex-col items-center gap-2" type="button"
+              onclick="alert('카카오톡 공유 기능은 추후 구현 예정입니다')">
+        <div class="w-12 h-12 bg-[#FEE500] rounded-full flex items-center justify-center">
+          <span class="text-xl">💬</span>
+        </div>
+        <span class="text-xs text-warm-gray-500">카카오톡</span>
+      </button>
+      <button class="flex flex-col items-center gap-2" type="button"
+              onclick="navigator.clipboard.writeText('<%= @invite_url %>'); alert('링크가 복사되었습니다!')">
+        <div class="w-12 h-12 bg-warm-gray-200 rounded-full flex items-center justify-center">
+          <%= heroicon "link", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-600" } %>
+        </div>
+        <span class="text-xs text-warm-gray-500">링크 복사</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 하단 버튼 -->
+  <div class="px-6 pb-8 bg-cream-50 space-y-3">
+    <%= link_to "시작하기", root_path, class: "btn-primary w-full text-center block" %>
+    <%= button_tag "나중에 초대할게요", type: "button",
+        class: "text-warm-gray-400 text-sm w-full py-2",
+        onclick: "window.location.href='#{root_path}'" %>
+  </div>
 </div>
-
-<p>
-  <%= link_to "완료", dashboard_path, class: "btn-primary" %>
-</p>

@@ -1,0 +1,11 @@
+<div class="onboarding-header flex items-center justify-between px-4 h-14">
+  <button onclick="history.back()" class="p-2">
+    <%= heroicon "arrow-left", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-700" } %>
+  </button>
+  <span class="text-lg font-semibold text-warm-gray-800">모아봄</span>
+  <div class="flex gap-1">
+    <% 3.times do |i| %>
+      <span class="w-2 h-2 rounded-full <%= i == step - 1 ? 'bg-primary-500' : 'bg-warm-gray-300' %>"></span>
+    <% end %>
+  </div>
+</div>
