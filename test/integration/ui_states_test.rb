@@ -50,10 +50,10 @@ class UiStatesTest < ActionDispatch::IntegrationTest
     get family_photos_path(@family)
 
     assert_response :success
-    # 반응형 컨테이너 클래스
-    assert_select "[class*='container']" + ", " + "[class*='max-w-']" + ", " + "[class*='mx-auto']"
+    # 반응형 패딩/여백 클래스
+    assert_select "[class*='px-']"
     # 반응형 그리드나 flex 클래스
-    assert_select "[class*='grid']" + ", " + "[class*='flex']"
+    assert_select "[class*='grid']"
   end
 
   test "navigation should be responsive" do

@@ -11,7 +11,11 @@ class Photo < ApplicationRecord
   has_many :reactions, dependent: :destroy
   has_many :comments, dependent: :destroy
 
-  has_one_attached :image
+  has_one_attached :image do |attachable|
+    attachable.variant :thumbnail, resize_to_limit: [ 300, 300 ]
+    attachable.variant :medium, resize_to_limit: [ 800, 800 ]
+    attachable.variant :large, resize_to_limit: [ 1600, 1600 ]
+  end
 
   validates :taken_at, presence: true
   validates :image, presence: true

@@ -101,7 +101,7 @@ module Families
     private
 
     def set_photo
-      @photo = @family.photos.find(params[:id])
+      @photo = @family.photos.includes(:uploader, :child, :comments).find(params[:id])
     end
 
     def photo_params
