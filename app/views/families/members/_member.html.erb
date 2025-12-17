@@ -1,0 +1,26 @@
+<%# 가족 구성원 카드 partial %>
+<%# 사용법: <%= render "families/members/member", membership: membership %>
+
+<div class="flex items-center justify-between py-4">
+  <div class="flex items-center gap-3">
+    <div class="avatar bg-primary-100">
+      <span class="text-primary-600 font-medium">
+        <%= membership.user.nickname.to_s.first || "?" %>
+      </span>
+    </div>
+    <div>
+      <p class="font-medium text-warm-gray-800"><%= membership.user.nickname %></p>
+      <p class="text-sm text-warm-gray-500"><%= membership.user.email %></p>
+    </div>
+  </div>
+  <div class="flex items-center gap-2">
+    <span class="badge <%= membership.admin_or_owner? ? 'badge-primary' : 'badge-secondary' %>">
+      <%= membership.admin_or_owner? ? '관리자' : '구성원' %>
+    </span>
+    <% if can_manage_members? && membership.user != current_user %>
+      <button class="p-2 hover:bg-cream-100 rounded-full">
+        <%= heroicon "ellipsis-vertical", variant: :outline, options: { class: "w-5 h-5 text-warm-gray-400" } %>
+      </button>
+    <% end %>
+  </div>
+</div>

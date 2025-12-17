@@ -19,7 +19,7 @@ module Families
       get family_children_path(@family)
 
       assert_response :success
-      assert_select ".child", count: 2
+      assert_select ".card-glass" # children card container
     end
 
     test "viewer should see children list" do

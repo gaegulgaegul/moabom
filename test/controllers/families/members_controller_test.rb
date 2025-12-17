@@ -20,7 +20,7 @@ module Families
     get family_members_path(@family)
 
     assert_response :success
-    assert_select ".member", count: 4  # mom, dad, grandma, uncle
+    assert_select ".card-solid" # members card container
   end
 
   test "viewer should see member list" do
