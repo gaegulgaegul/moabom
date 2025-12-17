@@ -25,7 +25,7 @@ class LayoutTest < ApplicationSystemTestCase
     # 헤더 확인
     assert_selector "header", count: 1
     assert_text "모아봄"
-    assert_button "로그아웃"
+    assert_selector "header button[aria-label='알림']" # 알림 버튼 확인
 
     # 탭바 확인
     assert_selector "nav", count: 1
@@ -42,17 +42,24 @@ class LayoutTest < ApplicationSystemTestCase
     visit root_path
 
     # 홈 탭 활성화 확인
-    home_link = find("nav a[href='#{root_path}']")
-    assert home_link[:class].include?("text-pink-500"),
-           "홈 탭이 활성화되어야 합니다. 실제 클래스: #{home_link[:class]}"
+    within "nav" do
+      home_link = find("a", text: "홈")
+      assert home_link[:class]&.include?("tab-item-active"),
+             "홈 탭이 활성화되어야 합니다. 실제 클래스: #{home_link[:class]}"
+    end
 
     # 설정으로 이동
-    click_on "설정"
+    within "nav" do
+      click_on "설정"
+    end
 
     # 설정 탭 활성화 확인
-    settings_link = find("nav a[href='#{settings_profile_path}']")
-    assert settings_link[:class].include?("text-pink-500"),
-           "설정 탭이 활성화되어야 합니다. 실제 클래스: #{settings_link[:class]}"
+    assert_current_path settings_profile_path
+    within "nav" do
+      settings_link = find("a", text: "설정")
+      assert settings_link[:class]&.include?("tab-item-active"),
+             "설정 탭이 활성화되어야 합니다. 실제 클래스: #{settings_link[:class]}"
+    end
   end
 
   # Wave 2: 디자인 시스템 적용 테스트

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  include Heroicon::ApplicationHelper
   def can_manage_members?
     return false unless current_user && @family
 
