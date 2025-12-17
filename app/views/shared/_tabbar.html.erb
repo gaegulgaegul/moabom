@@ -1,27 +1,40 @@
-<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 safe-area-inset-bottom z-10">
+<nav class="fixed bottom-0 left-0 right-0 z-50
+            bg-white/90 backdrop-blur-md
+            border-t border-cream-200
+            safe-area-inset-bottom">
   <div class="flex items-center justify-around h-16">
-    <%= link_to root_path, class: "flex flex-col items-center justify-center flex-1 py-2 #{current_page_tab?(:home)}" do %>
-      <span class="text-2xl mb-1">🏠</span>
-      <span class="text-xs">홈</span>
+    <!-- 홈 -->
+    <%= link_to root_path, class: "tab-item #{current_page?(root_path) ? 'tab-item-active' : ''}" do %>
+      <%= heroicon "home", variant: current_page?(root_path) ? :solid : :outline, options: { class: "w-6 h-6" } %>
+      <span class="text-xs mt-1">홈</span>
     <% end %>
 
-    <%= link_to "#", class: "flex flex-col items-center justify-center flex-1 py-2 #{current_page_tab?(:albums)}" do %>
-      <span class="text-2xl mb-1">📅</span>
-      <span class="text-xs">앨범</span>
+    <!-- 앨범 -->
+    <%= link_to "#", class: "tab-item" do %>
+      <%= heroicon "photo", variant: :outline, options: { class: "w-6 h-6" } %>
+      <span class="text-xs mt-1">앨범</span>
     <% end %>
 
-    <%= link_to "#", class: "flex flex-col items-center justify-center flex-1 py-2 #{current_page_tab?(:upload)}" do %>
-      <span class="text-3xl">⊕</span>
+    <!-- 업로드 (FAB) -->
+    <%= link_to "#", class: "flex items-center justify-center -mt-4 tap-highlight-none" do %>
+      <div class="w-14 h-14 bg-primary-500 rounded-full flex items-center justify-center
+                  shadow-lg shadow-primary-500/30
+                  hover:bg-primary-600 active:bg-primary-700
+                  transition-colors duration-200">
+        <%= heroicon "plus", variant: :solid, options: { class: "w-7 h-7 text-white" } %>
+      </div>
     <% end %>
 
-    <%= link_to "#", class: "flex flex-col items-center justify-center flex-1 py-2 #{current_page_tab?(:notifications)}" do %>
-      <span class="text-2xl mb-1">🔔</span>
-      <span class="text-xs">알림</span>
+    <!-- 알림 -->
+    <%= link_to "#", class: "tab-item" do %>
+      <%= heroicon "bell", variant: :outline, options: { class: "w-6 h-6" } %>
+      <span class="text-xs mt-1">알림</span>
     <% end %>
 
-    <%= link_to settings_profile_path, class: "flex flex-col items-center justify-center flex-1 py-2 #{current_page_tab?(:settings)}" do %>
-      <span class="text-2xl mb-1">⚙️</span>
-      <span class="text-xs">설정</span>
+    <!-- 설정 -->
+    <%= link_to settings_profile_path, class: "tab-item #{current_page?(settings_profile_path) ? 'tab-item-active' : ''}" do %>
+      <%= heroicon "cog-6-tooth", variant: current_page?(settings_profile_path) ? :solid : :outline, options: { class: "w-6 h-6" } %>
+      <span class="text-xs mt-1">설정</span>
     <% end %>
   </div>
 </nav>

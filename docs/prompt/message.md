@@ -41,6 +41,11 @@ docs/features/[기능명]/
 
 ## 1. 작업 관리
 
+### 작업 진행
+```text
+@CLAUDE.md 확인하고 @plan.md 실행해줘
+```
+
 ### 작업 리스트업
 ```text
 @CLAUDE.md 확인하고 @plan.md 실행할 수 있도록 작업 목록 리스트업해줘
