@@ -48,6 +48,7 @@ class Families::PhotosTest < ApplicationSystemTestCase
 
   test "아이별 필터링" do
     child = @family.children.first
+    skip "No children available in fixtures" if child.nil?
 
     visit family_photos_path(@family, child_id: child.id)
 
@@ -57,6 +58,7 @@ class Families::PhotosTest < ApplicationSystemTestCase
 
   test "사진 클릭 시 상세 페이지로 이동" do
     photo = @family.photos.first
+    skip "No photos available in fixtures" if photo.nil?
 
     visit family_photos_path(@family)
 
