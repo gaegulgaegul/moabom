@@ -1,30 +1,65 @@
-<h1>아이 등록</h1>
+<div class="fixed inset-0 bg-cream-50 flex flex-col z-[100]">
+  <!-- 헤더 (진행률 2/3) -->
+  <%= render "onboarding/header", step: 2 %>
 
-<%= form_with model: @child, url: onboarding_child_path, method: :post do |form| %>
-  <% if @child.errors.any? %>
-    <div class="error">
-      <% @child.errors.full_messages.each do |message| %>
-        <p><%= message %></p>
+  <%= form_with model: @child, url: onboarding_child_path, method: :post, local: true, class: "flex-1 flex flex-col" do |form| %>
+    <!-- 컨텐츠 -->
+    <div class="flex-1 px-6 py-8 pb-24">
+      <div class="w-20 h-20 mx-auto mb-6 bg-secondary-100 rounded-full flex items-center justify-center">
+        <%= heroicon "face-smile", variant: :outline, options: { class: "w-10 h-10 text-secondary-500" } %>
+      </div>
+
+      <h1 class="text-2xl font-bold text-warm-gray-800 text-center mb-2">
+        아이 정보를 등록해주세요
+      </h1>
+      <p class="text-warm-gray-500 text-center mb-8">
+        성장 기록의 주인공이에요
+      </p>
+
+      <% if @child.errors.any? %>
+        <div class="alert-error mb-4">
+          <% @child.errors.full_messages.each do |message| %>
+            <p class="text-sm"><%= message %></p>
+          <% end %>
+        </div>
       <% end %>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-warm-gray-700 mb-2">이름</label>
+          <%= form.text_field :name, placeholder: "아이 이름", class: "input-text" %>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-warm-gray-700 mb-2">생년월일</label>
+          <%= form.date_field :birthdate, class: "input-text" %>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-warm-gray-700 mb-2">성별</label>
+          <div class="flex gap-3">
+            <button type="button" class="flex-1 py-3 rounded-xl border-2
+                                          border-primary-500 bg-primary-50 text-primary-700 font-medium"
+                    data-gender="female">
+              여아
+            </button>
+            <button type="button" class="flex-1 py-3 rounded-xl border-2
+                                          border-warm-gray-200 text-warm-gray-500 font-medium"
+                    data-gender="male">
+              남아
+            </button>
+          </div>
+          <%= form.hidden_field :gender, value: "female" %>
+        </div>
+      </div>
+    </div>
+
+    <!-- 하단 버튼 -->
+    <div class="px-6 pb-8 bg-cream-50 space-y-3">
+      <%= form.submit "다음", class: "btn-primary w-full" %>
+      <%= button_tag "나중에 할게요", type: "button",
+          class: "text-warm-gray-400 text-sm w-full py-2",
+          onclick: "window.location.href='#{onboarding_invite_path}'" %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :name, "이름" %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :birthdate, "생년월일" %>
-    <%= form.date_field :birthdate %>
-  </div>
-
-  <div>
-    <%= form.label :gender, "성별" %>
-    <%= form.select :gender, [["남자", "male"], ["여자", "female"]], prompt: "선택하세요" %>
-  </div>
-
-  <div>
-    <%= form.submit "다음" %>
-  </div>
-<% end %>
+</div>

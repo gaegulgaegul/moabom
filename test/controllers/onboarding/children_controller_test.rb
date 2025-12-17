@@ -16,7 +16,7 @@ module Onboarding
       assert_select "form[action=?]", onboarding_child_path
       assert_select "input[name=?]", "child[name]"
       assert_select "input[name=?]", "child[birthdate]"
-      assert_select "select[name=?]", "child[gender]"
+      assert_select "input[type=?]", "hidden", with: { name: "child[gender]" }
     end
 
     test "should create child and family then redirect to invite step" do
@@ -58,7 +58,7 @@ module Onboarding
       }
 
       assert_response :unprocessable_entity
-      assert_select ".error", /이름/
+      assert_select ".alert-error", /이름/
     end
 
     test "should show error when birthdate is blank" do
@@ -71,7 +71,7 @@ module Onboarding
       }
 
       assert_response :unprocessable_entity
-      assert_select ".error", /생년월일/
+      assert_select ".alert-error", /생년월일/
     end
 
     test "should require authentication" do

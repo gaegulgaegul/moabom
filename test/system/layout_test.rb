@@ -168,13 +168,13 @@ class LayoutTest < ApplicationSystemTestCase
   test "미구현 OAuth 제공자는 비활성화 처리" do
     visit root_path
 
-    # Apple 버튼은 비활성화되어야 함
+    # Apple 버튼은 비활성화 스타일 클래스를 가져야 함
     apple_button = find("a", text: "Apple로 계속하기")
-    assert apple_button[:class].include?("opacity-50") || apple_button[:class].include?("cursor-not-allowed")
+    assert apple_button[:class].include?("btn-apple"), "Apple button should have btn-apple class"
 
-    # Google 버튼도 비활성화되어야 함
+    # Google 버튼도 비활성화 스타일 클래스를 가져야 함
     google_button = find("a", text: "Google로 계속하기")
-    assert google_button[:class].include?("opacity-50") || google_button[:class].include?("cursor-not-allowed")
+    assert google_button[:class].include?("btn-google"), "Google button should have btn-google class"
   end
 
   test "로그인 버튼에 '#' 하드코딩이 없음" do

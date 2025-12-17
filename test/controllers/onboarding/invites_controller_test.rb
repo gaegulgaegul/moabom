@@ -21,8 +21,8 @@ module Onboarding
       get onboarding_invite_path
 
       assert_response :success
-      # Should have an invitation link displayed
-      assert_select "[data-invite-link]"
+      # Should have an invitation link displayed in readonly input
+      assert_select "input[readonly]"
     end
 
     test "should create invitation when none exists" do
