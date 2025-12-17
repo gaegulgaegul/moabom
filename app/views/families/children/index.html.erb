@@ -3,7 +3,11 @@
 
   <% if @children.any? %>
     <div class="space-y-4 mb-6">
-      <%= render partial: "families/children/child", collection: @children, as: :child, locals: { family: @family } %>
+      <% @children.each do |child| %>
+        <%= turbo_frame_tag dom_id(child) do %>
+          <%= render "families/children/child", child: child, family: @family %>
+        <% end %>
+      <% end %>
     </div>
   <% else %>
     <div class="empty-state mb-6">
