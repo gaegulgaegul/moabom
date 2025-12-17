@@ -5,7 +5,7 @@
   <div class="flex items-center gap-3">
     <div class="avatar bg-primary-100">
       <span class="text-primary-600 font-medium">
-        <%= membership.user.nickname.first %>
+        <%= membership.user.nickname.to_s.first || "?" %>
       </span>
     </div>
     <div>
@@ -14,8 +14,8 @@
     </div>
   </div>
   <div class="flex items-center gap-2">
-    <span class="badge <%= membership.role == 'admin' || membership.role == 'owner' ? 'badge-primary' : 'badge-secondary' %>">
-      <%= membership.role == 'admin' || membership.role == 'owner' ? '관리자' : '구성원' %>
+    <span class="badge <%= membership.admin_or_owner? ? 'badge-primary' : 'badge-secondary' %>">
+      <%= membership.admin_or_owner? ? '관리자' : '구성원' %>
     </span>
     <% if can_manage_members? && membership.user != current_user %>
       <button class="p-2 hover:bg-cream-100 rounded-full">
