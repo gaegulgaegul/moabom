@@ -5,12 +5,4 @@
   <div class="card-solid divide-y divide-warm-gray-100 mb-6">
     <%= render partial: "families/members/member", collection: @memberships, as: :membership %>
   </div>
-
-  <!-- 가족 초대 버튼 -->
-  <% if can_manage_members? %>
-    <%= link_to "#", class: "btn-outline w-full" do %>
-      <%= heroicon "user-plus", variant: :outline, options: { class: "w-5 h-5 mr-2" } %>
-      가족 초대하기
-    <% end %>
-  <% end %>
 </div>

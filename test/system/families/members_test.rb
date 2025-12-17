@@ -49,24 +49,6 @@ module Families
       end
     end
 
-    test "owner can see invite button" do
-      sign_in @mom
-
-      visit family_members_path(@family)
-
-      # 초대 버튼 확인
-      assert_link "가족 초대하기"
-    end
-
-    test "member cannot see invite button" do
-      sign_in @uncle # member 역할
-
-      visit family_members_path(@family)
-
-      # 초대 버튼 없음
-      assert_no_link "가족 초대하기"
-    end
-
     test "owner can see action menu for other members" do
       sign_in @mom
 
@@ -150,22 +132,16 @@ module Families
       assert_text @mom.nickname
       assert_text @dad.nickname
 
-      # 초대 버튼 없음
-      assert_no_link "가족 초대하기"
-
       # 액션 메뉴 없음 (card-solid 내부에서만 확인)
       within ".card-solid" do
         assert_no_selector "button.p-2"
       end
     end
 
-    test "admin can see invite button and action menus" do
+    test "admin can see action menus" do
       sign_in @dad # admin 역할
 
       visit family_members_path(@family)
-
-      # 초대 버튼 확인
-      assert_link "가족 초대하기"
 
       # 다른 구성원에 대한 액션 메뉴 확인
       within ".card-solid" do
