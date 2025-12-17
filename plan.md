@@ -1,127 +1,60 @@
-# Wave 3: Phase 3 - 로그인/온보딩
+# Wave 3: Phase 7 - 설정
 
-> 실행 순서: 3.1 → (3.2 ∥ 3.3 ∥ 3.4)
 > 선행 조건: Wave 2 완료
-> 병렬 실행: Phase 4, 5, 6, 7, 8과 병렬 가능 (단, 3.1과 Phase 4는 파일 충돌 주의)
+> 병렬 실행: 7.1 ∥ 7.2 (내부 병렬), Phase 3, 4, 5, 6, 8과도 병렬 가능
 
 ---
 
-## 3.1 홈 화면 - 비로그인 상태 (home/index.html.erb)
+## 7.1 설정 메인 (병렬 가능)
 
-### 주의사항
-**Phase 4 (대시보드)와 같은 파일을 수정하므로, Phase 4와 순차 진행 필요**
+### 파일: `app/views/settings/profiles/show.html.erb`
 
 ### 작업 내용
-- [x] **RED**: 로그인 페이지 UI 테스트 ✅ 2025-12-17
-- [x] **GREEN**: 디자인 시스템 적용한 로그인 페이지 구현 ✅ 2025-12-17
+- [x] **RED**: 설정 페이지 UI 테스트 ✅ 2025-12-17
+- [x] **GREEN**: 설정 페이지 뷰 구현 ✅ 2025-12-17
 
 ```erb
-<% unless logged_in? %>
-  <div class="min-h-screen bg-gradient-warm flex flex-col">
-    <!-- 상단 여백 -->
-    <div class="flex-1 flex flex-col items-center justify-center px-6 pt-20">
-      <!-- 로고/일러스트 영역 -->
-      <div class="w-32 h-32 mb-8 bg-primary-100 rounded-full flex items-center justify-center">
-        <span class="text-6xl">🌸</span>
+<div class="px-4 py-6 space-y-6">
+  <h1 class="text-xl font-bold text-warm-gray-800">설정</h1>
+
+  <!-- 계정 설정 -->
+  <div class="card-solid divide-y divide-warm-gray-100">
+    <%= link_to "#", class: "flex items-center justify-between py-4 tap-highlight-none" do %>
+      <div class="flex items-center gap-3">
+        <%= heroicon "user-circle", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-500" } %>
+        <span class="text-warm-gray-800">프로필 설정</span>
       </div>
+      <%= heroicon "chevron-right", variant: :outline, options: { class: "w-5 h-5 text-warm-gray-400" } %>
+    <% end %>
 
-      <!-- 타이틀 -->
-      <h1 class="text-2xl font-bold text-warm-gray-800 text-center mb-2">
-        우리 아이의 소중한 순간,
-      </h1>
-      <p class="text-lg text-warm-gray-600 text-center mb-12">
-        가족과 함께 모아봄
-      </p>
-    </div>
+    <%= link_to settings_notifications_path, class: "flex items-center justify-between py-4 tap-highlight-none" do %>
+      <div class="flex items-center gap-3">
+        <%= heroicon "bell", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-500" } %>
+        <span class="text-warm-gray-800">알림 설정</span>
+      </div>
+      <%= heroicon "chevron-right", variant: :outline, options: { class: "w-5 h-5 text-warm-gray-400" } %>
+    <% end %>
 
-    <!-- 로그인 버튼 영역 -->
-    <div class="px-6 pb-12 space-y-3">
-      <!-- Apple 로그인 -->
-      <a href="#" class="flex items-center justify-center gap-3 w-full py-4
-                         bg-black text-white rounded-2xl font-medium
-                         opacity-50 cursor-not-allowed">
-        Apple로 계속하기
-      </a>
-
-      <!-- 카카오 로그인 -->
-      <%= link_to "/auth/kakao", class: "flex items-center justify-center gap-3 w-full py-4
-                                          bg-[#FEE500] text-warm-gray-900 rounded-2xl font-medium
-                                          hover:bg-yellow-400 transition-colors" do %>
-        💬 카카오로 계속하기
-      <% end %>
-
-      <!-- Google 로그인 -->
-      <a href="#" class="card-glass flex items-center justify-center gap-3 w-full py-4
-                         rounded-2xl font-medium text-warm-gray-700
-                         opacity-50 cursor-not-allowed">
-        Google로 계속하기
-      </a>
-
-      <!-- 약관 -->
-      <p class="text-xs text-warm-gray-400 text-center pt-4">
-        로그인 시 <a href="#" class="underline">이용약관</a> 및
-        <a href="#" class="underline">개인정보 처리방침</a>에 동의하게 됩니다.
-      </p>
-
-      <% if Rails.env.development? %>
-        <div class="pt-4 border-t border-warm-gray-200">
-          <%= button_to "🚀 개발 모드로 빠른 진입", dev_login_path, method: :post,
-              class: "w-full bg-purple-600 text-white py-3 rounded-2xl font-medium hover:bg-purple-700" %>
-        </div>
-      <% end %>
+    <div class="flex items-center justify-between py-4">
+      <div class="flex items-center gap-3">
+        <%= heroicon "moon", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-500" } %>
+        <span class="text-warm-gray-800">다크 모드</span>
+      </div>
+      <!-- Toggle Switch -->
+      <button class="w-12 h-7 bg-warm-gray-200 rounded-full relative transition-colors"
+              data-controller="toggle"
+              data-action="click->toggle#toggle">
+        <span class="absolute left-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
+              data-toggle-target="knob"></span>
+      </button>
     </div>
   </div>
-<% else %>
-  <!-- Phase 4에서 구현 -->
-<% end %>
-```
 
-- [x] **REFACTOR**: 버튼 공통 스타일 추출 (.btn-kakao, .btn-apple, .btn-google) ✅ 2025-12-17
+  <!-- 프로필 수정 폼 -->
+  <div class="card-solid">
+    <h2 class="text-lg font-semibold text-warm-gray-800 mb-4">프로필 정보</h2>
 
-### 완료 기준
-- bg-gradient-warm 배경
-- rounded-2xl 버튼
-- 카카오 노란색 (#FEE500)
-
----
-
-## 3.2 온보딩 - 프로필 설정 (병렬 가능)
-
-### 파일: `app/views/onboarding/profiles/show.html.erb`
-
-### 작업 내용
-- [x] **RED**: 프로필 폼 UI 테스트 ✅ 2025-12-17
-- [x] **GREEN**: Fixed 전체 화면 레이아웃 구현 (z-[100]) ✅ 2025-12-17
-
-```erb
-<div class="min-h-screen bg-cream-50 flex flex-col">
-  <!-- 헤더 -->
-  <header class="flex items-center justify-between px-4 h-14">
-    <button onclick="history.back()" class="p-2">
-      <%= heroicon "arrow-left", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-700" } %>
-    </button>
-    <span class="text-lg font-semibold text-warm-gray-800">모아봄</span>
-    <div class="flex gap-1">
-      <span class="w-2 h-2 rounded-full bg-primary-500"></span>
-      <span class="w-2 h-2 rounded-full bg-warm-gray-300"></span>
-      <span class="w-2 h-2 rounded-full bg-warm-gray-300"></span>
-    </div>
-  </header>
-
-  <!-- 컨텐츠 -->
-  <div class="flex-1 px-6 py-8">
-    <div class="w-20 h-20 mx-auto mb-6 bg-primary-100 rounded-full flex items-center justify-center">
-      <%= heroicon "user-circle", variant: :outline, options: { class: "w-10 h-10 text-primary-500" } %>
-    </div>
-
-    <h1 class="text-2xl font-bold text-warm-gray-800 text-center mb-2">
-      프로필을 설정해주세요
-    </h1>
-    <p class="text-warm-gray-500 text-center mb-8">
-      가족들에게 보여질 이름이에요
-    </p>
-
-    <%= form_with model: current_user, url: onboarding_profile_path, method: :patch, class: "space-y-4" do |form| %>
+    <%= form_with model: current_user, url: settings_profile_path, method: :patch, class: "space-y-4" do |form| %>
       <% if current_user.errors.any? %>
         <div class="alert-error">
           <% current_user.errors.full_messages.each do |message| %>
@@ -131,586 +64,146 @@
       <% end %>
 
       <div>
+        <label class="block text-sm font-medium text-warm-gray-700 mb-2">이메일</label>
+        <%= form.email_field :email, disabled: true, class: "input-text bg-warm-gray-100 cursor-not-allowed" %>
+        <p class="text-xs text-warm-gray-400 mt-1">이메일은 변경할 수 없습니다</p>
+      </div>
+
+      <div>
         <label class="block text-sm font-medium text-warm-gray-700 mb-2">닉네임</label>
-        <%= form.text_field :nickname, placeholder: "예: 엄마, 아빠, 할머니", class: "input-text" %>
+        <%= form.text_field :nickname, class: "input-text" %>
       </div>
+
+      <%= form.submit "저장", class: "btn-primary w-full" %>
     <% end %>
   </div>
 
-  <!-- 하단 버튼 -->
-  <div class="px-6 pb-8">
-    <%= form.submit "다음", class: "btn-primary w-full" %>
+  <!-- 정보 -->
+  <div class="card-solid divide-y divide-warm-gray-100">
+    <%= link_to "#", class: "flex items-center justify-between py-4 tap-highlight-none" do %>
+      <div class="flex items-center gap-3">
+        <%= heroicon "document-text", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-500" } %>
+        <span class="text-warm-gray-800">이용약관</span>
+      </div>
+      <%= heroicon "chevron-right", variant: :outline, options: { class: "w-5 h-5 text-warm-gray-400" } %>
+    <% end %>
+
+    <%= link_to "#", class: "flex items-center justify-between py-4 tap-highlight-none" do %>
+      <div class="flex items-center gap-3">
+        <%= heroicon "shield-check", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-500" } %>
+        <span class="text-warm-gray-800">개인정보 처리방침</span>
+      </div>
+      <%= heroicon "chevron-right", variant: :outline, options: { class: "w-5 h-5 text-warm-gray-400" } %>
+    <% end %>
+
+    <%= link_to "#", class: "flex items-center justify-between py-4 tap-highlight-none" do %>
+      <div class="flex items-center gap-3">
+        <%= heroicon "information-circle", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-500" } %>
+        <span class="text-warm-gray-800">앱 정보</span>
+      </div>
+      <span class="text-sm text-warm-gray-400">v1.0.0</span>
+    <% end %>
+  </div>
+
+  <!-- 로그아웃 -->
+  <div class="card-solid">
+    <%= button_to logout_path, method: :delete, class: "flex items-center gap-3 py-4 w-full tap-highlight-none" do %>
+      <%= heroicon "arrow-right-on-rectangle", variant: :outline, options: { class: "w-6 h-6 text-red-500" } %>
+      <span class="text-red-500">로그아웃</span>
+    <% end %>
   </div>
 </div>
 ```
 
-- [x] **REFACTOR**: 온보딩 공통 레이아웃 partial 추출 (app/views/onboarding/_header.html.erb) ✅ 2025-12-17
+- [x] **REFACTOR**: 설정 아이템 partial (`_setting_item.html.erb`) ✅ 2025-12-17
+
+### 완료 기준
+- card-solid 그룹 카드
+- heroicon 아이콘
+- 토글 스위치
+- 로그아웃 버튼 (text-red-500)
 
 ---
 
-## 3.3 온보딩 - 아이 등록 (병렬 가능)
+## 7.2 알림 설정 (병렬 가능)
 
-### 파일: `app/views/onboarding/children/show.html.erb`
+### 파일: `app/views/settings/notifications/show.html.erb`
 
 ### 작업 내용
-- [x] **RED**: 아이 등록 폼 UI 테스트 ✅ 2025-12-17
-- [x] **GREEN**: Fixed 전체 화면 레이아웃 구현 (z-[100], local: true 폼) ✅ 2025-12-17
+- [x] **RED**: 알림 설정 UI 테스트 ✅ 2025-12-17
+- [x] **GREEN**: 알림 설정 뷰 구현 ✅ 2025-12-17
 
 ```erb
-<div class="min-h-screen bg-cream-50 flex flex-col">
-  <!-- 헤더 (진행률 2/3) -->
-  <header class="flex items-center justify-between px-4 h-14">
-    <button onclick="history.back()" class="p-2">
+<div class="px-4 py-6 space-y-6">
+  <!-- 헤더 -->
+  <div class="flex items-center gap-4">
+    <button onclick="history.back()" class="p-2 -ml-2">
       <%= heroicon "arrow-left", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-700" } %>
     </button>
-    <span class="text-lg font-semibold text-warm-gray-800">모아봄</span>
-    <div class="flex gap-1">
-      <span class="w-2 h-2 rounded-full bg-warm-gray-300"></span>
-      <span class="w-2 h-2 rounded-full bg-primary-500"></span>
-      <span class="w-2 h-2 rounded-full bg-warm-gray-300"></span>
-    </div>
-  </header>
-
-  <div class="flex-1 px-6 py-8">
-    <div class="w-20 h-20 mx-auto mb-6 bg-secondary-100 rounded-full flex items-center justify-center">
-      <%= heroicon "face-smile", variant: :outline, options: { class: "w-10 h-10 text-secondary-500" } %>
-    </div>
-
-    <h1 class="text-2xl font-bold text-warm-gray-800 text-center mb-2">
-      아이 정보를 등록해주세요
-    </h1>
-    <p class="text-warm-gray-500 text-center mb-8">
-      성장 기록의 주인공이에요
-    </p>
-
-    <%= form_with model: @child, url: onboarding_child_path, method: :post, class: "space-y-4" do |form| %>
-      <div>
-        <label class="block text-sm font-medium text-warm-gray-700 mb-2">이름</label>
-        <%= form.text_field :name, placeholder: "아이 이름", class: "input-text" %>
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-warm-gray-700 mb-2">생년월일</label>
-        <%= form.date_field :birthdate, class: "input-text" %>
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-warm-gray-700 mb-2">성별</label>
-        <div class="flex gap-3">
-          <button type="button" class="flex-1 py-3 rounded-xl border-2
-                                        border-primary-500 bg-primary-50 text-primary-700 font-medium"
-                  data-gender="female">
-            여아
-          </button>
-          <button type="button" class="flex-1 py-3 rounded-xl border-2
-                                        border-warm-gray-200 text-warm-gray-500 font-medium"
-                  data-gender="male">
-            남아
-          </button>
-        </div>
-        <%= form.hidden_field :gender %>
-      </div>
-    <% end %>
+    <h1 class="text-xl font-bold text-warm-gray-800">알림 설정</h1>
   </div>
 
-  <div class="px-6 pb-8 space-y-3">
-    <%= form.submit "다음", class: "btn-primary w-full" %>
-    <button type="button" class="text-warm-gray-400 text-sm w-full py-2">나중에 할게요</button>
+  <!-- 알림 설정 목록 -->
+  <div class="card-solid divide-y divide-warm-gray-100">
+    <div class="flex items-center justify-between py-4">
+      <div>
+        <p class="text-warm-gray-800 font-medium">새 사진 알림</p>
+        <p class="text-sm text-warm-gray-500">가족이 새 사진을 올리면 알려드려요</p>
+      </div>
+      <button class="w-12 h-7 bg-primary-500 rounded-full relative transition-colors"
+              data-controller="toggle" data-toggle-active="true">
+        <span class="absolute right-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
+              data-toggle-target="knob"></span>
+      </button>
+    </div>
+
+    <div class="flex items-center justify-between py-4">
+      <div>
+        <p class="text-warm-gray-800 font-medium">댓글 알림</p>
+        <p class="text-sm text-warm-gray-500">내 사진에 댓글이 달리면 알려드려요</p>
+      </div>
+      <button class="w-12 h-7 bg-primary-500 rounded-full relative transition-colors"
+              data-controller="toggle" data-toggle-active="true">
+        <span class="absolute right-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
+              data-toggle-target="knob"></span>
+      </button>
+    </div>
+
+    <div class="flex items-center justify-between py-4">
+      <div>
+        <p class="text-warm-gray-800 font-medium">반응 알림</p>
+        <p class="text-sm text-warm-gray-500">내 사진에 반응이 달리면 알려드려요</p>
+      </div>
+      <button class="w-12 h-7 bg-warm-gray-200 rounded-full relative transition-colors"
+              data-controller="toggle">
+        <span class="absolute left-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
+              data-toggle-target="knob"></span>
+      </button>
+    </div>
+
+    <div class="flex items-center justify-between py-4">
+      <div>
+        <p class="text-warm-gray-800 font-medium">가족 초대 알림</p>
+        <p class="text-sm text-warm-gray-500">새 가족이 참여하면 알려드려요</p>
+      </div>
+      <button class="w-12 h-7 bg-primary-500 rounded-full relative transition-colors"
+              data-controller="toggle" data-toggle-active="true">
+        <span class="absolute right-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
+              data-toggle-target="knob"></span>
+      </button>
+    </div>
   </div>
 </div>
 ```
 
-- [x] **REFACTOR**: 버튼 그룹은 단일 사용으로 컴포넌트화 불필요 (YAGNI 원칙) ✅ 2025-12-17
+- [x] **REFACTOR**: 토글 컴포넌트 추출 (`toggle_controller.js`) ✅ 2025-12-17
 
----
-
-## 3.4 온보딩 - 가족 초대 (병렬 가능)
-
-### 파일: `app/views/onboarding/invites/show.html.erb`
-
-### 작업 내용
-- [x] **RED**: 초대 페이지 UI 테스트 ✅ 2025-12-17
-- [x] **GREEN**: Fixed 전체 화면 레이아웃 구현 (z-[100]) ✅ 2025-12-17
-
-```erb
-<div class="min-h-screen bg-cream-50 flex flex-col">
-  <!-- 헤더 (진행률 3/3) -->
-  <header class="flex items-center justify-between px-4 h-14">
-    <button onclick="history.back()" class="p-2">
-      <%= heroicon "arrow-left", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-700" } %>
-    </button>
-    <span class="text-lg font-semibold text-warm-gray-800">모아봄</span>
-    <div class="flex gap-1">
-      <span class="w-2 h-2 rounded-full bg-warm-gray-300"></span>
-      <span class="w-2 h-2 rounded-full bg-warm-gray-300"></span>
-      <span class="w-2 h-2 rounded-full bg-primary-500"></span>
-    </div>
-  </header>
-
-  <div class="flex-1 px-6 py-8">
-    <div class="w-20 h-20 mx-auto mb-6 bg-accent-100 rounded-full flex items-center justify-center">
-      <%= heroicon "user-group", variant: :outline, options: { class: "w-10 h-10 text-accent-500" } %>
-    </div>
-
-    <h1 class="text-2xl font-bold text-warm-gray-800 text-center mb-2">
-      가족을 초대해보세요
-    </h1>
-    <p class="text-warm-gray-500 text-center mb-8">
-      함께 추억을 공유할 수 있어요
-    </p>
-
-    <!-- 초대 링크 카드 -->
-    <div class="card-glass">
-      <p class="text-sm text-warm-gray-500 mb-3">초대 링크</p>
-      <div class="flex items-center gap-2">
-        <input type="text" value="moabom.app/i/<%= @invite_token %>" readonly
-               class="input-text flex-1 text-sm">
-        <button class="btn-primary btn-sm shrink-0" data-action="click->clipboard#copy">
-          <%= heroicon "clipboard-document", variant: :outline, options: { class: "w-5 h-5" } %>
-        </button>
-      </div>
-    </div>
-
-    <!-- 공유 버튼들 -->
-    <div class="flex justify-center gap-4 mt-6">
-      <button class="flex flex-col items-center gap-2">
-        <div class="w-12 h-12 bg-[#FEE500] rounded-full flex items-center justify-center">
-          <span class="text-xl">💬</span>
-        </div>
-        <span class="text-xs text-warm-gray-500">카카오톡</span>
-      </button>
-      <button class="flex flex-col items-center gap-2">
-        <div class="w-12 h-12 bg-warm-gray-200 rounded-full flex items-center justify-center">
-          <%= heroicon "link", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-600" } %>
-        </div>
-        <span class="text-xs text-warm-gray-500">링크 복사</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="px-6 pb-8 space-y-3">
-    <%= link_to "시작하기", root_path, class: "btn-primary w-full text-center" %>
-    <button type="button" class="text-warm-gray-400 text-sm w-full py-2">나중에 초대할게요</button>
-  </div>
-</div>
-```
-
-- [x] **REFACTOR**: 공유 버튼은 단일 사용으로 partial 추출 불필요 (YAGNI 원칙) ✅ 2025-12-17
+### 완료 기준
+- 토글 스위치 ON/OFF 상태
+- 설정 항목 설명 텍스트
+- 뒤로 가기 버튼
 
 ---
 
 ## 참고
-- [PAGE_LAYOUTS.md](../references/PAGE_LAYOUTS.md) - 2. 홈 화면, 3. 온보딩 플로우
-
----
-
-# Wave 3: Phase 5 - 사진 기능
-
-> 선행 조건: Wave 2 완료
-> 병렬 실행: 5.1 ∥ 5.2 ∥ 5.3 (내부 병렬), Phase 3, 4, 6, 7, 8과도 병렬 가능
-
----
-
-## 5.1 사진 타임라인 (병렬 가능)
-
-### 파일: `app/views/families/photos/index.html.erb`
-
-### 작업 내용
-- [x] **RED**: 타임라인 UI 테스트 ✅ 2025-12-17
-- [x] **GREEN**: ✅ 2025-12-17
-
-```erb
-<div class="px-4 py-6">
-  <!-- 헤더 -->
-  <h1 class="text-xl font-bold text-warm-gray-800 mb-4">사진 타임라인</h1>
-
-  <!-- 필터 탭 -->
-  <div class="flex gap-2 mb-6 overflow-x-auto scrollbar-hide -mx-4 px-4">
-    <%= link_to family_photos_path(@family),
-        class: "shrink-0 px-4 py-2 rounded-full text-sm font-medium
-                #{params[:child_id].blank? ? 'bg-primary-500 text-white' : 'bg-cream-100 text-warm-gray-600'}" do %>
-      전체
-    <% end %>
-    <% @family.children.each do |child| %>
-      <%= link_to family_photos_path(@family, child_id: child.id),
-          class: "shrink-0 px-4 py-2 rounded-full text-sm font-medium
-                  #{params[:child_id].to_s == child.id.to_s ? 'bg-primary-500 text-white' : 'bg-cream-100 text-warm-gray-600'}" do %>
-        <%= child.name %>
-      <% end %>
-    <% end %>
-  </div>
-
-  <% if @photos.any? %>
-    <!-- 월별 그룹 -->
-    <% @photos.group_by { |p| p.taken_at.strftime("%Y년 %m월") }.each do |month, photos| %>
-      <section class="mb-8">
-        <h2 class="text-sm font-semibold text-warm-gray-500 mb-3"><%= month %></h2>
-
-        <!-- 사진 그리드 -->
-        <div class="grid grid-cols-3 gap-1">
-          <% photos.each do |photo| %>
-            <%= link_to family_photo_path(@family, photo),
-                class: "aspect-square overflow-hidden rounded-lg" do %>
-              <%= image_tag photo.image.variant(:thumbnail),
-                  class: "w-full h-full object-cover",
-                  loading: "lazy",
-                  alt: photo.caption %>
-            <% end %>
-          <% end %>
-        </div>
-      </section>
-    <% end %>
-  <% else %>
-    <!-- 빈 상태 -->
-    <div class="empty-state">
-      <div class="w-20 h-20 bg-cream-100 rounded-full flex items-center justify-center mb-4">
-        <%= heroicon "photo", variant: :outline, options: { class: "w-10 h-10 text-warm-gray-400" } %>
-      </div>
-      <h3 class="text-lg font-medium text-warm-gray-800 mb-2">아직 사진이 없어요</h3>
-      <p class="text-warm-gray-500 mb-6">소중한 순간을 가족과 공유해보세요</p>
-      <%= link_to new_family_photo_path(@family), class: "btn-primary" do %>
-        <%= heroicon "plus", variant: :solid, options: { class: "w-5 h-5 mr-2" } %>
-        첫 사진 업로드
-      <% end %>
-    </div>
-  <% end %>
-</div>
-```
-
-- [x] **REFACTOR**: 사진 그리드 partial 추출 ✅ 2025-12-17
-
-### 완료 기준
-- pill 스타일 필터 탭
-- 3열 그리드 (gap-1, rounded-lg)
-- 월별 그룹핑
-- empty-state 디자인
-
----
-
-## 5.2 사진 상세 (병렬 가능)
-
-### 파일: `app/views/families/photos/show.html.erb`
-
-### 작업 내용
-- [x] **RED**: 사진 상세 UI 테스트 ✅ 2025-12-17
-- [x] **GREEN**: ✅ 2025-12-17
-
-```erb
-<div class="min-h-screen bg-warm-gray-900">
-  <!-- 투명 헤더 -->
-  <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 h-14 safe-area-inset-top">
-    <button onclick="history.back()" class="p-2 bg-black/30 rounded-full backdrop-blur-sm">
-      <%= heroicon "arrow-left", variant: :outline, options: { class: "w-6 h-6 text-white" } %>
-    </button>
-    <button class="p-2 bg-black/30 rounded-full backdrop-blur-sm">
-      <%= heroicon "ellipsis-horizontal", variant: :outline, options: { class: "w-6 h-6 text-white" } %>
-    </button>
-  </header>
-
-  <!-- 사진 -->
-  <div class="w-full aspect-square pt-14">
-    <% if @photo.image.attached? %>
-      <%= image_tag @photo.image, class: "w-full h-full object-contain bg-black", alt: @photo.caption %>
-    <% end %>
-  </div>
-
-  <!-- 정보 영역 -->
-  <div class="bg-white rounded-t-3xl -mt-6 relative z-10 min-h-[50vh]">
-    <div class="px-4 py-6">
-      <!-- 반응 & 날짜 -->
-      <div class="flex items-center justify-between mb-4">
-        <div class="flex items-center gap-4">
-          <%= turbo_frame_tag dom_id(@photo, :reactions) do %>
-            <%= render "photos/reactions/reactions", photo: @photo %>
-          <% end %>
-        </div>
-        <span class="text-sm text-warm-gray-400">
-          <%= l @photo.taken_at, format: :short if @photo.taken_at %>
-        </span>
-      </div>
-
-      <!-- 캡션 -->
-      <% if @photo.caption.present? %>
-        <p class="text-warm-gray-800 mb-6"><%= @photo.caption %></p>
-      <% end %>
-
-      <!-- 메타 정보 -->
-      <div class="text-sm text-warm-gray-500 mb-6">
-        <p>업로드: <%= @photo.uploader.nickname %></p>
-        <% if @photo.child %>
-          <p>아이: <%= @photo.child.name %></p>
-        <% end %>
-      </div>
-
-      <!-- 댓글 -->
-      <div class="space-y-4">
-        <% @photo.comments.each do |comment| %>
-          <%= render "photos/comments/comment", comment: comment %>
-        <% end %>
-      </div>
-    </div>
-
-    <!-- 댓글 입력 -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-warm-gray-100 px-4 py-3 safe-area-inset-bottom">
-      <%= form_with url: family_photo_comments_path(@family, @photo), class: "flex items-center gap-3" do |form| %>
-        <%= form.text_field :content, placeholder: "댓글 작성...", class: "input-text flex-1" %>
-        <%= form.submit "전송", class: "btn-primary btn-sm" %>
-      <% end %>
-    </div>
-  </div>
-</div>
-```
-
-- [x] **REFACTOR**: 반응/댓글 컴포넌트 분리 ✅ 2025-12-17
-
-### 완료 기준
-- 투명 헤더 (bg-black/30 backdrop-blur-sm)
-- rounded-t-3xl 정보 카드
-- 고정 댓글 입력창
-
----
-
-## 5.3 사진 업로드 (병렬 가능)
-
-### 파일: `app/views/families/photos/new.html.erb`, `_form.html.erb`
-
-### 작업 내용
-- [x] **RED**: 업로드 폼 UI 테스트 ✅ 2025-12-17
-- [x] **GREEN**: ✅ 2025-12-17
-
-```erb
-<%# new.html.erb %>
-<div class="min-h-screen bg-cream-50">
-  <!-- 헤더 -->
-  <header class="flex items-center justify-between px-4 h-14 bg-white border-b border-warm-gray-100">
-    <%= link_to family_photos_path(@family), class: "text-warm-gray-600" do %>
-      취소
-    <% end %>
-    <span class="font-semibold text-warm-gray-800">사진 업로드</span>
-    <button form="photo_form" type="submit" class="text-primary-500 font-semibold">완료</button>
-  </header>
-
-  <%= render partial: "form", locals: { photo: @photo } %>
-</div>
-```
-
-```erb
-<%# _form.html.erb %>
-<%= form_with model: [@family, photo], id: "photo_form", class: "px-4 py-6 space-y-6" do |form| %>
-  <% if photo.errors.any? %>
-    <div class="alert-error">
-      <% photo.errors.full_messages.each do |message| %>
-        <p class="text-sm"><%= message %></p>
-      <% end %>
-    </div>
-  <% end %>
-
-  <!-- 미리보기 -->
-  <div class="aspect-square bg-warm-gray-100 rounded-2xl overflow-hidden flex items-center justify-center"
-       data-controller="image-preview">
-    <div class="text-center" data-image-preview-target="placeholder">
-      <%= heroicon "photo", variant: :outline, options: { class: "w-16 h-16 text-warm-gray-300 mx-auto mb-2" } %>
-      <p class="text-sm text-warm-gray-400">사진을 선택해주세요</p>
-    </div>
-    <img class="w-full h-full object-cover hidden" data-image-preview-target="preview">
-  </div>
-
-  <!-- 파일 선택 -->
-  <div class="flex gap-2 overflow-x-auto scrollbar-hide">
-    <label class="shrink-0 w-16 h-16 bg-cream-100 rounded-xl flex items-center justify-center
-                  cursor-pointer border-2 border-dashed border-warm-gray-300
-                  hover:border-primary-400 transition-colors">
-      <%= heroicon "plus", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-400" } %>
-      <%= form.file_field :image, accept: "image/*", class: "hidden",
-          data: { action: "change->image-preview#preview" } %>
-    </label>
-  </div>
-
-  <!-- 캡션 -->
-  <div>
-    <%= form.text_area :caption, placeholder: "이 순간에 대해 적어보세요...",
-        class: "input-textarea h-24", rows: 3 %>
-  </div>
-
-  <!-- 아이 태그 -->
-  <div>
-    <label class="block text-sm font-medium text-warm-gray-700 mb-2">아이 태그</label>
-    <div class="flex gap-2 flex-wrap">
-      <button type="button" class="px-4 py-2 rounded-full bg-primary-500 text-white text-sm font-medium"
-              data-child-id="">
-        전체
-      </button>
-      <% @family.children.each do |child| %>
-        <button type="button" class="px-4 py-2 rounded-full bg-cream-100 text-warm-gray-600 text-sm font-medium"
-                data-child-id="<%= child.id %>">
-          <%= child.name %>
-        </button>
-      <% end %>
-    </div>
-    <%= form.hidden_field :child_id %>
-  </div>
-
-  <!-- 촬영일 -->
-  <div>
-    <label class="block text-sm font-medium text-warm-gray-700 mb-2">촬영일</label>
-    <%= form.date_field :taken_at, class: "input-text", value: Date.today %>
-  </div>
-<% end %>
-```
-
-- [x] **REFACTOR**: 파일 업로드 Stimulus 컨트롤러 (`image_preview_controller.js`) ✅ 2025-12-17
-
-### 완료 기준
-- 취소/완료 헤더
-- 이미지 미리보기
-- pill 버튼 아이 태그
-- input-text, input-textarea 스타일
-
----
-
-## 참고
-- [PAGE_LAYOUTS.md](../references/PAGE_LAYOUTS.md) - 4. 사진 타임라인, 5. 사진 상세/업로드
-
----
-
-# Wave 3: Phase 6 - 가족 관리
-
-> 선행 조건: Wave 2 완료
-> 병렬 실행: 6.1 ∥ 6.2 (내부 병렬), Phase 3, 4, 5, 7, 8과도 병렬 가능
-
----
-
-## 6.1 가족 구성원 목록 (병렬 가능)
-
-### 파일: `app/views/families/members/index.html.erb`
-
-### 작업 내용
-- [x] **RED**: 구성원 목록 UI 테스트 ✅ 2025-01-22
-- [x] **GREEN**: 구성원 목록 뷰 구현 ✅ 2025-01-22
-
-```erb
-<div class="px-4 py-6">
-  <h1 class="text-xl font-bold text-warm-gray-800 mb-6">가족 구성원</h1>
-
-  <!-- 구성원 목록 -->
-  <div class="card-solid divide-y divide-warm-gray-100 mb-6">
-    <% @memberships.each do |membership| %>
-      <div class="flex items-center justify-between py-4">
-        <div class="flex items-center gap-3">
-          <div class="avatar bg-primary-100">
-            <span class="text-primary-600 font-medium">
-              <%= membership.user.nickname.first %>
-            </span>
-          </div>
-          <div>
-            <p class="font-medium text-warm-gray-800"><%= membership.user.nickname %></p>
-            <p class="text-sm text-warm-gray-500"><%= membership.user.email %></p>
-          </div>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="badge <%= membership.role == 'admin' ? 'badge-primary' : 'badge-secondary' %>">
-            <%= membership.role == 'admin' ? '관리자' : '구성원' %>
-          </span>
-          <% if can_manage_members? && membership.user != current_user %>
-            <button class="p-2 hover:bg-cream-100 rounded-full">
-              <%= heroicon "ellipsis-vertical", variant: :outline, options: { class: "w-5 h-5 text-warm-gray-400" } %>
-            </button>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-
-  <!-- 가족 초대 버튼 -->
-  <% if can_manage_members? %>
-    <%= link_to "#", class: "btn-outline w-full" do %>
-      <%= heroicon "user-plus", variant: :outline, options: { class: "w-5 h-5 mr-2" } %>
-      가족 초대하기
-    <% end %>
-  <% end %>
-</div>
-```
-
-- [x] **REFACTOR**: 구성원 카드 partial (`_member.html.erb`) ✅ 2025-01-22
-
-### 완료 기준
-- card-solid 카드
-- avatar 컴포넌트
-- badge 역할 표시
-- btn-outline 초대 버튼
-
----
-
-## 6.2 아이 목록 (병렬 가능)
-
-### 파일: `app/views/families/children/index.html.erb`
-
-### 작업 내용
-- [x] **RED**: 아이 목록 UI 테스트 ✅ 2025-01-22
-- [x] **GREEN**: 아이 목록 뷰 구현 ✅ 2025-01-22
-
-```erb
-<div class="px-4 py-6">
-  <h1 class="text-xl font-bold text-warm-gray-800 mb-6">우리 아이들</h1>
-
-  <% if @children.any? %>
-    <div class="space-y-4 mb-6">
-      <% @children.each do |child| %>
-        <%= link_to edit_family_child_path(@family, child), class: "card-glass block tap-highlight-none" do %>
-          <div class="flex items-center gap-4">
-            <!-- 프로필 영역 -->
-            <div class="w-16 h-16 rounded-full bg-cream-200 flex items-center justify-center overflow-hidden">
-              <% if child.profile_photo.attached? %>
-                <%= image_tag child.profile_photo.variant(:thumbnail), class: "w-full h-full object-cover" %>
-              <% else %>
-                <%= heroicon "face-smile", variant: :outline, options: { class: "w-8 h-8 text-warm-gray-400" } %>
-              <% end %>
-            </div>
-
-            <!-- 정보 -->
-            <div class="flex-1">
-              <p class="font-semibold text-warm-gray-800"><%= child.name %></p>
-              <p class="text-sm text-warm-gray-500">
-                <%= child.birthdate.strftime("%Y.%m.%d") %> (D+<%= child.days_since_birth %>)
-              </p>
-              <p class="text-xs text-warm-gray-400">사진 <%= child.photos.count %>장</p>
-            </div>
-
-            <!-- 화살표 -->
-            <%= heroicon "chevron-right", variant: :outline, options: { class: "w-5 h-5 text-warm-gray-400" } %>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-  <% else %>
-    <div class="empty-state mb-6">
-      <div class="w-16 h-16 bg-cream-100 rounded-full flex items-center justify-center mb-4">
-        <%= heroicon "face-smile", variant: :outline, options: { class: "w-8 h-8 text-warm-gray-400" } %>
-      </div>
-      <h3 class="text-lg font-medium text-warm-gray-800 mb-2">등록된 아이가 없어요</h3>
-      <p class="text-warm-gray-500">아이를 등록하고 성장 기록을 시작하세요</p>
-    </div>
-  <% end %>
-
-  <!-- 아이 추가 버튼 -->
-  <% if can_manage_members? %>
-    <%= link_to new_family_child_path(@family), class: "btn-outline w-full" do %>
-      <%= heroicon "plus", variant: :outline, options: { class: "w-5 h-5 mr-2" } %>
-      아이 추가하기
-    <% end %>
-  <% end %>
-</div>
-```
-
-- [x] **REFACTOR**: 아이 카드 partial (`_child.html.erb`) ✅ 2025-01-22
-
-### 완료 기준
-- card-glass 카드
-- D+일 표시
-- 사진 수 표시
-- empty-state 디자인
-
----
-
-## 참고
-- [PAGE_LAYOUTS.md](../references/PAGE_LAYOUTS.md) - 6. 가족 관리
+- [PAGE_LAYOUTS.md](../references/PAGE_LAYOUTS.md) - 7. 설정

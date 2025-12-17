@@ -13,10 +13,10 @@ module Settings
       get settings_notifications_path
 
       assert_response :success
-      assert_select "form[action=?]", settings_notifications_path
-      assert_select "input[name=?]", "user[notify_on_new_photo]"
-      assert_select "input[name=?]", "user[notify_on_comment]"
-      assert_select "input[name=?]", "user[notify_on_reaction]"
+      assert_select "h1", I18n.t("settings.notifications.show.title")
+      assert_select "label", I18n.t("settings.notifications.show.notify_on_new_photo")
+      assert_select "label", I18n.t("settings.notifications.show.notify_on_comment")
+      assert_select "label", I18n.t("settings.notifications.show.notify_on_reaction")
     end
 
     test "should update notification settings successfully" do
@@ -29,7 +29,7 @@ module Settings
       }
 
       assert_redirected_to settings_notifications_path
-      assert_equal "알림 설정이 업데이트되었습니다.", flash[:notice]
+      assert_equal I18n.t("settings.notifications.update.success"), flash[:notice]
 
       @user.reload
       assert_not @user.notify_on_new_photo

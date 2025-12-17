@@ -1,50 +1,60 @@
-<div class="max-w-lg mx-auto">
-  <h1 class="text-2xl font-bold text-gray-900 mb-6"><%= t(".title") %></h1>
+<div class="px-4 py-6 space-y-6">
+  <!-- 헤더 -->
+  <div class="flex items-center gap-4">
+    <button onclick="history.back()" class="p-2 -ml-2">
+      <%= heroicon "arrow-left", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-700" } %>
+    </button>
+    <h1 class="text-xl font-bold text-warm-gray-800"><%= t('.title') %></h1>
+  </div>
 
-  <%= form_with model: current_user, url: settings_notifications_path, method: :patch, class: "space-y-6" do |form| %>
-    <% if current_user.errors.any? %>
-      <div class="bg-red-50 border border-red-200 rounded-lg p-4">
-        <h2 class="text-red-800 font-medium text-sm"><%= pluralize(current_user.errors.count, "오류") %>가 있습니다:</h2>
-        <ul class="list-disc list-inside text-red-700 text-sm mt-2">
-          <% current_user.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
+  <!-- 알림 설정 목록 -->
+  <div class="card-solid divide-y divide-warm-gray-100">
+    <div class="flex items-center justify-between py-4">
+      <div>
+        <label class="text-warm-gray-800 font-medium"><%= t('.notify_on_new_photo') %></label>
+        <p class="text-sm text-warm-gray-500"><%= t('.notify_on_new_photo_help') %></p>
       </div>
-    <% end %>
-
-    <div class="space-y-4">
-      <div class="flex items-center justify-between p-4 bg-white rounded-lg border border-gray-200">
-        <div>
-          <%= form.label :notify_on_new_photo, t(".notify_on_new_photo"), class: "text-sm font-medium text-gray-900" %>
-          <p class="text-sm text-gray-500"><%= t(".notify_on_new_photo_help") %></p>
-        </div>
-        <%= form.check_box :notify_on_new_photo,
-            class: "h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
-      </div>
-
-      <div class="flex items-center justify-between p-4 bg-white rounded-lg border border-gray-200">
-        <div>
-          <%= form.label :notify_on_comment, t(".notify_on_comment"), class: "text-sm font-medium text-gray-900" %>
-          <p class="text-sm text-gray-500"><%= t(".notify_on_comment_help") %></p>
-        </div>
-        <%= form.check_box :notify_on_comment,
-            class: "h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
-      </div>
-
-      <div class="flex items-center justify-between p-4 bg-white rounded-lg border border-gray-200">
-        <div>
-          <%= form.label :notify_on_reaction, t(".notify_on_reaction"), class: "text-sm font-medium text-gray-900" %>
-          <p class="text-sm text-gray-500"><%= t(".notify_on_reaction_help") %></p>
-        </div>
-        <%= form.check_box :notify_on_reaction,
-            class: "h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
-      </div>
+      <button class="w-12 h-7 bg-primary-500 rounded-full relative transition-colors"
+              data-controller="toggle" data-toggle-active="true">
+        <span class="absolute right-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
+              data-toggle-target="knob"></span>
+      </button>
     </div>
 
-    <div>
-      <%= form.submit t("helpers.submit.save"),
-          class: "w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer" %>
+    <div class="flex items-center justify-between py-4">
+      <div>
+        <label class="text-warm-gray-800 font-medium"><%= t('.notify_on_comment') %></label>
+        <p class="text-sm text-warm-gray-500"><%= t('.notify_on_comment_help') %></p>
+      </div>
+      <button class="w-12 h-7 bg-primary-500 rounded-full relative transition-colors"
+              data-controller="toggle" data-toggle-active="true">
+        <span class="absolute right-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
+              data-toggle-target="knob"></span>
+      </button>
     </div>
-  <% end %>
+
+    <div class="flex items-center justify-between py-4">
+      <div>
+        <label class="text-warm-gray-800 font-medium"><%= t('.notify_on_reaction') %></label>
+        <p class="text-sm text-warm-gray-500"><%= t('.notify_on_reaction_help') %></p>
+      </div>
+      <button class="w-12 h-7 bg-warm-gray-200 rounded-full relative transition-colors"
+              data-controller="toggle">
+        <span class="absolute left-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
+              data-toggle-target="knob"></span>
+      </button>
+    </div>
+
+    <div class="flex items-center justify-between py-4">
+      <div>
+        <label class="text-warm-gray-800 font-medium"><%= t('.notify_on_invite') %></label>
+        <p class="text-sm text-warm-gray-500"><%= t('.notify_on_invite_help') %></p>
+      </div>
+      <button class="w-12 h-7 bg-primary-500 rounded-full relative transition-colors"
+              data-controller="toggle" data-toggle-active="true">
+        <span class="absolute right-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
+              data-toggle-target="knob"></span>
+      </button>
+    </div>
+  </div>
 </div>

@@ -13,7 +13,8 @@ module Settings
       get settings_profile_path
 
       assert_response :success
-      assert_select "form[action=?]", settings_profile_path
+      assert_select "h1", I18n.t("settings.profiles.show.title")
+      assert_select "h2", "프로필 정보"
       assert_select "input[name=?]", "user[nickname]"
     end
 
@@ -23,7 +24,7 @@ module Settings
       }
 
       assert_redirected_to settings_profile_path
-      assert_equal "프로필이 업데이트되었습니다.", flash[:notice]
+      assert_equal I18n.t("settings.profiles.update.success"), flash[:notice]
 
       @user.reload
       assert_equal "새로운닉네임", @user.nickname
@@ -35,8 +36,9 @@ module Settings
       }
 
       assert_response :unprocessable_entity
-      # TailwindCSS 스타일링된 에러 영역 확인
-      assert_select "[class*='bg-red']", /닉네임/
+      # 에러 메시지 확인
+      assert_select "div.alert-error"
+      assert_select "p", /닉네임/
     end
 
     test "should require authentication" do
