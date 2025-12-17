@@ -1,9 +1,12 @@
-<div class="container mx-auto px-4 py-8">
-  <div class="mb-4">
-    <%= link_to "← 타임라인으로", family_photos_path(@family), class: "text-blue-600" %>
-  </div>
-
-  <h1 class="text-2xl font-bold mb-6">사진 업로드</h1>
+<div class="min-h-screen bg-cream-50">
+  <!-- 헤더 -->
+  <header class="flex items-center justify-between px-4 h-14 bg-white border-b border-warm-gray-100">
+    <%= link_to family_photos_path(@family), class: "text-warm-gray-600" do %>
+      취소
+    <% end %>
+    <span class="font-semibold text-warm-gray-800">사진 업로드</span>
+    <button form="photo_form" type="submit" class="text-primary-500 font-semibold">완료</button>
+  </header>
 
   <%= render partial: "form", locals: { photo: @photo } %>
 </div>

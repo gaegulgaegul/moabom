@@ -1,0 +1,19 @@
+<%# locals: photos, family %>
+<!-- 사진 그리드 -->
+<div class="grid grid-cols-3 gap-1">
+  <% photos.each do |photo| %>
+    <%= link_to family_photo_path(family, photo),
+        class: "aspect-square overflow-hidden rounded-lg" do %>
+      <% if photo.image.attached? %>
+        <%= image_tag photo.image.variant(:thumbnail),
+            class: "w-full h-full object-cover",
+            loading: "lazy",
+            alt: photo.caption %>
+      <% else %>
+        <div class="w-full h-full bg-cream-200 flex items-center justify-center">
+          <%= heroicon "photo", variant: :outline, options: { class: "w-8 h-8 text-warm-gray-400" } %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
