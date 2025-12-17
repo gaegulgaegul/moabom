@@ -54,6 +54,13 @@ Rails.application.routes.draw do
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # Error pages
+  match "/404", to: "errors#not_found", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
+
   # Root
   root "home#index"
+
+  # Catch-all for 404 (must be last)
+  match "*path", to: "errors#not_found", via: :all
 end

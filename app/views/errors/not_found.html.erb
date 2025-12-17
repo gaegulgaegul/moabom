@@ -1,7 +1,8 @@
-<% content_for(:title) { "페이지를 찾을 수 없습니다 - Moabom" } %>
+<% content_for(:title) { "페이지를 찾을 수 없습니다 - 모아봄" } %>
 
-<div class="flex flex-col items-center justify-center min-h-[50vh] text-center">
-  <h1 class="text-4xl font-bold text-gray-800 mb-4">찾을 수 없습니다</h1>
-  <p class="text-gray-600 mb-8">요청하신 페이지를 찾을 수 없습니다.</p>
-  <%= link_to "홈으로 돌아가기", root_path, class: "px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600" %>
-</div>
+<%= render "errors/error_page",
+  icon_bg_class: "bg-warm-gray-100",
+  icon_name: "magnifying-glass",
+  icon_color_class: "text-warm-gray-400",
+  title: "페이지를 찾을 수 없어요",
+  description: "요청하신 페이지가 존재하지 않거나<br>이동되었을 수 있어요." %>
