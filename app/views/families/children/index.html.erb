@@ -1,29 +1,25 @@
-<div class="children-page">
-  <h1><%= @family.name %> 아이들</h1>
+<div class="px-4 py-6">
+  <h1 class="text-xl font-bold text-warm-gray-800 mb-6">우리 아이들</h1>
 
-  <% if can_manage_members? %>
-    <%= link_to "아이 추가", new_family_child_path(@family), class: "btn btn-primary" %>
+  <% if @children.any? %>
+    <div class="space-y-4 mb-6">
+      <%= render partial: "families/children/child", collection: @children, as: :child, locals: { family: @family } %>
+    </div>
+  <% else %>
+    <div class="empty-state mb-6">
+      <div class="w-16 h-16 bg-cream-100 rounded-full flex items-center justify-center mb-4">
+        <%= heroicon "face-smile", variant: :outline, options: { class: "w-8 h-8 text-warm-gray-400" } %>
+      </div>
+      <h3 class="text-lg font-medium text-warm-gray-800 mb-2">등록된 아이가 없어요</h3>
+      <p class="text-warm-gray-500">아이를 등록하고 성장 기록을 시작하세요</p>
+    </div>
   <% end %>
 
-  <div class="children-list">
-    <% @children.each do |child| %>
-      <div class="child">
-        <div class="child-info">
-          <span class="child-name"><%= child.name %></span>
-          <span class="child-age"><%= child.age_string %></span>
-          <span class="child-gender"><%= child.gender == "male" ? "남" : "여" %></span>
-        </div>
-
-        <% if can_manage_members? %>
-          <div class="child-actions">
-            <%= link_to "수정", edit_family_child_path(@family, child), class: "btn btn-secondary" %>
-            <%= button_to "삭제", family_child_path(@family, child),
-                          method: :delete,
-                          data: { turbo_confirm: "정말 삭제하시겠습니까?" },
-                          class: "btn btn-danger" %>
-          </div>
-        <% end %>
-      </div>
+  <!-- 아이 추가 버튼 -->
+  <% if can_manage_members? %>
+    <%= link_to new_family_child_path(@family), class: "btn-outline w-full" do %>
+      <%= heroicon "plus", variant: :outline, options: { class: "w-5 h-5 mr-2" } %>
+      아이 추가하기
     <% end %>
-  </div>
+  <% end %>
 </div>

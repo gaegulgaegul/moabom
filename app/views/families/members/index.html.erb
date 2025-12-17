@@ -1,28 +1,16 @@
-<div class="members-page">
-  <h1><%= @family.name %> 구성원</h1>
+<div class="px-4 py-6">
+  <h1 class="text-xl font-bold text-warm-gray-800 mb-6">가족 구성원</h1>
 
-  <div class="members-list">
-    <% @memberships.each do |membership| %>
-      <div class="member">
-        <div class="member-info">
-          <span class="member-nickname"><%= membership.user.nickname %></span>
-          <span class="member-role"><%= membership.role %></span>
-        </div>
-
-        <% if can_manage_members? && membership.user != current_user %>
-          <div class="member-actions">
-            <%= form_with url: family_member_path(@family, membership), method: :patch, class: "role-form" do %>
-              <%= select_tag "family_membership[role]", options_for_select(FamilyMembership.roles.keys, membership.role) %>
-              <%= submit_tag "변경" %>
-            <% end %>
-
-            <%= button_to "내보내기", family_member_path(@family, membership),
-                          method: :delete,
-                          data: { turbo_confirm: "정말 내보내시겠습니까?" },
-                          class: "btn-danger" %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+  <!-- 구성원 목록 -->
+  <div class="card-solid divide-y divide-warm-gray-100 mb-6">
+    <%= render partial: "families/members/member", collection: @memberships, as: :membership %>
   </div>
+
+  <!-- 가족 초대 버튼 -->
+  <% if can_manage_members? %>
+    <%= link_to "#", class: "btn-outline w-full" do %>
+      <%= heroicon "user-plus", variant: :outline, options: { class: "w-5 h-5 mr-2" } %>
+      가족 초대하기
+    <% end %>
+  <% end %>
 </div>
