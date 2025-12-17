@@ -1,0 +1,33 @@
+<%# 설정 아이템 partial
+    locals:
+      - icon: heroicon 이름 (예: "user-circle")
+      - title: 아이템 제목 (예: "프로필 설정")
+      - url: 링크 URL (선택사항, 없으면 div)
+      - value: 오른쪽에 표시할 값 (선택사항)
+%>
+
+<% if local_assigns[:url].present? %>
+  <%= link_to url, class: "flex items-center justify-between py-4 tap-highlight-none" do %>
+    <div class="flex items-center gap-3">
+      <%= heroicon icon, variant: :outline, options: { class: "w-6 h-6 text-warm-gray-500" } %>
+      <span class="text-warm-gray-800"><%= title %></span>
+    </div>
+    <% if local_assigns[:value].present? %>
+      <span class="text-sm text-warm-gray-400"><%= value %></span>
+    <% else %>
+      <%= heroicon "chevron-right", variant: :outline, options: { class: "w-5 h-5 text-warm-gray-400" } %>
+    <% end %>
+  <% end %>
+<% else %>
+  <div class="flex items-center justify-between py-4">
+    <div class="flex items-center gap-3">
+      <%= heroicon icon, variant: :outline, options: { class: "w-6 h-6 text-warm-gray-500" } %>
+      <span class="text-warm-gray-800"><%= title %></span>
+    </div>
+    <% if local_assigns[:value].present? %>
+      <span class="text-sm text-warm-gray-400"><%= value %></span>
+    <% elsif block_given? %>
+      <%= yield %>
+    <% end %>
+  </div>
+<% end %>
