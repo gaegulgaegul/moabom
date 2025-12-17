@@ -1,0 +1,8 @@
+<% content_for(:title) { "문제가 발생했습니다 - 모아봄" } %>
+
+<%= render "errors/error_page",
+  icon_bg_class: "bg-red-100",
+  icon_name: "exclamation-triangle",
+  icon_color_class: "text-red-500",
+  title: "문제가 발생했어요",
+  description: "잠시 후 다시 시도해주세요.<br>문제가 계속되면 고객센터로 연락해주세요." %>

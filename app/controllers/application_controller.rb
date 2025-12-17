@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
   # Error handlers
   def not_found
     respond_to do |format|
-      format.html { render "errors/not_found", status: :not_found }
+      format.html { render "errors/not_found", status: :not_found, layout: "error" }
       format.json { render json: { error: { code: "not_found", message: "리소스를 찾을 수 없습니다." } }, status: :not_found }
     end
   end
@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
   def bad_request(exception = nil)
     message = exception&.message || "잘못된 요청입니다."
     respond_to do |format|
-      format.html { render "errors/bad_request", status: :bad_request }
+      format.html { render "errors/bad_request", status: :bad_request, layout: "error" }
       format.json { render json: { error: { code: "bad_request", message: message } }, status: :bad_request }
     end
   end
