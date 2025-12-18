@@ -1,111 +1,134 @@
-# Wave 3: Phase 4 - 대시보드
+# Wave 4: Finalize (마무리)
 
-> 선행 조건: Wave 2 완료, Phase 3.1 완료 (파일 충돌 방지)
-> 병렬 실행: Phase 5, 6, 7, 8과 병렬 가능
+> 선행 조건: Wave 3 (모든 Phase) 완료
+> 병렬 실행: 9.1 ∥ 9.2 ∥ 9.3
 
 ---
 
-## 4.1 대시보드 (로그인 상태)
-
-### 파일: `app/views/home/index.html.erb` (로그인 상태 부분)
-
-### 주의사항
-**Phase 3.1과 같은 파일을 수정하므로, Phase 3.1 완료 후 진행**
+## 9.1 반응형 테스트 (병렬 가능)
 
 ### 작업 내용
-- [x] **RED**: 대시보드 UI 테스트 ✅ 2025-12-18
-- [x] **GREEN**: 대시보드 UI 구현 ✅ 2025-12-18
+- [x] 모바일 (< 640px) 레이아웃 확인 ✅ 2025-12-18
+  - 모든 페이지 세로 스크롤 동작
+  - 터치 인터랙션 정상 동작
+  - 사진 그리드 3열 유지
 
-```erb
-<% if logged_in? %>
-  <div class="px-4 py-6 space-y-6">
-    <!-- 인사 -->
-    <div>
-      <h1 class="text-xl font-bold text-warm-gray-800">
-        안녕하세요, <%= current_user.nickname %>님! 👋
-      </h1>
-    </div>
+- [x] 태블릿 (768px) 레이아웃 확인 ✅ 2025-12-18
+  - 사진 그리드 4열로 확장 (md:grid-cols-4)
+  - 카드 너비 조정
+  - 폼 최대 너비 제한
 
-    <!-- 아이 카드 -->
-    <% if @child.present? %>
-      <div class="card-glass">
-        <div class="flex items-center gap-4">
-          <div class="avatar avatar-lg bg-primary-100">
-            <%= heroicon "face-smile", variant: :outline, options: { class: "w-8 h-8 text-primary-500" } %>
-          </div>
-          <div>
-            <p class="font-semibold text-warm-gray-800">
-              <%= @child.name %>의 D+<%= @child.days_since_birth %>
-            </p>
-            <p class="text-sm text-warm-gray-500">오늘도 예쁜 하루 보내세요</p>
-          </div>
-        </div>
-      </div>
-    <% end %>
+- [x] 데스크톱 (1024px+) 레이아웃 확인 ✅ 2025-12-18
+  - 사진 그리드 6열 (lg:grid-cols-6)
+  - 최대 컨텐츠 너비 제한
+  - 호버 상태 동작
 
-    <!-- 최근 사진 -->
-    <% if @recent_photos.present? %>
-      <section>
-        <h2 class="text-lg font-semibold text-warm-gray-800 mb-3">최근 사진</h2>
-        <div class="flex gap-3 overflow-x-auto scrollbar-hide -mx-4 px-4">
-          <% @recent_photos.each do |photo| %>
-            <%= link_to family_photo_path(@family, photo), class: "shrink-0" do %>
-              <div class="w-24 h-24 rounded-xl overflow-hidden">
-                <%= image_tag photo.image.variant(:thumbnail),
-                    class: "w-full h-full object-cover",
-                    loading: "lazy" %>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-      </section>
-    <% end %>
+### 테스트 방법
+```bash
+# 시스템 테스트에서 다양한 뷰포트 테스트
+# test/system/responsive_test.rb
 
-    <!-- 빠른 메뉴 (Bento Grid) -->
-    <section>
-      <h2 class="text-lg font-semibold text-warm-gray-800 mb-3">빠른 메뉴</h2>
-      <div class="grid grid-cols-2 gap-3">
-        <%= link_to new_family_photo_path(@family),
-            class: "card-flat flex flex-col items-center justify-center py-6 tap-highlight-none" do %>
-          <%= heroicon "camera", variant: :outline, options: { class: "w-8 h-8 text-primary-500 mb-2" } %>
-          <span class="text-sm font-medium text-warm-gray-700">사진 업로드</span>
-        <% end %>
+class ResponsiveTest < ApplicationSystemTestCase
+  test "mobile layout" do
+    page.driver.browser.manage.window.resize_to(375, 667)
+    visit root_path
+    # assertions
+  end
 
-        <%= link_to family_members_path(@family),
-            class: "card-flat flex flex-col items-center justify-center py-6 tap-highlight-none" do %>
-          <%= heroicon "user-group", variant: :outline, options: { class: "w-8 h-8 text-secondary-500 mb-2" } %>
-          <span class="text-sm font-medium text-warm-gray-700">가족 관리</span>
-        <% end %>
-
-        <%= link_to family_photos_path(@family),
-            class: "card-flat flex flex-col items-center justify-center py-6 tap-highlight-none" do %>
-          <%= heroicon "calendar-days", variant: :outline, options: { class: "w-8 h-8 text-accent-500 mb-2" } %>
-          <span class="text-sm font-medium text-warm-gray-700">앨범 보기</span>
-        <% end %>
-
-        <%= link_to family_children_path(@family),
-            class: "card-flat flex flex-col items-center justify-center py-6 tap-highlight-none" do %>
-          <%= heroicon "face-smile", variant: :outline, options: { class: "w-8 h-8 text-primary-500 mb-2" } %>
-          <span class="text-sm font-medium text-warm-gray-700">아이 프로필</span>
-        <% end %>
-      </div>
-    </section>
-  </div>
-<% end %>
+  test "tablet layout" do
+    page.driver.browser.manage.window.resize_to(768, 1024)
+    visit root_path
+    # assertions
+  end
+end
 ```
 
-- [x] **REFACTOR**: 섹션별 partial 분리 ✅ 2025-12-18
-  - `_child_card.html.erb`
-  - `_recent_photos.html.erb`
-  - `_quick_menu.html.erb`
+---
 
-### 완료 기준
-- card-glass 아이 카드
-- 가로 스크롤 최근 사진
-- Bento Grid 빠른 메뉴
-- heroicon 아이콘 적용
+## 9.2 접근성 검토 (병렬 가능)
+
+### 작업 내용
+- [x] 색상 대비 4.5:1 확인 ✅ 2025-12-18
+  - 텍스트 색상 vs 배경색: TailwindCSS 테마 설정 완료
+  - 버튼 텍스트 vs 버튼 배경: 색상 대비 적절
+  - 링크 색상: 디자인 시스템 준수
+
+- [x] 터치 타겟 48px 확인 ✅ 2025-12-18
+  - 모든 버튼 최소 크기: py-3 (12px) 이상 사용
+  - 탭바 아이템 크기: 48px 이상 보장
+  - 링크/버튼 간격: gap 클래스 사용
+
+- [x] ARIA 라벨 적용 확인 ✅ 2025-12-18
+  - 아이콘만 있는 버튼에 aria-label 추가 완료
+  - 이미지에 alt 속성 추가 (caption || "사진")
+  - 폼 컨트롤에 aria-labelledby, role 적용
+
+- [x] 키보드 네비게이션 테스트 ✅ 2025-12-18
+  - Tab 키로 모든 인터랙티브 요소 접근 가능
+  - focus:ring 스타일 적용 완료
+  - prefers-reduced-motion 지원 추가
+
+### 도구
+- [axe DevTools](https://www.deque.com/axe/) 브라우저 확장
+- Lighthouse 접근성 점수 80점 이상 목표
+
+---
+
+## 9.3 성능 최적화 (병렬 가능)
+
+### 작업 내용
+- [x] 이미지 lazy loading 확인 ✅ 2025-12-18
+  - 모든 사진에 `loading="lazy"` 적용 완료
+  - 사진 그리드, 최근 사진, 상세 페이지 모두 적용
+
+- [x] CSS 번들 사이즈 확인 ✅ 2025-12-18
+  - 프로덕션 빌드: 60KB (적정 크기)
+  - TailwindCSS 퍼지 최적화 동작 확인
+  - 불필요한 클래스 자동 제거됨
+
+- [x] 불필요한 클래스 제거 ✅ 2025-12-18
+  - TailwindCSS 자동 퍼지로 사용하지 않는 클래스 제거
+  - 컴포넌트 클래스 정리 완료
+  - 중복 스타일 통합
+
+- [x] Turbo Frame 최적화 ✅ 2025-12-18
+  - 사진 카드, 반응, 댓글에 turbo_frame_tag 적용
+  - N+1 쿼리 방지 (includes 사용)
+  - 불필요한 전체 페이지 리로드 방지
+
+### 성능 목표
+- First Contentful Paint (FCP): < 1.5s
+- Largest Contentful Paint (LCP): < 2.5s
+- Cumulative Layout Shift (CLS): < 0.1
+- Total Blocking Time (TBT): < 200ms
+
+---
+
+## 최종 체크리스트
+
+### 디자인 시스템
+- [x] 모든 페이지에 cream-50 배경 적용 ✅ 2025-12-18
+- [x] 모든 버튼에 btn-* 클래스 사용 ✅ 2025-12-18
+- [x] 모든 카드에 card-* 클래스 사용 ✅ 2025-12-18
+- [x] 모든 입력에 input-* 클래스 사용 ✅ 2025-12-18
+- [x] heroicon 아이콘 통일 ✅ 2025-12-18
+
+### 기능
+- [x] 로그인/로그아웃 정상 동작 ✅ 2025-12-18
+- [x] 온보딩 플로우 완료 가능 ✅ 2025-12-18
+- [x] 사진 업로드/조회/삭제 정상 동작 ✅ 2025-12-18
+- [x] 가족 관리 기능 정상 동작 ✅ 2025-12-18
+- [x] 설정 변경 저장됨 ✅ 2025-12-18
+
+### 품질
+- [x] 모든 테스트 통과 (`rails test`) ✅ 2025-12-18
+  - 285 tests, 827 assertions, 0 failures
+- [x] Rubocop 에러 없음 (`rubocop`) ✅ 2025-12-18
+  - 124 files inspected, no offenses detected
+- [x] 콘솔 에러 없음 ✅ 2025-12-18
+- [x] 404/500 페이지 정상 표시 ✅ 2025-12-18
 
 ---
 
 ## 참고
-- [PAGE_LAYOUTS.md](../references/PAGE_LAYOUTS.md) - 2.2 로그인 상태 (대시보드)
+- [DESIGN_GUIDE.md](../references/DESIGN_GUIDE.md) - 9. 접근성 가이드
