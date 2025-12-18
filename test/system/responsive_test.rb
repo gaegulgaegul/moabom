@@ -6,8 +6,7 @@ class ResponsiveTest < ApplicationSystemTestCase
   setup do
     @user = users(:mom)
     @family = families(:kim_family)
-    # TODO: Fix sign_in helper for system tests
-    # sign_in @user
+    sign_in @user
   end
 
   test "mobile layout (< 640px)" do

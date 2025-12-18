@@ -3,27 +3,31 @@
 module SystemTestHelpers
   # 시스템 테스트에서 사용자 로그인 헬퍼
   def sign_in(user)
-    # For system tests, we need to use the test login endpoint
-    # Since we're using Capybara with a real browser (Selenium),
-    # we can't directly manipulate the session
+    # For system tests, we need to submit a form to create a session
+    # since we can't directly manipulate sessions with Selenium
+    # CSRF is disabled for /login in test environment
 
-    # Visit root first to start session
+    # Visit a page first to establish a session
     visit root_path
 
-    # Set user_id in local storage or session via JavaScript
-    # This simulates a logged-in user
-    page.execute_script("localStorage.setItem('test_user_id', '#{user.id}');")
+    # Use JavaScript to create and submit a hidden form (no CSRF needed in test)
+    page.execute_script(<<~JS)
+      var form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '/login';
 
-    # Set cookie for the application to read
-    page.driver.browser.manage.add_cookie(
-      name: "test_user_id",
-      value: user.id.to_s,
-      path: "/",
-      domain: "127.0.0.1"
-    )
+      var input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'user_id';
+      input.value = '#{user.id}';
+      form.appendChild(input);
 
-    # Refresh to load with the new cookie
-    visit root_path
+      document.body.appendChild(form);
+      form.submit();
+    JS
+
+    # Wait for redirect to complete
+    sleep 1
   end
 
   # 로그아웃 헬퍼
