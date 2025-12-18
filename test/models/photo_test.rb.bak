@@ -72,9 +72,6 @@ class PhotoTest < ActiveSupport::TestCase
     assert_includes photo.errors[:taken_at], "을(를) 입력해주세요"
   end
 
-  test "should require image" do
-    skip "Image validation disabled in test environment to allow fixtures"
-  end
 
   test "should scope recent in descending order" do
     # Create photos with different taken_at times

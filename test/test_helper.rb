@@ -18,7 +18,26 @@ module ActiveSupport
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
 
+    # Attach test images to photo fixtures after loading
+    setup do
+      attach_images_to_photo_fixtures if defined?(Photo)
+    end
+
     # Add more helper methods to be used by all tests here...
+
+    private
+
+    def attach_images_to_photo_fixtures
+      Photo.find_each do |photo|
+        next if photo.image.attached?
+
+        photo.image.attach(
+          io: File.open(Rails.root.join("test/fixtures/files/photo.jpg")),
+          filename: "photo.jpg",
+          content_type: "image/jpeg"
+        )
+      end
+    end
   end
 end
 
