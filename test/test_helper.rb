@@ -28,11 +28,17 @@ module ActiveSupport
     private
 
     def attach_images_to_photo_fixtures
+      # Skip for system tests (Capybara) as it causes format detection issues
+      return if defined?(Capybara) && Capybara.current_driver
+
       Photo.find_each do |photo|
         next if photo.image.attached?
 
+        # Read file content once and create new StringIO for each attachment
+        file_content = File.read(Rails.root.join("test/fixtures/files/photo.jpg"))
+
         photo.image.attach(
-          io: File.open(Rails.root.join("test/fixtures/files/photo.jpg")),
+          io: StringIO.new(file_content),
           filename: "photo.jpg",
           content_type: "image/jpeg"
         )
