@@ -219,10 +219,6 @@ module Families
     test "should return partial success for batch upload" do
       skip "Image validation disabled in test environment to allow fixtures"
     end
-      assert success_result.present?
-      assert failure_result.present?
-      assert failure_result["errors"].present?
-    end
 
     test "should reject batch upload without authentication" do
       delete logout_path
