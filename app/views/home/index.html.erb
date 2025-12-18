@@ -48,27 +48,18 @@
     </div>
   </div>
 <% else %>
-  <!-- Phase 4에서 구현 -->
-  <div class="px-4 py-8">
-    <div class="max-w-2xl mx-auto">
-      <div class="bg-white rounded-lg shadow-md p-6 mb-4">
-        <h2 class="text-xl font-semibold text-gray-900 mb-2">환영합니다!</h2>
-        <p class="text-gray-600">로그인되었습니다.</p>
-      </div>
-
-      <div class="grid grid-cols-2 gap-4">
-        <div class="bg-white rounded-lg shadow-md p-6 text-center">
-          <div class="text-4xl mb-2">📷</div>
-          <h3 class="font-semibold text-gray-900">사진</h3>
-          <p class="text-sm text-gray-500 mt-1">아직 사진이 없어요</p>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-md p-6 text-center">
-          <div class="text-4xl mb-2">👨‍👩‍👧</div>
-          <h3 class="font-semibold text-gray-900">가족</h3>
-          <p class="text-sm text-gray-500 mt-1">가족을 초대하세요</p>
-        </div>
-      </div>
+  <div class="px-4 py-6 space-y-6">
+    <!-- 인사 -->
+    <div>
+      <h1 class="text-xl font-bold text-warm-gray-800">
+        안녕하세요, <%= current_user.nickname %>님! 👋
+      </h1>
     </div>
+
+    <% if @family.present? %>
+      <%= render "child_card", child: @child %>
+      <%= render "recent_photos", family: @family, recent_photos: @recent_photos %>
+      <%= render "quick_menu", family: @family %>
+    <% end %>
   </div>
 <% end %>
