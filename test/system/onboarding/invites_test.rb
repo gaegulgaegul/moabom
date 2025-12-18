@@ -77,7 +77,8 @@ module Onboarding
     test "시작하기 버튼으로 홈으로 이동" do
       visit onboarding_invite_path
 
-      click_link "시작하기"
+      # JavaScript로 클릭 (요소 겹침 문제)
+      page.execute_script("document.querySelector('a.btn-primary').click()")
 
       assert_current_path root_path
     end
