@@ -1,209 +1,111 @@
-# Wave 3: Phase 7 - 설정
+# Wave 3: Phase 4 - 대시보드
 
-> 선행 조건: Wave 2 완료
-> 병렬 실행: 7.1 ∥ 7.2 (내부 병렬), Phase 3, 4, 5, 6, 8과도 병렬 가능
+> 선행 조건: Wave 2 완료, Phase 3.1 완료 (파일 충돌 방지)
+> 병렬 실행: Phase 5, 6, 7, 8과 병렬 가능
 
 ---
 
-## 7.1 설정 메인 (병렬 가능)
+## 4.1 대시보드 (로그인 상태)
 
-### 파일: `app/views/settings/profiles/show.html.erb`
+### 파일: `app/views/home/index.html.erb` (로그인 상태 부분)
+
+### 주의사항
+**Phase 3.1과 같은 파일을 수정하므로, Phase 3.1 완료 후 진행**
 
 ### 작업 내용
-- [x] **RED**: 설정 페이지 UI 테스트 ✅ 2025-12-17
-- [x] **GREEN**: 설정 페이지 뷰 구현 ✅ 2025-12-17
+- [x] **RED**: 대시보드 UI 테스트 ✅ 2025-12-18
+- [x] **GREEN**: 대시보드 UI 구현 ✅ 2025-12-18
 
 ```erb
-<div class="px-4 py-6 space-y-6">
-  <h1 class="text-xl font-bold text-warm-gray-800">설정</h1>
-
-  <!-- 계정 설정 -->
-  <div class="card-solid divide-y divide-warm-gray-100">
-    <%= link_to "#", class: "flex items-center justify-between py-4 tap-highlight-none" do %>
-      <div class="flex items-center gap-3">
-        <%= heroicon "user-circle", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-500" } %>
-        <span class="text-warm-gray-800">프로필 설정</span>
-      </div>
-      <%= heroicon "chevron-right", variant: :outline, options: { class: "w-5 h-5 text-warm-gray-400" } %>
-    <% end %>
-
-    <%= link_to settings_notifications_path, class: "flex items-center justify-between py-4 tap-highlight-none" do %>
-      <div class="flex items-center gap-3">
-        <%= heroicon "bell", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-500" } %>
-        <span class="text-warm-gray-800">알림 설정</span>
-      </div>
-      <%= heroicon "chevron-right", variant: :outline, options: { class: "w-5 h-5 text-warm-gray-400" } %>
-    <% end %>
-
-    <div class="flex items-center justify-between py-4">
-      <div class="flex items-center gap-3">
-        <%= heroicon "moon", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-500" } %>
-        <span class="text-warm-gray-800">다크 모드</span>
-      </div>
-      <!-- Toggle Switch -->
-      <button class="w-12 h-7 bg-warm-gray-200 rounded-full relative transition-colors"
-              data-controller="toggle"
-              data-action="click->toggle#toggle">
-        <span class="absolute left-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
-              data-toggle-target="knob"></span>
-      </button>
+<% if logged_in? %>
+  <div class="px-4 py-6 space-y-6">
+    <!-- 인사 -->
+    <div>
+      <h1 class="text-xl font-bold text-warm-gray-800">
+        안녕하세요, <%= current_user.nickname %>님! 👋
+      </h1>
     </div>
-  </div>
 
-  <!-- 프로필 수정 폼 -->
-  <div class="card-solid">
-    <h2 class="text-lg font-semibold text-warm-gray-800 mb-4">프로필 정보</h2>
+    <!-- 아이 카드 -->
+    <% if @child.present? %>
+      <div class="card-glass">
+        <div class="flex items-center gap-4">
+          <div class="avatar avatar-lg bg-primary-100">
+            <%= heroicon "face-smile", variant: :outline, options: { class: "w-8 h-8 text-primary-500" } %>
+          </div>
+          <div>
+            <p class="font-semibold text-warm-gray-800">
+              <%= @child.name %>의 D+<%= @child.days_since_birth %>
+            </p>
+            <p class="text-sm text-warm-gray-500">오늘도 예쁜 하루 보내세요</p>
+          </div>
+        </div>
+      </div>
+    <% end %>
 
-    <%= form_with model: current_user, url: settings_profile_path, method: :patch, class: "space-y-4" do |form| %>
-      <% if current_user.errors.any? %>
-        <div class="alert-error">
-          <% current_user.errors.full_messages.each do |message| %>
-            <p class="text-sm"><%= message %></p>
+    <!-- 최근 사진 -->
+    <% if @recent_photos.present? %>
+      <section>
+        <h2 class="text-lg font-semibold text-warm-gray-800 mb-3">최근 사진</h2>
+        <div class="flex gap-3 overflow-x-auto scrollbar-hide -mx-4 px-4">
+          <% @recent_photos.each do |photo| %>
+            <%= link_to family_photo_path(@family, photo), class: "shrink-0" do %>
+              <div class="w-24 h-24 rounded-xl overflow-hidden">
+                <%= image_tag photo.image.variant(:thumbnail),
+                    class: "w-full h-full object-cover",
+                    loading: "lazy" %>
+              </div>
+            <% end %>
           <% end %>
         </div>
-      <% end %>
-
-      <div>
-        <label class="block text-sm font-medium text-warm-gray-700 mb-2">이메일</label>
-        <%= form.email_field :email, disabled: true, class: "input-text bg-warm-gray-100 cursor-not-allowed" %>
-        <p class="text-xs text-warm-gray-400 mt-1">이메일은 변경할 수 없습니다</p>
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-warm-gray-700 mb-2">닉네임</label>
-        <%= form.text_field :nickname, class: "input-text" %>
-      </div>
-
-      <%= form.submit "저장", class: "btn-primary w-full" %>
+      </section>
     <% end %>
+
+    <!-- 빠른 메뉴 (Bento Grid) -->
+    <section>
+      <h2 class="text-lg font-semibold text-warm-gray-800 mb-3">빠른 메뉴</h2>
+      <div class="grid grid-cols-2 gap-3">
+        <%= link_to new_family_photo_path(@family),
+            class: "card-flat flex flex-col items-center justify-center py-6 tap-highlight-none" do %>
+          <%= heroicon "camera", variant: :outline, options: { class: "w-8 h-8 text-primary-500 mb-2" } %>
+          <span class="text-sm font-medium text-warm-gray-700">사진 업로드</span>
+        <% end %>
+
+        <%= link_to family_members_path(@family),
+            class: "card-flat flex flex-col items-center justify-center py-6 tap-highlight-none" do %>
+          <%= heroicon "user-group", variant: :outline, options: { class: "w-8 h-8 text-secondary-500 mb-2" } %>
+          <span class="text-sm font-medium text-warm-gray-700">가족 관리</span>
+        <% end %>
+
+        <%= link_to family_photos_path(@family),
+            class: "card-flat flex flex-col items-center justify-center py-6 tap-highlight-none" do %>
+          <%= heroicon "calendar-days", variant: :outline, options: { class: "w-8 h-8 text-accent-500 mb-2" } %>
+          <span class="text-sm font-medium text-warm-gray-700">앨범 보기</span>
+        <% end %>
+
+        <%= link_to family_children_path(@family),
+            class: "card-flat flex flex-col items-center justify-center py-6 tap-highlight-none" do %>
+          <%= heroicon "face-smile", variant: :outline, options: { class: "w-8 h-8 text-primary-500 mb-2" } %>
+          <span class="text-sm font-medium text-warm-gray-700">아이 프로필</span>
+        <% end %>
+      </div>
+    </section>
   </div>
-
-  <!-- 정보 -->
-  <div class="card-solid divide-y divide-warm-gray-100">
-    <%= link_to "#", class: "flex items-center justify-between py-4 tap-highlight-none" do %>
-      <div class="flex items-center gap-3">
-        <%= heroicon "document-text", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-500" } %>
-        <span class="text-warm-gray-800">이용약관</span>
-      </div>
-      <%= heroicon "chevron-right", variant: :outline, options: { class: "w-5 h-5 text-warm-gray-400" } %>
-    <% end %>
-
-    <%= link_to "#", class: "flex items-center justify-between py-4 tap-highlight-none" do %>
-      <div class="flex items-center gap-3">
-        <%= heroicon "shield-check", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-500" } %>
-        <span class="text-warm-gray-800">개인정보 처리방침</span>
-      </div>
-      <%= heroicon "chevron-right", variant: :outline, options: { class: "w-5 h-5 text-warm-gray-400" } %>
-    <% end %>
-
-    <%= link_to "#", class: "flex items-center justify-between py-4 tap-highlight-none" do %>
-      <div class="flex items-center gap-3">
-        <%= heroicon "information-circle", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-500" } %>
-        <span class="text-warm-gray-800">앱 정보</span>
-      </div>
-      <span class="text-sm text-warm-gray-400">v1.0.0</span>
-    <% end %>
-  </div>
-
-  <!-- 로그아웃 -->
-  <div class="card-solid">
-    <%= button_to logout_path, method: :delete, class: "flex items-center gap-3 py-4 w-full tap-highlight-none" do %>
-      <%= heroicon "arrow-right-on-rectangle", variant: :outline, options: { class: "w-6 h-6 text-red-500" } %>
-      <span class="text-red-500">로그아웃</span>
-    <% end %>
-  </div>
-</div>
+<% end %>
 ```
 
-- [x] **REFACTOR**: 설정 아이템 partial (`_setting_item.html.erb`) ✅ 2025-12-17
+- [x] **REFACTOR**: 섹션별 partial 분리 ✅ 2025-12-18
+  - `_child_card.html.erb`
+  - `_recent_photos.html.erb`
+  - `_quick_menu.html.erb`
 
 ### 완료 기준
-- card-solid 그룹 카드
-- heroicon 아이콘
-- 토글 스위치
-- 로그아웃 버튼 (text-red-500)
-
----
-
-## 7.2 알림 설정 (병렬 가능)
-
-### 파일: `app/views/settings/notifications/show.html.erb`
-
-### 작업 내용
-- [x] **RED**: 알림 설정 UI 테스트 ✅ 2025-12-17
-- [x] **GREEN**: 알림 설정 뷰 구현 ✅ 2025-12-17
-
-```erb
-<div class="px-4 py-6 space-y-6">
-  <!-- 헤더 -->
-  <div class="flex items-center gap-4">
-    <button onclick="history.back()" class="p-2 -ml-2">
-      <%= heroicon "arrow-left", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-700" } %>
-    </button>
-    <h1 class="text-xl font-bold text-warm-gray-800">알림 설정</h1>
-  </div>
-
-  <!-- 알림 설정 목록 -->
-  <div class="card-solid divide-y divide-warm-gray-100">
-    <div class="flex items-center justify-between py-4">
-      <div>
-        <p class="text-warm-gray-800 font-medium">새 사진 알림</p>
-        <p class="text-sm text-warm-gray-500">가족이 새 사진을 올리면 알려드려요</p>
-      </div>
-      <button class="w-12 h-7 bg-primary-500 rounded-full relative transition-colors"
-              data-controller="toggle" data-toggle-active="true">
-        <span class="absolute right-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
-              data-toggle-target="knob"></span>
-      </button>
-    </div>
-
-    <div class="flex items-center justify-between py-4">
-      <div>
-        <p class="text-warm-gray-800 font-medium">댓글 알림</p>
-        <p class="text-sm text-warm-gray-500">내 사진에 댓글이 달리면 알려드려요</p>
-      </div>
-      <button class="w-12 h-7 bg-primary-500 rounded-full relative transition-colors"
-              data-controller="toggle" data-toggle-active="true">
-        <span class="absolute right-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
-              data-toggle-target="knob"></span>
-      </button>
-    </div>
-
-    <div class="flex items-center justify-between py-4">
-      <div>
-        <p class="text-warm-gray-800 font-medium">반응 알림</p>
-        <p class="text-sm text-warm-gray-500">내 사진에 반응이 달리면 알려드려요</p>
-      </div>
-      <button class="w-12 h-7 bg-warm-gray-200 rounded-full relative transition-colors"
-              data-controller="toggle">
-        <span class="absolute left-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
-              data-toggle-target="knob"></span>
-      </button>
-    </div>
-
-    <div class="flex items-center justify-between py-4">
-      <div>
-        <p class="text-warm-gray-800 font-medium">가족 초대 알림</p>
-        <p class="text-sm text-warm-gray-500">새 가족이 참여하면 알려드려요</p>
-      </div>
-      <button class="w-12 h-7 bg-primary-500 rounded-full relative transition-colors"
-              data-controller="toggle" data-toggle-active="true">
-        <span class="absolute right-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
-              data-toggle-target="knob"></span>
-      </button>
-    </div>
-  </div>
-</div>
-```
-
-- [x] **REFACTOR**: 토글 컴포넌트 추출 (`toggle_controller.js`) ✅ 2025-12-17
-
-### 완료 기준
-- 토글 스위치 ON/OFF 상태
-- 설정 항목 설명 텍스트
-- 뒤로 가기 버튼
+- card-glass 아이 카드
+- 가로 스크롤 최근 사진
+- Bento Grid 빠른 메뉴
+- heroicon 아이콘 적용
 
 ---
 
 ## 참고
-- [PAGE_LAYOUTS.md](../references/PAGE_LAYOUTS.md) - 7. 설정
+- [PAGE_LAYOUTS.md](../references/PAGE_LAYOUTS.md) - 2.2 로그인 상태 (대시보드)
