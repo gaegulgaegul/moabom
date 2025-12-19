@@ -6,7 +6,12 @@ module Onboarding
     skip_before_action :check_onboarding
 
     def show
-      @family = current_user.families.first
+      @family = current_family
+      unless @family
+        redirect_to root_path, alert: "가족을 찾을 수 없습니다. 먼저 프로필을 완성해주세요."
+        return
+      end
+
       @invitation = find_or_create_invitation
       @invite_url = accept_invitation_url(@invitation.token)
 
