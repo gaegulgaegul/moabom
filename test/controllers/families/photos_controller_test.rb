@@ -129,8 +129,23 @@ module Families
       assert_equal @user, Photo.last.uploader
     end
 
-    test "should not create photo without image" do
-      skip "Image validation disabled in test environment to allow fixtures"
+    test "should not create photo without image in production" do
+      # 프로덕션 환경 시뮬레이션
+      original_env = Rails.env
+      Rails.env = ActiveSupport::StringInquirer.new("production")
+
+      assert_no_difference "Photo.count" do
+        post family_photos_path(@family), params: {
+          photo: {
+            caption: "이미지 없음",
+            taken_at: Time.current.iso8601
+          }
+        }
+      end
+
+      assert_response :unprocessable_entity
+    ensure
+      Rails.env = original_env
     end
 
     test "should not create photo without taken_at" do
@@ -216,8 +231,36 @@ module Families
       assert_equal 2, json["results"].count
       assert json["results"].all? { |r| r["success"] }
     end
-    test "should return partial success for batch upload" do
-      skip "Image validation disabled in test environment to allow fixtures"
+    test "should return partial success for batch upload in production" do
+      # 프로덕션 환경 시뮬레이션 - 이미지 없는 사진은 실패해야 함
+      original_env = Rails.env
+      Rails.env = ActiveSupport::StringInquirer.new("production")
+
+      post batch_family_photos_path(@family), params: {
+        photos: [
+          {
+            caption: "성공할 사진",
+            taken_at: Time.current.iso8601,
+            image: fixture_file_upload("photo.jpg", "image/jpeg")
+          },
+          {
+            caption: "실패할 사진 (이미지 없음)",
+            taken_at: Time.current.iso8601
+          }
+        ]
+      }
+
+      assert_response :success
+      json = JSON.parse(response.body)
+
+      success_results = json["results"].select { |r| r["success"] }
+      failure_results = json["results"].reject { |r| r["success"] }
+
+      assert_equal 1, success_results.count, "하나는 성공해야 함"
+      assert_equal 1, failure_results.count, "하나는 실패해야 함"
+      assert failure_results.first["errors"].present?, "실패 이유가 있어야 함"
+    ensure
+      Rails.env = original_env
     end
 
     test "should reject batch upload without authentication" do
