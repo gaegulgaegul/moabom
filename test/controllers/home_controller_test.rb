@@ -99,4 +99,40 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get root_path
     assert_redirected_to onboarding_profile_path
   end
+
+  test "should not redirect invited member to onboarding even when family onboarding not completed" do
+    # dad is an admin (non-owner) of kim_family
+    user = users(:dad)
+    family = families(:kim_family)
+    family.update!(onboarding_completed_at: nil)
+    sign_in user
+
+    get root_path
+    assert_response :success
+    assert_select "h1", text: /안녕하세요, #{user.nickname}님!/
+  end
+
+  test "should not redirect viewer to onboarding even when family onboarding not completed" do
+    # grandma is a viewer (non-owner) of kim_family
+    user = users(:grandma)
+    family = families(:kim_family)
+    family.update!(onboarding_completed_at: nil)
+    sign_in user
+
+    get root_path
+    assert_response :success
+    assert_select "h1", text: /안녕하세요, #{user.nickname}님!/
+  end
+
+  test "should not redirect member to onboarding even when family onboarding not completed" do
+    # uncle is a member (non-owner) of kim_family
+    user = users(:uncle)
+    family = families(:kim_family)
+    family.update!(onboarding_completed_at: nil)
+    sign_in user
+
+    get root_path
+    assert_response :success
+    assert_select "h1", text: /안녕하세요, #{user.nickname}님!/
+  end
 end

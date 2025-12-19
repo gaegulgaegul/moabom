@@ -46,6 +46,14 @@ class User < ApplicationRecord
     family_memberships.find_by(family: family)
   end
 
+  def role_for_family(family)
+    membership_for(family)&.role
+  end
+
+  def owner_of?(family)
+    membership_for(family)&.role_owner?
+  end
+
   private
 
   def nickname_not_forbidden

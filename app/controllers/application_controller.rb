@@ -59,6 +59,7 @@ class ApplicationController < ActionController::Base
     return unless logged_in?
     return if controller_name == "sessions" || controller_path.start_with?("onboarding/")
     return unless current_family # 가족이 없으면 체크 안함
+    return unless current_user.owner_of?(current_family) # 가족 소유자만 온보딩 체크
     return if current_family.onboarding_completed?
 
     redirect_to onboarding_profile_path
