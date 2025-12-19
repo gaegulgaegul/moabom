@@ -41,7 +41,7 @@ class AccessibilityTest < ApplicationSystemTestCase
         height = page.evaluate_script("arguments[0].getBoundingClientRect().height;", button)
         width = page.evaluate_script("arguments[0].getBoundingClientRect().width;", button)
 
-        # 터치 타겟 최소 크기 48px
+        # 터치 타겟 최소 크기 44px — WCAG 2.2 2.5.8
         assert height >= 44, "네비게이션 버튼 높이가 너무 작음: #{height}px"
         assert width >= 44, "네비게이션 버튼 너비가 너무 작음: #{width}px"
       end
