@@ -241,4 +241,47 @@ class UserTest < ActiveSupport::TestCase
     # The test fixture is small, so should be valid
     assert user.valid?
   end
+
+  # Family role helper methods
+  test "role_for_family should return correct role" do
+    user = users(:mom)
+    family = families(:kim_family)
+    assert_equal "owner", user.role_for_family(family)
+  end
+
+  test "role_for_family should return nil when user is not a member" do
+    user = users(:other_family_user)
+    family = families(:kim_family)
+    assert_nil user.role_for_family(family)
+  end
+
+  test "owner_of? should return true for family owner" do
+    user = users(:mom)
+    family = families(:kim_family)
+    assert user.owner_of?(family)
+  end
+
+  test "owner_of? should return false for admin" do
+    user = users(:dad)
+    family = families(:kim_family)
+    assert_not user.owner_of?(family)
+  end
+
+  test "owner_of? should return false for member" do
+    user = users(:uncle)
+    family = families(:kim_family)
+    assert_not user.owner_of?(family)
+  end
+
+  test "owner_of? should return false for viewer" do
+    user = users(:grandma)
+    family = families(:kim_family)
+    assert_not user.owner_of?(family)
+  end
+
+  test "owner_of? should return false when user is not a member" do
+    user = users(:other_family_user)
+    family = families(:kim_family)
+    assert_not user.owner_of?(family)
+  end
 end

@@ -19,4 +19,12 @@ class FamilyTest < ActiveSupport::TestCase
     assert_respond_to family, :users
     assert_respond_to family, :family_memberships
   end
+
+  test "should track onboarding completion" do
+    family = Family.create!(name: "새 가족")
+    assert_not family.onboarding_completed?
+
+    family.complete_onboarding!
+    assert family.onboarding_completed?
+  end
 end

@@ -77,5 +77,15 @@ module Onboarding
 
       assert_redirected_to root_path
     end
+
+    test "should redirect when user has no family" do
+      # 사용자의 모든 가족 멤버십 삭제
+      @user.family_memberships.destroy_all
+
+      get onboarding_invite_path
+
+      assert_redirected_to root_path
+      assert_equal "가족을 찾을 수 없습니다. 먼저 프로필을 완성해주세요.", flash[:alert]
+    end
   end
 end

@@ -2,6 +2,8 @@
 
 kim_family:
   name: 김씨 가족
+  onboarding_completed_at: <%= 1.day.ago %>
 
 lee_family:
   name: 이씨 가족
+  onboarding_completed_at: <%= 1.day.ago %>

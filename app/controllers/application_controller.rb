@@ -13,10 +13,29 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::InvalidAuthenticityToken, with: :unprocessable_entity
   rescue_from ActionDispatch::Http::Parameters::ParseError, with: :json_parse_error
 
+  before_action :check_onboarding
+
   private
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+    return @current_user if defined?(@current_user)
+
+    @current_user = User.includes(:families).find_by(id: session[:user_id]) if session[:user_id]
+  end
+
+  def current_family
+    return @current_family if defined?(@current_family)
+
+    # Family selection strategy:
+    # 1. Use params[:family_id] when present (explicit family context)
+    # 2. Fall back to user's first family (default for single-family users)
+    # This assumes single-family-per-user for MVP; for multi-family support,
+    # consider adding a user.default_family_id column or session[:current_family_id]
+    @current_family = if params[:family_id].present?
+      current_user&.families&.find_by(id: params[:family_id])
+    else
+      current_user&.families&.first
+    end
   end
 
   def logged_in?
@@ -36,7 +55,17 @@ class ApplicationController < ActionController::Base
     redirect_to onboarding_profile_path, alert: "온보딩을 완료해주세요."
   end
 
-  helper_method :current_user, :logged_in?
+  def check_onboarding
+    return unless logged_in?
+    return if controller_name == "sessions" || controller_path.start_with?("onboarding/")
+    return unless current_family # 가족이 없으면 체크 안함
+    return unless current_user.owner_of?(current_family) # 가족 소유자만 온보딩 체크
+    return if current_family.onboarding_completed?
+
+    redirect_to onboarding_profile_path
+  end
+
+  helper_method :current_user, :current_family, :logged_in?
 
   # Error handlers
   def not_found
