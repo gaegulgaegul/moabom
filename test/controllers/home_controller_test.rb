@@ -45,6 +45,9 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     family = families(:kim_family)
     sign_in user
 
+    # Delete all photos to test empty state
+    Photo.destroy_all
+
     get root_path
     assert_response :success
     assert_select "h2", { text: "최근 사진", count: 0 }

@@ -41,5 +41,8 @@
 .idea/
 .DS_Store
 
+# Backup files
+*.bak
+
 # Claude Code session logs
 /docs/logs/

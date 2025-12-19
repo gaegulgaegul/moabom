@@ -1,10 +1,13 @@
 <div class="min-h-screen bg-warm-gray-900">
   <!-- 투명 헤더 -->
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 h-14 safe-area-inset-top">
-    <button onclick="history.back()" class="p-2 bg-black/30 rounded-full backdrop-blur-sm">
+    <button onclick="history.back()"
+            class="p-2 bg-black/30 rounded-full backdrop-blur-sm"
+            aria-label="뒤로 가기">
       <%= heroicon "arrow-left", variant: :outline, options: { class: "w-6 h-6 text-white" } %>
     </button>
-    <button class="p-2 bg-black/30 rounded-full backdrop-blur-sm">
+    <button class="p-2 bg-black/30 rounded-full backdrop-blur-sm"
+            aria-label="더 보기">
       <%= heroicon "ellipsis-horizontal", variant: :outline, options: { class: "w-6 h-6 text-white" } %>
     </button>
   </header>

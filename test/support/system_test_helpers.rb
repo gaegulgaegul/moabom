@@ -3,20 +3,31 @@
 module SystemTestHelpers
   # 시스템 테스트에서 사용자 로그인 헬퍼
   def sign_in(user)
-    # OmniAuth 콜백 시뮬레이션
-    # 실제 OAuth 플로우 없이 세션 생성
-    OmniAuth.config.test_mode = true
-    OmniAuth.config.mock_auth[:kakao] = OmniAuth::AuthHash.new(
-      provider: user.provider,
-      uid: user.uid,
-      info: {
-        name: user.nickname,
-        email: user.email
-      }
-    )
+    # For system tests, we need to submit a form to create a session
+    # since we can't directly manipulate sessions with Selenium
+    # CSRF is disabled for /login in test environment
 
-    visit "/auth/kakao"
-    visit "/auth/kakao/callback"
+    # Visit a page first to establish a session
+    visit root_path
+
+    # Use JavaScript to create and submit a hidden form (no CSRF needed in test)
+    page.execute_script(<<~JS)
+      var form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '/login';
+
+      var input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'user_id';
+      input.value = '#{user.id}';
+      form.appendChild(input);
+
+      document.body.appendChild(form);
+      form.submit();
+    JS
+
+    # Wait for redirect to complete
+    sleep 1
   end
 
   # 로그아웃 헬퍼

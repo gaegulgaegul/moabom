@@ -18,7 +18,32 @@ module ActiveSupport
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
 
+    # Attach test images to photo fixtures after loading
+    setup do
+      attach_images_to_photo_fixtures if defined?(Photo)
+    end
+
     # Add more helper methods to be used by all tests here...
+
+    private
+
+    def attach_images_to_photo_fixtures
+      # Skip for system tests (Capybara) as it causes format detection issues
+      return if defined?(Capybara) && Capybara.current_driver
+
+      Photo.find_each do |photo|
+        next if photo.image.attached?
+
+        # Read file content once and create new StringIO for each attachment
+        file_content = File.read(Rails.root.join("test/fixtures/files/photo.jpg"))
+
+        photo.image.attach(
+          io: StringIO.new(file_content),
+          filename: "photo.jpg",
+          content_type: "image/jpeg"
+        )
+      end
+    end
   end
 end
 

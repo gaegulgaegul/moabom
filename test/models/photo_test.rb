@@ -72,10 +72,24 @@ class PhotoTest < ActiveSupport::TestCase
     assert_includes photo.errors[:taken_at], "을(를) 입력해주세요"
   end
 
-  test "should require image" do
-    photo = Photo.new(family: @family, uploader: @user, taken_at: Time.current)
-    assert_not photo.valid?
+  test "should require image in production" do
+    # 테스트 환경에서는 검증이 스킵되므로, 프로덕션 동작을 검증하기 위해
+    # 이미지가 없는 상태에서 수동으로 acceptable_image 검증 실행
+    photo = Photo.new(
+      family: @family,
+      uploader: @user,
+      taken_at: Time.current
+    )
+
+    # 프로덕션에서는 이미지 presence 검증이 실행됨을 테스트
+    # 검증 조건을 우회하여 테스트
+    original_env = Rails.env
+    Rails.env = ActiveSupport::StringInquirer.new("production")
+
+    assert_not photo.valid?, "Image should be required in production"
     assert_includes photo.errors[:image], "을(를) 입력해주세요"
+  ensure
+    Rails.env = original_env
   end
 
   test "should scope recent in descending order" do

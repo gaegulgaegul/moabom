@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
+  # Skip CSRF verification for test login endpoint
+  skip_before_action :verify_authenticity_token, only: [ :create ], if: -> { Rails.env.test? }
+
   # For testing purposes - allows direct login
   def create
     user = User.find_by(id: params[:user_id])

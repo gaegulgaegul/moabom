@@ -56,10 +56,10 @@ module Onboarding
 
         # 제출 버튼
         assert_button "다음", class: "btn-primary"
-
-        # 스킵 버튼
-        assert_selector "button.text-warm-gray-400", text: "나중에 할게요"
       end
+
+      # 스킵 버튼 (form 밖에서 확인)
+      assert_button "나중에 할게요", class: "text-warm-gray-400"
     end
 
     test "성별 선택 버튼 상태 변경" do

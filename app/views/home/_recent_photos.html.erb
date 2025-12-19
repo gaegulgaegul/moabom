@@ -7,7 +7,8 @@
           <div class="w-24 h-24 rounded-xl overflow-hidden">
             <%= image_tag photo.image.variant(:thumbnail),
                 class: "w-full h-full object-cover",
-                loading: "lazy" %>
+                loading: "lazy",
+                alt: photo.caption || "사진" %>
           </div>
         <% end %>
       <% end %>
