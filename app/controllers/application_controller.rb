@@ -18,11 +18,24 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+    return @current_user if defined?(@current_user)
+
+    @current_user = User.includes(:families).find_by(id: session[:user_id]) if session[:user_id]
   end
 
   def current_family
-    @current_family ||= current_user&.families&.first
+    return @current_family if defined?(@current_family)
+
+    # Family selection strategy:
+    # 1. Use params[:family_id] when present (explicit family context)
+    # 2. Fall back to user's first family (default for single-family users)
+    # This assumes single-family-per-user for MVP; for multi-family support,
+    # consider adding a user.default_family_id column or session[:current_family_id]
+    @current_family = if params[:family_id].present?
+      current_user&.families&.find_by(id: params[:family_id])
+    else
+      current_user&.families&.first
+    end
   end
 
   def logged_in?
