@@ -3,6 +3,7 @@
 module Onboarding
   class ChildrenController < ApplicationController
     before_action :authenticate_user!
+    skip_before_action :check_onboarding
 
     def show
       @child = Child.new

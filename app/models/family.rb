@@ -8,4 +8,12 @@ class Family < ApplicationRecord
   has_many :invitations, dependent: :destroy
 
   validates :name, presence: true
+
+  def onboarding_completed?
+    onboarding_completed_at.present?
+  end
+
+  def complete_onboarding!
+    update!(onboarding_completed_at: Time.current)
+  end
 end

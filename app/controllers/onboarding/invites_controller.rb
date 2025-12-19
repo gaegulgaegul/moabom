@@ -3,11 +3,15 @@
 module Onboarding
   class InvitesController < ApplicationController
     before_action :authenticate_user!
+    skip_before_action :check_onboarding
 
     def show
       @family = current_user.families.first
       @invitation = find_or_create_invitation
       @invite_url = accept_invitation_url(@invitation.token)
+
+      # 온보딩 완료 처리 (나중에 뷰의 버튼으로 이동 예정)
+      @family.complete_onboarding! unless @family.onboarding_completed?
     end
 
     private

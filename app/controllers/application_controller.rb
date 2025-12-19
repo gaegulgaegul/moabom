@@ -13,10 +13,16 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::InvalidAuthenticityToken, with: :unprocessable_entity
   rescue_from ActionDispatch::Http::Parameters::ParseError, with: :json_parse_error
 
+  before_action :check_onboarding
+
   private
 
   def current_user
     @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+  end
+
+  def current_family
+    @current_family ||= current_user&.families&.first
   end
 
   def logged_in?
@@ -36,7 +42,16 @@ class ApplicationController < ActionController::Base
     redirect_to onboarding_profile_path, alert: "온보딩을 완료해주세요."
   end
 
-  helper_method :current_user, :logged_in?
+  def check_onboarding
+    return unless logged_in?
+    return if controller_name == "sessions" || controller_path.start_with?("onboarding/")
+    return unless current_family # 가족이 없으면 체크 안함
+    return if current_family.onboarding_completed?
+
+    redirect_to onboarding_profile_path
+  end
+
+  helper_method :current_user, :current_family, :logged_in?
 
   # Error handlers
   def not_found
