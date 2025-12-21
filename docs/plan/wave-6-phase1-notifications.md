@@ -742,7 +742,7 @@ resources :notifications, only: [ :index, :update ]
     <div class="space-y-2">
       <% @notifications.each do |notification| %>
         <%= link_to notification_path(notification),
-                    method: :patch,
+                    data: { turbo_method: :patch },
                     class: "block p-4 rounded-xl hover:bg-cream-50 transition-colors #{notification.read? ? '' : 'bg-primary-50 border-l-4 border-primary-500'}" do %>
           <div class="flex items-start gap-3">
             <!-- 아바타 -->
