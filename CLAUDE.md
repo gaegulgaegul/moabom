@@ -1,7 +1,5 @@
 # CLAUDE.md
 
-# CLAUDE.md
-
 # TDD WORKFLOW WITH PLAN.MD
 
 Always follow the instructions in @plan.md (located in project root).
