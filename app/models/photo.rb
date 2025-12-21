@@ -21,6 +21,7 @@ class Photo < ApplicationRecord
   validates :image, presence: true, unless: -> { Rails.env.test? }
   validate :acceptable_image
 
+  scope :for_family, ->(family) { where(family: family) }
   scope :recent, -> { order(taken_at: :desc) }
   scope :with_eager_loaded_image, -> { includes(image_attachment: :blob) }
   scope :by_month, ->(year, month) {
@@ -28,6 +29,31 @@ class Photo < ApplicationRecord
     end_date = start_date.end_of_month
     where(taken_at: start_date.beginning_of_day..end_date.end_of_day)
   }
+
+  # 타임라인용 최적화 쿼리 (N+1 방지)
+  scope :timeline_for, ->(family, page: 1, per_page: 50) {
+    for_family(family)
+      .recent
+      .includes(:uploader, :child, image_attachment: :blob)
+      .limit(per_page)
+      .offset((page - 1) * per_page)
+  }
+
+  # 날짜별 그룹화 (최신순으로 정렬 후 그룹화)
+  def self.group_by_date
+    recent.group_by { |photo| photo.taken_at.to_date }
+  end
+
+  # 타임라인용 (날짜 헤더 + 사진)
+  def self.timeline
+    group_by_date.map do |date, photos|
+      {
+        date: date,
+        photos: photos,
+        count: photos.size
+      }
+    end
+  end
 
   private
 
