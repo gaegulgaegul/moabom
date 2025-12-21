@@ -10,9 +10,16 @@ class TabbarNavigationTest < ApplicationSystemTestCase
     @user.complete_onboarding!
     @family.complete_onboarding!
 
-    # Debug: verify onboarding status in database with fresh query
-    fresh_user = User.find(@user.id)
-    fresh_family = Family.find(@family.id)
+    # Force clear all caches to ensure fresh data
+    Rails.cache.clear
+    ActiveRecord::Base.connection.query_cache.clear
+
+    # Debug: verify user has families
+    fresh_user = User.uncached { User.find(@user.id) }
+    fresh_family = Family.uncached { Family.find(@family.id) }
+    puts "DEBUG: User ID: #{fresh_user.id}"
+    puts "DEBUG: User families count: #{fresh_user.families.reload.count}"
+    puts "DEBUG: Family ID: #{fresh_family.id}"
     puts "DEBUG: Fresh User onboarding_completed_at: #{fresh_user.onboarding_completed_at}"
     puts "DEBUG: Fresh Family onboarding_completed_at: #{fresh_family.onboarding_completed_at}"
 
