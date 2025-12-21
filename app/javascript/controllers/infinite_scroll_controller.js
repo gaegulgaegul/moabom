@@ -9,6 +9,7 @@ export default class extends Controller {
   }
 
   connect() {
+    this.isLoading = false
     this.observer = new IntersectionObserver(
       entries => this.handleIntersect(entries),
       { threshold: 0.1 }
@@ -32,12 +33,13 @@ export default class extends Controller {
   }
 
   async loadMore() {
-    if (!this.hasMoreValue) return
+    if (!this.hasMoreValue || this.isLoading) return
 
-    this.pageValue += 1
+    this.isLoading = true
 
+    const nextPage = this.pageValue + 1
     const url = new URL(this.urlValue, window.location.origin)
-    url.searchParams.set("page", this.pageValue)
+    url.searchParams.set("page", nextPage)
 
     try {
       const response = await fetch(url, {
@@ -49,9 +51,12 @@ export default class extends Controller {
       if (response.ok) {
         const html = await response.text()
         Turbo.renderStreamMessage(html)
+        this.pageValue = nextPage
       }
     } catch (error) {
       console.error("Failed to load more:", error)
+    } finally {
+      this.isLoading = false
     }
   }
 }
