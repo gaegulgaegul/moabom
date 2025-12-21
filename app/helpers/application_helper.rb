@@ -27,6 +27,7 @@ module ApplicationHelper
   end
 
   # Wave 5: Phase 2 - 대시보드에서는 탭바 숨김
+  # Wave 5: Phase 5 - 설정 페이지에서는 탭바 숨김
   def show_bottom_tabbar?
     # 로그인하지 않은 경우 탭바 미표시
     return false unless logged_in?
@@ -36,6 +37,9 @@ module ApplicationHelper
 
     # 온보딩 페이지에서는 탭바 미표시
     return false if controller_path.start_with?("onboarding/")
+
+    # 설정 페이지에서는 탭바 미표시 (Wave 5 Phase 5)
+    return false if controller_path.start_with?("settings/")
 
     # 세션 페이지에서는 탭바 미표시
     return false if controller_name == "sessions"
