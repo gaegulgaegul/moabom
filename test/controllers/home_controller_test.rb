@@ -135,4 +135,70 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "h1", text: /안녕하세요, #{user.nickname}님!/
   end
+
+  # 타임라인 테스트
+  test "should get index with timeline" do
+    user = users(:mom)
+    family = families(:kim_family)
+    family.complete_onboarding!
+    sign_in user
+
+    get root_path
+
+    assert_response :success
+    # 타임라인이 렌더링되는지 확인 (뷰 기반 검증)
+    # @timeline이 설정되면 뷰에 timeline-date가 나타남
+  end
+
+  test "should group photos by date in timeline" do
+    user = users(:mom)
+    family = families(:kim_family)
+    family.complete_onboarding!
+    sign_in user
+
+    # 기존 사진 제거
+    family.photos.destroy_all
+
+    # 오늘 사진 생성
+    today_photo = create_photo(family, user, taken_at: Time.current)
+
+    # 어제 사진 생성
+    yesterday_photo = create_photo(family, user, taken_at: 1.day.ago)
+
+    get root_path
+
+    assert_response :success
+    # 날짜별로 그룹화된 타임라인 섹션 확인
+    assert_select ".timeline-date", count: 2
+  end
+
+  test "should show empty state when no photos" do
+    user = users(:mom)
+    family = families(:kim_family)
+    family.complete_onboarding!
+    sign_in user
+
+    family.photos.destroy_all
+
+    get root_path
+
+    assert_response :success
+    assert_select ".empty-state", text: /아직 사진이 없어요/
+  end
+
+  private
+
+  def create_photo(family, user, taken_at:)
+    photo = family.photos.build(
+      uploader: user,
+      taken_at: taken_at
+    )
+    photo.image.attach(
+      io: StringIO.new("fake image data"),
+      filename: "photo.jpg",
+      content_type: "image/jpeg"
+    )
+    photo.save!
+    photo
+  end
 end

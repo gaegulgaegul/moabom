@@ -58,8 +58,14 @@
 
     <% if @family.present? %>
       <%= render "child_card", child: @child %>
-      <%= render "recent_photos", family: @family, recent_photos: @recent_photos %>
       <%= render "quick_menu", family: @family %>
+
+      <!-- 타임라인 -->
+      <% if @timeline.present? %>
+        <%= render "timeline" %>
+      <% else %>
+        <%= render "empty_state" %>
+      <% end %>
     <% end %>
   </div>
 <% end %>
