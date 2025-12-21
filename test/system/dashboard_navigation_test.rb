@@ -6,6 +6,10 @@ class DashboardNavigationTest < ApplicationSystemTestCase
   setup do
     @user = users(:mom)
     @family = families(:kim_family)
+    # 온보딩 완료를 sign_in 전에 처리
+    @user.complete_onboarding!
+    @family.complete_onboarding!
+
     sign_in @user
   end
 
@@ -42,7 +46,7 @@ class DashboardNavigationTest < ApplicationSystemTestCase
       assert_selector "a[href='/']", text: "모아봄"
 
       # 알림 아이콘
-      assert_selector "button[aria-label='알림']"
+      assert_selector "a[aria-label='알림']"
 
       # 설정 아이콘
       assert_selector "a[aria-label='설정']"
@@ -57,6 +61,38 @@ class DashboardNavigationTest < ApplicationSystemTestCase
       find("a[aria-label='설정']").click
     end
 
+    assert_current_path settings_profile_path
+    assert_text "설정"
+  end
+
+  # 5.4 알림 네비게이션 테스트
+  test "should navigate to notifications from header bell icon" do
+    visit root_path
+
+    # 헤더의 알림 버튼 클릭
+    within "header" do
+      find("a[aria-label='알림']").click
+    end
+
+    # 알림 목록 화면으로 이동 확인
+    assert_current_path notifications_path
+    assert_text "알림"
+  end
+
+  test "should navigate to settings from tabbar" do
+    # 탭바가 표시되는 페이지(알림)로 이동
+    # 설정 페이지는 Wave 5 Phase 5에서 탭바 숨김 처리됨
+    visit notifications_path
+
+    # 탭바가 표시되는지 확인
+    assert_selector "nav", count: 1
+
+    # 탭바의 설정 탭 클릭
+    within "nav" do
+      click_link "설정"
+    end
+
+    # 설정 화면으로 이동 확인
     assert_current_path settings_profile_path
     assert_text "설정"
   end

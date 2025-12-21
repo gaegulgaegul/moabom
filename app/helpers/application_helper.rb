@@ -18,7 +18,7 @@ module ApplicationHelper
     when :upload
       false # 업로드 기능은 Phase 4에서 구현
     when :notifications
-      false # 알림 기능은 Phase 6에서 구현
+      controller_name == "notifications"
     when :settings
       controller.class.module_parent_name == "Settings"
     else
@@ -29,21 +29,11 @@ module ApplicationHelper
   # Wave 5: Phase 2 - 대시보드에서는 탭바 숨김
   # Wave 5: Phase 5 - 설정 페이지에서는 탭바 숨김
   def show_bottom_tabbar?
-    # 로그인하지 않은 경우 탭바 미표시
     return false unless logged_in?
-
-    # 대시보드(홈)에서는 탭바 제거
     return false if controller_name == "home" && action_name == "index"
-
-    # 온보딩 페이지에서는 탭바 미표시
     return false if controller_path.start_with?("onboarding/")
-
-    # 설정 페이지에서는 탭바 미표시 (Wave 5 Phase 5)
     return false if controller_path.start_with?("settings/")
-
-    # 세션 페이지에서는 탭바 미표시
     return false if controller_name == "sessions"
-
     true
   end
 end

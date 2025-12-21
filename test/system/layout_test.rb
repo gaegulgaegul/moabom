@@ -106,9 +106,9 @@ class LayoutTest < ApplicationSystemTestCase
     sign_in user
     visit root_path
 
-    # 알림 버튼과 heroicon bell 확인
+    # 알림 링크와 heroicon bell 확인
     within "header" do
-      assert_selector "button svg"  # heroicon
+      assert_selector "a[aria-label='알림'] svg"  # heroicon
       # 알림 뱃지 확인
       assert_selector ".bg-accent-500.rounded-full"
     end
