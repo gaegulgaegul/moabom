@@ -16,12 +16,21 @@
     <% end %>
 
     <!-- 업로드 (FAB) -->
-    <%= link_to "#", class: "flex items-center justify-center -mt-4 tap-highlight-none", "aria-label": "사진 업로드" do %>
-      <div class="w-14 h-14 bg-primary-500 rounded-full flex items-center justify-center
-                  shadow-lg shadow-primary-500/30
-                  hover:bg-primary-600 active:bg-primary-700
-                  transition-colors duration-200">
-        <%= heroicon "plus", variant: :solid, options: { class: "w-7 h-7 text-white" } %>
+    <% if current_family %>
+      <%= link_to new_family_photo_path(current_family), class: "flex items-center justify-center -mt-4 tap-highlight-none", "aria-label": "사진 업로드" do %>
+        <div class="w-14 h-14 bg-primary-500 rounded-full flex items-center justify-center
+                    shadow-lg shadow-primary-500/30
+                    hover:bg-primary-600 active:bg-primary-700
+                    transition-colors duration-200">
+          <%= heroicon "plus", variant: :solid, options: { class: "w-7 h-7 text-white" } %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="flex items-center justify-center -mt-4">
+        <div class="w-14 h-14 bg-warm-gray-300 rounded-full flex items-center justify-center
+                    shadow-lg opacity-50 cursor-not-allowed">
+          <%= heroicon "plus", variant: :solid, options: { class: "w-7 h-7 text-white" } %>
+        </div>
       </div>
     <% end %>
 
