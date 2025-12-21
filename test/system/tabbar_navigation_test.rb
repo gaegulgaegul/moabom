@@ -14,8 +14,9 @@ class TabbarNavigationTest < ApplicationSystemTestCase
   end
 
   test "should navigate to photo upload when clicking upload button" do
-    # 탭바가 표시되는 페이지(설정)로 이동
-    visit settings_profile_path
+    # 탭바가 표시되는 페이지(알림)로 이동
+    # 설정 페이지는 Wave 5 Phase 5에서 탭바 숨김 처리됨
+    visit notifications_path
 
     # 탭바가 표시되는지 확인
     assert_selector "nav", count: 1

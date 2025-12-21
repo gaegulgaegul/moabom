@@ -27,10 +27,12 @@ module ApplicationHelper
   end
 
   # Wave 5: Phase 2 - 대시보드에서는 탭바 숨김
+  # Wave 5: Phase 5 - 설정 페이지에서는 탭바 숨김
   def show_bottom_tabbar?
     return false unless logged_in?
     return false if controller_name == "home" && action_name == "index"
     return false if controller_path.start_with?("onboarding/")
+    return false if controller_path.start_with?("settings/")
     return false if controller_name == "sessions"
     true
   end

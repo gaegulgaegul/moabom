@@ -79,20 +79,21 @@ class DashboardNavigationTest < ApplicationSystemTestCase
     assert_text "알림"
   end
 
-  test "should navigate to notifications from tabbar" do
-    # 탭바가 표시되는 페이지(설정)로 이동
-    visit settings_profile_path
+  test "should navigate to settings from tabbar" do
+    # 탭바가 표시되는 페이지(알림)로 이동
+    # 설정 페이지는 Wave 5 Phase 5에서 탭바 숨김 처리됨
+    visit notifications_path
 
     # 탭바가 표시되는지 확인
     assert_selector "nav", count: 1
 
-    # 탭바의 알림 탭 클릭
+    # 탭바의 설정 탭 클릭
     within "nav" do
-      click_link "알림"
+      click_link "설정"
     end
 
-    # 알림 목록 화면으로 이동 확인
-    assert_current_path notifications_path
-    assert_text "알림"
+    # 설정 화면으로 이동 확인
+    assert_current_path settings_profile_path
+    assert_text "설정"
   end
 end
