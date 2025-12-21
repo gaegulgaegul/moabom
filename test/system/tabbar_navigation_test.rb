@@ -6,14 +6,13 @@ class TabbarNavigationTest < ApplicationSystemTestCase
   setup do
     @user = users(:mom)
     @family = families(:kim_family)
+    # 온보딩 완료를 sign_in 전에 처리
+    @user.complete_onboarding!
+    @family.complete_onboarding!
     sign_in @user
   end
 
   test "should navigate to photo upload when clicking upload button" do
-    # 사용자 및 가족 온보딩 완료
-    @user.complete_onboarding!
-    @family.complete_onboarding!
-
     # 탭바가 표시되는 페이지(설정)로 이동
     visit settings_profile_path
 
