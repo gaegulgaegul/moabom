@@ -25,4 +25,21 @@ module ApplicationHelper
       false
     end ? "text-pink-500" : "text-gray-600"
   end
+
+  # Wave 5: Phase 2 - 대시보드에서는 탭바 숨김
+  def show_bottom_tabbar?
+    # 로그인하지 않은 경우 탭바 미표시
+    return false unless logged_in?
+
+    # 대시보드(홈)에서는 탭바 제거
+    return false if controller_name == "home" && action_name == "index"
+
+    # 온보딩 페이지에서는 탭바 미표시
+    return false if controller_path.start_with?("onboarding/")
+
+    # 세션 페이지에서는 탭바 미표시
+    return false if controller_name == "sessions"
+
+    true
+  end
 end
