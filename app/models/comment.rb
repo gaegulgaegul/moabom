@@ -5,6 +5,7 @@ class Comment < ApplicationRecord
 
   belongs_to :photo
   belongs_to :user
+  has_many :notifications, as: :notifiable, dependent: :destroy
 
   validates :body, presence: true
   validates :body, length: { maximum: MAX_BODY_LENGTH }
