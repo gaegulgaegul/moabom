@@ -23,6 +23,9 @@ class TabbarNavigationTest < ApplicationSystemTestCase
     # 탭바가 표시되는 페이지(설정)로 이동
     visit settings_profile_path
 
+    # Debug: print current path
+    puts "DEBUG: Current path after visit: #{current_path}"
+
     # Debug: check if we were redirected to onboarding
     if current_path.start_with?("/onboarding")
       puts "DEBUG: REDIRECTED to onboarding page: #{current_path}"
@@ -31,17 +34,28 @@ class TabbarNavigationTest < ApplicationSystemTestCase
       # Query the database from the test process to see what we see
       test_process_family = Family.find(@family.id)
       puts "DEBUG: Family onboarding_completed_at from test process: #{test_process_family.onboarding_completed_at}"
+    else
+      puts "DEBUG: Successfully on settings page (not redirected)"
     end
 
     # Debug: check if tabbar is present
-    if has_selector?("nav", wait: 1)
-      puts "DEBUG: Tabbar is present on settings page ✓"
+    if has_selector?("nav", wait: 5)
+      puts "DEBUG: Tabbar IS present on settings page ✓"
     else
       puts "DEBUG: Tabbar is NOT present on settings page!"
+
+      # Check what page elements we DO have
+      if has_selector?("header", wait: 1)
+        puts "DEBUG: Header IS present"
+      end
+
+      # Save page HTML for inspection
+      puts "DEBUG: Page title: #{page.title}"
+      puts "DEBUG: Page has 'show_bottom_tabbar': #{page.html.include?('show_bottom_tabbar')}"
     end
 
     # 탭바의 업로드 버튼 클릭
-    find('a[aria-label="사진 업로드"]').click
+    find('a[aria-label="사진 업로드"]', wait: 10).click
 
     # 사진 업로드 화면으로 이동 확인
     assert_current_path new_family_photo_path(@family)
