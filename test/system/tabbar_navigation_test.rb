@@ -10,6 +10,9 @@ class TabbarNavigationTest < ApplicationSystemTestCase
   end
 
   test "should navigate to photo upload when clicking upload button" do
+    # 가족 온보딩 완료
+    @family.complete_onboarding!
+
     # 탭바가 표시되는 페이지(설정)로 이동
     visit settings_profile_path
 

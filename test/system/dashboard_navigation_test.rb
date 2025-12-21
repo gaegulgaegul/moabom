@@ -80,6 +80,9 @@ class DashboardNavigationTest < ApplicationSystemTestCase
     # 탭바가 표시되는 페이지(설정)로 이동
     visit settings_profile_path
 
+    # 탭바가 표시되는지 확인
+    assert_selector "nav", count: 1
+
     # 탭바의 알림 탭 클릭
     within "nav" do
       click_link "알림"
