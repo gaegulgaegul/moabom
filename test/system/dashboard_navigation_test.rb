@@ -77,6 +77,9 @@ class DashboardNavigationTest < ApplicationSystemTestCase
   end
 
   test "should navigate to notifications from tabbar" do
+    # 사용자 온보딩 완료
+    @user.complete_onboarding!
+
     # 탭바가 표시되는 페이지(설정)로 이동
     visit settings_profile_path
 
