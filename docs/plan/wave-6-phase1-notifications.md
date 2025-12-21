@@ -237,6 +237,13 @@ class User < ApplicationRecord
   # 알림
   has_many :notifications, foreign_key: :recipient_id, dependent: :destroy
   has_many :sent_notifications, class_name: "Notification", foreign_key: :actor_id, dependent: :destroy
+
+  # Counter cache를 사용할 경우 아래 association 추가 필요
+  # has_many :unread_notifications, -> { where(read_at: nil) },
+  #          foreign_key: :recipient_id,
+  #          class_name: "Notification"
+  #
+  # 하지만 현재는 manual callback 방식 사용 (Notification 모델 참조)
 end
 ```
 
@@ -864,9 +871,14 @@ class AddUnreadNotificationsCountToUsers < ActiveRecord::Migration[8.0]
   def change
     add_column :users, :unread_notifications_count, :integer, default: 0, null: false
 
-    # 기존 데이터 업데이트
-    User.find_each do |user|
-      User.reset_counters(user.id, :unread_notifications)
+    # 기존 데이터 업데이트 (Notification 모델 생성 후 backfill)
+    reversible do |dir|
+      dir.up do
+        User.find_each do |user|
+          unread_count = Notification.where(recipient_id: user.id, read_at: nil).count
+          user.update_column(:unread_notifications_count, unread_count)
+        end
+      end
     end
   end
 end
