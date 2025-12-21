@@ -5,7 +5,7 @@ require "application_system_test_case"
 class SettingsTabbarTest < ApplicationSystemTestCase
   setup do
     @user = users(:mom)
-    sign_in_as @user
+    sign_in @user
   end
 
   test "should not show bottom tabbar in settings pages" do
