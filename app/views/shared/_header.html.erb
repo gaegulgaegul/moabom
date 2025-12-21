@@ -10,13 +10,21 @@
     <% end %>
 
     <!-- 우측 액션 -->
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-2">
       <% if logged_in? %>
+        <!-- 알림 (임시 버튼 - Phase 6에서 구현 예정) -->
         <button class="relative p-2 rounded-full hover:bg-cream-100 tap-highlight-none"
                 aria-label="알림">
           <%= heroicon "bell", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-700" } %>
           <span class="absolute top-1 right-1 w-2 h-2 bg-accent-500 rounded-full" aria-label="새 알림"></span>
         </button>
+
+        <!-- 설정 -->
+        <%= header_icon_button(
+          icon: "cog-6-tooth",
+          path: settings_profile_path,
+          label: "설정"
+        ) %>
       <% end %>
     </div>
   </div>

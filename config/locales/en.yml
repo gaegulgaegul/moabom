@@ -28,4 +28,6 @@
 #       enabled: "ON"
 
 en:
+  notifications:
+    unread_badge: "New notification"
   hello: "Hello world"

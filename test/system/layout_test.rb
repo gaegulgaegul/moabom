@@ -20,14 +20,14 @@ class LayoutTest < ApplicationSystemTestCase
     user = users(:mom)
     sign_in user
 
-    visit root_path
+    visit settings_profile_path
 
     # 헤더 확인
     assert_selector "header", count: 1
     assert_text "모아봄"
-    assert_selector "header button[aria-label='알림']" # 알림 버튼 확인
+    assert_selector "header a[aria-label='설정']" # 설정 아이콘 확인
 
-    # 탭바 확인
+    # 탭바 확인 (대시보드가 아닌 다른 페이지에서는 탭바 표시)
     assert_selector "nav", count: 1
     assert_text "홈"
     assert_text "앨범"
@@ -39,27 +39,22 @@ class LayoutTest < ApplicationSystemTestCase
     user = users(:mom)
     sign_in user
 
-    visit root_path
-
-    # 홈 탭 활성화 확인
-    within "nav" do
-      home_link = find("a", text: "홈")
-      assert home_link[:class]&.include?("tab-item-active"),
-             "홈 탭이 활성화되어야 합니다. 실제 클래스: #{home_link[:class]}"
-    end
-
-    # 설정으로 이동
-    within "nav" do
-      click_on "설정"
-    end
+    visit settings_profile_path
 
     # 설정 탭 활성화 확인
-    assert_current_path settings_profile_path
     within "nav" do
       settings_link = find("a", text: "설정")
       assert settings_link[:class]&.include?("tab-item-active"),
              "설정 탭이 활성화되어야 합니다. 실제 클래스: #{settings_link[:class]}"
     end
+
+    # 홈으로 이동
+    within "nav" do
+      click_on "홈"
+    end
+
+    # 홈 페이지로 이동 확인 (대시보드에서는 탭바가 없으므로 경로만 확인)
+    assert_current_path root_path
   end
 
   # Wave 2: 디자인 시스템 적용 테스트
@@ -73,9 +68,9 @@ class LayoutTest < ApplicationSystemTestCase
   test "로그인 사용자의 main 영역 패딩 확인" do
     user = users(:mom)
     sign_in user
-    visit root_path
+    visit settings_profile_path
 
-    # main 태그에 pt-14 pb-20 클래스가 있는지 확인
+    # main 태그에 pt-14 pb-20 클래스가 있는지 확인 (탭바가 있는 페이지)
     assert_selector "main.pt-14.pb-20.min-h-screen"
   end
 
@@ -113,7 +108,7 @@ class LayoutTest < ApplicationSystemTestCase
   test "탭바에 glass 효과 적용" do
     user = users(:mom)
     sign_in user
-    visit root_path
+    visit settings_profile_path
 
     # nav에 glassmorphism 효과 클래스 확인
     assert_selector "nav.bg-white\\/90.backdrop-blur-md"
@@ -123,7 +118,7 @@ class LayoutTest < ApplicationSystemTestCase
   test "탭바 아이콘이 heroicon으로 표시" do
     user = users(:mom)
     sign_in user
-    visit root_path
+    visit settings_profile_path
 
     # nav 내부에 여러 개의 svg (heroicon)가 있어야 함
     within "nav" do
@@ -134,7 +129,7 @@ class LayoutTest < ApplicationSystemTestCase
   test "중앙 FAB 버튼 스타일링" do
     user = users(:mom)
     sign_in user
-    visit root_path
+    visit settings_profile_path
 
     # FAB 버튼 확인 (bg-primary-500, rounded-full)
     within "nav" do
