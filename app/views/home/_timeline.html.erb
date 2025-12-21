@@ -17,10 +17,16 @@
           <%= link_to family_photo_path(@family, photo),
                       class: "photo-item block aspect-square overflow-hidden
                               bg-cream-200 hover:opacity-90 transition-opacity" do %>
-            <%= image_tag url_for(photo.image.variant(:thumbnail)),
-                          loading: "lazy",
-                          alt: photo.caption || "사진",
-                          class: "w-full h-full object-cover" %>
+            <% if photo.image.attached? && photo.image.variable? %>
+              <%= image_tag photo.image.variant(resize_to_limit: [300, 300]),
+                            loading: "lazy",
+                            alt: photo.caption || "사진",
+                            class: "w-full h-full object-cover" %>
+            <% else %>
+              <div class="w-full h-full bg-cream-200 flex items-center justify-center">
+                <span class="text-warm-gray-400 text-xs">No image</span>
+              </div>
+            <% end %>
           <% end %>
         <% end %>
       </div>
