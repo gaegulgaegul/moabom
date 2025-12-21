@@ -26,8 +26,9 @@ module SystemTestHelpers
       form.submit();
     JS
 
-    # Wait for redirect to complete
-    sleep 1
+    # Wait for redirect and page load to complete
+    # Use Capybara's synchronization by waiting for flash notice
+    assert_text "로그인되었습니다", wait: 5
   end
 
   # 로그아웃 헬퍼
