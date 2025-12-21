@@ -873,15 +873,36 @@ end
 
 # app/models/notification.rb
 class Notification < ApplicationRecord
-  belongs_to :recipient, class_name: "User", counter_cache: :unread_notifications_count
+  belongs_to :recipient, class_name: "User"
 
-  after_commit :update_counter_cache, on: :update
+  # 생성 시: 읽지 않은 알림이면 카운터 증가
+  after_commit :increment_unread_count, on: :create
+
+  # 삭제 시: 읽지 않은 알림이면 카운터 감소
+  after_commit :decrement_unread_count, on: :destroy
+
+  # 업데이트 시: read 상태 변경에 따라 카운터 조정
+  after_commit :update_unread_count, on: :update
 
   private
 
-  def update_counter_cache
+  def increment_unread_count
+    recipient.increment!(:unread_notifications_count) unless read?
+  end
+
+  def decrement_unread_count
+    recipient.decrement!(:unread_notifications_count) unless read?
+  end
+
+  def update_unread_count
     if saved_change_to_read_at?
-      recipient.decrement!(:unread_notifications_count) if read?
+      if read?
+        # 읽지 않음 → 읽음: 카운터 감소
+        recipient.decrement!(:unread_notifications_count)
+      else
+        # 읽음 → 읽지 않음: 카운터 증가
+        recipient.increment!(:unread_notifications_count)
+      end
     end
   end
 end
