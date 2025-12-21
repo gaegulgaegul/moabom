@@ -786,7 +786,7 @@ resources :notifications, only: [ :index, :update ]
 ```erb
 # app/views/notifications/_notification.html.erb
 <%= link_to notification_path(notification),
-            method: :patch,
+            data: { turbo_method: :patch },
             class: "notification-item block p-4 rounded-xl hover:bg-cream-50 transition-colors #{notification.read? ? '' : 'unread bg-primary-50 border-l-4 border-primary-500'}" do %>
   <div class="flex items-start gap-3">
     <%= render "notifications/avatar", actor: notification.actor %>
