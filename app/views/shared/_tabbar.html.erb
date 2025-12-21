@@ -35,8 +35,8 @@
     <% end %>
 
     <!-- 알림 -->
-    <%= link_to "#", class: "tab-item" do %>
-      <%= heroicon "bell", variant: :outline, options: { class: "w-6 h-6" } %>
+    <%= link_to notifications_path, class: "tab-item #{current_page?(notifications_path) ? 'tab-item-active' : ''}" do %>
+      <%= heroicon "bell", variant: current_page?(notifications_path) ? :solid : :outline, options: { class: "w-6 h-6" } %>
       <span class="text-xs mt-1">알림</span>
     <% end %>
 

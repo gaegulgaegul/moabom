@@ -51,6 +51,9 @@ Rails.application.routes.draw do
   get "i/:token", to: "invitations#show", as: :accept_invitation
   post "i/:token", to: "invitations#accept"
 
+  # Notifications
+  resources :notifications, only: [ :index ]
+
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
 

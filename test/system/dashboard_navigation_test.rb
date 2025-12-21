@@ -6,6 +6,7 @@ class DashboardNavigationTest < ApplicationSystemTestCase
   setup do
     @user = users(:mom)
     @family = families(:kim_family)
+    @family.complete_onboarding!
     sign_in @user
   end
 
@@ -42,7 +43,7 @@ class DashboardNavigationTest < ApplicationSystemTestCase
       assert_selector "a[href='/']", text: "모아봄"
 
       # 알림 아이콘
-      assert_selector "button[aria-label='알림']"
+      assert_selector "a[aria-label='알림']"
 
       # 설정 아이콘
       assert_selector "a[aria-label='설정']"
@@ -59,5 +60,33 @@ class DashboardNavigationTest < ApplicationSystemTestCase
 
     assert_current_path settings_profile_path
     assert_text "설정"
+  end
+
+  # 5.4 알림 네비게이션 테스트
+  test "should navigate to notifications from header bell icon" do
+    visit root_path
+
+    # 헤더의 알림 버튼 클릭
+    within "header" do
+      find("a[aria-label='알림']").click
+    end
+
+    # 알림 목록 화면으로 이동 확인
+    assert_current_path notifications_path
+    assert_text "알림"
+  end
+
+  test "should navigate to notifications from tabbar" do
+    # 탭바가 표시되는 페이지(설정)로 이동
+    visit settings_profile_path
+
+    # 탭바의 알림 탭 클릭
+    within "nav" do
+      click_link "알림"
+    end
+
+    # 알림 목록 화면으로 이동 확인
+    assert_current_path notifications_path
+    assert_text "알림"
   end
 end

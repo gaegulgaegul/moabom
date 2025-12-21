@@ -18,7 +18,7 @@ module ApplicationHelper
     when :upload
       false # 업로드 기능은 Phase 4에서 구현
     when :notifications
-      false # 알림 기능은 Phase 6에서 구현
+      controller_name == "notifications"
     when :settings
       controller.class.module_parent_name == "Settings"
     else
