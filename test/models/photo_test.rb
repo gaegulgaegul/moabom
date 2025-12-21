@@ -190,6 +190,58 @@ class PhotoTest < ActiveSupport::TestCase
     assert photo.valid?
   end
 
+  # 타임라인 그룹화 테스트
+  test "should group photos by date" do
+    family = families(:kim_family)
+    # 기존 사진 제거
+    family.photos.destroy_all
+
+    # 오늘 사진 2장
+    today_photo1 = create_photo(family, taken_at: Time.current)
+    today_photo2 = create_photo(family, taken_at: Time.current)
+
+    # 어제 사진 1장
+    yesterday_photo = create_photo(family, taken_at: 1.day.ago)
+
+    # 그룹화
+    grouped = Photo.for_family(family).group_by_date
+
+    assert_equal 2, grouped.keys.size
+    assert_equal 2, grouped[Date.current].size
+    assert_equal 1, grouped[Date.yesterday].size
+  end
+
+  test "should order grouped photos by date descending" do
+    family = families(:kim_family)
+    # 기존 사진 제거
+    family.photos.destroy_all
+
+    old_photo = create_photo(family, taken_at: 1.week.ago)
+    recent_photo = create_photo(family, taken_at: Time.current)
+
+    grouped = Photo.for_family(family).group_by_date
+
+    # 최신 날짜가 먼저
+    assert_equal Date.current, grouped.keys.first
+  end
+
+  test "should scope photos by month for timeline" do
+    family = families(:kim_family)
+    # 기존 사진 제거
+    family.photos.destroy_all
+
+    # 1월 사진
+    jan_photo = create_photo(family, taken_at: Date.new(2025, 1, 15))
+
+    # 2월 사진
+    feb_photo = create_photo(family, taken_at: Date.new(2025, 2, 10))
+
+    jan_photos = Photo.for_family(family).by_month(2025, 1)
+
+    assert_includes jan_photos, jan_photo
+    assert_not_includes jan_photos, feb_photo
+  end
+
   private
 
   def build_photo_with_content_type(content_type, filename)
@@ -203,6 +255,20 @@ class PhotoTest < ActiveSupport::TestCase
       filename: filename,
       content_type: content_type
     )
+    photo
+  end
+
+  def create_photo(family, taken_at:)
+    photo = family.photos.build(
+      uploader: users(:mom),
+      taken_at: taken_at
+    )
+    photo.image.attach(
+      io: StringIO.new("fake image data"),
+      filename: "photo.jpg",
+      content_type: "image/jpeg"
+    )
+    photo.save!
     photo
   end
 end

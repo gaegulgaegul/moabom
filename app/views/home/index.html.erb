@@ -58,8 +58,31 @@
 
     <% if @family.present? %>
       <%= render "child_card", child: @child %>
-      <%= render "recent_photos", family: @family, recent_photos: @recent_photos %>
       <%= render "quick_menu", family: @family %>
+
+      <!-- 타임라인 (무한 스크롤) -->
+      <div data-controller="infinite-scroll"
+           data-infinite-scroll-url-value="<%= root_path %>"
+           data-infinite-scroll-has-more-value="<%= @has_more %>">
+
+        <%= render "has_more_flag", has_more: @has_more %>
+
+        <div id="timeline-entries" data-infinite-scroll-target="entries">
+          <% if @timeline.present? %>
+            <%= render "timeline" %>
+          <% else %>
+            <%= render "empty_state" %>
+          <% end %>
+        </div>
+
+        <% if @has_more %>
+          <div data-infinite-scroll-target="pagination"
+               class="h-20 flex items-center justify-center">
+            <div class="animate-spin w-6 h-6 border-2 border-primary-500
+                        border-t-transparent rounded-full"></div>
+          </div>
+        <% end %>
+      </div>
     <% end %>
   </div>
 <% end %>

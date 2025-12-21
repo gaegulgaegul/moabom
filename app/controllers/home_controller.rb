@@ -8,6 +8,26 @@ class HomeController < ApplicationController
     return unless @family
 
     @child = @family.children.order(birthdate: :desc).first
-    @recent_photos = @family.photos.with_eager_loaded_image.recent.limit(10)
+    result = TimelineService.new(@family, page: params[:page] || 1).call
+    @timeline = result.timeline
+    @has_more = result.has_more
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.append(
+            "timeline-entries",
+            partial: "timeline",
+            locals: { timeline: @timeline }
+          ),
+          turbo_stream.replace(
+            "infinite-scroll-has-more",
+            partial: "has_more_flag",
+            locals: { has_more: @has_more }
+          )
+        ]
+      end
+    end
   end
 end
