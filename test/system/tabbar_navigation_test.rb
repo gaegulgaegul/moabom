@@ -28,7 +28,25 @@ class TabbarNavigationTest < ApplicationSystemTestCase
       puts "DEBUG: Tabbar is present on settings page"
     else
       puts "DEBUG: Tabbar is NOT present on settings page!"
-      puts "DEBUG: Page source: #{page.html[0..500]}"
+      # Check if we're logged in by looking for the header bell
+      if has_selector?("a[aria-label='알림']", wait: 1)
+        puts "DEBUG: User IS logged in (bell icon present)"
+      else
+        puts "DEBUG: User is NOT logged in (no bell icon)"
+      end
+
+      # Check the body tag for more info
+      body_html = page.find("body").native.inner_html
+      if body_html.include?("show_bottom_tabbar")
+        puts "DEBUG: 'show_bottom_tabbar' found in body HTML"
+      end
+
+      # Check for onboarding redirect
+      if current_path.start_with?("/onboarding")
+        puts "DEBUG: Redirected to onboarding page: #{current_path}"
+      else
+        puts "DEBUG: Current path: #{current_path}"
+      end
     end
 
     # 탭바의 업로드 버튼 클릭
