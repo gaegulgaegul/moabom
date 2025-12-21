@@ -5,15 +5,11 @@ require "test_helper"
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :selenium, using: :headless_chrome, screen_size: [ 1400, 1400 ]
 
-  # System tests run in a separate server process, so we can't use transactional tests
-  # Database changes need to be visible across processes
-  self.use_transactional_tests = false
-
-  # Clean up database after each test
-  teardown do
-    # Note: In production, consider using database_cleaner gem for more robust cleanup
-    # For now, we rely on fixtures being reloaded for each test
-  end
+  # Disable parallelization for system tests
+  # System tests use a separate Puma server process which needs to access the same database
+  # Parallel workers use separate database files (test-1.sqlite3, test-2.sqlite3, etc.)
+  # This causes the server to read from a different database than the test writes to
+  parallelize(workers: 1)
 
   # 시스템 테스트 헬퍼 포함
   include SystemTestHelpers
