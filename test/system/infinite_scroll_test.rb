@@ -12,7 +12,7 @@ class InfiniteScrollTest < ApplicationSystemTestCase
     # 기존 사진 제거
     @family.photos.destroy_all
 
-    # 60장의 사진 생성 (50장 + 10장 = 2페이지)
+    # 60장의 사진 생성 — 2페이지 분량 (페이지당 50장)
     60.times do |i|
       create_photo(@family, taken_at: i.days.ago)
     end
