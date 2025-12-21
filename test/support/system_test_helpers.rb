@@ -7,6 +7,10 @@ module SystemTestHelpers
     # since we can't directly manipulate sessions with Selenium
     # CSRF is disabled for /login in test environment
 
+    # Ensure database changes are visible (important for CI parallel tests)
+    user.reload
+    user.families.each(&:reload)
+
     # Visit a page first to establish a session
     visit root_path
 
@@ -30,6 +34,10 @@ module SystemTestHelpers
     # Check for header element which only appears when logged in
     # This is more reliable than flash message which may disappear quickly
     assert_selector "header", wait: 10
+
+    # Additional verification: check for notification bell which only appears when logged in
+    # This confirms session is fully loaded with user data
+    assert_selector "a[aria-label='알림']", wait: 5
   end
 
   # 로그아웃 헬퍼
