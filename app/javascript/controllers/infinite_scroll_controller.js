@@ -52,11 +52,24 @@ export default class extends Controller {
         const html = await response.text()
         Turbo.renderStreamMessage(html)
         this.pageValue = nextPage
+        this.updateHasMore()
       }
     } catch (error) {
       console.error("Failed to load more:", error)
     } finally {
       this.isLoading = false
+    }
+  }
+
+  updateHasMore() {
+    const hasMoreFlag = document.getElementById("infinite-scroll-has-more")
+    if (hasMoreFlag) {
+      const hasMore = hasMoreFlag.dataset.hasMore === "true"
+      this.hasMoreValue = hasMore
+
+      if (!hasMore && this.hasPaginationTarget) {
+        this.observer.unobserve(this.paginationTarget)
+      }
     }
   }
 }

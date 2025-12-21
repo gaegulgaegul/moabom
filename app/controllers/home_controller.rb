@@ -15,11 +15,18 @@ class HomeController < ApplicationController
     respond_to do |format|
       format.html
       format.turbo_stream do
-        render turbo_stream: turbo_stream.append(
-          "timeline-entries",
-          partial: "timeline",
-          locals: { timeline: @timeline }
-        )
+        render turbo_stream: [
+          turbo_stream.append(
+            "timeline-entries",
+            partial: "timeline",
+            locals: { timeline: @timeline }
+          ),
+          turbo_stream.replace(
+            "infinite-scroll-has-more",
+            partial: "has_more_flag",
+            locals: { has_more: @has_more }
+          )
+        ]
       end
     end
   end

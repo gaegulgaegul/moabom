@@ -65,6 +65,8 @@
            data-infinite-scroll-url-value="<%= root_path %>"
            data-infinite-scroll-has-more-value="<%= @has_more %>">
 
+        <%= render "has_more_flag", has_more: @has_more %>
+
         <div id="timeline-entries" data-infinite-scroll-target="entries">
           <% if @timeline.present? %>
             <%= render "timeline" %>
