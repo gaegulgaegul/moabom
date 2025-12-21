@@ -8,30 +8,8 @@ class HomeController < ApplicationController
     return unless @family
 
     @child = @family.children.order(birthdate: :desc).first
-    @photos = @family.photos.timeline_for(@family, page: params[:page] || 1)
-    @timeline = build_timeline(@photos)
-  end
-
-  private
-
-  def build_timeline(photos)
-    photos.group_by_date.map do |date, date_photos|
-      {
-        date: date,
-        date_label: format_date(date),
-        photos: date_photos,
-        count: date_photos.size
-      }
-    end
-  end
-
-  def format_date(date)
-    if date == Date.current
-      "오늘"
-    elsif date == Date.yesterday
-      "어제"
-    else
-      I18n.l(date, format: :long) # "2025년 1월 15일 (수)"
-    end
+    result = TimelineService.new(@family, page: params[:page] || 1).call
+    @timeline = result.timeline
+    @has_more = result.has_more
   end
 end
