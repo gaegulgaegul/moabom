@@ -1,4 +1,6 @@
 ko:
+  notifications:
+    unread_badge: 새 알림
   helpers:
     submit:
       save: 저장

@@ -19,7 +19,7 @@ module NavigationHelper
       if badge
         concat content_tag(:span, "",
                           class: "absolute top-1 right-1 w-2 h-2 bg-accent-500 rounded-full",
-                          "aria-label": "새 알림")
+                          "aria-label": t("notifications.unread_badge"))
       end
     end
   end
