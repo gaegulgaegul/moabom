@@ -10,13 +10,23 @@
     <% end %>
 
     <!-- 우측 액션 -->
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-2">
       <% if logged_in? %>
+        <!-- 알림 -->
         <button class="relative p-2 rounded-full hover:bg-cream-100 tap-highlight-none"
                 aria-label="알림">
           <%= heroicon "bell", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-700" } %>
           <span class="absolute top-1 right-1 w-2 h-2 bg-accent-500 rounded-full" aria-label="새 알림"></span>
         </button>
+
+        <!-- 설정 -->
+        <%= link_to settings_profile_path,
+                    class: "p-2 rounded-full hover:bg-cream-100
+                            transition-colors duration-200 tap-highlight-none",
+                    "aria-label": "설정" do %>
+          <%= heroicon "cog-6-tooth", variant: :outline,
+              options: { class: "w-6 h-6 text-warm-gray-700" } %>
+        <% end %>
       <% end %>
     </div>
   </div>
