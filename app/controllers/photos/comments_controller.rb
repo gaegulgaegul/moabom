@@ -25,6 +25,9 @@ module Photos
       @comment.user = current_user
 
       if @comment.save
+        # 알림 생성
+        NotificationService.notify_comment_created(@comment)
+
         respond_to do |format|
           format.turbo_stream { render turbo_stream: turbo_stream.append(dom_id(@photo, :comments), partial: "photos/comments/comment", locals: { comment: @comment }) }
           format.json { render json: @comment.as_json(only: [ :id, :body, :created_at ]) }

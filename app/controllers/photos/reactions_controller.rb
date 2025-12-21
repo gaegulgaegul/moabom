@@ -16,6 +16,9 @@ module Photos
       @reaction.emoji = reaction_params[:emoji]
 
       if @reaction.save
+        # 알림 생성
+        NotificationService.notify_reaction_created(@reaction)
+
         respond_to do |format|
           format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id(@photo, :reactions), partial: "photos/reactions/reactions", locals: { photo: @photo }) }
           format.json { render json: @reaction.as_json(only: [ :id, :emoji ]) }

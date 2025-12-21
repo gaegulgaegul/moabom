@@ -49,6 +49,35 @@ module Photos
     end
 
     # ========================================
+    # 알림 생성 테스트
+    # ========================================
+
+    test "should create notification when creating reaction" do
+      # 다른 사용자 사진에 반응 추가
+      other_user = users(:dad)
+      other_photo = @family.photos.create!(
+        uploader: other_user,
+        caption: "다른 사용자 사진",
+        taken_at: Time.current
+      )
+      other_photo.image.attach(
+        io: StringIO.new("fake image data"),
+        filename: "test.jpg",
+        content_type: "image/jpeg"
+      )
+
+      assert_difference "Notification.count", 1 do
+        post family_photo_reactions_path(@family, other_photo), params: {
+          reaction: { emoji: "❤️" }
+        }
+      end
+
+      notification = Notification.last
+      assert_equal other_user, notification.recipient
+      assert_equal @user, notification.actor
+    end
+
+    # ========================================
     # 반응 변경 테스트
     # ========================================
 
