@@ -13,7 +13,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   # Disable transactional tests for system tests
   # System tests run a separate Puma server process
-  # Transactional tests wrap each test in a transaction and roll back after
+  # Transactional tests wrap the test in a transaction and roll back after
   # This means the Puma server can't see the test data because it's in a transaction
   # We need actual database commits so the server can access the data
   self.use_transactional_tests = false
