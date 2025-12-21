@@ -11,6 +11,13 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   # This causes the server to read from a different database than the test writes to
   parallelize(workers: 1)
 
+  # Disable transactional tests for system tests
+  # System tests run a separate Puma server process
+  # Transactional tests wrap each test in a transaction and roll back after
+  # This means the Puma server can't see the test data because it's in a transaction
+  # We need actual database commits so the server can access the data
+  self.use_transactional_tests = false
+
   # 시스템 테스트 헬퍼 포함
   include SystemTestHelpers
 end
