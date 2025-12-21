@@ -44,7 +44,7 @@ class DashboardNavigationTest < ApplicationSystemTestCase
       # 알림 아이콘
       assert_selector "button[aria-label='알림']"
 
-      # 설정 아이콘 (아직 없음 - 이 테스트는 실패해야 함)
+      # 설정 아이콘
       assert_selector "a[aria-label='설정']"
     end
   end
