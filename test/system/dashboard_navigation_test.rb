@@ -9,6 +9,7 @@ class DashboardNavigationTest < ApplicationSystemTestCase
     # 온보딩 완료를 sign_in 전에 처리
     @user.complete_onboarding!
     @family.complete_onboarding!
+
     sign_in @user
   end
 

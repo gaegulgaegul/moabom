@@ -18,6 +18,13 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   # We need actual database commits so the server can access the data
   self.use_transactional_tests = false
 
+  # Force WAL checkpoint at start of each test to ensure fixtures are visible to Puma
+  # SQLite WAL (Write-Ahead Logging) may not flush writes to the main DB file immediately
+  # This ensures the separate Puma server process can read all fixture data
+  setup do
+    ActiveRecord::Base.connection.execute("PRAGMA wal_checkpoint(FULL)")
+  end
+
   # Clean up database after each test since we're not using transactional tests
   # This prevents test pollution where data from one test affects another
   teardown do

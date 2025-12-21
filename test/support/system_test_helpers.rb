@@ -11,6 +11,11 @@ module SystemTestHelpers
     user.reload
     raise "User not found in database" unless User.exists?(user.id)
 
+    # Force SQLite WAL checkpoint to ensure all writes are visible to Puma server
+    # This is critical because Puma runs in a separate process and may not see
+    # uncommitted WAL changes
+    ActiveRecord::Base.connection.execute("PRAGMA wal_checkpoint(FULL)")
+
     # Visit a page first to establish a session
     visit root_path
 

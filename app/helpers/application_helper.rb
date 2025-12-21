@@ -28,40 +28,10 @@ module ApplicationHelper
 
   # Wave 5: Phase 2 - 대시보드에서는 탭바 숨김
   def show_bottom_tabbar?
-    # Debug logging for CI
-    if Rails.env.test?
-      Rails.logger.info "=== show_bottom_tabbar? DEBUG ==="
-      Rails.logger.info "logged_in?: #{logged_in?}"
-      Rails.logger.info "controller_name: #{controller_name}"
-      Rails.logger.info "action_name: #{action_name}"
-      Rails.logger.info "controller_path: #{controller_path}"
-    end
-
-    # 로그인하지 않은 경우 탭바 미표시
-    unless logged_in?
-      Rails.logger.info "Returning false: not logged in" if Rails.env.test?
-      return false
-    end
-
-    # 대시보드(홈)에서는 탭바 제거
-    if controller_name == "home" && action_name == "index"
-      Rails.logger.info "Returning false: home#index" if Rails.env.test?
-      return false
-    end
-
-    # 온보딩 페이지에서는 탭바 미표시
-    if controller_path.start_with?("onboarding/")
-      Rails.logger.info "Returning false: onboarding page" if Rails.env.test?
-      return false
-    end
-
-    # 세션 페이지에서는 탭바 미표시
-    if controller_name == "sessions"
-      Rails.logger.info "Returning false: sessions controller" if Rails.env.test?
-      return false
-    end
-
-    Rails.logger.info "Returning true: should show tabbar" if Rails.env.test?
+    return false unless logged_in?
+    return false if controller_name == "home" && action_name == "index"
+    return false if controller_path.start_with?("onboarding/")
+    return false if controller_name == "sessions"
     true
   end
 end
