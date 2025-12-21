@@ -27,8 +27,9 @@ module SystemTestHelpers
     JS
 
     # Wait for redirect and page load to complete
-    # Use Capybara's synchronization by waiting for flash notice
-    assert_text "로그인되었습니다", wait: 5
+    # Check for header element which only appears when logged in
+    # This is more reliable than flash message which may disappear quickly
+    assert_selector "header", wait: 10
   end
 
   # 로그아웃 헬퍼
