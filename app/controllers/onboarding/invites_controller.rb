@@ -23,7 +23,10 @@ module Onboarding
         return
       end
 
+      # 가족과 사용자 온보딩 둘 다 완료 처리
       @family.complete_onboarding!
+      current_user.complete_onboarding! unless current_user.onboarding_completed?
+
       redirect_to root_path, notice: "온보딩이 완료되었습니다. 환영합니다!"
     end
 

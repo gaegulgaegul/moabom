@@ -91,12 +91,15 @@ module Onboarding
     test "POST #complete should mark family onboarding as completed" do
       # 온보딩 미완료 상태로 설정
       @family.update_column(:onboarding_completed_at, nil)
+      @user.update_column(:onboarding_completed_at, nil)
       assert_not @family.onboarding_completed?
+      assert_not @user.onboarding_completed?
 
       post complete_onboarding_invite_path
 
       assert_redirected_to root_path
       assert @family.reload.onboarding_completed?
+      assert @user.reload.onboarding_completed?
     end
 
     test "POST #complete should redirect to root with success message" do
