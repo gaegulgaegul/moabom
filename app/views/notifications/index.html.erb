@@ -18,7 +18,7 @@
           <div class="flex items-start gap-3">
             <!-- 아바타 -->
             <div class="w-10 h-10 rounded-full bg-primary-200 flex items-center justify-center flex-shrink-0">
-              <span class="text-lg"><%= notification.actor.nickname&.first || '?' %></span>
+              <span class="text-lg"><%= notification.actor&.nickname&.first || '?' %></span>
             </div>
 
             <!-- 내용 -->

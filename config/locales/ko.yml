@@ -1,6 +1,7 @@
 ko:
   notifications:
     unread_badge: 새 알림
+    unknown_user: "알 수 없는 사용자"
     messages:
       reaction_created: "%{actor_nickname}님이 사진에 반응을 남겼습니다"
       comment_created: "%{actor_nickname}님이 댓글을 남겼습니다"

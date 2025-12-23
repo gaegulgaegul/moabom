@@ -37,6 +37,7 @@ class Notification < ApplicationRecord
             "notifications.messages.default"
     end
 
-    I18n.t(key, actor_nickname: actor.nickname, default: I18n.t("notifications.messages.default"))
+    actor_nickname = actor&.nickname || I18n.t("notifications.unknown_user")
+    I18n.t(key, actor_nickname: actor_nickname, default: I18n.t("notifications.messages.default"))
   end
 end
