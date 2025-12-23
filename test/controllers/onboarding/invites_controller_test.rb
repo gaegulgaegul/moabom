@@ -87,5 +87,27 @@ module Onboarding
       assert_redirected_to root_path
       assert_equal "가족을 찾을 수 없습니다. 먼저 프로필을 완성해주세요.", flash[:alert]
     end
+
+    test "POST #complete should mark family onboarding as completed" do
+      # 온보딩 미완료 상태로 설정
+      @family.update_column(:onboarding_completed_at, nil)
+      assert_not @family.onboarding_completed?
+
+      post complete_onboarding_invite_path
+
+      assert_redirected_to root_path
+      assert @family.reload.onboarding_completed?
+    end
+
+    test "POST #complete should redirect to root with success message" do
+      # 온보딩 미완료 상태로 설정
+      @family.update_column(:onboarding_completed_at, nil)
+
+      post complete_onboarding_invite_path
+
+      assert_redirected_to root_path
+      follow_redirect!
+      assert_select ".alert-success", text: /온보딩이 완료되었습니다/
+    end
   end
 end
