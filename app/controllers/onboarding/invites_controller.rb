@@ -14,9 +14,17 @@ module Onboarding
 
       @invitation = find_or_create_invitation
       @invite_url = accept_invitation_url(@invitation.token)
+    end
 
-      # 온보딩 완료 처리 (나중에 뷰의 버튼으로 이동 예정)
-      @family.complete_onboarding! unless @family.onboarding_completed?
+    def complete
+      @family = current_family
+      unless @family
+        redirect_to root_path, alert: "가족을 찾을 수 없습니다."
+        return
+      end
+
+      @family.complete_onboarding!
+      redirect_to root_path, notice: "온보딩이 완료되었습니다. 환영합니다!"
     end
 
     private

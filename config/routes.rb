@@ -30,7 +30,9 @@ Rails.application.routes.draw do
   namespace :onboarding do
     resource :profile, only: [ :show, :update ]
     resource :child, only: [ :show, :create ]
-    resource :invite, only: [ :show ]
+    resource :invite, only: [ :show ] do
+      post :complete, on: :collection
+    end
   end
 
   # Settings (Phase 7)
