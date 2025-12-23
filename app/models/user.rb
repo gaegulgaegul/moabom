@@ -16,6 +16,10 @@ class User < ApplicationRecord
   has_many :devices, dependent: :destroy
   has_one_attached :avatar
 
+  # 알림
+  has_many :notifications, foreign_key: :recipient_id, inverse_of: :recipient, dependent: :destroy
+  has_many :sent_notifications, class_name: "Notification", foreign_key: :actor_id, inverse_of: :actor, dependent: :destroy
+
   validates :email, presence: true
   validates :nickname, presence: true,
                        length: { in: MIN_NICKNAME_LENGTH..MAX_NICKNAME_LENGTH },

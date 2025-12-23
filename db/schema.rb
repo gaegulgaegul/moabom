@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_19_055039) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_21_133942) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -106,6 +106,22 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_19_055039) do
     t.index ["token"], name: "index_invitations_on_token", unique: true
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.integer "actor_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "notifiable_id", null: false
+    t.string "notifiable_type", null: false
+    t.string "notification_type", null: false
+    t.datetime "read_at"
+    t.integer "recipient_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actor_id"], name: "index_notifications_on_actor_id"
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
+    t.index ["recipient_id", "created_at"], name: "index_notifications_on_recipient_id_and_created_at"
+    t.index ["recipient_id", "read_at"], name: "index_notifications_on_recipient_id_and_read_at"
+    t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
+  end
+
   create_table "photos", force: :cascade do |t|
     t.text "caption"
     t.integer "child_id"
@@ -157,6 +173,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_19_055039) do
   add_foreign_key "family_memberships", "users"
   add_foreign_key "invitations", "families"
   add_foreign_key "invitations", "users", column: "inviter_id"
+  add_foreign_key "notifications", "users", column: "actor_id"
+  add_foreign_key "notifications", "users", column: "recipient_id"
   add_foreign_key "photos", "children"
   add_foreign_key "photos", "families"
   add_foreign_key "photos", "users", column: "uploader_id"

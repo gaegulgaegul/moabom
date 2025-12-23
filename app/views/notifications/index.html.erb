@@ -9,6 +9,35 @@
       <p class="mt-2 text-sm text-warm-gray-500">새로운 소식이 있으면 알려드릴게요.</p>
     </div>
   <% else %>
-    <!-- 알림 목록 (Phase 6에서 구현) -->
+    <!-- 알림 목록 -->
+    <div class="space-y-2">
+      <% @notifications.each do |notification| %>
+        <%= link_to notification_path(notification),
+                    data: { turbo_method: :patch },
+                    class: "block p-4 rounded-xl hover:bg-cream-50 transition-colors #{notification.read? ? '' : 'bg-primary-50 border-l-4 border-primary-500'}" do %>
+          <div class="flex items-start gap-3">
+            <!-- 아바타 -->
+            <div class="w-10 h-10 rounded-full bg-primary-200 flex items-center justify-center flex-shrink-0">
+              <span class="text-lg"><%= notification.actor&.nickname&.first || '?' %></span>
+            </div>
+
+            <!-- 내용 -->
+            <div class="flex-1 min-w-0">
+              <p class="text-sm text-warm-gray-800 font-medium">
+                <%= notification.message %>
+              </p>
+              <p class="text-xs text-warm-gray-500 mt-1">
+                <%= time_ago_in_words(notification.created_at) %> 전
+              </p>
+            </div>
+
+            <!-- 읽지 않음 표시 -->
+            <% unless notification.read? %>
+              <div class="w-2 h-2 bg-primary-500 rounded-full flex-shrink-0 mt-2"></div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
   <% end %>
 </div>

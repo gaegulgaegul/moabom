@@ -25,6 +25,18 @@ module Photos
       @comment.user = current_user
 
       if @comment.save
+        # 알림 생성 (실패해도 댓글 생성은 성공으로 처리)
+        begin
+          NotificationService.notify_comment_created(@comment)
+        rescue StandardError => e
+          Rails.logger.error "Failed to create notification for comment: " \
+                             "comment_id=#{@comment.id}, user_id=#{current_user.id}, " \
+                             "photo_id=#{@photo.id}, error=#{e.class}: #{e.message}"
+          Rails.logger.error e.backtrace.join("\n")
+          # TODO: Report to error tracker (Sentry/Errbit) when available
+          # Sentry.capture_exception(e, extra: { comment_id: @comment.id, user_id: current_user.id })
+        end
+
         respond_to do |format|
           format.turbo_stream { render turbo_stream: turbo_stream.append(dom_id(@photo, :comments), partial: "photos/comments/comment", locals: { comment: @comment }) }
           format.json { render json: @comment.as_json(only: [ :id, :body, :created_at ]) }

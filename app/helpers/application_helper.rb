@@ -36,4 +36,11 @@ module ApplicationHelper
     return false if controller_name == "sessions"
     true
   end
+
+  # Wave 6: Phase 1 - 읽지 않은 알림 개수
+  def unread_notifications_count(user = current_user)
+    return 0 unless user
+
+    user.notifications.unread.count
+  end
 end

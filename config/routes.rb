@@ -52,7 +52,7 @@ Rails.application.routes.draw do
   post "i/:token", to: "invitations#accept"
 
   # Notifications
-  resources :notifications, only: [ :index ]
+  resources :notifications, only: [ :index, :update ]
 
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check

@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+read_notification:
+  recipient: mom
+  actor: dad
+  notifiable: mom_heart (Reaction)
+  notification_type: reaction_created
+  read_at: <%= 1.hour.ago %>
+
+unread_notification:
+  recipient: mom
+  actor: dad
+  notifiable: dad_thumbsup (Reaction)
+  notification_type: reaction_created
+  read_at: <%= nil %>
