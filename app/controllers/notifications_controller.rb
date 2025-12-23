@@ -5,8 +5,28 @@ class NotificationsController < ApplicationController
   before_action :require_onboarding!
 
   def index
-    # Phase 6에서 실제 알림 데이터 구현 예정
-    # 현재는 빈 목록 표시
-    @notifications = []
+    @notifications = current_user.notifications.recent.includes(:actor, :notifiable)
+  end
+
+  def update
+    @notification = current_user.notifications.find(params[:id])
+    @notification.mark_as_read!
+
+    # 알림 대상으로 리다이렉트
+    redirect_to notification_target_path(@notification)
+  end
+
+  private
+
+  def notification_target_path(notification)
+    case notification.notifiable
+    when Reaction, Comment
+      family_photo_path(
+        notification.notifiable.photo.family,
+        notification.notifiable.photo
+      )
+    else
+      notifications_path
+    end
   end
 end
