@@ -17,7 +17,14 @@
                     class: "relative p-2 rounded-full hover:bg-cream-100 tap-highlight-none",
                     "aria-label": "알림" do %>
           <%= heroicon "bell", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-700" } %>
-          <span class="absolute top-1 right-1 w-2 h-2 bg-accent-500 rounded-full" aria-label="새 알림"></span>
+          <% if unread_notifications_count > 0 %>
+            <span class="absolute top-1 right-1 min-w-[18px] h-[18px] px-1
+                         bg-accent-500 text-white text-xs font-semibold
+                         rounded-full flex items-center justify-center"
+                  aria-label="읽지 않은 알림">
+              <%= unread_notifications_count > 9 ? "9+" : unread_notifications_count %>
+            </span>
+          <% end %>
         <% end %>
 
         <!-- 설정 -->
