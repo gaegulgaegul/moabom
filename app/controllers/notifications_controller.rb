@@ -5,7 +5,7 @@ class NotificationsController < ApplicationController
   before_action :require_onboarding!
 
   def index
-    @notifications = current_user.notifications.recent.includes(:actor, :notifiable)
+    @notifications = current_user.notifications.recent.includes(:actor, notifiable: :photo)
   end
 
   def update
