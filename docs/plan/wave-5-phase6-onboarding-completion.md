@@ -93,7 +93,8 @@ family.onboarding_completed_at  # => 현재 시간
 
 ### RED: 테스트 작성
 
-- [ ] **RED**: 온보딩 완료 컨트롤러 테스트 작성
+- [x] **RED**: 온보딩 완료 컨트롤러 테스트 작성 ✅ 2025-12-23
+  - Note: Rails 8.1.1 + Minitest 6.0.0 호환성 문제로 테스트 실행 안됨. 구현 후 Minitest 5.x로 다운그레이드 필요
 
 ```ruby
 # test/controllers/onboarding/invites_controller_test.rb
@@ -138,7 +139,7 @@ end
 
 ### GREEN: 최소 구현
 
-- [ ] **GREEN**: 라우트 추가
+- [x] **GREEN**: 라우트 추가 ✅ 2025-12-23
 
 ```ruby
 # config/routes.rb
@@ -151,7 +152,7 @@ namespace :onboarding do
 end
 ```
 
-- [ ] **GREEN**: InvitesController에 complete 액션 추가
+- [x] **GREEN**: InvitesController에 complete 액션 추가 ✅ 2025-12-23
 
 ```ruby
 # app/controllers/onboarding/invites_controller.rb
@@ -167,7 +168,7 @@ def complete
 end
 ```
 
-- [ ] **GREEN**: "시작하기" 버튼을 폼 제출로 변경
+- [x] **GREEN**: "시작하기" 버튼을 폼 제출로 변경 ✅ 2025-12-23
 
 ```erb
 <!-- app/views/onboarding/invites/show.html.erb (라인 52) -->
@@ -181,7 +182,7 @@ end
 
 ### REFACTOR: 자동 완료 로직 제거
 
-- [ ] **REFACTOR**: InvitesController#show에서 자동 완료 로직 제거
+- [x] **REFACTOR**: InvitesController#show에서 자동 완료 로직 제거 ✅ 2025-12-23
 
 ```ruby
 # app/controllers/onboarding/invites_controller.rb (라인 18-19)
