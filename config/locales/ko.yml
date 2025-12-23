@@ -1,6 +1,10 @@
 ko:
   notifications:
     unread_badge: 새 알림
+    messages:
+      reaction_created: "%{actor_nickname}님이 사진에 반응을 남겼습니다"
+      comment_created: "%{actor_nickname}님이 댓글을 남겼습니다"
+      default: "새로운 알림이 있습니다"
   helpers:
     submit:
       save: 저장

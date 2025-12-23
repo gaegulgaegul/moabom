@@ -2,8 +2,8 @@
 
 class Notification < ApplicationRecord
   # 연관관계
-  belongs_to :recipient, class_name: "User"
-  belongs_to :actor, class_name: "User"
+  belongs_to :recipient, class_name: "User", inverse_of: :notifications
+  belongs_to :actor, class_name: "User", inverse_of: :sent_notifications
   belongs_to :notifiable, polymorphic: true
 
   # Validations
@@ -28,13 +28,15 @@ class Notification < ApplicationRecord
   end
 
   def message
-    case notification_type
+    key = case notification_type
     when "reaction_created"
-      "#{actor.nickname}님이 사진에 반응을 남겼습니다"
+            "notifications.messages.reaction_created"
     when "comment_created"
-      "#{actor.nickname}님이 댓글을 남겼습니다"
+            "notifications.messages.comment_created"
     else
-      "새로운 알림이 있습니다"
+            "notifications.messages.default"
     end
+
+    I18n.t(key, actor_nickname: actor.nickname, default: I18n.t("notifications.messages.default"))
   end
 end
