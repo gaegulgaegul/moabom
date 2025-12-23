@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Notification < ApplicationRecord
   # 연관관계
   belongs_to :recipient, class_name: "User"
