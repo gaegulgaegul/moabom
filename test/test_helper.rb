@@ -13,7 +13,8 @@ OmniAuth.config.test_mode = true
 module ActiveSupport
   class TestCase
     # Run tests in parallel with specified workers
-    parallelize(workers: :number_of_processors)
+    # Temporarily disabled due to Rails 8.1.1 + Minitest 6.0.0 compatibility issue
+    # parallelize(workers: :number_of_processors)
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all

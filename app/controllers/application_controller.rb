@@ -28,13 +28,13 @@ class ApplicationController < ActionController::Base
 
     # Family selection strategy:
     # 1. Use params[:family_id] when present (explicit family context)
-    # 2. Fall back to user's first family (default for single-family users)
+    # 2. Fall back to most recently completed onboarding family (predictable)
     # This assumes single-family-per-user for MVP; for multi-family support,
     # consider adding a user.default_family_id column or session[:current_family_id]
     @current_family = if params[:family_id].present?
       current_user&.families&.find_by(id: params[:family_id])
     else
-      current_user&.families&.first
+      current_user&.families&.order(onboarding_completed_at: :desc, created_at: :desc)&.first
     end
   end
 

@@ -59,8 +59,8 @@ module Onboarding
       end
 
       # 하단 버튼
-      assert_link "시작하기", class: "btn-primary"
-      assert_selector "button.text-warm-gray-400", text: "나중에 초대할게요"
+      assert_button "시작하기", class: "btn-primary"
+      assert_button "나중에 초대할게요", class: "text-warm-gray-400"
     end
 
     test "초대 링크가 표시됨" do
@@ -77,8 +77,10 @@ module Onboarding
     test "시작하기 버튼으로 홈으로 이동" do
       visit onboarding_invite_path
 
-      # JavaScript로 클릭 (요소 겹침 문제)
-      page.execute_script("document.querySelector('a.btn-primary').click()")
+      # 하단 버튼 영역으로 스크롤 후 클릭
+      within("div.px-6.pb-8.bg-cream-50") do
+        find("button", text: "시작하기").scroll_to(:bottom).click
+      end
 
       assert_current_path root_path
     end
@@ -86,8 +88,10 @@ module Onboarding
     test "나중에 초대 버튼으로 홈으로 이동" do
       visit onboarding_invite_path
 
-      # JavaScript로 클릭 (z-index 문제)
-      page.execute_script("document.querySelector('button.text-warm-gray-400').click()")
+      # 하단 버튼 영역으로 스크롤 후 클릭
+      within("div.px-6.pb-8.bg-cream-50") do
+        find("button", text: "나중에 초대할게요").scroll_to(:bottom).click
+      end
 
       assert_current_path root_path
     end
