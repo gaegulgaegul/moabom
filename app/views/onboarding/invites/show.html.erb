@@ -50,9 +50,8 @@
   <!-- 하단 버튼 -->
   <div class="px-6 pb-8 bg-cream-50 space-y-3">
     <%= button_to "시작하기", complete_onboarding_invite_path,
-        method: :post, class: "btn-primary w-full" %>
-    <%= button_tag "나중에 초대할게요", type: "button",
-        class: "text-warm-gray-400 text-sm w-full py-2",
-        onclick: "window.location.href='#{root_path}'" %>
+        method: :post, class: "btn-primary w-full", data: { turbo: false } %>
+    <%= button_to "나중에 초대할게요", complete_onboarding_invite_path,
+        method: :post, class: "text-warm-gray-400 text-sm w-full py-2", data: { turbo: false } %>
   </div>
 </div>

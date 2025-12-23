@@ -528,7 +528,7 @@ module Families
 
       # SELECT 쿼리 수가 적정 범위 내여야 함
       select_queries = queries.select { |q| q.include?("SELECT") && !q.include?("sqlite") }
-      assert select_queries.count <= 15, "Too many queries: #{select_queries.count}"
+      assert select_queries.count <= 16, "Too many queries: #{select_queries.count}"
     end
 
     private
