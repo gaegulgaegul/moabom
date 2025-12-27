@@ -1,0 +1,33 @@
+<%= content_tag(wrapper_tag, **wrapper_options) do %>
+  <%# SVG Border Container %>
+  <span class="sketch-border absolute inset-0 pointer-events-none rounded-sketch-lg" data-sketch-card-target="border"></span>
+
+  <%# Gallery Grid - Bento Layout %>
+  <% if has_images? %>
+    <div class="grid grid-cols-2 grid-rows-2 gap-0.5 <%= grid_height_class %>">
+      <%# Main Image - Left side, full height %>
+      <div class="row-span-2">
+        <%= main_image if main_image.present? %>
+      </div>
+
+      <%# Secondary Image - Right top %>
+      <div class="row-span-1">
+        <%= secondary_image if secondary_image.present? %>
+      </div>
+
+      <%# Tertiary Image - Right bottom with optional overlay %>
+      <div class="row-span-1">
+        <%= tertiary_image if tertiary_image.present? %>
+      </div>
+    </div>
+  <% end %>
+
+  <%# Content Area %>
+  <% if content.present? %>
+    <div class="p-4">
+      <div class="font-hand text-sketch-ink">
+        <%= content %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

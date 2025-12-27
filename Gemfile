@@ -44,8 +44,11 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
-# SVG icons from Heroicons [https://heroicons.com/]
-gem "heroicon"
+# SVG icons from Lucide [https://lucide.dev/]
+gem "lucide-rails"
+
+# ViewComponent for reusable UI components [https://viewcomponent.org/]
+gem "view_component"
 
 # OAuth authentication
 gem "omniauth"

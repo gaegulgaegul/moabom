@@ -1,0 +1,946 @@
+<%# Frame0 Sketch Design System Demo Page %>
+<% content_for :title, @page_title %>
+
+<div class="min-h-screen bg-sketch-paper">
+  <%# Header %>
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b-2 border-sketch-ink/20 px-4 py-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <h1 class="font-sketch text-2xl text-sketch-ink">
+        ✏️ Frame0 Sketch Design System
+      </h1>
+      <span class="text-sm text-sketch-gray font-hand">Development Only</span>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8 space-y-16">
+
+    <%# ==================== BUTTONS ==================== %>
+    <section id="buttons" class="space-y-6">
+      <h2 class="font-sketch text-3xl text-sketch-ink border-b-2 border-dashed border-sketch-ink/30 pb-2">
+        Buttons
+      </h2>
+
+      <%# Primary Buttons %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Primary Variant</h3>
+        <div class="flex flex-wrap gap-4 items-center">
+          <%= render Sketch::ButtonComponent.new(variant: :primary) do %>
+            Default
+          <% end %>
+
+          <%= render Sketch::ButtonComponent.new(variant: :primary, size: :sm) do %>
+            Small
+          <% end %>
+
+          <%= render Sketch::ButtonComponent.new(variant: :primary, size: :lg) do %>
+            Large
+          <% end %>
+
+          <%= render Sketch::ButtonComponent.new(variant: :primary, disabled: true) do %>
+            Disabled
+          <% end %>
+
+          <%= render Sketch::ButtonComponent.new(variant: :primary, loading: true) do %>
+            Loading
+          <% end %>
+        </div>
+      </div>
+
+      <%# Secondary Buttons %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Secondary Variant</h3>
+        <div class="flex flex-wrap gap-4 items-center">
+          <%= render Sketch::ButtonComponent.new(variant: :secondary) do %>
+            Secondary
+          <% end %>
+
+          <%= render Sketch::ButtonComponent.new(variant: :secondary, size: :sm) do %>
+            Small
+          <% end %>
+
+          <%= render Sketch::ButtonComponent.new(variant: :secondary, disabled: true) do %>
+            Disabled
+          <% end %>
+        </div>
+      </div>
+
+      <%# Ghost Buttons %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Ghost Variant</h3>
+        <div class="flex flex-wrap gap-4 items-center">
+          <%= render Sketch::ButtonComponent.new(variant: :ghost) do %>
+            Ghost
+          <% end %>
+
+          <%= render Sketch::ButtonComponent.new(variant: :ghost, size: :lg) do %>
+            Large Ghost
+          <% end %>
+        </div>
+      </div>
+
+      <%# Danger Buttons %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Danger Variant</h3>
+        <div class="flex flex-wrap gap-4 items-center">
+          <%= render Sketch::ButtonComponent.new(variant: :danger) do %>
+            Delete
+          <% end %>
+
+          <%= render Sketch::ButtonComponent.new(variant: :danger, disabled: true) do %>
+            Disabled
+          <% end %>
+        </div>
+      </div>
+
+      <%# Full Width %>
+      <div class="space-y-4 max-w-md">
+        <h3 class="font-hand text-xl text-sketch-gray">Full Width</h3>
+        <%= render Sketch::ButtonComponent.new(variant: :primary, full_width: true) do %>
+          Full Width Button
+        <% end %>
+      </div>
+    </section>
+
+    <%# ==================== CARDS ==================== %>
+    <section id="cards" class="space-y-6">
+      <h2 class="font-sketch text-3xl text-sketch-ink border-b-2 border-dashed border-sketch-ink/30 pb-2">
+        Cards
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <%# Default Card %>
+        <%= render Sketch::CardComponent.new(variant: :default) do |card| %>
+          <% card.with_header do %>
+            <h4 class="font-sketch text-lg">Default Card</h4>
+          <% end %>
+          <p class="text-sketch-gray font-hand">
+            This is the default card style with a hand-drawn border effect.
+          </p>
+          <% card.with_footer do %>
+            <span class="text-sm text-sketch-gray">Footer content</span>
+          <% end %>
+        <% end %>
+
+        <%# Elevated Card %>
+        <%= render Sketch::CardComponent.new(variant: :elevated) do |card| %>
+          <% card.with_header do %>
+            <h4 class="font-sketch text-lg">Elevated Card</h4>
+          <% end %>
+          <p class="text-sketch-gray font-hand">
+            Elevated style with shadow effect for depth.
+          </p>
+        <% end %>
+
+        <%# Flat Card %>
+        <%= render Sketch::CardComponent.new(variant: :flat) do |card| %>
+          <% card.with_header do %>
+            <h4 class="font-sketch text-lg">Flat Card</h4>
+          <% end %>
+          <p class="text-sketch-gray font-hand">
+            Minimal flat design without shadow.
+          </p>
+        <% end %>
+
+        <%# Glass Card %>
+        <%= render Sketch::CardComponent.new(variant: :glass) do |card| %>
+          <% card.with_header do %>
+            <h4 class="font-sketch text-lg">Glass Card</h4>
+          <% end %>
+          <p class="text-sketch-gray font-hand">
+            Glassmorphism effect with blur backdrop.
+          </p>
+        <% end %>
+      </div>
+
+      <%# Hoverable Card %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Interactive Cards</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
+          <%= render Sketch::CardComponent.new(variant: :default, hoverable: true) do %>
+            <h4 class="font-sketch text-lg mb-2">Hoverable Card</h4>
+            <p class="text-sketch-gray font-hand">Hover to see the effect!</p>
+          <% end %>
+
+          <%= render Sketch::CardComponent.new(variant: :elevated, href: "#", hoverable: true) do %>
+            <h4 class="font-sketch text-lg mb-2">Clickable Card</h4>
+            <p class="text-sketch-gray font-hand">This card is a link!</p>
+          <% end %>
+        </div>
+      </div>
+
+      <%# Card with Image %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Card with Image</h3>
+        <div class="max-w-sm">
+          <%= render Sketch::CardComponent.new(variant: :default) do |card| %>
+            <% card.with_image(src: "https://placehold.co/400x300/FFE4B5/1A1A1A?text=Photo", alt: "Sample photo") %>
+            <h4 class="font-sketch text-lg mb-2">Photo Card</h4>
+            <p class="text-sketch-gray font-hand text-sm">A card with an image slot.</p>
+          <% end %>
+        </div>
+      </div>
+
+      <%# Gallery Card (Bento Grid) %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Gallery Card (Bento Grid)</h3>
+        <div class="max-w-lg">
+          <%= render Sketch::GalleryCardComponent.new(aspect_ratio: :portrait, hoverable: true) do |card| %>
+            <% card.with_main_image(src: "https://placehold.co/400x400/E8D5B7/1A1A1A?text=Photo+1", alt: "Main photo") %>
+            <% card.with_secondary_image(src: "https://placehold.co/200x200/D4E5F7/1A1A1A?text=Photo+2", alt: "Second photo") %>
+            <% card.with_tertiary_image(src: "https://placehold.co/200x200/F7E4D4/1A1A1A?text=Photo+3", alt: "Third photo", more_count: 12) %>
+            <h4 class="font-sketch text-lg mb-1">우리 가족 앨범</h4>
+            <p class="text-sketch-gray font-hand text-sm">소중한 순간들을 모아봤어요 ✨</p>
+          <% end %>
+        </div>
+      </div>
+
+      <%# Gallery Card - Square Aspect %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Gallery Card - Square</h3>
+        <div class="max-w-md">
+          <%= render Sketch::GalleryCardComponent.new(aspect_ratio: :square, hoverable: true) do |card| %>
+            <% card.with_main_image(src: "https://placehold.co/300x300/FFD4E5/1A1A1A?text=Photo+1", alt: "Main") %>
+            <% card.with_secondary_image(src: "https://placehold.co/150x150/E5FFD4/1A1A1A?text=Photo+2", alt: "Top") %>
+            <% card.with_tertiary_image(src: "https://placehold.co/150x150/D4E5FF/1A1A1A?text=Photo+3", alt: "Bottom", more_text: "더보기") %>
+            <p class="text-sketch-ink font-hand">첫 돌 파티 사진 모음</p>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <%# ==================== INPUTS ==================== %>
+    <section id="inputs" class="space-y-6">
+      <h2 class="font-sketch text-3xl text-sketch-ink border-b-2 border-dashed border-sketch-ink/30 pb-2">
+        Form Inputs
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
+        <%# Text Input %>
+        <div class="space-y-4">
+          <h3 class="font-hand text-xl text-sketch-gray">Text Inputs</h3>
+
+          <%= render Sketch::InputComponent.new(
+            type: :text,
+            name: "demo_text",
+            label: "Your Name",
+            placeholder: "Enter your name...",
+            helper: "This is helper text"
+          ) %>
+
+          <%= render Sketch::InputComponent.new(
+            type: :email,
+            name: "demo_email",
+            label: "Email Address",
+            placeholder: "you@example.com",
+            required: true
+          ) %>
+
+          <%= render Sketch::InputComponent.new(
+            type: :password,
+            name: "demo_password",
+            label: "Password",
+            placeholder: "********"
+          ) %>
+        </div>
+
+        <%# Input States %>
+        <div class="space-y-4">
+          <h3 class="font-hand text-xl text-sketch-gray">Input States</h3>
+
+          <%= render Sketch::InputComponent.new(
+            type: :text,
+            name: "demo_error",
+            label: "With Error",
+            placeholder: "Invalid input",
+            error: "This field has an error!"
+          ) %>
+
+          <%= render Sketch::InputComponent.new(
+            type: :text,
+            name: "demo_disabled",
+            label: "Disabled",
+            placeholder: "Cannot edit",
+            disabled: true
+          ) %>
+
+          <%= render Sketch::InputComponent.new(
+            type: :text,
+            name: "demo_readonly",
+            label: "Read Only",
+            value: "Read-only value",
+            readonly: true
+          ) %>
+        </div>
+
+        <%# Textarea %>
+        <div class="space-y-4">
+          <h3 class="font-hand text-xl text-sketch-gray">Textarea</h3>
+
+          <%= render Sketch::InputComponent.new(
+            type: :textarea,
+            name: "demo_textarea",
+            label: "Message",
+            placeholder: "Write your message here...",
+            rows: 4
+          ) %>
+        </div>
+
+        <%# Select %>
+        <div class="space-y-4">
+          <h3 class="font-hand text-xl text-sketch-gray">Select</h3>
+
+          <%= render Sketch::InputComponent.new(
+            type: :select,
+            name: "demo_select",
+            label: "Choose an option",
+            options: [
+              ["Option 1", "1"],
+              ["Option 2", "2"],
+              ["Option 3", "3"]
+            ],
+            include_blank: "Select..."
+          ) %>
+        </div>
+
+        <%# Variants %>
+        <div class="space-y-4 md:col-span-2">
+          <h3 class="font-hand text-xl text-sketch-gray">Input Variants</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <%= render Sketch::InputComponent.new(
+              type: :text,
+              name: "variant_default",
+              label: "Default",
+              variant: :default,
+              placeholder: "Default style"
+            ) %>
+
+            <%= render Sketch::InputComponent.new(
+              type: :text,
+              name: "variant_filled",
+              label: "Filled",
+              variant: :filled,
+              placeholder: "Filled style"
+            ) %>
+
+            <%= render Sketch::InputComponent.new(
+              type: :text,
+              name: "variant_underline",
+              label: "Underline",
+              variant: :underline,
+              placeholder: "Underline style"
+            ) %>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <%# ==================== NAVIGATION ==================== %>
+    <section id="navigation" class="space-y-6">
+      <h2 class="font-sketch text-3xl text-sketch-ink border-b-2 border-dashed border-sketch-ink/30 pb-2">
+        Navigation
+      </h2>
+
+      <%# Header Nav %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Header Navigation</h3>
+        <%= render Sketch::NavComponent.new(variant: :header) do |nav| %>
+          <% nav.with_brand do %>
+            <span class="font-sketch text-xl">✏️ Moabom</span>
+          <% end %>
+          <% nav.with_item(href: "#", active: true) do %>Home<% end %>
+          <% nav.with_item(href: "#") do %>Photos<% end %>
+          <% nav.with_item(href: "#") do %>Albums<% end %>
+          <% nav.with_actions do %>
+            <%= render Sketch::ButtonComponent.new(variant: :primary, size: :sm) do %>
+              Upload
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <%# Inline Nav %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Inline Navigation</h3>
+        <%= render Sketch::NavComponent.new(variant: :inline) do |nav| %>
+          <% nav.with_item(href: "#", active: true) do %>All<% end %>
+          <% nav.with_item(href: "#") do %>Recent<% end %>
+          <% nav.with_item(href: "#") do %>Favorites<% end %>
+          <% nav.with_item(href: "#") do %>Shared<% end %>
+        <% end %>
+      </div>
+
+      <%# Tab Bar %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Tab Bar (Mobile)</h3>
+        <div class="max-w-md border-2 border-dashed border-sketch-ink/20 rounded-lg overflow-hidden">
+          <%= render Sketch::NavComponent.new(variant: :tabbar) do |nav| %>
+            <% nav.with_tab(href: "#", icon: "home", label: "Home", active: true) %>
+            <% nav.with_tab(href: "#", icon: "image", label: "Photos") %>
+            <% nav.with_tab(href: "#", icon: "plus-circle", label: "Add") %>
+            <% nav.with_tab(href: "#", icon: "bell", label: "Alerts") %>
+            <% nav.with_tab(href: "#", icon: "settings", label: "Settings") %>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <%# ==================== MODALS ==================== %>
+    <section id="modals" class="space-y-6">
+      <h2 class="font-sketch text-3xl text-sketch-ink border-b-2 border-dashed border-sketch-ink/30 pb-2">
+        Modals
+      </h2>
+
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Modal Sizes</h3>
+        <div class="flex flex-wrap gap-4">
+          <button
+            type="button"
+            class="sketch-btn sketch-btn-secondary"
+            onclick="openSketchModal('modal-sm')"
+          >
+            Small Modal
+          </button>
+
+          <button
+            type="button"
+            class="sketch-btn sketch-btn-secondary"
+            onclick="openSketchModal('modal-md')"
+          >
+            Medium Modal
+          </button>
+
+          <button
+            type="button"
+            class="sketch-btn sketch-btn-secondary"
+            onclick="openSketchModal('modal-lg')"
+          >
+            Large Modal
+          </button>
+        </div>
+      </div>
+
+      <%# Modal Components (hidden by default) %>
+      <%= render Sketch::ModalComponent.new(id: "modal-sm", size: :sm, title: "Small Modal") do |modal| %>
+        <% modal.with_body do %>
+          <p class="font-hand text-sketch-gray">This is a small modal dialog.</p>
+        <% end %>
+        <% modal.with_footer do %>
+          <%= render Sketch::ButtonComponent.new(variant: :ghost, data: { action: "click->sketch-modal#close" }) do %>
+            Cancel
+          <% end %>
+          <%= render Sketch::ButtonComponent.new(variant: :primary) do %>
+            Confirm
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= render Sketch::ModalComponent.new(id: "modal-md", size: :md, title: "Medium Modal") do |modal| %>
+        <% modal.with_body do %>
+          <p class="font-hand text-sketch-gray mb-4">
+            This is a medium-sized modal with more content space.
+          </p>
+          <%= render Sketch::InputComponent.new(
+            type: :text,
+            name: "modal_input",
+            label: "Enter something",
+            placeholder: "Type here..."
+          ) %>
+        <% end %>
+        <% modal.with_footer do %>
+          <%= render Sketch::ButtonComponent.new(variant: :ghost, data: { action: "click->sketch-modal#close" }) do %>
+            Cancel
+          <% end %>
+          <%= render Sketch::ButtonComponent.new(variant: :primary) do %>
+            Save
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= render Sketch::ModalComponent.new(id: "modal-lg", size: :lg, title: "Large Modal") do |modal| %>
+        <% modal.with_body do %>
+          <p class="font-hand text-sketch-gray mb-4">
+            This is a large modal that can contain more complex content.
+          </p>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="h-32 bg-sketch-highlight-blue/30 rounded-lg flex items-center justify-center">
+              <span class="font-sketch text-sketch-ink/50">Content Area 1</span>
+            </div>
+            <div class="h-32 bg-sketch-highlight-pink/30 rounded-lg flex items-center justify-center">
+              <span class="font-sketch text-sketch-ink/50">Content Area 2</span>
+            </div>
+          </div>
+        <% end %>
+        <% modal.with_footer do %>
+          <%= render Sketch::ButtonComponent.new(variant: :danger, data: { action: "click->sketch-modal#close" }) do %>
+            Delete
+          <% end %>
+          <div class="flex-1"></div>
+          <%= render Sketch::ButtonComponent.new(variant: :ghost, data: { action: "click->sketch-modal#close" }) do %>
+            Cancel
+          <% end %>
+          <%= render Sketch::ButtonComponent.new(variant: :primary) do %>
+            Save Changes
+          <% end %>
+        <% end %>
+      <% end %>
+    </section>
+
+    <%# ==================== UTILITIES ==================== %>
+    <section id="utilities" class="space-y-6">
+      <h2 class="font-sketch text-3xl text-sketch-ink border-b-2 border-dashed border-sketch-ink/30 pb-2">
+        Utility Classes
+      </h2>
+
+      <%# Shadows %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Rough Shadows</h3>
+        <div class="flex flex-wrap gap-8">
+          <div class="w-32 h-32 bg-white rounded-lg rough-shadow-sm flex items-center justify-center">
+            <span class="font-hand text-sm text-sketch-gray">small</span>
+          </div>
+          <div class="w-32 h-32 bg-white rounded-lg rough-shadow flex items-center justify-center">
+            <span class="font-hand text-sm text-sketch-gray">default</span>
+          </div>
+          <div class="w-32 h-32 bg-white rounded-lg rough-shadow-lg flex items-center justify-center">
+            <span class="font-hand text-sm text-sketch-gray">large</span>
+          </div>
+        </div>
+      </div>
+
+      <%# Noise Fill %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Noise Fill</h3>
+        <div class="flex flex-wrap gap-8">
+          <div class="w-32 h-32 bg-sketch-highlight-yellow noise-fill-light rounded-lg flex items-center justify-center">
+            <span class="font-hand text-sm text-sketch-gray relative z-10">light</span>
+          </div>
+          <div class="w-32 h-32 bg-sketch-highlight-pink noise-fill rounded-lg flex items-center justify-center">
+            <span class="font-hand text-sm text-sketch-gray relative z-10">default</span>
+          </div>
+          <div class="w-32 h-32 bg-sketch-highlight-blue noise-fill-heavy rounded-lg flex items-center justify-center">
+            <span class="font-hand text-sm text-sketch-gray relative z-10">heavy</span>
+          </div>
+        </div>
+      </div>
+
+      <%# Borders %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Irregular Borders</h3>
+        <div class="flex flex-wrap gap-8">
+          <div class="w-32 h-32 bg-white irregular-border-thin rounded-lg flex items-center justify-center">
+            <span class="font-hand text-sm text-sketch-gray">thin</span>
+          </div>
+          <div class="w-32 h-32 bg-white irregular-border rounded-lg flex items-center justify-center">
+            <span class="font-hand text-sm text-sketch-gray">default</span>
+          </div>
+          <div class="w-32 h-32 bg-white irregular-border-thick rounded-lg flex items-center justify-center">
+            <span class="font-hand text-sm text-sketch-gray">thick</span>
+          </div>
+        </div>
+      </div>
+
+      <%# Text Effects %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Text Effects</h3>
+        <div class="space-y-4 max-w-md">
+          <p class="text-lg">
+            This text has a <span class="sketch-underline">sketch underline</span> effect.
+          </p>
+          <p class="text-lg">
+            This text has a <span class="sketch-strikethrough">strikethrough</span> effect.
+          </p>
+          <p class="text-lg">
+            This text has a <span class="sketch-highlight">yellow highlight</span> effect.
+          </p>
+          <p class="text-lg">
+            Try <span class="sketch-highlight-pink">pink</span>,
+            <span class="sketch-highlight-blue">blue</span>, or
+            <span class="sketch-highlight-green">green</span> highlights!
+          </p>
+        </div>
+      </div>
+
+      <%# Animations %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Animations</h3>
+        <div class="flex flex-wrap gap-8">
+          <div class="w-24 h-24 bg-sketch-highlight-yellow rounded-lg sketch-wobble flex items-center justify-center">
+            <span class="font-hand text-xs text-sketch-gray">wobble</span>
+          </div>
+          <div class="w-24 h-24 bg-sketch-highlight-pink rounded-lg sketch-shake flex items-center justify-center">
+            <span class="font-hand text-xs text-sketch-gray">shake (hover)</span>
+          </div>
+          <div class="w-24 h-24 bg-sketch-highlight-blue rounded-lg sketch-loading flex items-center justify-center">
+            <span class="font-hand text-xs text-sketch-gray">loading</span>
+          </div>
+        </div>
+      </div>
+
+      <%# Background Patterns %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Background Patterns</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="h-40 sketch-dotted-bg rounded-lg flex items-center justify-center">
+            <span class="font-hand text-sketch-gray bg-white px-2">dotted</span>
+          </div>
+          <div class="h-40 sketch-lined-bg rounded-lg flex items-center justify-center">
+            <span class="font-hand text-sketch-gray bg-white px-2">lined</span>
+          </div>
+          <div class="h-40 sketch-crosshatch rounded-lg flex items-center justify-center">
+            <span class="font-hand text-sketch-gray bg-white px-2">crosshatch</span>
+          </div>
+        </div>
+      </div>
+
+      <%# Paper Effects %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Paper Effects</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="h-40 bg-white sketch-paper-texture rounded-lg flex items-center justify-center">
+            <span class="font-hand text-sketch-gray relative z-10">paper texture</span>
+          </div>
+          <div class="h-40 bg-sketch-highlight-yellow sketch-torn-edge flex items-center justify-center">
+            <span class="font-hand text-sketch-gray">torn edge</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <%# ==================== HELPERS ==================== %>
+    <section id="helpers" class="space-y-6">
+      <h2 class="font-sketch text-3xl text-sketch-ink border-b-2 border-dashed border-sketch-ink/30 pb-2">
+        Helper Methods
+      </h2>
+
+      <%# sketch_container %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">sketch_container</h3>
+        <%= sketch_container(variant: :card, class: "p-4") do %>
+          <p class="font-hand text-sketch-gray">Content inside a sketch container</p>
+        <% end %>
+      </div>
+
+      <%# sketch_divider %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">sketch_divider</h3>
+        <div class="max-w-md space-y-4">
+          <%= sketch_divider %>
+          <%= sketch_divider(variant: :dashed) %>
+          <%= sketch_divider(variant: :dotted) %>
+        </div>
+      </div>
+
+      <%# sketch_badge %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">sketch_badge</h3>
+        <div class="flex flex-wrap gap-4">
+          <%= sketch_badge("Default") %>
+          <%= sketch_badge("Primary", variant: :primary) %>
+          <%= sketch_badge("Secondary", variant: :secondary) %>
+          <%= sketch_badge("Success", variant: :success) %>
+          <%= sketch_badge("Warning", variant: :warning) %>
+          <%= sketch_badge("Danger", variant: :danger) %>
+        </div>
+      </div>
+
+      <%# sketch_avatar %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">sketch_avatar</h3>
+        <div class="flex flex-wrap gap-4 items-end">
+          <%= sketch_avatar(initials: "AB", size: :sm) %>
+          <%= sketch_avatar(initials: "CD", size: :md) %>
+          <%= sketch_avatar(initials: "EF", size: :lg) %>
+          <%= sketch_avatar(initials: "GH", size: :xl) %>
+        </div>
+      </div>
+    </section>
+
+    <%# ==================== KOREAN TYPOGRAPHY ==================== %>
+    <section id="korean-fonts" class="space-y-6">
+      <h2 class="font-sketch text-3xl text-sketch-ink border-b-2 border-dashed border-sketch-ink/30 pb-2">
+        한글 Typography
+      </h2>
+
+      <%# Primary Font (Headings) %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Primary - 제목용 (Nanum Pen Script, Gamja Flower)</h3>
+        <div class="p-6 bg-white rounded-lg border-2 border-sketch-ink/20">
+          <p class="font-sketch text-3xl text-sketch-ink mb-4">
+            우리 가족의 소중한 순간들
+          </p>
+          <p class="font-sketch text-2xl text-sketch-ink mb-4">
+            아이의 첫 걸음마를 기록해요
+          </p>
+          <p class="font-sketch text-xl text-sketch-ink">
+            모아봄에서 추억을 모아보세요 ✨
+          </p>
+        </div>
+      </div>
+
+      <%# Body Font (Content) %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Body - 본문용 (Gaegu, Hi Melody)</h3>
+        <div class="p-6 bg-white rounded-lg border-2 border-sketch-ink/20">
+          <p class="font-hand text-lg text-sketch-ink mb-4">
+            오늘 하루도 행복한 하루였어요. 아이가 처음으로 "엄마"라고 불러줬답니다.
+            감동적인 순간을 가족들과 함께 공유하고 싶어요.
+          </p>
+          <p class="font-hand text-base text-sketch-gray">
+            2024년 12월 27일 - 첫 돌 파티에서 촬영한 사진이에요.
+            할머니, 할아버지도 함께 축하해 주셨어요.
+          </p>
+        </div>
+      </div>
+
+      <%# Mono Font (Labels/Captions) %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Mono - 캡션용 (Poor Story)</h3>
+        <div class="p-6 bg-white rounded-lg border-2 border-sketch-ink/20">
+          <p class="font-sketch-mono text-base text-sketch-ink mb-2">
+            // 메모: 다음 주에 가족사진 찍기
+          </p>
+          <p class="font-sketch-mono text-sm text-sketch-gray">
+            업로드: 2024-12-27 14:30 | 용량: 2.3MB
+          </p>
+        </div>
+      </div>
+
+      <%# Mixed Example %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Mixed - 실제 사용 예시</h3>
+        <div class="max-w-md">
+          <%= render Sketch::CardComponent.new(variant: :elevated) do |card| %>
+            <% card.with_header do %>
+              <span class="font-sketch text-xl">첫 돌 축하해요! 🎂</span>
+            <% end %>
+            <p class="font-hand text-sketch-ink mb-3">
+              벌써 1년이 지났네요. 건강하게 자라줘서 고마워요.
+              앞으로도 예쁘게 자라렴~
+            </p>
+            <p class="font-sketch-mono text-xs text-sketch-gray">
+              2024년 12월 15일 • 엄마가
+            </p>
+            <% card.with_footer do %>
+              <div class="flex gap-2">
+                <%= render Sketch::ButtonComponent.new(variant: :ghost, size: :sm) do %>
+                  💕 좋아요 12
+                <% end %>
+                <%= render Sketch::ButtonComponent.new(variant: :ghost, size: :sm) do %>
+                  💬 댓글 3
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <%# ==================== ICONS ==================== %>
+    <section id="icons" class="space-y-6">
+      <h2 class="font-sketch text-3xl text-sketch-ink border-b-2 border-dashed border-sketch-ink/30 pb-2">
+        Icons (lucide)
+      </h2>
+
+      <%# Icon Sizes %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Sizes</h3>
+        <div class="flex flex-wrap gap-6 items-end">
+          <div class="text-center">
+            <%= lucide_icon "home", class: "w-4 h-4 text-sketch-ink" %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">16px</p>
+          </div>
+          <div class="text-center">
+            <%= lucide_icon "home", class: "w-5 h-5 text-sketch-ink" %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">20px</p>
+          </div>
+          <div class="text-center">
+            <%= lucide_icon "home", class: "w-6 h-6 text-sketch-ink" %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">24px</p>
+          </div>
+          <div class="text-center">
+            <%= lucide_icon "home", class: "w-8 h-8 text-sketch-ink" %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">32px</p>
+          </div>
+          <div class="text-center">
+            <%= lucide_icon "home", class: "w-12 h-12 text-sketch-ink" %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">48px</p>
+          </div>
+        </div>
+      </div>
+
+      <%# Icon Variants %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Variants (Outline vs Solid)</h3>
+        <div class="flex flex-wrap gap-8">
+          <div class="flex items-center gap-4 p-4 bg-white rounded-lg border-2 border-sketch-ink/20">
+            <%= lucide_icon "heart", class: "w-8 h-8 text-sketch-ink" %>
+            <%= lucide_icon "heart", class: "w-8 h-8 text-sketch-ink" %>
+            <span class="font-hand text-sketch-gray">heart</span>
+          </div>
+          <div class="flex items-center gap-4 p-4 bg-white rounded-lg border-2 border-sketch-ink/20">
+            <%= lucide_icon "star", class: "w-8 h-8 text-sketch-ink" %>
+            <%= lucide_icon "star", class: "w-8 h-8 text-sketch-ink" %>
+            <span class="font-hand text-sketch-gray">star</span>
+          </div>
+          <div class="flex items-center gap-4 p-4 bg-white rounded-lg border-2 border-sketch-ink/20">
+            <%= lucide_icon "bell", class: "w-8 h-8 text-sketch-ink" %>
+            <%= lucide_icon "bell", class: "w-8 h-8 text-sketch-ink" %>
+            <span class="font-hand text-sketch-gray">bell</span>
+          </div>
+        </div>
+      </div>
+
+      <%# Common UI Icons %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Common UI Icons</h3>
+        <div class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
+          <% %w[home image camera plus-circle user users settings bell search arrow-left x check trash pencil share message-circle smile calendar folder bookmark archive file upload download].each do |icon_name| %>
+            <div class="flex flex-col items-center p-3 bg-white rounded-lg border border-sketch-ink/10 hover:border-sketch-ink/30 transition-colors">
+              <%= lucide_icon icon_name, class: "w-6 h-6 text-sketch-ink" %>
+              <span class="font-hand text-xs text-sketch-gray mt-2 text-center truncate w-full"><%= icon_name %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <%# Icon Colors %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Icon Colors</h3>
+        <div class="flex flex-wrap gap-4">
+          <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
+            <%= lucide_icon "heart", class: "w-8 h-8 text-sketch-ink" %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">ink</p>
+          </div>
+          <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
+            <%= lucide_icon "heart", class: "w-8 h-8 text-sketch-pencil" %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">pencil</p>
+          </div>
+          <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
+            <%= lucide_icon "heart", class: "w-8 h-8 text-sketch-gray" %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">gray</p>
+          </div>
+          <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
+            <%= lucide_icon "heart", class: "w-8 h-8 text-red-500" %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">red</p>
+          </div>
+          <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
+            <%= lucide_icon "heart", class: "w-8 h-8 text-primary-500" %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">primary</p>
+          </div>
+          <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
+            <%= lucide_icon "heart", class: "w-8 h-8 text-secondary-500" %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">secondary</p>
+          </div>
+        </div>
+      </div>
+
+      <%# Icon Buttons %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Icon Buttons</h3>
+        <div class="flex flex-wrap gap-4">
+          <button class="p-3 bg-white border-2 border-sketch-ink rounded-lg hover:bg-sketch-paper transition-colors">
+            <%= lucide_icon "plus", class: "w-6 h-6 text-sketch-ink" %>
+          </button>
+          <button class="p-3 bg-primary-500 rounded-lg hover:bg-primary-600 transition-colors">
+            <%= lucide_icon "camera", class: "w-6 h-6 text-white" %>
+          </button>
+          <button class="p-3 bg-sketch-highlight-pink rounded-full hover:bg-sketch-highlight-pink/80 transition-colors">
+            <%= lucide_icon "heart", class: "w-6 h-6 text-red-500" %>
+          </button>
+          <button class="p-3 bg-sketch-paper border-2 border-dashed border-sketch-ink/30 rounded-lg hover:border-sketch-ink/50 transition-colors">
+            <%= lucide_icon "upload", class: "w-6 h-6 text-sketch-pencil" %>
+          </button>
+        </div>
+      </div>
+
+      <%# Icons with Text %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Icons with Text</h3>
+        <div class="flex flex-wrap gap-4">
+          <div class="flex items-center gap-2 p-3 bg-white rounded-lg border-2 border-sketch-ink/20">
+            <%= lucide_icon "image", class: "w-5 h-5 text-sketch-ink" %>
+            <span class="font-hand text-sketch-ink">사진 12장</span>
+          </div>
+          <div class="flex items-center gap-2 p-3 bg-white rounded-lg border-2 border-sketch-ink/20">
+            <%= lucide_icon "heart", class: "w-5 h-5 text-red-500" %>
+            <span class="font-hand text-sketch-ink">좋아요 48</span>
+          </div>
+          <div class="flex items-center gap-2 p-3 bg-white rounded-lg border-2 border-sketch-ink/20">
+            <%= lucide_icon "message-circle", class: "w-5 h-5 text-sketch-ink" %>
+            <span class="font-hand text-sketch-ink">댓글 7개</span>
+          </div>
+          <div class="flex items-center gap-2 p-3 bg-sketch-highlight-yellow rounded-lg">
+            <%= lucide_icon "star", class: "w-5 h-5 text-amber-500" %>
+            <span class="font-hand text-sketch-ink">즐겨찾기</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <%# ==================== COLORS ==================== %>
+    <section id="colors" class="space-y-6">
+      <h2 class="font-sketch text-3xl text-sketch-ink border-b-2 border-dashed border-sketch-ink/30 pb-2">
+        Color Palette
+      </h2>
+
+      <%# Core Colors %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Core Colors</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="space-y-2">
+            <div class="h-20 bg-sketch-ink rounded-lg"></div>
+            <span class="font-hand text-sm text-sketch-gray">ink</span>
+          </div>
+          <div class="space-y-2">
+            <div class="h-20 bg-sketch-paper rounded-lg border border-sketch-ink/10"></div>
+            <span class="font-hand text-sm text-sketch-gray">paper</span>
+          </div>
+          <div class="space-y-2">
+            <div class="h-20 bg-sketch-pencil rounded-lg"></div>
+            <span class="font-hand text-sm text-sketch-gray">pencil</span>
+          </div>
+          <div class="space-y-2">
+            <div class="h-20 bg-sketch-gray rounded-lg"></div>
+            <span class="font-hand text-sm text-sketch-gray">gray</span>
+          </div>
+        </div>
+      </div>
+
+      <%# Highlighter Colors %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Highlighter Colors</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="space-y-2">
+            <div class="h-20 bg-sketch-highlight-yellow rounded-lg"></div>
+            <span class="font-hand text-sm text-sketch-gray">yellow</span>
+          </div>
+          <div class="space-y-2">
+            <div class="h-20 bg-sketch-highlight-pink rounded-lg"></div>
+            <span class="font-hand text-sm text-sketch-gray">pink</span>
+          </div>
+          <div class="space-y-2">
+            <div class="h-20 bg-sketch-highlight-blue rounded-lg"></div>
+            <span class="font-hand text-sm text-sketch-gray">blue</span>
+          </div>
+          <div class="space-y-2">
+            <div class="h-20 bg-sketch-highlight-green rounded-lg"></div>
+            <span class="font-hand text-sm text-sketch-gray">green</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <%# Footer %>
+  <footer class="border-t-2 border-dashed border-sketch-ink/20 px-4 py-8 mt-16">
+    <div class="max-w-6xl mx-auto text-center">
+      <p class="font-hand text-sketch-gray">
+        Frame0 Sketch Design System for Moabom
+      </p>
+      <p class="font-hand text-sm text-sketch-gray/60 mt-2">
+        Built with Rails ViewComponent + TailwindCSS + Rough.js
+      </p>
+    </div>
+  </footer>
+</div>

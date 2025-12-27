@@ -18,9 +18,36 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
+    <%# Frame0 Sketch Style Fonts %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@400;500;600;700&family=Comic+Neue:wght@300;400;700&family=Gaegu:wght@300;400;700&family=Gamja+Flower&family=Gloria+Hallelujah&family=Hi+Melody&family=Indie+Flower&family=Kalam:wght@300;400;700&family=Nanum+Pen+Script&family=Patrick+Hand&family=Poor+Story&display=swap" rel="stylesheet">
+
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <%# CDN Fallback for Sketch Dependencies %>
+    <%# Timeout-based verification: check if rough loaded after importmap processing %>
+    <script>
+      (function() {
+        var FALLBACK_DELAY = 2000;
+        var fallbackLoaded = false;
+
+        function loadRoughFallback() {
+          if (fallbackLoaded || window.rough) return;
+          fallbackLoaded = true;
+          console.warn('Rough.js not available, loading CDN fallback...');
+          var script = document.createElement('script');
+          script.src = 'https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.min.js';
+          document.head.appendChild(script);
+        }
+
+        setTimeout(function() {
+          if (!window.rough) loadRoughFallback();
+        }, FALLBACK_DELAY);
+      })();
+    </script>
   </head>
 
   <body class="bg-cream-50 dark:bg-warm-gray-900">
@@ -29,14 +56,14 @@
     <main class="<%= show_bottom_tabbar? ? 'pt-14 pb-20' : 'pt-14' %> min-h-screen">
       <% if flash[:notice] %>
         <div class="alert-success flex items-center gap-3 mx-4 mt-4">
-          <%= heroicon "check-circle", variant: :solid, options: { class: "w-5 h-5 text-emerald-600 shrink-0" } %>
+          <%= lucide_icon "check-circle-2", class: "w-5 h-5 text-emerald-600 shrink-0" %>
           <p class="text-sm"><%= flash[:notice] %></p>
         </div>
       <% end %>
 
       <% if flash[:alert] %>
         <div class="alert-error flex items-center gap-3 mx-4 mt-4">
-          <%= heroicon "exclamation-circle", variant: :solid, options: { class: "w-5 h-5 text-red-600 shrink-0" } %>
+          <%= lucide_icon "alert-circle", class: "w-5 h-5 text-red-600 shrink-0" %>
           <p class="text-sm"><%= flash[:alert] %></p>
         </div>
       <% end %>

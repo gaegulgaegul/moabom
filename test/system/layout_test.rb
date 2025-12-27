@@ -106,9 +106,9 @@ class LayoutTest < ApplicationSystemTestCase
     sign_in user
     visit root_path
 
-    # 알림 링크와 heroicon bell 확인
+    # 알림 링크와 lucide bell 확인
     within "header" do
-      assert_selector "a[aria-label='알림'] svg"  # heroicon
+      assert_selector "a[aria-label='알림'] svg"  # lucide
       # 알림 뱃지 확인
       assert_selector ".bg-accent-500.rounded-full"
     end
@@ -133,7 +133,7 @@ class LayoutTest < ApplicationSystemTestCase
     end
   end
 
-  test "탭바 아이콘이 heroicon으로 표시" do
+  test "탭바 아이콘이 lucide으로 표시" do
     user = users(:mom)
     sign_in user
 
@@ -143,7 +143,7 @@ class LayoutTest < ApplicationSystemTestCase
 
     # 탭바가 있는 경우에만 테스트
     if has_selector?("nav", text: "홈")
-      # nav 내부에 여러 개의 svg (heroicon)가 있어야 함
+      # nav 내부에 여러 개의 svg (lucide)가 있어야 함
       within "nav" do
         assert_selector "svg", minimum: 5  # 홈, 앨범, 업로드, 알림, 설정
       end

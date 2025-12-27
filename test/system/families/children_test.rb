@@ -120,7 +120,7 @@ module Families
       # chevron-right 아이콘 확인 (각 카드에)
       @family.children.each do |child|
         within ".card-glass", text: child.name do
-          assert_selector "svg" # heroicon chevron-right
+          assert_selector "svg" # lucide chevron-right
         end
       end
     end

@@ -1,0 +1,30 @@
+<%= content_tag(wrapper_tag, **wrapper_options) do %>
+  <%# SVG Border Container %>
+  <span class="sketch-border absolute inset-0 pointer-events-none rounded-sketch-lg" data-sketch-card-target="border"></span>
+
+  <%# Image Slot %>
+  <% if image? %>
+    <%= image %>
+  <% end %>
+
+  <%# Header Slot %>
+  <% if header? %>
+    <header class="sketch-card-header mb-3 pb-3 border-b border-sketch-gray/30">
+      <h3 class="font-sketch text-lg font-semibold text-sketch-ink">
+        <%= header %>
+      </h3>
+    </header>
+  <% end %>
+
+  <%# Main Content %>
+  <div class="sketch-card-content relative z-10">
+    <%= content %>
+  </div>
+
+  <%# Footer Slot %>
+  <% if footer? %>
+    <footer class="sketch-card-footer mt-4 pt-3 border-t border-sketch-gray/30">
+      <%= footer %>
+    </footer>
+  <% end %>
+<% end %>

@@ -20,7 +20,7 @@
     <% if can_manage_members? && membership.user != current_user %>
       <button class="p-2 hover:bg-cream-100 rounded-full"
               aria-label="<%= membership.user.nickname %> 관리">
-        <%= heroicon "ellipsis-vertical", variant: :outline, options: { class: "w-5 h-5 text-warm-gray-400" } %>
+        <%= lucide_icon "more-vertical", class: "w-5 h-5 text-warm-gray-400" %>
       </button>
     <% end %>
   </div>

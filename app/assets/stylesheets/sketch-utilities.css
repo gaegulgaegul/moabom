@@ -1,0 +1,474 @@
+/**
+ * Frame0 Sketch Utility Classes
+ * Additional utility classes for sketch-style UI effects
+ *
+ * Usage:
+ *   <div class="rough-shadow noise-fill irregular-border">
+ *     Content with sketch effects
+ *   </div>
+ */
+
+/* ============================================
+   1. rough-shadow - Hand-drawn shadow effect
+   ============================================ */
+.rough-shadow {
+  box-shadow:
+    3px 3px 0 0 var(--sketch-ink, #1A1A1A),
+    4px 4px 0 0 var(--sketch-ink, #1A1A1A);
+  transition: box-shadow 0.2s ease;
+}
+
+.rough-shadow:hover {
+  box-shadow:
+    4px 4px 0 0 var(--sketch-ink, #1A1A1A),
+    5px 5px 0 0 var(--sketch-ink, #1A1A1A);
+}
+
+.rough-shadow-sm {
+  box-shadow: 2px 2px 0 0 var(--sketch-ink, #1A1A1A);
+}
+
+.rough-shadow-lg {
+  box-shadow:
+    4px 4px 0 0 var(--sketch-ink, #1A1A1A),
+    5px 5px 0 0 var(--sketch-ink, #1A1A1A),
+    6px 6px 0 0 var(--sketch-ink, #1A1A1A);
+}
+
+/* ============================================
+   2. noise-fill - Noise texture background
+   ============================================ */
+.noise-fill {
+  position: relative;
+}
+
+.noise-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.noise-fill-light::before {
+  opacity: 0.02;
+}
+
+.noise-fill-heavy::before {
+  opacity: 0.06;
+}
+
+/* ============================================
+   3. irregular-border - Uneven border effect
+   ============================================ */
+.irregular-border {
+  border-style: solid;
+  border-width: 2px 2.5px 1.5px 2px;
+  border-color: var(--sketch-ink, #1A1A1A);
+}
+
+.irregular-border-thin {
+  border-width: 1px 1.5px 1px 1.5px;
+}
+
+.irregular-border-thick {
+  border-width: 3px 3.5px 2.5px 3px;
+}
+
+/* ============================================
+   4. sketch-underline - Hand-drawn underline
+   ============================================ */
+.sketch-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.sketch-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--sketch-ink, #1A1A1A) 0%,
+    var(--sketch-ink, #1A1A1A) 70%,
+    transparent 70%,
+    transparent 75%,
+    var(--sketch-ink, #1A1A1A) 75%,
+    var(--sketch-ink, #1A1A1A) 100%
+  );
+  transform: rotate(-0.5deg);
+}
+
+/**
+ * Wavy underline using CSS-only approach with SVG data URI.
+ * No external clipPath element required - the wavy pattern is embedded directly.
+ */
+.sketch-underline-wavy::after {
+  height: 4px;
+  bottom: -3px;
+  /* Wavy line pattern using inline SVG */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 4' preserveAspectRatio='none'%3E%3Cpath d='M0 3 Q 2.5 0, 5 3 T 10 3 T 15 3 T 20 3' stroke='%231A1A1A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 20px 4px;
+  transform: rotate(-0.3deg);
+}
+
+/* Support custom ink color via CSS mask for wavy underline */
+.sketch-underline-wavy[style*="--sketch-ink"]::after {
+  /* Use mask to apply custom color while keeping wavy shape */
+  background: var(--sketch-ink);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 4' preserveAspectRatio='none'%3E%3Cpath d='M0 3 Q 2.5 0, 5 3 T 10 3 T 15 3 T 20 3' stroke='%23000' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 4' preserveAspectRatio='none'%3E%3Cpath d='M0 3 Q 2.5 0, 5 3 T 10 3 T 15 3 T 20 3' stroke='%23000' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-size: 20px 4px;
+  mask-size: 20px 4px;
+}
+
+/* ============================================
+   5. sketch-strikethrough - Hand-drawn strikethrough
+   ============================================ */
+.sketch-strikethrough {
+  position: relative;
+  text-decoration: none;
+}
+
+.sketch-strikethrough::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: 50%;
+  height: 2px;
+  background: var(--sketch-ink, #1A1A1A);
+  transform: rotate(-1deg) translateY(-50%);
+}
+
+/* ============================================
+   6. sketch-highlight - Marker highlight effect
+   ============================================ */
+.sketch-highlight {
+  background: linear-gradient(
+    180deg,
+    transparent 60%,
+    var(--sketch-highlight, #FEF08A) 60%,
+    var(--sketch-highlight, #FEF08A) 90%,
+    transparent 90%
+  );
+  padding: 0 4px;
+  margin: 0 -4px;
+}
+
+.sketch-highlight-pink {
+  --sketch-highlight: #FBCFE8;
+}
+
+.sketch-highlight-blue {
+  --sketch-highlight: #BAE6FD;
+}
+
+.sketch-highlight-green {
+  --sketch-highlight: #BBF7D0;
+}
+
+/* ============================================
+   7. sketch-wobble - Wobble animation
+   ============================================ */
+.sketch-wobble {
+  animation: sketch-wobble 0.15s ease-in-out infinite;
+}
+
+@keyframes sketch-wobble {
+  0%, 100% {
+    transform: rotate(0deg) translateX(0);
+  }
+  25% {
+    transform: rotate(-0.5deg) translateX(-1px);
+  }
+  75% {
+    transform: rotate(0.5deg) translateX(1px);
+  }
+}
+
+/* ============================================
+   8. sketch-draw-in - Draw-in animation
+   ============================================ */
+.sketch-draw-in {
+  animation: sketch-draw-in 0.5s ease-out forwards;
+}
+
+@keyframes sketch-draw-in {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ============================================
+   9. sketch-shake - Shake on hover
+   ============================================ */
+.sketch-shake:hover {
+  animation: sketch-shake 0.3s ease-in-out;
+}
+
+@keyframes sketch-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-2px) rotate(-1deg); }
+  40% { transform: translateX(2px) rotate(1deg); }
+  60% { transform: translateX(-1px) rotate(-0.5deg); }
+  80% { transform: translateX(1px) rotate(0.5deg); }
+}
+
+/* ============================================
+   10. sketch-fade-in - Sketchy fade in
+   ============================================ */
+.sketch-fade-in {
+  animation: sketch-fade-in 0.4s ease-out forwards;
+}
+
+@keyframes sketch-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(4px) rotate(-0.5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+
+/* ============================================
+   11. sketch-paper-texture - Paper texture overlay
+   ============================================ */
+.sketch-paper-texture {
+  position: relative;
+}
+
+.sketch-paper-texture::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* ============================================
+   12. sketch-torn-edge - Torn paper edge effect
+   ============================================ */
+.sketch-torn-edge {
+  clip-path: polygon(
+    0% 2%,
+    5% 0%,
+    10% 3%,
+    15% 1%,
+    20% 2%,
+    25% 0%,
+    30% 2%,
+    35% 1%,
+    40% 3%,
+    45% 0%,
+    50% 2%,
+    55% 1%,
+    60% 0%,
+    65% 2%,
+    70% 1%,
+    75% 3%,
+    80% 0%,
+    85% 2%,
+    90% 1%,
+    95% 2%,
+    100% 0%,
+    100% 98%,
+    95% 100%,
+    90% 97%,
+    85% 99%,
+    80% 98%,
+    75% 100%,
+    70% 98%,
+    65% 99%,
+    60% 97%,
+    55% 100%,
+    50% 98%,
+    45% 99%,
+    40% 100%,
+    35% 98%,
+    30% 99%,
+    25% 97%,
+    20% 100%,
+    15% 98%,
+    10% 99%,
+    5% 98%,
+    0% 100%
+  );
+}
+
+/* ============================================
+   13. sketch-dotted-bg - Dot grid background
+   ============================================ */
+.sketch-dotted-bg {
+  background-image: radial-gradient(
+    circle,
+    var(--sketch-gray, #9CA3AF) 1px,
+    transparent 1px
+  );
+  background-size: 16px 16px;
+}
+
+.sketch-dotted-bg-dense {
+  background-size: 8px 8px;
+}
+
+.sketch-dotted-bg-sparse {
+  background-size: 24px 24px;
+}
+
+/* ============================================
+   14. sketch-lined-bg - Lined paper background
+   ============================================ */
+.sketch-lined-bg {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 23px,
+    var(--sketch-gray, #E5E7EB) 23px,
+    var(--sketch-gray, #E5E7EB) 24px
+  );
+  background-position: 0 8px;
+}
+
+.sketch-lined-bg-dense {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 15px,
+    var(--sketch-gray, #E5E7EB) 15px,
+    var(--sketch-gray, #E5E7EB) 16px
+  );
+}
+
+/* ============================================
+   15. sketch-crosshatch - Crosshatch pattern
+   ============================================ */
+.sketch-crosshatch {
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      var(--sketch-gray, #D1D5DB) 2px,
+      var(--sketch-gray, #D1D5DB) 3px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 2px,
+      var(--sketch-gray, #D1D5DB) 2px,
+      var(--sketch-gray, #D1D5DB) 3px
+    );
+  background-size: 8px 8px;
+}
+
+.sketch-crosshatch-light {
+  background-size: 12px 12px;
+}
+
+/* ============================================
+   Additional Utility Helpers
+   ============================================ */
+
+/**
+ * Sketch icon filter effect
+ *
+ * DEPENDENCY: This class requires the sketch JavaScript module to be initialized.
+ * The `roughen-filter` SVG filter is dynamically injected into the DOM by
+ * the `initSketchEnvironment()` function from `app/javascript/sketch/index.js`.
+ *
+ * Without JavaScript, the filter reference will be broken (url(#roughen-filter)
+ * points to a non-existent element), potentially causing rendering issues.
+ *
+ * Usage:
+ *   1. Ensure sketch JavaScript is loaded: `import { initSketchEnvironment } from "sketch"`
+ *   2. Call `initSketchEnvironment()` on page load
+ *   3. Apply `.sketch-icon` class to elements
+ *
+ * For non-JS fallback, add `no-js` class to <html> element (remove it via JS on load).
+ */
+.sketch-icon {
+  /* Fallback: no filter when JS is unavailable or filter is missing */
+  filter: none;
+}
+
+/* Apply the roughen filter only when JavaScript has loaded and initialized the SVG filters.
+ * This selector works when:
+ *   1. The `no-js` class is NOT present on <html> (removed by JS on load), or
+ *   2. The sketch filters SVG element exists in the DOM (added by initSketchEnvironment)
+ *
+ * The `:has()` selector provides a more robust check for the filter's existence.
+ */
+html:not(.no-js) .sketch-icon {
+  filter: url(#roughen-filter);
+}
+
+/* Modern browsers: Only apply filter when the SVG filter actually exists in the DOM.
+ * This provides the most reliable fallback as it checks for the actual filter element.
+ */
+@supports selector(:has(*)) {
+  html:has(#sketch-filters-svg) .sketch-icon {
+    filter: url(#roughen-filter);
+  }
+
+  /* Reset the no-js based rule to avoid double application */
+  html:not(.no-js):not(:has(#sketch-filters-svg)) .sketch-icon {
+    filter: none;
+  }
+}
+
+/* Sketch focused state */
+.sketch-focused {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--sketch-paper, #FFFDFB),
+              0 0 0 5px var(--sketch-ink, #1A1A1A);
+}
+
+/* Sketch disabled state */
+.sketch-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Sketch loading pulse */
+.sketch-loading {
+  animation: sketch-loading-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes sketch-loading-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .sketch-wobble,
+  .sketch-draw-in,
+  .sketch-shake:hover,
+  .sketch-fade-in,
+  .sketch-loading {
+    animation: none;
+  }
+}
