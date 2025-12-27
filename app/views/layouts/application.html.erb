@@ -28,16 +28,25 @@
     <%= javascript_importmap_tags %>
 
     <%# CDN Fallback for Sketch Dependencies %>
+    <%# Timeout-based verification: check if rough loaded after importmap processing %>
     <script>
-      window.addEventListener('error', function(e) {
-        if (e.filename && e.filename.includes('roughjs')) {
-          console.warn('Rough.js failed to load from importmap, loading CDN fallback...');
+      (function() {
+        var FALLBACK_DELAY = 2000;
+        var fallbackLoaded = false;
+
+        function loadRoughFallback() {
+          if (fallbackLoaded || window.rough) return;
+          fallbackLoaded = true;
+          console.warn('Rough.js not available, loading CDN fallback...');
           var script = document.createElement('script');
           script.src = 'https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.min.js';
-          script.onload = function() { window.rough = rough; };
           document.head.appendChild(script);
         }
-      }, true);
+
+        setTimeout(function() {
+          if (!window.rough) loadRoughFallback();
+        }, FALLBACK_DELAY);
+      })();
     </script>
   </head>
 

@@ -104,16 +104,27 @@
   transform: rotate(-0.5deg);
 }
 
+/**
+ * Wavy underline using CSS-only approach with SVG data URI.
+ * No external clipPath element required - the wavy pattern is embedded directly.
+ */
 .sketch-underline-wavy::after {
-  background: repeating-linear-gradient(
-    90deg,
-    var(--sketch-ink, #1A1A1A),
-    var(--sketch-ink, #1A1A1A) 4px,
-    transparent 4px,
-    transparent 6px
-  );
-  height: 3px;
-  clip-path: url(#wavy-clip);
+  height: 4px;
+  bottom: -3px;
+  /* Wavy line pattern using inline SVG */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 4' preserveAspectRatio='none'%3E%3Cpath d='M0 3 Q 2.5 0, 5 3 T 10 3 T 15 3 T 20 3' stroke='%231A1A1A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 20px 4px;
+  transform: rotate(-0.3deg);
+}
+
+/* Support custom ink color via CSS filter for wavy underline */
+.sketch-underline-wavy[style*="--sketch-ink"]::after {
+  /* When custom color is set, we need to use a different approach */
+  background: none;
+  /* Fallback to a simple wavy border effect */
+  border-bottom: 2px wavy currentColor;
+  height: auto;
 }
 
 /* ============================================

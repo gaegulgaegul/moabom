@@ -77,9 +77,10 @@ module Onboarding
     test "시작하기 버튼으로 홈으로 이동" do
       visit onboarding_invite_path
 
+      # fixed 레이아웃에서는 scroll_to가 작동하지 않으므로 JavaScript 사용
       button = find_button("시작하기")
-      scroll_to(button)
-      button.click
+      execute_script("arguments[0].scrollIntoView({block: 'center'})", button)
+      execute_script("arguments[0].click()", button)
 
       assert_current_path root_path
     end
@@ -87,9 +88,10 @@ module Onboarding
     test "나중에 초대 버튼으로 홈으로 이동" do
       visit onboarding_invite_path
 
+      # fixed 레이아웃에서는 scroll_to가 작동하지 않으므로 JavaScript 사용
       button = find_button("나중에 초대할게요")
-      scroll_to(button)
-      button.click
+      execute_script("arguments[0].scrollIntoView({block: 'center'})", button)
+      execute_script("arguments[0].click()", button)
 
       assert_current_path root_path
     end

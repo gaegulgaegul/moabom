@@ -370,10 +370,13 @@
   .sketch-highlight-green { background: var(--color-sketch-highlight-green); }
   .sketch-highlight-pink { background: var(--color-sketch-highlight-pink); }
 
-  /* Sketch Dashed Borders */
-  .sketch-border-dashed-short { border-style: dashed; stroke-dasharray: 4, 3; }
-  .sketch-border-dashed-medium { border-style: dashed; stroke-dasharray: 8, 4; }
-  .sketch-border-dashed-long { border-style: dashed; stroke-dasharray: 12, 6; }
+  /* Sketch Dashed Borders
+     Note: CSS border-style: dashed uses browser-default dash patterns.
+     For custom dash patterns (e.g., 4,3 or 8,4), use SVG borders or
+     background-image with repeating-linear-gradient. */
+  .sketch-border-dashed-short { border-style: dashed; }
+  .sketch-border-dashed-medium { border-style: dashed; }
+  .sketch-border-dashed-long { border-style: dashed; }
 
   /* ==========================================
      Original 모아봄 Components
