@@ -170,19 +170,19 @@
     justify-content: center;
     padding: var(--sketch-btn-padding, 10px 18px);
     background: var(--sketch-btn-bg, #FFFFFF);
-    color: var(--color-sketch-black);
-    font-family: var(--font-sketch-body);
-    font-size: var(--text-sketch-base);
-    border: var(--sketch-stroke-base) solid var(--color-sketch-black);
-    border-radius: var(--radius-sketch-base);
-    box-shadow: var(--shadow-sketch-light);
+    color: var(--sketch-black);
+    font-family: var(--sketch-font-body);
+    font-size: var(--sketch-text-base);
+    border: var(--sketch-stroke-base) solid var(--sketch-black);
+    border-radius: var(--sketch-radius-base);
+    box-shadow: var(--sketch-shadow-light);
     cursor: pointer;
-    transition: all var(--duration-sketch-normal) ease-in-out;
+    transition: all var(--sketch-duration-normal) ease-in-out;
   }
 
   .sketch-btn:hover {
-    background: var(--color-sketch-paper);
-    box-shadow: var(--shadow-sketch-medium);
+    background: var(--sketch-paper);
+    box-shadow: var(--sketch-shadow-medium);
   }
 
   .sketch-btn:active {
@@ -197,25 +197,25 @@
 
   /* Sketch Button - Filled */
   .sketch-btn-filled {
-    background: var(--color-sketch-black);
+    background: var(--sketch-black);
     color: #FFFFFF;
   }
 
   .sketch-btn-filled:hover {
-    background: var(--color-sketch-dark);
+    background: var(--sketch-dark);
   }
 
   /* Sketch Card */
   .sketch-card {
     padding: var(--sketch-card-padding, 16px);
     background: var(--sketch-card-bg, #FFFFFF);
-    border: var(--sketch-stroke-base) solid var(--color-sketch-300);
-    border-radius: var(--radius-sketch-md);
-    box-shadow: var(--shadow-sketch-subtle);
+    border: var(--sketch-stroke-base) solid var(--sketch-gray-300);
+    border-radius: var(--sketch-radius-md);
+    box-shadow: var(--sketch-shadow-subtle);
   }
 
   .sketch-card-elevated {
-    box-shadow: var(--shadow-sketch-medium);
+    box-shadow: var(--sketch-shadow-medium);
   }
 
   /* Sketch Input */
@@ -223,22 +223,22 @@
     width: 100%;
     padding: var(--sketch-input-padding, 10px 14px);
     background: var(--sketch-input-bg, #FAFAFA);
-    color: var(--color-sketch-black);
-    font-family: var(--font-sketch-body);
-    font-size: var(--text-sketch-base);
-    border: var(--sketch-stroke-base) solid var(--color-sketch-300);
-    border-radius: var(--radius-sketch-base);
-    box-shadow: var(--shadow-sketch-inset);
-    transition: border-color var(--duration-sketch-normal) ease-in-out;
+    color: var(--sketch-black);
+    font-family: var(--sketch-font-body);
+    font-size: var(--sketch-text-base);
+    border: var(--sketch-stroke-base) solid var(--sketch-gray-300);
+    border-radius: var(--sketch-radius-base);
+    box-shadow: var(--sketch-shadow-inset-subtle);
+    transition: border-color var(--sketch-duration-normal) ease-in-out;
   }
 
   .sketch-input::placeholder {
-    color: var(--color-sketch-400);
+    color: var(--sketch-gray-400);
   }
 
   .sketch-input:focus {
     outline: none;
-    border-color: var(--color-sketch-black);
+    border-color: var(--sketch-black);
   }
 
   /* Sketch Navigation */
@@ -247,7 +247,7 @@
     align-items: center;
     padding: 12px 16px;
     background: #FFFFFF;
-    border-bottom: var(--sketch-stroke-base) solid var(--color-sketch-200);
+    border-bottom: var(--sketch-stroke-base) solid var(--sketch-gray-200);
   }
 
   /* Sketch Header */
@@ -258,27 +258,27 @@
     height: var(--sketch-header-height, 56px);
     padding: 0 16px;
     background: #FFFFFF;
-    border-bottom: var(--sketch-stroke-base) solid var(--color-sketch-200);
+    border-bottom: var(--sketch-stroke-base) solid var(--sketch-gray-200);
   }
 
   /* Sketch Footer */
   .sketch-footer {
     padding: 16px;
-    background: var(--color-sketch-paper);
-    border-top: var(--sketch-stroke-base) solid var(--color-sketch-200);
+    background: var(--sketch-paper);
+    border-top: var(--sketch-stroke-base) solid var(--sketch-gray-200);
   }
 
   /* Sketch Modal */
   .sketch-modal {
     padding: var(--sketch-modal-padding, 24px);
     background: #FFFFFF;
-    border: var(--sketch-stroke-medium) solid var(--color-sketch-black);
-    border-radius: var(--radius-sketch-lg);
-    box-shadow: var(--shadow-sketch-heavy);
+    border: var(--sketch-stroke-medium) solid var(--sketch-black);
+    border-radius: var(--sketch-radius-lg);
+    box-shadow: var(--sketch-shadow-heavy);
   }
 
   .sketch-modal-overlay {
-    background: var(--color-sketch-overlay-medium);
+    background: var(--sketch-overlay-medium);
   }
 
   /* Sketch Toggle */
@@ -286,11 +286,11 @@
     position: relative;
     width: var(--sketch-toggle-width, 44px);
     height: var(--sketch-toggle-height, 24px);
-    background: var(--color-sketch-200);
-    border: var(--sketch-stroke-base) solid var(--color-sketch-300);
-    border-radius: var(--radius-sketch-xl);
+    background: var(--sketch-gray-200);
+    border: var(--sketch-stroke-base) solid var(--sketch-gray-300);
+    border-radius: var(--sketch-radius-xl);
     cursor: pointer;
-    transition: all var(--duration-sketch-normal) ease-in-out;
+    transition: all var(--sketch-duration-normal) ease-in-out;
   }
 
   .sketch-toggle::after {
@@ -301,34 +301,34 @@
     width: var(--sketch-toggle-knob, 18px);
     height: var(--sketch-toggle-knob, 18px);
     background: #FFFFFF;
-    border: var(--sketch-stroke-base) solid var(--color-sketch-300);
+    border: var(--sketch-stroke-base) solid var(--sketch-gray-300);
     border-radius: 50%;
-    transition: transform var(--duration-sketch-normal) ease-in-out;
+    transition: transform var(--sketch-duration-normal) ease-in-out;
   }
 
   .sketch-toggle-active {
-    background: var(--color-sketch-black);
-    border-color: var(--color-sketch-black);
+    background: var(--sketch-black);
+    border-color: var(--sketch-black);
   }
 
   .sketch-toggle-active::after {
     transform: translateX(20px);
-    border-color: var(--color-sketch-black);
+    border-color: var(--sketch-black);
   }
 
   /* Sketch Progress Bar */
   .sketch-progress {
     width: 100%;
     height: var(--sketch-progress-height, 8px);
-    background: var(--color-sketch-200);
-    border: 1px solid var(--color-sketch-300);
-    border-radius: var(--radius-sketch-base);
+    background: var(--sketch-gray-200);
+    border: 1px solid var(--sketch-gray-300);
+    border-radius: var(--sketch-radius-base);
     overflow: hidden;
   }
 
   .sketch-progress-fill {
     height: 100%;
-    background: var(--color-sketch-black);
+    background: var(--sketch-black);
     background-image: repeating-linear-gradient(
       45deg,
       transparent,
@@ -336,7 +336,7 @@
       rgba(255, 255, 255, 0.1) 2px,
       rgba(255, 255, 255, 0.1) 4px
     );
-    transition: width var(--duration-sketch-slow) ease-out;
+    transition: width var(--sketch-duration-slow) ease-out;
   }
 
   /* Sketch Icon Wrapper */
@@ -344,7 +344,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-sketch-black);
+    color: var(--sketch-black);
   }
 
   .sketch-icon-sm { width: var(--sketch-icon-sm, 16px); height: var(--sketch-icon-sm, 16px); }
@@ -354,13 +354,13 @@
 
   /* Sketch Typography */
   .sketch-text {
-    font-family: var(--font-sketch-body);
-    color: var(--color-sketch-black);
+    font-family: var(--sketch-font-body);
+    color: var(--sketch-black);
   }
 
   .sketch-heading {
     font-family: var(--font-sketch-primary);
-    color: var(--color-sketch-black);
+    color: var(--sketch-black);
     font-weight: 700;
   }
 
@@ -688,33 +688,33 @@
   .dash-sketch-rough { stroke-dasharray: 6, 3, 2, 3; }
 
   /* Sketch Shadow Utilities */
-  .shadow-sketch-subtle { box-shadow: var(--shadow-sketch-subtle); }
-  .shadow-sketch-light { box-shadow: var(--shadow-sketch-light); }
-  .shadow-sketch-medium { box-shadow: var(--shadow-sketch-medium); }
-  .shadow-sketch-heavy { box-shadow: var(--shadow-sketch-heavy); }
+  .shadow-sketch-subtle { box-shadow: var(--sketch-shadow-subtle); }
+  .shadow-sketch-light { box-shadow: var(--sketch-shadow-light); }
+  .shadow-sketch-medium { box-shadow: var(--sketch-shadow-medium); }
+  .shadow-sketch-heavy { box-shadow: var(--sketch-shadow-heavy); }
   .shadow-sketch-lifted { box-shadow: var(--shadow-sketch-lifted); }
-  .shadow-sketch-inset { box-shadow: var(--shadow-sketch-inset); }
+  .shadow-sketch-inset { box-shadow: var(--sketch-shadow-inset-subtle); }
 
   /* Sketch Border Radius Utilities */
   .rounded-sketch-sm { border-radius: var(--radius-sketch-sm); }
-  .rounded-sketch-base { border-radius: var(--radius-sketch-base); }
-  .rounded-sketch-md { border-radius: var(--radius-sketch-md); }
-  .rounded-sketch-lg { border-radius: var(--radius-sketch-lg); }
-  .rounded-sketch-xl { border-radius: var(--radius-sketch-xl); }
+  .rounded-sketch-base { border-radius: var(--sketch-radius-base); }
+  .rounded-sketch-md { border-radius: var(--sketch-radius-md); }
+  .rounded-sketch-lg { border-radius: var(--sketch-radius-lg); }
+  .rounded-sketch-xl { border-radius: var(--sketch-radius-xl); }
 
   /* Sketch Font Utilities */
   .font-sketch-primary { font-family: var(--font-sketch-primary); }
-  .font-sketch-body { font-family: var(--font-sketch-body); }
+  .font-sketch-body { font-family: var(--sketch-font-body); }
   .font-sketch-mono { font-family: var(--font-sketch-mono); }
 
   /* Sketch Font Aliases (convenience classes) */
   .font-sketch { font-family: var(--font-sketch-primary); }
-  .font-hand { font-family: var(--font-sketch-body); }
+  .font-hand { font-family: var(--sketch-font-body); }
 
   /* Sketch Font Size Utilities */
   .text-sketch-xs { font-size: var(--text-sketch-xs); }
   .text-sketch-sm { font-size: var(--text-sketch-sm); }
-  .text-sketch-base { font-size: var(--text-sketch-base); }
+  .text-sketch-base { font-size: var(--sketch-text-base); }
   .text-sketch-md { font-size: var(--text-sketch-md); }
   .text-sketch-lg { font-size: var(--text-sketch-lg); }
   .text-sketch-xl { font-size: var(--text-sketch-xl); }
@@ -722,8 +722,17 @@
   .text-sketch-3xl { font-size: var(--text-sketch-3xl); }
 
   /* Sketch Background Utilities */
-  .bg-sketch-paper { background-color: var(--color-sketch-paper); }
+  .bg-sketch-paper { background-color: var(--sketch-paper); }
   .bg-sketch-fill { background-color: var(--color-sketch-fill); }
+
+  /* Sketch Text Color Utilities */
+  .text-sketch-ink { color: var(--color-sketch-ink); }
+  .text-sketch-pencil { color: var(--color-sketch-pencil); }
+  .text-sketch-gray { color: var(--color-sketch-gray); }
+  .text-sketch-error { color: var(--color-sketch-error); }
+  .text-sketch-success { color: var(--color-sketch-success); }
+  .text-sketch-warning { color: var(--color-sketch-warning); }
+  .text-sketch-info { color: var(--color-sketch-info); }
 
   /* Sketch Line Style (for SVG) */
   .linecap-sketch { stroke-linecap: round; }
@@ -736,8 +745,8 @@
 
   /* Sketch Animation Utilities */
   .duration-sketch-fast { transition-duration: var(--duration-sketch-fast); }
-  .duration-sketch-normal { transition-duration: var(--duration-sketch-normal); }
-  .duration-sketch-slow { transition-duration: var(--duration-sketch-slow); }
+  .duration-sketch-normal { transition-duration: var(--sketch-duration-normal); }
+  .duration-sketch-slow { transition-duration: var(--sketch-duration-slow); }
 
   /* Sketch Irregular Border Path */
   .border-irregular {
