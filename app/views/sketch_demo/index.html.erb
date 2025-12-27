@@ -184,10 +184,10 @@
       <div class="space-y-4">
         <h3 class="font-hand text-xl text-sketch-gray">Gallery Card (Bento Grid)</h3>
         <div class="max-w-lg">
-          <%= render Sketch::GalleryCardComponent.new(hoverable: true) do |card| %>
-            <% card.with_main_image(src: "https://placehold.co/400x400/E8D5B7/1A1A1A?text=사진1", alt: "Main photo") %>
-            <% card.with_secondary_image(src: "https://placehold.co/200x200/D4E5F7/1A1A1A?text=사진2", alt: "Second photo") %>
-            <% card.with_tertiary_image(src: "https://placehold.co/200x200/F7E4D4/1A1A1A?text=사진3", alt: "Third photo", more_count: 12) %>
+          <%= render Sketch::GalleryCardComponent.new(aspect_ratio: :portrait, hoverable: true) do |card| %>
+            <% card.with_main_image(src: "https://placehold.co/400x400/E8D5B7/1A1A1A?text=Photo+1", alt: "Main photo") %>
+            <% card.with_secondary_image(src: "https://placehold.co/200x200/D4E5F7/1A1A1A?text=Photo+2", alt: "Second photo") %>
+            <% card.with_tertiary_image(src: "https://placehold.co/200x200/F7E4D4/1A1A1A?text=Photo+3", alt: "Third photo", more_count: 12) %>
             <h4 class="font-sketch text-lg mb-1">우리 가족 앨범</h4>
             <p class="text-sketch-gray font-hand text-sm">소중한 순간들을 모아봤어요 ✨</p>
           <% end %>
@@ -199,9 +199,9 @@
         <h3 class="font-hand text-xl text-sketch-gray">Gallery Card - Square</h3>
         <div class="max-w-md">
           <%= render Sketch::GalleryCardComponent.new(aspect_ratio: :square, hoverable: true) do |card| %>
-            <% card.with_main_image(src: "https://placehold.co/300x300/FFD4E5/1A1A1A?text=메인", alt: "Main") %>
-            <% card.with_secondary_image(src: "https://placehold.co/150x150/E5FFD4/1A1A1A?text=상단", alt: "Top") %>
-            <% card.with_tertiary_image(src: "https://placehold.co/150x150/D4E5FF/1A1A1A?text=하단", alt: "Bottom", more_text: "더보기") %>
+            <% card.with_main_image(src: "https://placehold.co/300x300/FFD4E5/1A1A1A?text=Photo+1", alt: "Main") %>
+            <% card.with_secondary_image(src: "https://placehold.co/150x150/E5FFD4/1A1A1A?text=Photo+2", alt: "Top") %>
+            <% card.with_tertiary_image(src: "https://placehold.co/150x150/D4E5FF/1A1A1A?text=Photo+3", alt: "Bottom", more_text: "더보기") %>
             <p class="text-sketch-ink font-hand">첫 돌 파티 사진 모음</p>
           <% end %>
         </div>
