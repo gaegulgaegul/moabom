@@ -77,9 +77,9 @@ module Onboarding
     test "시작하기 버튼으로 홈으로 이동" do
       visit onboarding_invite_path
 
-      # 하단 버튼 영역으로 스크롤 후 클릭
+      # 하단 버튼 클릭 (fixed 컨테이너 내에서는 스크롤 불필요)
       within("div.px-6.pb-8.bg-cream-50") do
-        find("button", text: "시작하기").scroll_to(:bottom).click
+        click_button "시작하기"
       end
 
       assert_current_path root_path
@@ -88,9 +88,9 @@ module Onboarding
     test "나중에 초대 버튼으로 홈으로 이동" do
       visit onboarding_invite_path
 
-      # 하단 버튼 영역으로 스크롤 후 클릭
+      # 하단 버튼 클릭 (fixed 컨테이너 내에서는 스크롤 불필요)
       within("div.px-6.pb-8.bg-cream-50") do
-        find("button", text: "나중에 초대할게요").scroll_to(:bottom).click
+        click_button "나중에 초대할게요"
       end
 
       assert_current_path root_path
