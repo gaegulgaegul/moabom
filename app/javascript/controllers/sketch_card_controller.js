@@ -24,15 +24,27 @@ export default class extends Controller {
 
   drawBorder() {
     const rect = this.element.getBoundingClientRect()
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
 
-    svg.setAttribute("width", rect.width)
-    svg.setAttribute("height", rect.height)
-    svg.style.position = "absolute"
-    svg.style.top = "0"
-    svg.style.left = "0"
-    svg.style.pointerEvents = "none"
-    svg.style.overflow = "visible"
+    // Reuse existing SVG if available, otherwise create new one
+    let svg = this.svg
+    if (svg) {
+      // Clear existing children before redrawing
+      while (svg.firstChild) {
+        svg.removeChild(svg.firstChild)
+      }
+      // Update dimensions
+      svg.setAttribute("width", rect.width)
+      svg.setAttribute("height", rect.height)
+    } else {
+      svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
+      svg.setAttribute("width", rect.width)
+      svg.setAttribute("height", rect.height)
+      svg.style.position = "absolute"
+      svg.style.top = "0"
+      svg.style.left = "0"
+      svg.style.pointerEvents = "none"
+      svg.style.overflow = "visible"
+    }
 
     const rc = rough.svg(svg)
     const dashPattern = this.getRandomDashPattern()
@@ -48,8 +60,8 @@ export default class extends Controller {
 
     svg.appendChild(border)
 
-    if (this.hasBorderTarget) {
-      this.clearBorderTarget()
+    // Only append to DOM if this is a new SVG
+    if (!this.svg && this.hasBorderTarget) {
       this.borderTarget.appendChild(svg)
     }
 

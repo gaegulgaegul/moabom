@@ -23,12 +23,18 @@ export default class extends Controller {
   connect() {
     this.isHovering = false
     this.animationFrame = null
+    this._onResize = this.resize.bind(this)
+    window.addEventListener("resize", this._onResize)
     this.drawBorder()
   }
 
   disconnect() {
     this.cancelAnimation()
     this.removeBorder()
+    if (this._onResize) {
+      window.removeEventListener("resize", this._onResize)
+      this._onResize = null
+    }
   }
 
   drawBorder() {

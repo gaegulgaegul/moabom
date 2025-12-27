@@ -32,10 +32,10 @@ if File.exist?(tokens_path)
       config.typography = tokens.dig(:typography) || {}
 
       # Shadows
-      config.shadows = tokens.dig(:shadows) || {}
+      config.shadows = tokens.dig(:shadow) || {}
 
       # Textures
-      config.textures = tokens.dig(:textures) || {}
+      config.textures = tokens.dig(:texture) || {}
 
       # Components
       config.components = tokens.dig(:components) || {}

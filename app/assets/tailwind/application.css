@@ -32,6 +32,12 @@
   --color-sketch-pencil: #6B6B6B;
   --color-sketch-gray: #A3A3A3;
 
+  /* Sketch Semantic Colors */
+  --color-sketch-error: #EF4444;
+  --color-sketch-success: #10B981;
+  --color-sketch-warning: #F59E0B;
+  --color-sketch-info: #3B82F6;
+
   /* Sketch Highlighter Colors */
   --color-sketch-highlight-yellow: rgba(255, 235, 59, 0.40);
   --color-sketch-highlight-blue: rgba(100, 181, 246, 0.35);
@@ -164,10 +170,10 @@
     justify-content: center;
     padding: var(--sketch-btn-padding, 10px 18px);
     background: var(--sketch-btn-bg, #FFFFFF);
-    color: var(--sketch-black);
-    font-family: var(--sketch-font-body);
+    color: var(--color-sketch-black);
+    font-family: var(--font-sketch-body);
     font-size: var(--text-sketch-base);
-    border: var(--sketch-stroke-base) solid var(--sketch-black);
+    border: var(--sketch-stroke-base) solid var(--color-sketch-black);
     border-radius: var(--radius-sketch-base);
     box-shadow: var(--shadow-sketch-light);
     cursor: pointer;
@@ -175,7 +181,7 @@
   }
 
   .sketch-btn:hover {
-    background: var(--sketch-paper);
+    background: var(--color-sketch-paper);
     box-shadow: var(--shadow-sketch-medium);
   }
 
@@ -191,19 +197,19 @@
 
   /* Sketch Button - Filled */
   .sketch-btn-filled {
-    background: var(--sketch-black);
+    background: var(--color-sketch-black);
     color: #FFFFFF;
   }
 
   .sketch-btn-filled:hover {
-    background: var(--sketch-dark);
+    background: var(--color-sketch-dark);
   }
 
   /* Sketch Card */
   .sketch-card {
     padding: var(--sketch-card-padding, 16px);
     background: var(--sketch-card-bg, #FFFFFF);
-    border: var(--sketch-stroke-base) solid var(--sketch-gray-300);
+    border: var(--sketch-stroke-base) solid var(--color-sketch-300);
     border-radius: var(--radius-sketch-md);
     box-shadow: var(--shadow-sketch-subtle);
   }
@@ -217,22 +223,22 @@
     width: 100%;
     padding: var(--sketch-input-padding, 10px 14px);
     background: var(--sketch-input-bg, #FAFAFA);
-    color: var(--sketch-black);
-    font-family: var(--sketch-font-body);
+    color: var(--color-sketch-black);
+    font-family: var(--font-sketch-body);
     font-size: var(--text-sketch-base);
-    border: var(--sketch-stroke-base) solid var(--sketch-gray-300);
+    border: var(--sketch-stroke-base) solid var(--color-sketch-300);
     border-radius: var(--radius-sketch-base);
     box-shadow: var(--shadow-sketch-inset);
     transition: border-color var(--duration-sketch-normal) ease-in-out;
   }
 
   .sketch-input::placeholder {
-    color: var(--sketch-gray-400);
+    color: var(--color-sketch-400);
   }
 
   .sketch-input:focus {
     outline: none;
-    border-color: var(--sketch-black);
+    border-color: var(--color-sketch-black);
   }
 
   /* Sketch Navigation */
@@ -241,7 +247,7 @@
     align-items: center;
     padding: 12px 16px;
     background: #FFFFFF;
-    border-bottom: var(--sketch-stroke-base) solid var(--sketch-gray-200);
+    border-bottom: var(--sketch-stroke-base) solid var(--color-sketch-200);
   }
 
   /* Sketch Header */
@@ -252,27 +258,27 @@
     height: var(--sketch-header-height, 56px);
     padding: 0 16px;
     background: #FFFFFF;
-    border-bottom: var(--sketch-stroke-base) solid var(--sketch-gray-200);
+    border-bottom: var(--sketch-stroke-base) solid var(--color-sketch-200);
   }
 
   /* Sketch Footer */
   .sketch-footer {
     padding: 16px;
-    background: var(--sketch-paper);
-    border-top: var(--sketch-stroke-base) solid var(--sketch-gray-200);
+    background: var(--color-sketch-paper);
+    border-top: var(--sketch-stroke-base) solid var(--color-sketch-200);
   }
 
   /* Sketch Modal */
   .sketch-modal {
     padding: var(--sketch-modal-padding, 24px);
     background: #FFFFFF;
-    border: var(--sketch-stroke-medium) solid var(--sketch-black);
+    border: var(--sketch-stroke-medium) solid var(--color-sketch-black);
     border-radius: var(--radius-sketch-lg);
     box-shadow: var(--shadow-sketch-heavy);
   }
 
   .sketch-modal-overlay {
-    background: var(--sketch-overlay-medium);
+    background: var(--color-sketch-overlay-medium);
   }
 
   /* Sketch Toggle */
@@ -280,8 +286,8 @@
     position: relative;
     width: var(--sketch-toggle-width, 44px);
     height: var(--sketch-toggle-height, 24px);
-    background: var(--sketch-gray-200);
-    border: var(--sketch-stroke-base) solid var(--sketch-gray-300);
+    background: var(--color-sketch-200);
+    border: var(--sketch-stroke-base) solid var(--color-sketch-300);
     border-radius: var(--radius-sketch-xl);
     cursor: pointer;
     transition: all var(--duration-sketch-normal) ease-in-out;
@@ -295,34 +301,34 @@
     width: var(--sketch-toggle-knob, 18px);
     height: var(--sketch-toggle-knob, 18px);
     background: #FFFFFF;
-    border: var(--sketch-stroke-base) solid var(--sketch-gray-300);
+    border: var(--sketch-stroke-base) solid var(--color-sketch-300);
     border-radius: 50%;
     transition: transform var(--duration-sketch-normal) ease-in-out;
   }
 
   .sketch-toggle-active {
-    background: var(--sketch-black);
-    border-color: var(--sketch-black);
+    background: var(--color-sketch-black);
+    border-color: var(--color-sketch-black);
   }
 
   .sketch-toggle-active::after {
     transform: translateX(20px);
-    border-color: var(--sketch-black);
+    border-color: var(--color-sketch-black);
   }
 
   /* Sketch Progress Bar */
   .sketch-progress {
     width: 100%;
     height: var(--sketch-progress-height, 8px);
-    background: var(--sketch-gray-200);
-    border: 1px solid var(--sketch-gray-300);
+    background: var(--color-sketch-200);
+    border: 1px solid var(--color-sketch-300);
     border-radius: var(--radius-sketch-base);
     overflow: hidden;
   }
 
   .sketch-progress-fill {
     height: 100%;
-    background: var(--sketch-black);
+    background: var(--color-sketch-black);
     background-image: repeating-linear-gradient(
       45deg,
       transparent,
@@ -338,7 +344,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--sketch-black);
+    color: var(--color-sketch-black);
   }
 
   .sketch-icon-sm { width: var(--sketch-icon-sm, 16px); height: var(--sketch-icon-sm, 16px); }
@@ -348,22 +354,21 @@
 
   /* Sketch Typography */
   .sketch-text {
-    font-family: var(--sketch-font-body);
-    color: var(--sketch-black);
-    letter-spacing: var(--sketch-tracking-sketch);
+    font-family: var(--font-sketch-body);
+    color: var(--color-sketch-black);
   }
 
   .sketch-heading {
-    font-family: var(--sketch-font-primary);
-    color: var(--sketch-black);
+    font-family: var(--font-sketch-primary);
+    color: var(--color-sketch-black);
     font-weight: 700;
   }
 
   /* Sketch Highlighter Effect */
-  .sketch-highlight-yellow { background: var(--sketch-highlight-yellow); }
-  .sketch-highlight-blue { background: var(--sketch-highlight-blue); }
-  .sketch-highlight-green { background: var(--sketch-highlight-green); }
-  .sketch-highlight-pink { background: var(--sketch-highlight-pink); }
+  .sketch-highlight-yellow { background: var(--color-sketch-highlight-yellow); }
+  .sketch-highlight-blue { background: var(--color-sketch-highlight-blue); }
+  .sketch-highlight-green { background: var(--color-sketch-highlight-green); }
+  .sketch-highlight-pink { background: var(--color-sketch-highlight-pink); }
 
   /* Sketch Dashed Borders */
   .sketch-border-dashed-short { border-style: dashed; stroke-dasharray: 4, 3; }
@@ -714,8 +719,8 @@
   .text-sketch-3xl { font-size: var(--text-sketch-3xl); }
 
   /* Sketch Background Utilities */
-  .bg-sketch-paper { background-color: var(--sketch-paper); }
-  .bg-sketch-fill { background-color: var(--sketch-fill); }
+  .bg-sketch-paper { background-color: var(--color-sketch-paper); }
+  .bg-sketch-fill { background-color: var(--color-sketch-fill); }
 
   /* Sketch Line Style (for SVG) */
   .linecap-sketch { stroke-linecap: round; }

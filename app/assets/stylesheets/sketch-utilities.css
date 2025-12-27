@@ -373,9 +373,51 @@
    Additional Utility Helpers
    ============================================ */
 
-/* Sketch icon filter effect */
+/**
+ * Sketch icon filter effect
+ *
+ * DEPENDENCY: This class requires the sketch JavaScript module to be initialized.
+ * The `roughen-filter` SVG filter is dynamically injected into the DOM by
+ * the `initSketchEnvironment()` function from `app/javascript/sketch/index.js`.
+ *
+ * Without JavaScript, the filter reference will be broken (url(#roughen-filter)
+ * points to a non-existent element), potentially causing rendering issues.
+ *
+ * Usage:
+ *   1. Ensure sketch JavaScript is loaded: `import { initSketchEnvironment } from "sketch"`
+ *   2. Call `initSketchEnvironment()` on page load
+ *   3. Apply `.sketch-icon` class to elements
+ *
+ * For non-JS fallback, add `no-js` class to <html> element (remove it via JS on load).
+ */
 .sketch-icon {
+  /* Fallback: no filter when JS is unavailable or filter is missing */
+  filter: none;
+}
+
+/* Apply the roughen filter only when JavaScript has loaded and initialized the SVG filters.
+ * This selector works when:
+ *   1. The `no-js` class is NOT present on <html> (removed by JS on load), or
+ *   2. The sketch filters SVG element exists in the DOM (added by initSketchEnvironment)
+ *
+ * The `:has()` selector provides a more robust check for the filter's existence.
+ */
+html:not(.no-js) .sketch-icon {
   filter: url(#roughen-filter);
+}
+
+/* Modern browsers: Only apply filter when the SVG filter actually exists in the DOM.
+ * This provides the most reliable fallback as it checks for the actual filter element.
+ */
+@supports selector(:has(*)) {
+  html:has(#sketch-filters-svg) .sketch-icon {
+    filter: url(#roughen-filter);
+  }
+
+  /* Reset the no-js based rule to avoid double application */
+  html:not(.no-js):not(:has(#sketch-filters-svg)) .sketch-icon {
+    filter: none;
+  }
 }
 
 /* Sketch focused state */

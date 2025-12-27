@@ -70,7 +70,8 @@ module Sketch
 
     def card_data
       stimulus_data("card", {
-        "sketch-card-hoverable-value": @hoverable
+        "sketch-card-hoverable-value": @hoverable,
+        action: @hoverable ? "mouseenter->sketch-card#onHover mouseleave->sketch-card#onLeave" : ""
       })
     end
 

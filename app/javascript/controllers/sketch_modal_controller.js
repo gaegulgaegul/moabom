@@ -20,9 +20,15 @@ export default class extends Controller {
   connect() {
     this.isOpen = false
     this.previousActiveElement = null
+
+    // Bind keydown handler for proper add/remove of event listener
+    this._handleKeydown = this._handleKeydown.bind(this)
   }
 
   disconnect() {
+    // Remove keydown listener if still attached
+    document.removeEventListener("keydown", this._handleKeydown)
+
     if (this.isOpen) {
       this.close()
     }
@@ -40,14 +46,19 @@ export default class extends Controller {
     // Prevent body scroll
     document.body.style.overflow = "hidden"
 
-    // Draw border after element is visible
+    // Register Escape key handler for keyboard accessibility
+    document.addEventListener("keydown", this._handleKeydown)
+
+    // Draw border after element is visible, then focus
     requestAnimationFrame(() => {
       this.drawBorder()
       this.animateIn()
-    })
 
-    // Focus first focusable element
-    this.focusFirstElement()
+      // Focus first focusable element after animations are scheduled/painted
+      requestAnimationFrame(() => {
+        this.focusFirstElement()
+      })
+    })
 
     // Dispatch custom event
     this.dispatch("opened")
@@ -57,6 +68,9 @@ export default class extends Controller {
     if (!this.isOpen) return
 
     this.isOpen = false
+
+    // Remove Escape key handler
+    document.removeEventListener("keydown", this._handleKeydown)
 
     this.animateOut().then(() => {
       this.element.classList.add("hidden")
@@ -74,6 +88,21 @@ export default class extends Controller {
 
   backdropClick(event) {
     if (this.backdropCloseValue && event.target === this.backdropTarget) {
+      this.close()
+    }
+  }
+
+  /**
+   * Handle keydown events for keyboard accessibility
+   * Closes modal when Escape key is pressed
+   * @param {KeyboardEvent} event
+   */
+  _handleKeydown(event) {
+    // Only react when modal is open
+    if (!this.isOpen) return
+
+    if (event.key === "Escape") {
+      event.preventDefault()
       this.close()
     }
   }

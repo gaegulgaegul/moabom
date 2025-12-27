@@ -14,10 +14,13 @@ export default class extends Controller {
 
   connect() {
     this.isFocused = false
+    this._onResize = this.resize.bind(this)
+    window.addEventListener('resize', this._onResize)
     this.drawBorder()
   }
 
   disconnect() {
+    window.removeEventListener('resize', this._onResize)
     this.removeBorder()
   }
 

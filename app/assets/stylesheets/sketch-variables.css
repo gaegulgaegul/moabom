@@ -18,6 +18,12 @@
   --sketch-gray-200: #E0E0E0;
   --sketch-paper: #F5F5F5;
 
+  /* Semantic Colors */
+  --sketch-error: #EF4444;
+  --sketch-success: #10B981;
+  --sketch-warning: #F59E0B;
+  --sketch-info: #3B82F6;
+
   /* Transparency variants (80% opacity) */
   --sketch-black-80: rgba(26, 26, 26, 0.80);
   --sketch-gray-100-80: #f8f9fa80;

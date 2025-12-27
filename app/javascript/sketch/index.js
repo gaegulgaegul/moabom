@@ -87,7 +87,12 @@ export function applySketchBorder(element, options = {}) {
     fill: "transparent"
   })
 
-  element.style.position = "relative"
+  // Only set position to "relative" if the element has no positioning (static)
+  // Check computed style to respect existing stylesheet rules
+  const computedPosition = getComputedStyle(element).position
+  if (computedPosition === "static") {
+    element.style.position = "relative"
+  }
   element.appendChild(canvas)
 
   return canvas
