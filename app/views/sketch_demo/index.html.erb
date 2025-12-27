@@ -375,10 +375,10 @@
         <div class="max-w-md border-2 border-dashed border-sketch-ink/20 rounded-lg overflow-hidden">
           <%= render Sketch::NavComponent.new(variant: :tabbar) do |nav| %>
             <% nav.with_tab(href: "#", icon: "home", label: "Home", active: true) %>
-            <% nav.with_tab(href: "#", icon: "photo", label: "Photos") %>
+            <% nav.with_tab(href: "#", icon: "image", label: "Photos") %>
             <% nav.with_tab(href: "#", icon: "plus-circle", label: "Add") %>
             <% nav.with_tab(href: "#", icon: "bell", label: "Alerts") %>
-            <% nav.with_tab(href: "#", icon: "cog-6-tooth", label: "Settings") %>
+            <% nav.with_tab(href: "#", icon: "settings", label: "Settings") %>
           <% end %>
         </div>
       </div>
@@ -746,23 +746,23 @@
         <h3 class="font-hand text-xl text-sketch-gray">Sizes</h3>
         <div class="flex flex-wrap gap-6 items-end">
           <div class="text-center">
-            <%= heroicon "home", variant: :outline, options: { class: "w-4 h-4 text-sketch-ink" } %>
+            <%= lucide_icon "home", class: "w-4 h-4 text-sketch-ink" %>
             <p class="font-hand text-xs text-sketch-gray mt-1">16px</p>
           </div>
           <div class="text-center">
-            <%= heroicon "home", variant: :outline, options: { class: "w-5 h-5 text-sketch-ink" } %>
+            <%= lucide_icon "home", class: "w-5 h-5 text-sketch-ink" %>
             <p class="font-hand text-xs text-sketch-gray mt-1">20px</p>
           </div>
           <div class="text-center">
-            <%= heroicon "home", variant: :outline, options: { class: "w-6 h-6 text-sketch-ink" } %>
+            <%= lucide_icon "home", class: "w-6 h-6 text-sketch-ink" %>
             <p class="font-hand text-xs text-sketch-gray mt-1">24px</p>
           </div>
           <div class="text-center">
-            <%= heroicon "home", variant: :outline, options: { class: "w-8 h-8 text-sketch-ink" } %>
+            <%= lucide_icon "home", class: "w-8 h-8 text-sketch-ink" %>
             <p class="font-hand text-xs text-sketch-gray mt-1">32px</p>
           </div>
           <div class="text-center">
-            <%= heroicon "home", variant: :outline, options: { class: "w-12 h-12 text-sketch-ink" } %>
+            <%= lucide_icon "home", class: "w-12 h-12 text-sketch-ink" %>
             <p class="font-hand text-xs text-sketch-gray mt-1">48px</p>
           </div>
         </div>
@@ -773,18 +773,18 @@
         <h3 class="font-hand text-xl text-sketch-gray">Variants (Outline vs Solid)</h3>
         <div class="flex flex-wrap gap-8">
           <div class="flex items-center gap-4 p-4 bg-white rounded-lg border-2 border-sketch-ink/20">
-            <%= heroicon "heart", variant: :outline, options: { class: "w-8 h-8 text-sketch-ink" } %>
-            <%= heroicon "heart", variant: :solid, options: { class: "w-8 h-8 text-sketch-ink" } %>
+            <%= lucide_icon "heart", class: "w-8 h-8 text-sketch-ink" %>
+            <%= lucide_icon "heart", class: "w-8 h-8 text-sketch-ink" %>
             <span class="font-hand text-sketch-gray">heart</span>
           </div>
           <div class="flex items-center gap-4 p-4 bg-white rounded-lg border-2 border-sketch-ink/20">
-            <%= heroicon "star", variant: :outline, options: { class: "w-8 h-8 text-sketch-ink" } %>
-            <%= heroicon "star", variant: :solid, options: { class: "w-8 h-8 text-sketch-ink" } %>
+            <%= lucide_icon "star", class: "w-8 h-8 text-sketch-ink" %>
+            <%= lucide_icon "star", class: "w-8 h-8 text-sketch-ink" %>
             <span class="font-hand text-sketch-gray">star</span>
           </div>
           <div class="flex items-center gap-4 p-4 bg-white rounded-lg border-2 border-sketch-ink/20">
-            <%= heroicon "bell", variant: :outline, options: { class: "w-8 h-8 text-sketch-ink" } %>
-            <%= heroicon "bell", variant: :solid, options: { class: "w-8 h-8 text-sketch-ink" } %>
+            <%= lucide_icon "bell", class: "w-8 h-8 text-sketch-ink" %>
+            <%= lucide_icon "bell", class: "w-8 h-8 text-sketch-ink" %>
             <span class="font-hand text-sketch-gray">bell</span>
           </div>
         </div>
@@ -794,9 +794,9 @@
       <div class="space-y-4">
         <h3 class="font-hand text-xl text-sketch-gray">Common UI Icons</h3>
         <div class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
-          <% %w[home photo camera plus-circle user user-group cog-6-tooth bell magnifying-glass arrow-left x-mark check trash pencil share chat-bubble-oval-left face-smile calendar folder bookmark archive-box document arrow-up-tray arrow-down-tray].each do |icon_name| %>
+          <% %w[home image camera plus-circle user users settings bell search arrow-left x check trash pencil share message-circle smile calendar folder bookmark archive file upload download].each do |icon_name| %>
             <div class="flex flex-col items-center p-3 bg-white rounded-lg border border-sketch-ink/10 hover:border-sketch-ink/30 transition-colors">
-              <%= heroicon icon_name, variant: :outline, options: { class: "w-6 h-6 text-sketch-ink" } %>
+              <%= lucide_icon icon_name, class: "w-6 h-6 text-sketch-ink" %>
               <span class="font-hand text-xs text-sketch-gray mt-2 text-center truncate w-full"><%= icon_name %></span>
             </div>
           <% end %>
@@ -808,27 +808,27 @@
         <h3 class="font-hand text-xl text-sketch-gray">Icon Colors</h3>
         <div class="flex flex-wrap gap-4">
           <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
-            <%= heroicon "heart", variant: :solid, options: { class: "w-8 h-8 text-sketch-ink" } %>
+            <%= lucide_icon "heart", class: "w-8 h-8 text-sketch-ink" %>
             <p class="font-hand text-xs text-sketch-gray mt-1">ink</p>
           </div>
           <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
-            <%= heroicon "heart", variant: :solid, options: { class: "w-8 h-8 text-sketch-pencil" } %>
+            <%= lucide_icon "heart", class: "w-8 h-8 text-sketch-pencil" %>
             <p class="font-hand text-xs text-sketch-gray mt-1">pencil</p>
           </div>
           <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
-            <%= heroicon "heart", variant: :solid, options: { class: "w-8 h-8 text-sketch-gray" } %>
+            <%= lucide_icon "heart", class: "w-8 h-8 text-sketch-gray" %>
             <p class="font-hand text-xs text-sketch-gray mt-1">gray</p>
           </div>
           <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
-            <%= heroicon "heart", variant: :solid, options: { class: "w-8 h-8 text-red-500" } %>
+            <%= lucide_icon "heart", class: "w-8 h-8 text-red-500" %>
             <p class="font-hand text-xs text-sketch-gray mt-1">red</p>
           </div>
           <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
-            <%= heroicon "heart", variant: :solid, options: { class: "w-8 h-8 text-primary-500" } %>
+            <%= lucide_icon "heart", class: "w-8 h-8 text-primary-500" %>
             <p class="font-hand text-xs text-sketch-gray mt-1">primary</p>
           </div>
           <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
-            <%= heroicon "heart", variant: :solid, options: { class: "w-8 h-8 text-secondary-500" } %>
+            <%= lucide_icon "heart", class: "w-8 h-8 text-secondary-500" %>
             <p class="font-hand text-xs text-sketch-gray mt-1">secondary</p>
           </div>
         </div>
@@ -839,16 +839,16 @@
         <h3 class="font-hand text-xl text-sketch-gray">Icon Buttons</h3>
         <div class="flex flex-wrap gap-4">
           <button class="p-3 bg-white border-2 border-sketch-ink rounded-lg hover:bg-sketch-paper transition-colors">
-            <%= heroicon "plus", variant: :outline, options: { class: "w-6 h-6 text-sketch-ink" } %>
+            <%= lucide_icon "plus", class: "w-6 h-6 text-sketch-ink" %>
           </button>
           <button class="p-3 bg-primary-500 rounded-lg hover:bg-primary-600 transition-colors">
-            <%= heroicon "camera", variant: :solid, options: { class: "w-6 h-6 text-white" } %>
+            <%= lucide_icon "camera", class: "w-6 h-6 text-white" %>
           </button>
           <button class="p-3 bg-sketch-highlight-pink rounded-full hover:bg-sketch-highlight-pink/80 transition-colors">
-            <%= heroicon "heart", variant: :solid, options: { class: "w-6 h-6 text-red-500" } %>
+            <%= lucide_icon "heart", class: "w-6 h-6 text-red-500" %>
           </button>
           <button class="p-3 bg-sketch-paper border-2 border-dashed border-sketch-ink/30 rounded-lg hover:border-sketch-ink/50 transition-colors">
-            <%= heroicon "arrow-up-tray", variant: :outline, options: { class: "w-6 h-6 text-sketch-pencil" } %>
+            <%= lucide_icon "upload", class: "w-6 h-6 text-sketch-pencil" %>
           </button>
         </div>
       </div>
@@ -858,19 +858,19 @@
         <h3 class="font-hand text-xl text-sketch-gray">Icons with Text</h3>
         <div class="flex flex-wrap gap-4">
           <div class="flex items-center gap-2 p-3 bg-white rounded-lg border-2 border-sketch-ink/20">
-            <%= heroicon "photo", variant: :outline, options: { class: "w-5 h-5 text-sketch-ink" } %>
+            <%= lucide_icon "image", class: "w-5 h-5 text-sketch-ink" %>
             <span class="font-hand text-sketch-ink">사진 12장</span>
           </div>
           <div class="flex items-center gap-2 p-3 bg-white rounded-lg border-2 border-sketch-ink/20">
-            <%= heroicon "heart", variant: :solid, options: { class: "w-5 h-5 text-red-500" } %>
+            <%= lucide_icon "heart", class: "w-5 h-5 text-red-500" %>
             <span class="font-hand text-sketch-ink">좋아요 48</span>
           </div>
           <div class="flex items-center gap-2 p-3 bg-white rounded-lg border-2 border-sketch-ink/20">
-            <%= heroicon "chat-bubble-oval-left", variant: :outline, options: { class: "w-5 h-5 text-sketch-ink" } %>
+            <%= lucide_icon "message-circle", class: "w-5 h-5 text-sketch-ink" %>
             <span class="font-hand text-sketch-ink">댓글 7개</span>
           </div>
           <div class="flex items-center gap-2 p-3 bg-sketch-highlight-yellow rounded-lg">
-            <%= heroicon "star", variant: :solid, options: { class: "w-5 h-5 text-amber-500" } %>
+            <%= lucide_icon "star", class: "w-5 h-5 text-amber-500" %>
             <span class="font-hand text-sketch-ink">즐겨찾기</span>
           </div>
         </div>

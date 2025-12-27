@@ -117,6 +117,24 @@
         "value": "#A3A3A3",
         "description": "Muted/placeholder text"
       }
+    },
+    "status": {
+      "error": {
+        "value": "#EF4444",
+        "description": "Error/danger state"
+      },
+      "success": {
+        "value": "#10B981",
+        "description": "Success/positive state"
+      },
+      "warning": {
+        "value": "#F59E0B",
+        "description": "Warning/caution state"
+      },
+      "info": {
+        "value": "#3B82F6",
+        "description": "Informational state"
+      }
     }
   },
 

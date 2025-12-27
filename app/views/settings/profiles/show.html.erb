@@ -3,7 +3,7 @@
 
   <!-- 계정 설정 -->
   <div class="card-solid divide-y divide-warm-gray-100">
-    <%= render "settings/setting_item", icon: "user-circle", title: "프로필 설정", url: "#" %>
+    <%= render "settings/setting_item", icon: "circle-user", title: "프로필 설정", url: "#" %>
 
     <%= render "settings/setting_item", icon: "bell", title: "알림 설정", url: settings_notifications_path %>
 
@@ -47,17 +47,17 @@
 
   <!-- 정보 -->
   <div class="card-solid divide-y divide-warm-gray-100">
-    <%= render "settings/setting_item", icon: "document-text", title: "이용약관", url: "#" %>
+    <%= render "settings/setting_item", icon: "file-text", title: "이용약관", url: "#" %>
 
     <%= render "settings/setting_item", icon: "shield-check", title: "개인정보 처리방침", url: "#" %>
 
-    <%= render "settings/setting_item", icon: "information-circle", title: "앱 정보", url: "#", value: "v1.0.0" %>
+    <%= render "settings/setting_item", icon: "info", title: "앱 정보", url: "#", value: "v1.0.0" %>
   </div>
 
   <!-- 로그아웃 -->
   <div class="card-solid">
     <%= button_to logout_path, method: :delete, class: "flex items-center gap-3 py-4 w-full tap-highlight-none" do %>
-      <%= heroicon "arrow-right-on-rectangle", variant: :outline, options: { class: "w-6 h-6 text-red-500" } %>
+      <%= lucide_icon "log-out", class: "w-6 h-6 text-red-500" %>
       <span class="text-red-500">로그아웃</span>
     <% end %>
   </div>

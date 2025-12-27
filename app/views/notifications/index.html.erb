@@ -4,7 +4,7 @@
   <% if @notifications.empty? %>
     <!-- 빈 상태 -->
     <div class="flex flex-col items-center justify-center py-16 text-center">
-      <%= heroicon "bell", variant: :outline, options: { class: "w-16 h-16 text-warm-gray-300" } %>
+      <%= lucide_icon "bell", class: "w-16 h-16 text-warm-gray-300" %>
       <h3 class="mt-4 text-lg font-medium text-warm-gray-800">알림이 없습니다</h3>
       <p class="mt-2 text-sm text-warm-gray-500">새로운 소식이 있으면 알려드릴게요.</p>
     </div>

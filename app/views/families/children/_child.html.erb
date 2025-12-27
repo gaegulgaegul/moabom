@@ -10,7 +10,7 @@
       <% if child.profile_photo.attached? %>
         <%= image_tag child.profile_photo.variant(:thumbnail), class: "w-full h-full object-cover" %>
       <% else %>
-        <%= heroicon "face-smile", variant: :outline, options: { class: "w-8 h-8 text-warm-gray-400" } %>
+        <%= lucide_icon "smile", class: "w-8 h-8 text-warm-gray-400" %>
       <% end %>
     </div>
 
@@ -24,6 +24,6 @@
     </div>
 
     <!-- 화살표 -->
-    <%= heroicon "chevron-right", variant: :outline, options: { class: "w-5 h-5 text-warm-gray-400" } %>
+    <%= lucide_icon "chevron-right", class: "w-5 h-5 text-warm-gray-400" %>
   </div>
 <% end %>

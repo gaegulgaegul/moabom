@@ -24,20 +24,20 @@ class SettingsTest < ApplicationSystemTestCase
 
     # 프로필 설정 링크
     within ".card-solid", match: :first do
-      assert_selector "svg"  # heroicon user-circle
+      assert_selector "svg"  # lucide user-circle
       assert_text "프로필 설정"
-      assert_selector "svg"  # heroicon chevron-right
+      assert_selector "svg"  # lucide chevron-right
     end
 
     # 알림 설정 링크
     within ".card-solid", match: :first do
-      assert_selector "svg"  # heroicon bell
+      assert_selector "svg"  # lucide bell
       assert_text "알림 설정"
     end
 
     # 다크 모드 토글
     within ".card-solid", match: :first do
-      assert_selector "svg"  # heroicon moon
+      assert_selector "svg"  # lucide moon
       assert_text "다크 모드"
       assert_selector "button[data-controller='toggle']"
     end
@@ -68,15 +68,15 @@ class SettingsTest < ApplicationSystemTestCase
     # 정보 섹션 카드
     within all(".card-solid")[2] do
       # 이용약관
-      assert_selector "svg"  # heroicon document-text
+      assert_selector "svg"  # lucide document-text
       assert_text "이용약관"
 
       # 개인정보 처리방침
-      assert_selector "svg"  # heroicon shield-check
+      assert_selector "svg"  # lucide shield-check
       assert_text "개인정보 처리방침"
 
       # 앱 정보
-      assert_selector "svg"  # heroicon information-circle
+      assert_selector "svg"  # lucide information-circle
       assert_text "앱 정보"
       assert_text "v1.0.0"
     end
@@ -87,7 +87,7 @@ class SettingsTest < ApplicationSystemTestCase
 
     # 로그아웃 카드
     within all(".card-solid").last do
-      assert_selector "svg"  # heroicon arrow-right-on-rectangle
+      assert_selector "svg"  # lucide arrow-right-on-rectangle
       assert_selector ".text-red-500", text: "로그아웃"
     end
   end
@@ -183,10 +183,10 @@ class SettingsTest < ApplicationSystemTestCase
     assert_selector ".card-solid", minimum: 3
   end
 
-  test "디자인 시스템 준수 - heroicon 사용" do
+  test "디자인 시스템 준수 - lucide 사용" do
     visit settings_profile_path
 
-    # SVG 아이콘 확인 (heroicon)
+    # SVG 아이콘 확인 (lucide)
     assert_selector "svg", minimum: 8
   end
 

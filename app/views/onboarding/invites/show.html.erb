@@ -4,7 +4,7 @@
 
   <div class="flex-1 px-6 py-8 pb-24">
     <div class="w-20 h-20 mx-auto mb-6 bg-accent-100 rounded-full flex items-center justify-center">
-      <%= heroicon "user-group", variant: :outline, options: { class: "w-10 h-10 text-accent-500" } %>
+      <%= lucide_icon "users", class: "w-10 h-10 text-accent-500" %>
     </div>
 
     <h1 class="text-2xl font-bold text-warm-gray-800 text-center mb-2">
@@ -23,7 +23,7 @@
         <button class="btn-primary shrink-0 py-3 px-4"
                 type="button"
                 onclick="navigator.clipboard.writeText('<%= @invite_url %>'); alert('링크가 복사되었습니다!')">
-          <%= heroicon "clipboard-document", variant: :outline, options: { class: "w-5 h-5" } %>
+          <%= lucide_icon "clipboard", class: "w-5 h-5" %>
         </button>
       </div>
     </div>
@@ -40,7 +40,7 @@
       <button class="flex flex-col items-center gap-2" type="button"
               onclick="navigator.clipboard.writeText('<%= @invite_url %>'); alert('링크가 복사되었습니다!')">
         <div class="w-12 h-12 bg-warm-gray-200 rounded-full flex items-center justify-center">
-          <%= heroicon "link", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-600" } %>
+          <%= lucide_icon "link", class: "w-6 h-6 text-warm-gray-600" %>
         </div>
         <span class="text-xs text-warm-gray-500">링크 복사</span>
       </button>

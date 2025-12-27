@@ -16,7 +16,7 @@
         <%= link_to notifications_path,
                     class: "relative p-2 rounded-full hover:bg-cream-100 tap-highlight-none",
                     "aria-label": "알림" do %>
-          <%= heroicon "bell", variant: :outline, options: { class: "w-6 h-6 text-warm-gray-700" } %>
+          <%= lucide_icon "bell", class: "w-6 h-6 text-warm-gray-700" %>
           <% if unread_notifications_count > 0 %>
             <span class="absolute top-1 right-1 min-w-[18px] h-[18px] px-1
                          bg-accent-500 text-white text-xs font-semibold
@@ -29,7 +29,7 @@
 
         <!-- 설정 -->
         <%= header_icon_button(
-          icon: "cog-6-tooth",
+          icon: "settings",
           path: settings_profile_path,
           label: "설정"
         ) %>

@@ -165,8 +165,7 @@ module SketchHelper
   # 5. sketch_icon - Sketch style icon wrapper
   # ============================================
   #
-  # @param name [String] Heroicon name (required)
-  # @param variant [Symbol] Heroicon variant (:outline, :solid, :mini)
+  # @param name [String] Lucide icon name (required)
   # @param size [Symbol] Icon size (:xs, :sm, :md, :lg, :xl)
   # @param sketch_style [Boolean] Apply sketch filter effect
   # @param color [String] Icon color class
@@ -178,7 +177,9 @@ module SketchHelper
   # @example With sketch effect
   #   <%= sketch_icon("camera", size: :lg, sketch_style: true) %>
   #
-  def sketch_icon(name, variant: :outline, size: :md, sketch_style: false, color: nil, **options)
+  # Note: Lucide icons use kebab-case names (e.g., "arrow-left", "chevron-right")
+  #
+  def sketch_icon(name, size: :md, sketch_style: false, color: nil, **options)
     size_classes = {
       xs: "w-3 h-3",
       sm: "w-4 h-4",
@@ -194,7 +195,7 @@ module SketchHelper
       options[:class]
     ].compact.join(" ")
 
-    heroicon(name, variant: variant, options: options.merge(class: icon_classes))
+    lucide_icon(name, class: icon_classes, **options.except(:class))
   end
 
   # ============================================

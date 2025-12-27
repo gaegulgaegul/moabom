@@ -30,12 +30,12 @@
     <!-- 빈 상태 -->
     <div class="empty-state">
       <div class="w-20 h-20 bg-cream-100 rounded-full flex items-center justify-center mb-4">
-        <%= heroicon "photo", variant: :outline, options: { class: "w-10 h-10 text-warm-gray-400" } %>
+        <%= lucide_icon "image", class: "w-10 h-10 text-warm-gray-400" %>
       </div>
       <h3 class="text-lg font-medium text-warm-gray-800 mb-2">아직 사진이 없어요</h3>
       <p class="text-warm-gray-500 mb-6">소중한 순간을 가족과 공유해보세요</p>
       <%= link_to new_family_photo_path(@family), class: "btn-primary" do %>
-        <%= heroicon "plus", variant: :solid, options: { class: "w-5 h-5 mr-2" } %>
+        <%= lucide_icon "plus", class: "w-5 h-5 mr-2" %>
         첫 사진 업로드
       <% end %>
     </div>

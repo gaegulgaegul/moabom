@@ -135,7 +135,7 @@ module Sketch
 
     def icon_element
       return nil unless @icon
-      helpers.heroicon(@icon, variant: @active ? :solid : :outline, options: { class: "w-5 h-5 mr-1.5 inline" })
+      helpers.lucide_icon(@icon, class: "w-5 h-5 mr-1.5 inline")
     end
   end
 
@@ -155,7 +155,7 @@ module Sketch
         safe_join([
           tag.span(class: "relative") do
             safe_join([
-              helpers.heroicon(@icon, variant: @active ? :solid : :outline, options: { class: "w-6 h-6" }),
+              helpers.lucide_icon(@icon, class: "w-6 h-6"),
               badge_element
             ].compact)
           end,

@@ -724,6 +724,10 @@
   /* Sketch Background Utilities */
   .bg-sketch-paper { background-color: var(--sketch-paper); }
   .bg-sketch-fill { background-color: var(--color-sketch-fill); }
+  .bg-sketch-error { background-color: var(--color-sketch-error); }
+  .bg-sketch-success { background-color: var(--color-sketch-success); }
+  .bg-sketch-warning { background-color: var(--color-sketch-warning); }
+  .bg-sketch-info { background-color: var(--color-sketch-info); }
 
   /* Sketch Text Color Utilities */
   .text-sketch-ink { color: var(--color-sketch-ink); }
