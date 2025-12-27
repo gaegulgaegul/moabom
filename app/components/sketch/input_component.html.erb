@@ -1,0 +1,86 @@
+<div class="<%= wrapper_classes %>"
+     data-controller="sketch-input"
+     data-sketch-input-roughness-value="<%= roughness_value %>"
+     data-sketch-input-seed-value="<%= random_seed %>">
+
+  <%# Label %>
+  <% if has_label? %>
+    <label for="<%= input_id %>" class="<%= label_classes %>">
+      <%= label_text %>
+    </label>
+  <% end %>
+
+  <%# Input Container %>
+  <div class="relative">
+    <%# SVG Border Container %>
+    <span class="sketch-border absolute inset-0 pointer-events-none rounded-sketch-md" data-sketch-input-target="border"></span>
+
+    <% if textarea? %>
+      <%# Textarea %>
+      <textarea
+        id="<%= input_id %>"
+        name="<%= input_name %>"
+        class="<%= input_classes %>"
+        placeholder="<%= placeholder_text %>"
+        rows="<%= textarea_rows %>"
+        <%= "disabled" if disabled? %>
+        <%= "required" if required? %>
+        aria-describedby="<%= aria_describedby %>"
+        data-action="focus->sketch-input#onFocus blur->sketch-input#onBlur"
+      ><%= input_value %></textarea>
+
+    <% elsif select? %>
+      <%# Select %>
+      <select
+        id="<%= input_id %>"
+        name="<%= input_name %>"
+        class="<%= input_classes %>"
+        <%= "disabled" if disabled? %>
+        <%= "required" if required? %>
+        aria-describedby="<%= aria_describedby %>"
+        data-action="focus->sketch-input#onFocus blur->sketch-input#onBlur"
+      >
+        <% if placeholder_text %>
+          <option value="" disabled selected><%= placeholder_text %></option>
+        <% end %>
+        <% select_options.each do |option| %>
+          <% if option.is_a?(Array) %>
+            <option value="<%= option[1] %>" <%= "selected" if input_value == option[1] %>><%= option[0] %></option>
+          <% else %>
+            <option value="<%= option %>" <%= "selected" if input_value == option %>><%= option %></option>
+          <% end %>
+        <% end %>
+      </select>
+
+    <% else %>
+      <%# Regular Input %>
+      <input
+        type="<%= input_type %>"
+        id="<%= input_id %>"
+        name="<%= input_name %>"
+        class="<%= input_classes %>"
+        placeholder="<%= placeholder_text %>"
+        value="<%= input_value %>"
+        <%= "disabled" if disabled? %>
+        <%= "required" if required? %>
+        aria-describedby="<%= aria_describedby %>"
+        data-action="focus->sketch-input#onFocus blur->sketch-input#onBlur"
+      >
+    <% end %>
+  </div>
+
+  <%# Helper Text %>
+  <% if has_helper? %>
+    <p id="<%= input_id %>_helper" class="<%= helper_classes %>">
+      <%= helper_text %>
+    </p>
+  <% end %>
+
+  <%# Error Message %>
+  <% if has_error? %>
+    <p id="<%= input_id %>_error" class="<%= error_classes %>" role="alert">
+      <%= helpers.heroicon "exclamation-circle", variant: :mini, options: { class: "w-3 h-3 inline mr-1" } %>
+      <%= error_text %>
+    </p>
+  <% end %>
+</div>

@@ -1,0 +1,65 @@
+<%# Modal Container - Hidden by default %>
+<div id="<%= modal_id %>"
+     class="<%= modal_classes %> hidden"
+     data-controller="sketch-modal"
+     data-sketch-modal-roughness-value="<%= roughness_value %>"
+     data-sketch-modal-backdrop-close-value="<%= @backdrop_close %>"
+     data-action="keydown.escape->sketch-modal#close"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="<%= modal_id %>_title">
+
+  <%# Backdrop %>
+  <div class="<%= backdrop_classes %>"
+       data-sketch-modal-target="backdrop"
+       data-action="click->sketch-modal#backdropClick"
+       aria-hidden="true"></div>
+
+  <%# Dialog %>
+  <div class="<%= dialog_classes %>"
+       data-sketch-modal-target="dialog"
+       role="document">
+
+    <%# SVG Border Container %>
+    <span class="sketch-border absolute inset-0 pointer-events-none rounded-sketch-lg"
+          data-sketch-modal-target="border"></span>
+
+    <%# Header %>
+    <% if has_title? %>
+      <header class="<%= header_classes %>">
+        <% if header? %>
+          <%= header %>
+        <% else %>
+          <h2 id="<%= modal_id %>_title" class="<%= title_classes %>">
+            <%= title_text %>
+          </h2>
+        <% end %>
+
+        <% if closable? %>
+          <button type="button"
+                  class="<%= close_button_classes %>"
+                  data-action="click->sketch-modal#close"
+                  aria-label="Close modal">
+            <%= helpers.heroicon "x-mark", variant: :outline, options: { class: "w-5 h-5" } %>
+          </button>
+        <% end %>
+      </header>
+    <% end %>
+
+    <%# Body %>
+    <div class="<%= body_classes %>">
+      <% if has_body? %>
+        <%= body %>
+      <% else %>
+        <%= content %>
+      <% end %>
+    </div>
+
+    <%# Footer %>
+    <% if has_footer? %>
+      <footer class="<%= footer_classes %>">
+        <%= footer %>
+      </footer>
+    <% end %>
+  </div>
+</div>

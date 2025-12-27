@@ -1,0 +1,64 @@
+<nav class="<%= nav_classes %>"
+     data-controller="sketch-nav"
+     data-sketch-nav-roughness-value="<%= roughness_value %>"
+     data-sketch-nav-variant-value="<%= @variant %>"
+     role="navigation"
+     aria-label="<%= header? ? 'Main' : tabbar? ? 'Tab' : 'Navigation' %>">
+
+  <%# SVG Border Container %>
+  <span class="sketch-border absolute inset-0 pointer-events-none" data-sketch-nav-target="border"></span>
+
+  <div class="<%= inner_classes %>">
+    <% if header? %>
+      <%# Header Layout %>
+      <div class="flex items-center gap-6">
+        <%= brand if brand? %>
+        <div class="hidden sm:flex items-center gap-4">
+          <% items.each do |item| %>
+            <%= item %>
+          <% end %>
+        </div>
+      </div>
+
+      <% if actions? %>
+        <div class="flex items-center gap-2">
+          <%= actions %>
+        </div>
+      <% end %>
+
+    <% elsif tabbar? %>
+      <%# Tab Bar Layout %>
+      <% tabs.each do |tab| %>
+        <%= tab %>
+      <% end %>
+
+    <% elsif sidebar? %>
+      <%# Sidebar Layout %>
+      <div class="px-4 mb-6">
+        <%= brand if brand? %>
+      </div>
+
+      <div class="flex-1 px-2 space-y-1">
+        <% items.each do |item| %>
+          <div class="px-2 py-2 rounded-sketch-md hover:bg-sketch-cream transition-colors">
+            <%= item %>
+          </div>
+        <% end %>
+      </div>
+
+      <% if actions? %>
+        <div class="px-4 pt-4 border-t border-sketch-gray/30">
+          <%= actions %>
+        </div>
+      <% end %>
+
+    <% else %>
+      <%# Inline Layout %>
+      <%= brand if brand? %>
+      <% items.each do |item| %>
+        <%= item %>
+      <% end %>
+      <%= actions if actions? %>
+    <% end %>
+  </div>
+</nav>

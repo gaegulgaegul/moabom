@@ -18,9 +18,27 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
+    <%# Frame0 Sketch Style Fonts %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Patrick+Hand&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <%# CDN Fallback for Sketch Dependencies %>
+    <script>
+      window.addEventListener('error', function(e) {
+        if (e.filename && e.filename.includes('roughjs')) {
+          console.warn('Rough.js failed to load from importmap, loading CDN fallback...');
+          var script = document.createElement('script');
+          script.src = 'https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.min.js';
+          script.onload = function() { window.rough = rough; };
+          document.head.appendChild(script);
+        }
+      }, true);
+    </script>
   </head>
 
   <body class="bg-cream-50 dark:bg-warm-gray-900">

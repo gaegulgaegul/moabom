@@ -56,6 +56,9 @@ Rails.application.routes.draw do
   # Notifications
   resources :notifications, only: [ :index, :update ]
 
+  # Sketch Design System Demo (development only)
+  get "sketch-demo", to: "sketch_demo#index" if Rails.env.development?
+
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
 

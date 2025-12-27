@@ -47,6 +47,9 @@ gem "image_processing", "~> 1.2"
 # SVG icons from Heroicons [https://heroicons.com/]
 gem "heroicon"
 
+# ViewComponent for reusable UI components [https://viewcomponent.org/]
+gem "view_component"
+
 # OAuth authentication
 gem "omniauth"
 gem "omniauth-oauth2"

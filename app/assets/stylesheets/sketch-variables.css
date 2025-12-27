@@ -1,0 +1,265 @@
+/* ============================================
+   Frame0 Sketch Style - CSS Variables
+   Hand-drawn wireframe aesthetic
+   ============================================ */
+
+:root {
+  /* ----------------------------------------
+     Sketch Color Palette
+     ---------------------------------------- */
+  --sketch-black: #1A1A1A;
+  --sketch-dark: #2D2D2D;
+  --sketch-charcoal: #404040;
+  --sketch-gray-700: #525252;
+  --sketch-gray-600: #6B6B6B;
+  --sketch-gray-500: #858585;
+  --sketch-gray-400: #A3A3A3;
+  --sketch-gray-300: #C4C4C4;
+  --sketch-gray-200: #E0E0E0;
+  --sketch-paper: #F5F5F5;
+
+  /* Transparency variants (80% opacity) */
+  --sketch-black-80: rgba(26, 26, 26, 0.80);
+  --sketch-gray-100-80: #f8f9fa80;
+  --sketch-gray-200-80: rgba(224, 224, 224, 0.80);
+  --sketch-gray-300-80: rgba(196, 196, 196, 0.80);
+
+  /* Overlays */
+  --sketch-overlay-heavy: rgba(26, 26, 26, 0.80);
+  --sketch-overlay-medium: rgba(26, 26, 26, 0.60);
+  --sketch-overlay-light: rgba(26, 26, 26, 0.40);
+  --sketch-overlay-subtle: rgba(26, 26, 26, 0.20);
+  --sketch-fill: rgba(107, 107, 107, 0.15);
+
+  /* Highlighter colors */
+  --sketch-highlight-yellow: rgba(255, 235, 59, 0.40);
+  --sketch-highlight-blue: rgba(100, 181, 246, 0.35);
+  --sketch-highlight-green: rgba(129, 199, 132, 0.35);
+  --sketch-highlight-pink: rgba(244, 143, 177, 0.35);
+
+  /* ----------------------------------------
+     Stroke Variables
+     ---------------------------------------- */
+  --sketch-stroke-hairline: 0.5px;
+  --sketch-stroke-thin: 1px;
+  --sketch-stroke-base: 1.5px;
+  --sketch-stroke-medium: 2px;
+  --sketch-stroke-thick: 2.5px;
+  --sketch-stroke-heavy: 3px;
+
+  /* Dash patterns */
+  --sketch-dasharray-solid: none;
+  --sketch-dasharray-short: 4, 3;
+  --sketch-dasharray-medium: 8, 4;
+  --sketch-dasharray-long: 12, 6;
+  --sketch-dasharray-dotted: 2, 4;
+  --sketch-dasharray-rough: 6, 3, 2, 3;
+
+  /* Line style */
+  --sketch-linecap: round;
+  --sketch-linejoin: round;
+
+  /* ----------------------------------------
+     Typography
+     ---------------------------------------- */
+  --sketch-font-primary: 'Caveat', 'Patrick Hand', 'Kalam', cursive;
+  --sketch-font-body: 'Architects Daughter', 'Comic Neue', 'Nunito', sans-serif;
+  --sketch-font-mono: 'Indie Flower', 'Gloria Hallelujah', monospace;
+  --sketch-font-fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Font sizes */
+  --sketch-text-xs: 11px;
+  --sketch-text-sm: 13px;
+  --sketch-text-base: 15px;
+  --sketch-text-md: 17px;
+  --sketch-text-lg: 20px;
+  --sketch-text-xl: 24px;
+  --sketch-text-2xl: 30px;
+  --sketch-text-3xl: 36px;
+
+  /* Line heights */
+  --sketch-leading-xs: 14px;
+  --sketch-leading-sm: 18px;
+  --sketch-leading-base: 22px;
+  --sketch-leading-md: 26px;
+  --sketch-leading-lg: 28px;
+  --sketch-leading-xl: 32px;
+
+  /* Letter spacing */
+  --sketch-tracking-tight: -0.02em;
+  --sketch-tracking-normal: 0;
+  --sketch-tracking-wide: 0.03em;
+  --sketch-tracking-sketch: 0.05em;
+
+  /* ----------------------------------------
+     Shadows
+     ---------------------------------------- */
+  --sketch-shadow-none: none;
+  --sketch-shadow-subtle: 2px 2px 0px rgba(26, 26, 26, 0.08);
+  --sketch-shadow-light: 3px 3px 0px rgba(26, 26, 26, 0.12);
+  --sketch-shadow-medium: 4px 4px 0px rgba(26, 26, 26, 0.15);
+  --sketch-shadow-heavy: 6px 6px 0px rgba(26, 26, 26, 0.18);
+  --sketch-shadow-lifted: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --sketch-shadow-inset-subtle: inset 1px 1px 2px rgba(26, 26, 26, 0.06);
+  --sketch-shadow-inset-medium: inset 2px 2px 4px rgba(26, 26, 26, 0.10);
+
+  /* ----------------------------------------
+     Border Radius
+     ---------------------------------------- */
+  --sketch-radius-none: 0px;
+  --sketch-radius-sm: 2px;
+  --sketch-radius-base: 4px;
+  --sketch-radius-md: 6px;
+  --sketch-radius-lg: 8px;
+  --sketch-radius-xl: 12px;
+  --sketch-radius-pill: 9999px;
+
+  /* ----------------------------------------
+     Animation
+     ---------------------------------------- */
+  --sketch-duration-instant: 0ms;
+  --sketch-duration-fast: 100ms;
+  --sketch-duration-normal: 200ms;
+  --sketch-duration-slow: 300ms;
+  --sketch-duration-deliberate: 500ms;
+
+  --sketch-easing-default: ease-in-out;
+  --sketch-easing-in: cubic-bezier(0.4, 0, 0.2, 1);
+  --sketch-easing-out: cubic-bezier(0, 0, 0.2, 1);
+  --sketch-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* ----------------------------------------
+     Component Tokens
+     ---------------------------------------- */
+  /* Button */
+  --sketch-btn-padding: 10px 18px;
+  --sketch-btn-radius: 4px;
+  --sketch-btn-border: 1.5px solid var(--sketch-black);
+  --sketch-btn-bg: #FFFFFF;
+  --sketch-btn-shadow: var(--sketch-shadow-light);
+
+  /* Card */
+  --sketch-card-padding: 16px;
+  --sketch-card-radius: 6px;
+  --sketch-card-border: 1.5px solid var(--sketch-gray-300);
+  --sketch-card-bg: #FFFFFF;
+  --sketch-card-shadow: 4px 4px 0px rgba(26, 26, 26, 0.08);
+
+  /* Input */
+  --sketch-input-padding: 10px 14px;
+  --sketch-input-radius: 4px;
+  --sketch-input-border: 1.5px solid var(--sketch-gray-300);
+  --sketch-input-bg: #FAFAFA;
+  --sketch-input-shadow: var(--sketch-shadow-inset-subtle);
+
+  /* Modal */
+  --sketch-modal-padding: 24px;
+  --sketch-modal-radius: 8px;
+  --sketch-modal-border: 2px solid var(--sketch-black);
+  --sketch-modal-shadow: var(--sketch-shadow-heavy);
+
+  /* Header/Footer */
+  --sketch-header-height: 56px;
+  --sketch-header-border: 1.5px solid var(--sketch-gray-200);
+
+  /* Toggle */
+  --sketch-toggle-width: 44px;
+  --sketch-toggle-height: 24px;
+  --sketch-toggle-knob: 18px;
+
+  /* Progress */
+  --sketch-progress-height: 8px;
+  --sketch-progress-radius: 4px;
+
+  /* Icon */
+  --sketch-icon-sm: 16px;
+  --sketch-icon-md: 20px;
+  --sketch-icon-lg: 24px;
+  --sketch-icon-xl: 32px;
+  --sketch-icon-stroke: 1.5px;
+}
+
+/* ----------------------------------------
+   SVG Filters for Rough.js-like Effects
+   ---------------------------------------- */
+.sketch-filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Inline SVG filters - add this to your HTML body */
+/*
+<svg class="sketch-filters">
+  <defs>
+    <filter id="roughen-filter">
+      <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="sketch-wobble">
+      <feTurbulence type="turbulence" baseFrequency="0.04" numOctaves="2" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5"/>
+    </filter>
+    <filter id="pencil-texture">
+      <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="2"/>
+      <feDisplacementMap in="SourceGraphic" scale="1"/>
+    </filter>
+  </defs>
+</svg>
+*/
+
+/* ----------------------------------------
+   Noise Texture Background
+   ---------------------------------------- */
+.sketch-paper-texture {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+.sketch-pencil-texture {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='pencil'%3E%3CfeTurbulence type='turbulence' baseFrequency='1.2' numOctaves='2'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23pencil)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* ----------------------------------------
+   Keyframe Animations
+   ---------------------------------------- */
+@keyframes sketch-wobble {
+  0%, 100% { transform: rotate(-0.5deg); }
+  50% { transform: rotate(0.5deg); }
+}
+
+@keyframes sketch-draw-in {
+  from { stroke-dashoffset: 100%; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes sketch-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sketch-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+/* Animation utility classes */
+.animate-sketch-wobble {
+  animation: sketch-wobble 0.5s ease-in-out infinite;
+}
+
+.animate-sketch-draw {
+  animation: sketch-draw-in 0.8s ease-out forwards;
+}
+
+.animate-sketch-fade {
+  animation: sketch-fade-in 0.3s ease-out;
+}
+
+/* ----------------------------------------
+   Irregular Border Path (for sketch borders)
+   ---------------------------------------- */
+.sketch-border-irregular {
+  --border-path: path("M0 0 Q2 1 4 0 T8 1 T12 0 T16 0.5 T20 0 T24 1 T28 0");
+}
