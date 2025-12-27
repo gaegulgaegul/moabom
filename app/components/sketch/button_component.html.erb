@@ -22,7 +22,7 @@
 
   <%# Left Icon %>
   <% if has_icon? && icon_left? && !loading? %>
-    <%= helpers.heroicon icon_name, variant: :outline, options: { class: icon_classes } %>
+    <%= helpers.lucide_icon icon_name, class: icon_classes %>
   <% end %>
 
   <%# Button Content %>
@@ -32,6 +32,6 @@
 
   <%# Right Icon %>
   <% if has_icon? && !icon_left? && !loading? %>
-    <%= helpers.heroicon icon_name, variant: :outline, options: { class: icon_classes } %>
+    <%= helpers.lucide_icon icon_name, class: icon_classes %>
   <% end %>
 </button>

@@ -171,8 +171,8 @@
     padding: var(--sketch-btn-padding, 10px 18px);
     background: var(--sketch-btn-bg, #FFFFFF);
     color: var(--sketch-black);
-    font-family: var(--sketch-font-body);
-    font-size: var(--sketch-text-base);
+    font-family: var(--font-sketch-body);
+    font-size: var(--text-sketch-base);
     border: var(--sketch-stroke-base) solid var(--sketch-black);
     border-radius: var(--sketch-radius-base);
     box-shadow: var(--sketch-shadow-light);
@@ -224,8 +224,8 @@
     padding: var(--sketch-input-padding, 10px 14px);
     background: var(--sketch-input-bg, #FAFAFA);
     color: var(--sketch-black);
-    font-family: var(--sketch-font-body);
-    font-size: var(--sketch-text-base);
+    font-family: var(--font-sketch-body);
+    font-size: var(--text-sketch-base);
     border: var(--sketch-stroke-base) solid var(--sketch-gray-300);
     border-radius: var(--sketch-radius-base);
     box-shadow: var(--sketch-shadow-inset-subtle);
@@ -354,7 +354,7 @@
 
   /* Sketch Typography */
   .sketch-text {
-    font-family: var(--sketch-font-body);
+    font-family: var(--font-sketch-body);
     color: var(--sketch-black);
   }
 
@@ -704,17 +704,17 @@
 
   /* Sketch Font Utilities */
   .font-sketch-primary { font-family: var(--font-sketch-primary); }
-  .font-sketch-body { font-family: var(--sketch-font-body); }
+  .font-sketch-body { font-family: var(--font-sketch-body); }
   .font-sketch-mono { font-family: var(--font-sketch-mono); }
 
   /* Sketch Font Aliases (convenience classes) */
   .font-sketch { font-family: var(--font-sketch-primary); }
-  .font-hand { font-family: var(--sketch-font-body); }
+  .font-hand { font-family: var(--font-sketch-body); }
 
   /* Sketch Font Size Utilities */
   .text-sketch-xs { font-size: var(--text-sketch-xs); }
   .text-sketch-sm { font-size: var(--text-sketch-sm); }
-  .text-sketch-base { font-size: var(--sketch-text-base); }
+  .text-sketch-base { font-size: var(--text-sketch-base); }
   .text-sketch-md { font-size: var(--text-sketch-md); }
   .text-sketch-lg { font-size: var(--text-sketch-lg); }
   .text-sketch-xl { font-size: var(--text-sketch-xl); }
