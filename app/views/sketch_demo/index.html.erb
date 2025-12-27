@@ -179,6 +179,33 @@
           <% end %>
         </div>
       </div>
+
+      <%# Gallery Card (Bento Grid) %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Gallery Card (Bento Grid)</h3>
+        <div class="max-w-lg">
+          <%= render Sketch::GalleryCardComponent.new(hoverable: true) do |card| %>
+            <% card.with_main_image(src: "https://placehold.co/400x400/E8D5B7/1A1A1A?text=사진1", alt: "Main photo") %>
+            <% card.with_secondary_image(src: "https://placehold.co/200x200/D4E5F7/1A1A1A?text=사진2", alt: "Second photo") %>
+            <% card.with_tertiary_image(src: "https://placehold.co/200x200/F7E4D4/1A1A1A?text=사진3", alt: "Third photo", more_count: 12) %>
+            <h4 class="font-sketch text-lg mb-1">우리 가족 앨범</h4>
+            <p class="text-sketch-gray font-hand text-sm">소중한 순간들을 모아봤어요 ✨</p>
+          <% end %>
+        </div>
+      </div>
+
+      <%# Gallery Card - Square Aspect %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Gallery Card - Square</h3>
+        <div class="max-w-md">
+          <%= render Sketch::GalleryCardComponent.new(aspect_ratio: :square, hoverable: true) do |card| %>
+            <% card.with_main_image(src: "https://placehold.co/300x300/FFD4E5/1A1A1A?text=메인", alt: "Main") %>
+            <% card.with_secondary_image(src: "https://placehold.co/150x150/E5FFD4/1A1A1A?text=상단", alt: "Top") %>
+            <% card.with_tertiary_image(src: "https://placehold.co/150x150/D4E5FF/1A1A1A?text=하단", alt: "Bottom", more_text: "더보기") %>
+            <p class="text-sketch-ink font-hand">첫 돌 파티 사진 모음</p>
+          <% end %>
+        </div>
+      </div>
     </section>
 
     <%# ==================== INPUTS ==================== %>
@@ -627,6 +654,228 @@
           <%= sketch_avatar(initials: "CD", size: :md) %>
           <%= sketch_avatar(initials: "EF", size: :lg) %>
           <%= sketch_avatar(initials: "GH", size: :xl) %>
+        </div>
+      </div>
+    </section>
+
+    <%# ==================== KOREAN TYPOGRAPHY ==================== %>
+    <section id="korean-fonts" class="space-y-6">
+      <h2 class="font-sketch text-3xl text-sketch-ink border-b-2 border-dashed border-sketch-ink/30 pb-2">
+        한글 Typography
+      </h2>
+
+      <%# Primary Font (Headings) %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Primary - 제목용 (Nanum Pen Script, Gamja Flower)</h3>
+        <div class="p-6 bg-white rounded-lg border-2 border-sketch-ink/20">
+          <p class="font-sketch text-3xl text-sketch-ink mb-4">
+            우리 가족의 소중한 순간들
+          </p>
+          <p class="font-sketch text-2xl text-sketch-ink mb-4">
+            아이의 첫 걸음마를 기록해요
+          </p>
+          <p class="font-sketch text-xl text-sketch-ink">
+            모아봄에서 추억을 모아보세요 ✨
+          </p>
+        </div>
+      </div>
+
+      <%# Body Font (Content) %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Body - 본문용 (Gaegu, Hi Melody)</h3>
+        <div class="p-6 bg-white rounded-lg border-2 border-sketch-ink/20">
+          <p class="font-hand text-lg text-sketch-ink mb-4">
+            오늘 하루도 행복한 하루였어요. 아이가 처음으로 "엄마"라고 불러줬답니다.
+            감동적인 순간을 가족들과 함께 공유하고 싶어요.
+          </p>
+          <p class="font-hand text-base text-sketch-gray">
+            2024년 12월 27일 - 첫 돌 파티에서 촬영한 사진이에요.
+            할머니, 할아버지도 함께 축하해 주셨어요.
+          </p>
+        </div>
+      </div>
+
+      <%# Mono Font (Labels/Captions) %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Mono - 캡션용 (Poor Story)</h3>
+        <div class="p-6 bg-white rounded-lg border-2 border-sketch-ink/20">
+          <p class="font-sketch-mono text-base text-sketch-ink mb-2">
+            // 메모: 다음 주에 가족사진 찍기
+          </p>
+          <p class="font-sketch-mono text-sm text-sketch-gray">
+            업로드: 2024-12-27 14:30 | 용량: 2.3MB
+          </p>
+        </div>
+      </div>
+
+      <%# Mixed Example %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Mixed - 실제 사용 예시</h3>
+        <div class="max-w-md">
+          <%= render Sketch::CardComponent.new(variant: :elevated) do |card| %>
+            <% card.with_header do %>
+              <span class="font-sketch text-xl">첫 돌 축하해요! 🎂</span>
+            <% end %>
+            <p class="font-hand text-sketch-ink mb-3">
+              벌써 1년이 지났네요. 건강하게 자라줘서 고마워요.
+              앞으로도 예쁘게 자라렴~
+            </p>
+            <p class="font-sketch-mono text-xs text-sketch-gray">
+              2024년 12월 15일 • 엄마가
+            </p>
+            <% card.with_footer do %>
+              <div class="flex gap-2">
+                <%= render Sketch::ButtonComponent.new(variant: :ghost, size: :sm) do %>
+                  💕 좋아요 12
+                <% end %>
+                <%= render Sketch::ButtonComponent.new(variant: :ghost, size: :sm) do %>
+                  💬 댓글 3
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <%# ==================== ICONS ==================== %>
+    <section id="icons" class="space-y-6">
+      <h2 class="font-sketch text-3xl text-sketch-ink border-b-2 border-dashed border-sketch-ink/30 pb-2">
+        Icons (Heroicons)
+      </h2>
+
+      <%# Icon Sizes %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Sizes</h3>
+        <div class="flex flex-wrap gap-6 items-end">
+          <div class="text-center">
+            <%= heroicon "home", variant: :outline, options: { class: "w-4 h-4 text-sketch-ink" } %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">16px</p>
+          </div>
+          <div class="text-center">
+            <%= heroicon "home", variant: :outline, options: { class: "w-5 h-5 text-sketch-ink" } %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">20px</p>
+          </div>
+          <div class="text-center">
+            <%= heroicon "home", variant: :outline, options: { class: "w-6 h-6 text-sketch-ink" } %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">24px</p>
+          </div>
+          <div class="text-center">
+            <%= heroicon "home", variant: :outline, options: { class: "w-8 h-8 text-sketch-ink" } %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">32px</p>
+          </div>
+          <div class="text-center">
+            <%= heroicon "home", variant: :outline, options: { class: "w-12 h-12 text-sketch-ink" } %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">48px</p>
+          </div>
+        </div>
+      </div>
+
+      <%# Icon Variants %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Variants (Outline vs Solid)</h3>
+        <div class="flex flex-wrap gap-8">
+          <div class="flex items-center gap-4 p-4 bg-white rounded-lg border-2 border-sketch-ink/20">
+            <%= heroicon "heart", variant: :outline, options: { class: "w-8 h-8 text-sketch-ink" } %>
+            <%= heroicon "heart", variant: :solid, options: { class: "w-8 h-8 text-sketch-ink" } %>
+            <span class="font-hand text-sketch-gray">heart</span>
+          </div>
+          <div class="flex items-center gap-4 p-4 bg-white rounded-lg border-2 border-sketch-ink/20">
+            <%= heroicon "star", variant: :outline, options: { class: "w-8 h-8 text-sketch-ink" } %>
+            <%= heroicon "star", variant: :solid, options: { class: "w-8 h-8 text-sketch-ink" } %>
+            <span class="font-hand text-sketch-gray">star</span>
+          </div>
+          <div class="flex items-center gap-4 p-4 bg-white rounded-lg border-2 border-sketch-ink/20">
+            <%= heroicon "bell", variant: :outline, options: { class: "w-8 h-8 text-sketch-ink" } %>
+            <%= heroicon "bell", variant: :solid, options: { class: "w-8 h-8 text-sketch-ink" } %>
+            <span class="font-hand text-sketch-gray">bell</span>
+          </div>
+        </div>
+      </div>
+
+      <%# Common UI Icons %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Common UI Icons</h3>
+        <div class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
+          <% %w[home photo camera plus-circle user user-group cog-6-tooth bell magnifying-glass arrow-left x-mark check trash pencil share chat-bubble-oval-left face-smile calendar folder bookmark archive-box document arrow-up-tray arrow-down-tray].each do |icon_name| %>
+            <div class="flex flex-col items-center p-3 bg-white rounded-lg border border-sketch-ink/10 hover:border-sketch-ink/30 transition-colors">
+              <%= heroicon icon_name, variant: :outline, options: { class: "w-6 h-6 text-sketch-ink" } %>
+              <span class="font-hand text-xs text-sketch-gray mt-2 text-center truncate w-full"><%= icon_name %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <%# Icon Colors %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Icon Colors</h3>
+        <div class="flex flex-wrap gap-4">
+          <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
+            <%= heroicon "heart", variant: :solid, options: { class: "w-8 h-8 text-sketch-ink" } %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">ink</p>
+          </div>
+          <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
+            <%= heroicon "heart", variant: :solid, options: { class: "w-8 h-8 text-sketch-pencil" } %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">pencil</p>
+          </div>
+          <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
+            <%= heroicon "heart", variant: :solid, options: { class: "w-8 h-8 text-sketch-gray" } %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">gray</p>
+          </div>
+          <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
+            <%= heroicon "heart", variant: :solid, options: { class: "w-8 h-8 text-red-500" } %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">red</p>
+          </div>
+          <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
+            <%= heroicon "heart", variant: :solid, options: { class: "w-8 h-8 text-primary-500" } %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">primary</p>
+          </div>
+          <div class="p-4 bg-white rounded-lg border-2 border-sketch-ink/20 text-center">
+            <%= heroicon "heart", variant: :solid, options: { class: "w-8 h-8 text-secondary-500" } %>
+            <p class="font-hand text-xs text-sketch-gray mt-1">secondary</p>
+          </div>
+        </div>
+      </div>
+
+      <%# Icon Buttons %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Icon Buttons</h3>
+        <div class="flex flex-wrap gap-4">
+          <button class="p-3 bg-white border-2 border-sketch-ink rounded-lg hover:bg-sketch-paper transition-colors">
+            <%= heroicon "plus", variant: :outline, options: { class: "w-6 h-6 text-sketch-ink" } %>
+          </button>
+          <button class="p-3 bg-primary-500 rounded-lg hover:bg-primary-600 transition-colors">
+            <%= heroicon "camera", variant: :solid, options: { class: "w-6 h-6 text-white" } %>
+          </button>
+          <button class="p-3 bg-sketch-highlight-pink rounded-full hover:bg-sketch-highlight-pink/80 transition-colors">
+            <%= heroicon "heart", variant: :solid, options: { class: "w-6 h-6 text-red-500" } %>
+          </button>
+          <button class="p-3 bg-sketch-paper border-2 border-dashed border-sketch-ink/30 rounded-lg hover:border-sketch-ink/50 transition-colors">
+            <%= heroicon "arrow-up-tray", variant: :outline, options: { class: "w-6 h-6 text-sketch-pencil" } %>
+          </button>
+        </div>
+      </div>
+
+      <%# Icons with Text %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">Icons with Text</h3>
+        <div class="flex flex-wrap gap-4">
+          <div class="flex items-center gap-2 p-3 bg-white rounded-lg border-2 border-sketch-ink/20">
+            <%= heroicon "photo", variant: :outline, options: { class: "w-5 h-5 text-sketch-ink" } %>
+            <span class="font-hand text-sketch-ink">사진 12장</span>
+          </div>
+          <div class="flex items-center gap-2 p-3 bg-white rounded-lg border-2 border-sketch-ink/20">
+            <%= heroicon "heart", variant: :solid, options: { class: "w-5 h-5 text-red-500" } %>
+            <span class="font-hand text-sketch-ink">좋아요 48</span>
+          </div>
+          <div class="flex items-center gap-2 p-3 bg-white rounded-lg border-2 border-sketch-ink/20">
+            <%= heroicon "chat-bubble-oval-left", variant: :outline, options: { class: "w-5 h-5 text-sketch-ink" } %>
+            <span class="font-hand text-sketch-ink">댓글 7개</span>
+          </div>
+          <div class="flex items-center gap-2 p-3 bg-sketch-highlight-yellow rounded-lg">
+            <%= heroicon "star", variant: :solid, options: { class: "w-5 h-5 text-amber-500" } %>
+            <span class="font-hand text-sketch-ink">즐겨찾기</span>
+          </div>
         </div>
       </div>
     </section>

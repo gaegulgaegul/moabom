@@ -27,6 +27,11 @@
   --color-sketch-100: #f8f9fa80;
   --color-sketch-paper: #F5F5F5;
 
+  /* Sketch Core Colors (aliases for semantic usage) */
+  --color-sketch-ink: #1A1A1A;
+  --color-sketch-pencil: #6B6B6B;
+  --color-sketch-gray: #A3A3A3;
+
   /* Sketch Highlighter Colors */
   --color-sketch-highlight-yellow: rgba(255, 235, 59, 0.40);
   --color-sketch-highlight-blue: rgba(100, 181, 246, 0.35);
@@ -63,10 +68,10 @@
   --shadow-sketch-lifted: 0 4px 12px rgba(0, 0, 0, 0.12);
   --shadow-sketch-inset: inset 1px 1px 2px rgba(26, 26, 26, 0.06);
 
-  /* Sketch Font Families */
-  --font-sketch-primary: 'Caveat', 'Patrick Hand', 'Kalam', cursive;
-  --font-sketch-body: 'Architects Daughter', 'Comic Neue', 'Nunito', sans-serif;
-  --font-sketch-mono: 'Indie Flower', 'Gloria Hallelujah', monospace;
+  /* Sketch Font Families (with Korean handwriting fonts) */
+  --font-sketch-primary: 'Caveat', 'Nanum Pen Script', 'Patrick Hand', 'Gamja Flower', 'Kalam', cursive;
+  --font-sketch-body: 'Architects Daughter', 'Gaegu', 'Comic Neue', 'Hi Melody', sans-serif;
+  --font-sketch-mono: 'Indie Flower', 'Poor Story', 'Gloria Hallelujah', monospace;
 
   /* Sketch Font Sizes */
   --text-sketch-xs: 11px;
@@ -693,6 +698,10 @@
   .font-sketch-primary { font-family: var(--font-sketch-primary); }
   .font-sketch-body { font-family: var(--font-sketch-body); }
   .font-sketch-mono { font-family: var(--font-sketch-mono); }
+
+  /* Sketch Font Aliases (convenience classes) */
+  .font-sketch { font-family: var(--font-sketch-primary); }
+  .font-hand { font-family: var(--font-sketch-body); }
 
   /* Sketch Font Size Utilities */
   .text-sketch-xs { font-size: var(--text-sketch-xs); }
