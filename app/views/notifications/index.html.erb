@@ -1,43 +1,55 @@
-<div class="px-4 py-6">
-  <h1 class="text-2xl font-bold text-warm-gray-800 mb-6">알림</h1>
+<%# Frame0 Sketch Design System - Notifications %>
+<%= render Sketch::ContainerComponent.new(padding: :md, variant: :paper) do %>
+  <h1 class="text-2xl font-sketch font-bold text-sketch-ink mb-6">알림</h1>
 
   <% if @notifications.empty? %>
     <!-- 빈 상태 -->
-    <div class="flex flex-col items-center justify-center py-16 text-center">
-      <%= lucide_icon "bell", class: "w-16 h-16 text-warm-gray-300" %>
-      <h3 class="mt-4 text-lg font-medium text-warm-gray-800">알림이 없습니다</h3>
-      <p class="mt-2 text-sm text-warm-gray-500">새로운 소식이 있으면 알려드릴게요.</p>
-    </div>
+    <%= render Sketch::EmptyStateComponent.new(
+      icon: "bell",
+      title: "알림이 없습니다",
+      description: "새로운 소식이 있으면 알려드릴게요.",
+      size: :md
+    ) %>
   <% else %>
     <!-- 알림 목록 -->
     <div class="space-y-2">
       <% @notifications.each do |notification| %>
         <%= link_to notification_path(notification),
                     data: { turbo_method: :patch },
-                    class: "block p-4 rounded-xl hover:bg-cream-50 transition-colors #{notification.read? ? '' : 'bg-primary-50 border-l-4 border-primary-500'}" do %>
-          <div class="flex items-start gap-3">
-            <!-- 아바타 -->
-            <div class="w-10 h-10 rounded-full bg-primary-200 flex items-center justify-center flex-shrink-0">
-              <span class="text-lg"><%= notification.actor&.nickname&.first || '?' %></span>
-            </div>
+                    class: "block" do %>
+          <%= render Sketch::CardComponent.new(
+            variant: notification.read? ? :flat : :default,
+            padding: :md,
+            hoverable: true,
+            clickable: true,
+            class: notification.read? ? "" : "border-l-4 border-l-sketch-ink"
+          ) do %>
+            <div class="flex items-start gap-3">
+              <!-- 아바타 -->
+              <%= render Sketch::AvatarComponent.new(
+                size: :md,
+                initials: notification.actor&.nickname&.first || '?',
+                border: true
+              ) %>
 
-            <!-- 내용 -->
-            <div class="flex-1 min-w-0">
-              <p class="text-sm text-warm-gray-800 font-medium">
-                <%= notification.message %>
-              </p>
-              <p class="text-xs text-warm-gray-500 mt-1">
-                <%= time_ago_in_words(notification.created_at) %> 전
-              </p>
-            </div>
+              <!-- 내용 -->
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-hand text-sketch-ink font-medium">
+                  <%= notification.message %>
+                </p>
+                <p class="text-xs font-hand text-sketch-gray mt-1">
+                  <%= time_ago_in_words(notification.created_at) %> 전
+                </p>
+              </div>
 
-            <!-- 읽지 않음 표시 -->
-            <% unless notification.read? %>
-              <div class="w-2 h-2 bg-primary-500 rounded-full flex-shrink-0 mt-2"></div>
-            <% end %>
-          </div>
+              <!-- 읽지 않음 표시 -->
+              <% unless notification.read? %>
+                <div class="w-2 h-2 bg-sketch-ink rounded-full flex-shrink-0 mt-2"></div>
+              <% end %>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
     </div>
   <% end %>
-</div>
+<% end %>

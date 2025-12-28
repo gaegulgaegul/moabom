@@ -1,0 +1,40 @@
+<%# 인스타 스토리 스타일 아이 프로필 필터 %>
+<div class="pt-4 pb-3 border-b border-sketch-gray/10">
+  <div class="flex gap-3 overflow-x-auto px-4 py-1 scrollbar-hide" data-controller="story-filter">
+    <%# 전체 보기 옵션 %>
+    <%= render Sketch::StoryAvatarComponent.new(
+      name: "전체",
+      is_all: true,
+      selected: @selected_child_id.nil?,
+      href: root_path,
+      turbo_frame: "timeline"
+    ) %>
+
+    <%# 아이 프로필 목록 %>
+    <% @children.each do |child| %>
+      <%= render Sketch::StoryAvatarComponent.new(
+        name: child.name,
+        src: child.profile_photo.attached? ? url_for(child.profile_photo.variant(:thumbnail)) : nil,
+        selected: @selected_child_id == child.id,
+        href: root_path(child_id: child.id),
+        turbo_frame: "timeline"
+      ) %>
+    <% end %>
+
+    <%# 아이가 없을 때 추가 버튼 %>
+    <% if @children.empty? %>
+      <%= link_to new_family_child_path(@family),
+          class: "story-avatar flex flex-col items-center gap-1 w-16",
+          data: { turbo_frame: "_top" } do %>
+        <div class="rounded-full p-0.5 border-2 border-dashed border-sketch-gray/30">
+          <div class="w-14 h-14 rounded-full bg-sketch-cream flex items-center justify-center">
+            <svg class="w-6 h-6 text-sketch-gray" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+          </div>
+        </div>
+        <span class="font-hand text-xs text-sketch-gray">추가</span>
+      <% end %>
+    <% end %>
+  </div>
+</div>

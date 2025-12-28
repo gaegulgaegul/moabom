@@ -1,26 +1,25 @@
-<%# 가족 구성원 카드 partial %>
+<%# Frame0 Sketch Design System - Family Member Card %>
 <%# 사용법: <%= render "families/members/member", membership: membership %>
 
-<div class="flex items-center justify-between py-4">
+<div class="flex items-center justify-between py-4 px-4">
   <div class="flex items-center gap-3">
-    <div class="avatar bg-primary-100">
-      <span class="text-primary-600 font-medium">
-        <%= membership.user.nickname.to_s.first || "?" %>
-      </span>
-    </div>
+    <%= render Sketch::AvatarComponent.new(size: :md, initials: membership.user.nickname.to_s.first || "?", border: true) %>
     <div>
-      <p class="font-medium text-warm-gray-800"><%= membership.user.nickname %></p>
-      <p class="text-sm text-warm-gray-500"><%= membership.user.email %></p>
+      <p class="font-sketch font-medium text-sketch-ink"><%= membership.user.nickname %></p>
+      <p class="text-sm font-hand text-sketch-gray"><%= membership.user.email %></p>
     </div>
   </div>
   <div class="flex items-center gap-2">
-    <span class="badge <%= membership.admin_or_owner? ? 'badge-primary' : 'badge-secondary' %>">
+    <%= render Sketch::BadgeComponent.new(
+      variant: membership.admin_or_owner? ? :primary : :secondary,
+      size: :sm
+    ) do %>
       <%= membership.admin_or_owner? ? '관리자' : '구성원' %>
-    </span>
+    <% end %>
     <% if can_manage_members? && membership.user != current_user %>
-      <button class="p-2 hover:bg-cream-100 rounded-full"
+      <button class="p-2 hover:bg-sketch-cream rounded-full transition-colors"
               aria-label="<%= membership.user.nickname %> 관리">
-        <%= lucide_icon "more-vertical", class: "w-5 h-5 text-warm-gray-400" %>
+        <%= lucide_icon "more-vertical", class: "w-5 h-5 text-sketch-gray" %>
       </button>
     <% end %>
   </div>

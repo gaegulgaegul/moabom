@@ -1,39 +1,31 @@
-<header class="fixed top-0 left-0 right-0 z-50
-               bg-white/80 backdrop-blur-md
-               border-b border-cream-200
-               safe-area-inset-top">
-  <div class="flex items-center justify-between px-4 h-14">
-    <!-- 로고 -->
-    <%= link_to root_path, class: "flex items-center gap-2" do %>
+<header>
+  <%= render Sketch::NavComponent.new(variant: :header) do |nav| %>
+    <% nav.with_brand(href: root_path) do %>
       <span class="text-2xl">🌸</span>
-      <span class="text-lg font-bold text-warm-gray-800">모아봄</span>
+      <span>모아봄</span>
     <% end %>
 
-    <!-- 우측 액션 -->
-    <div class="flex items-center gap-2">
+    <% nav.with_actions do %>
       <% if logged_in? %>
-        <!-- 알림 -->
+        <%# 알림 %>
         <%= link_to notifications_path,
-                    class: "relative p-2 rounded-full hover:bg-cream-100 tap-highlight-none",
+                    class: "relative p-2.5 rounded-full hover:bg-sketch-cream tap-highlight-none",
                     "aria-label": "알림" do %>
-          <%= lucide_icon "bell", class: "w-6 h-6 text-warm-gray-700" %>
+          <%= lucide_icon "bell", class: "w-6 h-6 text-sketch-ink" %>
           <% if unread_notifications_count > 0 %>
-            <span class="absolute top-1 right-1 min-w-[18px] h-[18px] px-1
-                         bg-accent-500 text-white text-xs font-semibold
-                         rounded-full flex items-center justify-center"
-                  aria-label="읽지 않은 알림">
+            <%= render Sketch::BadgeComponent.new(variant: :error, size: :sm, class: "absolute top-0 right-0") do %>
               <%= unread_notifications_count > 9 ? "9+" : unread_notifications_count %>
-            </span>
+            <% end %>
           <% end %>
         <% end %>
 
-        <!-- 설정 -->
-        <%= header_icon_button(
-          icon: "settings",
-          path: settings_profile_path,
-          label: "설정"
-        ) %>
+        <%# 설정 %>
+        <%= link_to settings_profile_path,
+                    class: "p-2.5 rounded-full hover:bg-sketch-cream tap-highlight-none",
+                    "aria-label": "설정" do %>
+          <%= lucide_icon "settings", class: "w-6 h-6 text-sketch-ink" %>
+        <% end %>
       <% end %>
-    </div>
-  </div>
+    <% end %>
+  <% end %>
 </header>

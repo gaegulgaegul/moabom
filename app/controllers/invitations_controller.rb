@@ -15,7 +15,7 @@ class InvitationsController < ApplicationController
     return handle_already_member if already_member?
 
     join_family
-    redirect_to dashboard_path, notice: "가족에 참여했습니다!"
+    redirect_to root_path, notice: "가족에 참여했습니다!"
   end
 
   private
@@ -38,7 +38,7 @@ class InvitationsController < ApplicationController
   end
 
   def handle_already_member
-    redirect_to dashboard_path, alert: "이미 가족 구성원입니다."
+    redirect_to root_path, alert: "이미 가족 구성원입니다."
   end
 
   def already_member?

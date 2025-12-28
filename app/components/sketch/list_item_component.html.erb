@@ -1,0 +1,34 @@
+<%# Frame0 Sketch List Item Component %>
+<%= content_tag list_item_tag, **list_item_options do %>
+  <%# Leading (icon or custom slot) %>
+  <% if has_leading? %>
+    <div class="flex-shrink-0">
+      <% if leading? %>
+        <%= leading %>
+      <% elsif has_icon? %>
+        <%= helpers.lucide_icon icon_name, class: "w-5 h-5 text-sketch-gray" %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%# Content %>
+  <div class="flex-1 min-w-0">
+    <p class="font-hand text-sketch-ink truncate"><%= title_text %></p>
+    <% if has_description? %>
+      <p class="font-hand text-sm text-sketch-gray truncate"><%= description_text %></p>
+    <% end %>
+  </div>
+
+  <%# Trailing (custom slot or chevron) %>
+  <% if trailing? %>
+    <div class="flex-shrink-0">
+      <%= trailing %>
+    </div>
+  <% end %>
+
+  <% if show_chevron? %>
+    <div class="flex-shrink-0">
+      <%= helpers.lucide_icon "chevron-right", class: "w-5 h-5 text-sketch-gray" %>
+    </div>
+  <% end %>
+<% end %>

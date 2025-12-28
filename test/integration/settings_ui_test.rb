@@ -16,20 +16,20 @@ class SettingsUiTest < ActionDispatch::IntegrationTest
     get settings_profile_path
 
     assert_response :success
-    # 카드 레이아웃 확인
-    assert_select "div[class*='card-solid']"
+    # Sketch CardComponent 레이아웃 확인
+    assert_select "[class*='bg-sketch-paper']"
     # 폼 스타일 확인
     assert_select "form[class*='space-y']"
-    # 입력 필드에 스타일 클래스
-    assert_select "input[type=text][class*='input']"
+    # Sketch InputComponent 스타일 클래스 (font-sketch)
+    assert_select "input[type=text][class*='font-sketch']"
   end
 
   test "notifications page should have TailwindCSS styled form" do
     get settings_notifications_path
 
     assert_response :success
-    # 카드 레이아웃 확인
-    assert_select "div[class*='card-solid']"
+    # Sketch CardComponent 레이아웃 확인
+    assert_select "[class*='bg-sketch-paper']"
     # 토글 버튼 확인 (체크박스 대신)
     assert_select "button[data-controller='toggle']"
     # 레이블 확인
@@ -50,8 +50,8 @@ class SettingsUiTest < ActionDispatch::IntegrationTest
     patch settings_profile_path, params: { user: { nickname: "!" } }
 
     assert_response :unprocessable_entity
-    # 에러 영역 스타일 확인
-    assert_select "div.alert-error"
-    assert_select "div.alert-error p"
+    # Sketch AlertComponent 에러 영역 스타일 확인
+    assert_select ".sketch-alert"
+    assert_select ".sketch-alert p"
   end
 end

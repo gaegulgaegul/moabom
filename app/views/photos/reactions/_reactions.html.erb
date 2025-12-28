@@ -1,7 +1,9 @@
+<%# Frame0 Sketch Design System - Reactions %>
 <%= turbo_frame_tag dom_id(photo, :reactions) do %>
-  <div class="reactions flex items-center gap-2">
+  <div class="reactions flex items-center gap-1">
     <% photo.reactions.includes(:user).each do |reaction| %>
-      <span class="reaction" title="<%= reaction.user.nickname %>">
+      <span class="reaction text-lg p-1 rounded-lg hover:bg-sketch-cream transition-colors cursor-default"
+            title="<%= reaction.user.nickname %>">
         <%= reaction.emoji %>
       </span>
     <% end %>

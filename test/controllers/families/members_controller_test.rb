@@ -20,7 +20,7 @@ module Families
     get family_members_path(@family)
 
     assert_response :success
-    assert_select ".card-solid" # members card container
+    assert_select "[class*='bg-sketch-paper']" # Sketch CardComponent
   end
 
   test "viewer should see member list" do

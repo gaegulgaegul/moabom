@@ -1,0 +1,64 @@
+<%# Gallery Card (Bento Grid) 스타일 - 날짜별 사진 그룹 %>
+<%# photos: 해당 날짜의 사진 배열, date: 날짜 %>
+<%# 모바일 최적화: 컴팩트 사이즈, content 영역 포함 %>
+
+<% if photos.any? %>
+  <% main_photo = photos[0] %>
+  <% secondary_photo = photos[1] %>
+  <% tertiary_photo = photos[2] %>
+  <% remaining_count = photos.size > 3 ? photos.size - 3 : nil %>
+
+  <div class="w-full rounded-xl overflow-hidden bg-sketch-paper border border-sketch-gray/10 shadow-sm">
+    <%# Bento Grid 이미지 영역 %>
+    <div class="grid grid-cols-2 grid-rows-2 gap-0.5 gallery-card-grid">
+      <%# 메인 이미지 (왼쪽 전체 높이) %>
+      <div class="row-span-2 relative overflow-hidden">
+        <% if main_photo %>
+          <%= image_tag photo_image_url(main_photo),
+              class: "w-full h-full object-cover",
+              loading: "lazy",
+              alt: main_photo.respond_to?(:caption) ? (main_photo.caption.presence || "사진") : "사진" %>
+        <% end %>
+      </div>
+
+      <%# 보조 이미지 (오른쪽 상단) %>
+      <div class="relative overflow-hidden">
+        <% if secondary_photo %>
+          <%= image_tag photo_image_url(secondary_photo),
+              class: "w-full h-full object-cover",
+              loading: "lazy",
+              alt: secondary_photo.respond_to?(:caption) ? (secondary_photo.caption.presence || "사진") : "사진" %>
+        <% elsif main_photo %>
+          <div class="w-full h-full bg-sketch-cream"></div>
+        <% end %>
+      </div>
+
+      <%# 세 번째 이미지 (오른쪽 하단, 더보기 오버레이 포함) %>
+      <div class="relative overflow-hidden">
+        <% if tertiary_photo %>
+          <%= image_tag photo_image_url(tertiary_photo),
+              class: "w-full h-full object-cover",
+              loading: "lazy",
+              alt: tertiary_photo.respond_to?(:caption) ? (tertiary_photo.caption.presence || "사진") : "사진" %>
+          <% if remaining_count && remaining_count > 0 %>
+            <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+              <span class="text-white font-sketch text-sm font-semibold">+<%= remaining_count %> 더보기</span>
+            </div>
+          <% end %>
+        <% elsif secondary_photo %>
+          <div class="w-full h-full bg-sketch-cream"></div>
+        <% end %>
+      </div>
+    </div>
+
+    <%# Content 영역 - 제목 + 설명 %>
+    <div class="p-3">
+      <h3 class="font-sketch text-sketch-ink text-sm font-medium">
+        <%= relative_date(date) %>의 추억
+      </h3>
+      <p class="font-hand text-sketch-gray text-xs mt-0.5">
+        소중한 순간들을 모아봤어요 ✨
+      </p>
+    </div>
+  </div>
+<% end %>

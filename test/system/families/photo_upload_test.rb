@@ -55,14 +55,14 @@ class Families::PhotoUploadTest < ApplicationSystemTestCase
   test "pill 버튼 스타일 확인" do
     visit new_family_photo_path(@family)
 
-    # 전체 버튼이 활성 상태 (bg-primary-500)
-    assert_selector "button.bg-primary-500", text: "전체"
+    # 전체 버튼이 활성 상태 (Sketch 디자인: bg-sketch-ink)
+    assert_selector "button.bg-sketch-ink", text: "전체"
   end
 
-  test "input-textarea 스타일 확인" do
+  test "textarea 스타일 확인" do
     visit new_family_photo_path(@family)
 
-    # h-24 클래스 확인
-    assert_selector "textarea.h-24"
+    # Sketch::InputComponent textarea 확인
+    assert_selector "textarea"
   end
 end

@@ -1,0 +1,6 @@
+<%# 날짜별 사진 타임라인 - Gallery Card (Bento Grid) 스타일 %>
+<div class="space-y-4">
+  <% photos_by_date.each do |date, photos| %>
+    <%= render "gallery_card", photos: photos, date: date %>
+  <% end %>
+</div>

@@ -33,14 +33,14 @@ module Onboarding
       }
 
       assert_response :unprocessable_entity
-      assert_select ".alert-error", /닉네임/
+      assert_select ".sketch-alert", /닉네임/
     end
 
     test "should require authentication" do
       delete logout_path
       get onboarding_profile_path
 
-      assert_redirected_to root_path
+      assert_redirected_to login_path
     end
   end
 end

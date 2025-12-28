@@ -1,29 +1,31 @@
-<%# 아이 카드 partial %>
+<%# Frame0 Sketch Design System - Child Card %>
 <%# 사용법: <%= render "families/children/child", child: child, family: family %>
 
 <%= link_to edit_family_child_path(family, child),
-    class: "card-glass block tap-highlight-none",
+    class: "block tap-highlight-none",
     data: { turbo_frame: "_top" } do %>
-  <div class="flex items-center gap-4">
-    <!-- 프로필 영역 -->
-    <div class="w-16 h-16 rounded-full bg-cream-200 flex items-center justify-center overflow-hidden">
-      <% if child.profile_photo.attached? %>
-        <%= image_tag child.profile_photo.variant(:thumbnail), class: "w-full h-full object-cover" %>
-      <% else %>
-        <%= lucide_icon "smile", class: "w-8 h-8 text-warm-gray-400" %>
+  <%= render Sketch::CardComponent.new(variant: :default, padding: :md, hoverable: true, clickable: true) do %>
+    <div class="flex items-center gap-4">
+      <!-- 프로필 영역 -->
+      <%= render Sketch::AvatarComponent.new(size: :lg, border: true) do %>
+        <% if child.profile_photo.attached? %>
+          <%= image_tag child.profile_photo.variant(:thumbnail), class: "w-full h-full object-cover" %>
+        <% else %>
+          <%= lucide_icon "smile", class: "w-8 h-8 text-sketch-ink" %>
+        <% end %>
       <% end %>
-    </div>
 
-    <!-- 정보 -->
-    <div class="flex-1">
-      <p class="font-semibold text-warm-gray-800"><%= child.name %></p>
-      <p class="text-sm text-warm-gray-500">
-        <%= child.birthdate.strftime("%Y.%m.%d") %> (D+<%= child.days_since_birth %>)
-      </p>
-      <p class="text-xs text-warm-gray-400">사진 <%= child.photos.count %>장</p>
-    </div>
+      <!-- 정보 -->
+      <div class="flex-1">
+        <p class="font-sketch font-semibold text-sketch-ink"><%= child.name %></p>
+        <p class="text-sm font-hand text-sketch-gray">
+          <%= child.birthdate.strftime("%Y.%m.%d") %> (D+<%= child.days_since_birth %>)
+        </p>
+        <p class="text-xs font-hand text-sketch-gray">사진 <%= child.photos.count %>장</p>
+      </div>
 
-    <!-- 화살표 -->
-    <%= lucide_icon "chevron-right", class: "w-5 h-5 text-warm-gray-400" %>
-  </div>
+      <!-- 화살표 -->
+      <%= lucide_icon "chevron-right", class: "w-5 h-5 text-sketch-gray" %>
+    </div>
+  <% end %>
 <% end %>

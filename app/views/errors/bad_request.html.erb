@@ -1,7 +1,9 @@
-<% content_for(:title) { "잘못된 요청 - Moabom" } %>
+<%# Frame0 Sketch Design System - 400 Error %>
+<% content_for(:title) { "잘못된 요청 - 모아봄" } %>
 
-<div class="flex flex-col items-center justify-center min-h-[50vh] text-center">
-  <h1 class="text-4xl font-bold text-gray-800 mb-4">잘못된 요청</h1>
-  <p class="text-gray-600 mb-8">요청을 처리할 수 없습니다. 다시 시도해주세요.</p>
-  <%= link_to "홈으로 돌아가기", root_path, class: "px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600" %>
-</div>
+<%= render "errors/error_page",
+  icon_bg_class: "bg-amber-100",
+  icon_name: "alert-circle",
+  icon_color_class: "text-amber-500",
+  title: "잘못된 요청이에요",
+  description: "요청을 처리할 수 없어요.<br>다시 시도해주세요." %>

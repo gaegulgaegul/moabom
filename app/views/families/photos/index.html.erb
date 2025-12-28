@@ -1,18 +1,19 @@
-<div class="px-4 py-6">
+<%# Frame0 Sketch Design System - Photo Timeline %>
+<%= render Sketch::ContainerComponent.new(padding: :md, variant: :paper) do %>
   <!-- 헤더 -->
-  <h1 class="text-xl font-bold text-warm-gray-800 mb-4">사진 타임라인</h1>
+  <h1 class="text-xl font-sketch font-bold text-sketch-ink mb-4">사진 타임라인</h1>
 
   <!-- 필터 탭 -->
   <div class="flex gap-2 mb-6 overflow-x-auto scrollbar-hide -mx-4 px-4">
     <%= link_to family_photos_path(@family),
-        class: "shrink-0 px-4 py-2 rounded-full text-sm font-medium
-                #{params[:child_id].blank? ? 'bg-primary-500 text-white' : 'bg-cream-100 text-warm-gray-600'}" do %>
+        class: "shrink-0 px-4 py-2 rounded-xl border-2 text-sm font-sketch font-medium transition-colors
+                #{params[:child_id].blank? ? 'bg-sketch-ink text-sketch-paper border-sketch-ink' : 'bg-sketch-cream text-sketch-gray border-sketch-gray'}" do %>
       전체
     <% end %>
     <% @family.children.each do |child| %>
       <%= link_to family_photos_path(@family, child_id: child.id),
-          class: "shrink-0 px-4 py-2 rounded-full text-sm font-medium
-                  #{params[:child_id].to_s == child.id.to_s ? 'bg-primary-500 text-white' : 'bg-cream-100 text-warm-gray-600'}" do %>
+          class: "shrink-0 px-4 py-2 rounded-xl border-2 text-sm font-sketch font-medium transition-colors
+                  #{params[:child_id].to_s == child.id.to_s ? 'bg-sketch-ink text-sketch-paper border-sketch-ink' : 'bg-sketch-cream text-sketch-gray border-sketch-gray'}" do %>
         <%= child.name %>
       <% end %>
     <% end %>
@@ -22,22 +23,24 @@
     <!-- 월별 그룹 -->
     <% @photos.group_by { |p| p.taken_at.strftime("%Y년 %m월") }.each do |month, photos| %>
       <section class="mb-8">
-        <h2 class="text-sm font-semibold text-warm-gray-500 mb-3"><%= month %></h2>
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-sm font-sketch font-semibold text-sketch-gray"><%= month %></h2>
+          <%= render Sketch::BadgeComponent.new(variant: :secondary, size: :sm) do %>
+            <%= photos.count %>장
+          <% end %>
+        </div>
         <%= render "families/photos/photo_grid", photos: photos, family: @family %>
       </section>
     <% end %>
   <% else %>
     <!-- 빈 상태 -->
-    <div class="empty-state">
-      <div class="w-20 h-20 bg-cream-100 rounded-full flex items-center justify-center mb-4">
-        <%= lucide_icon "image", class: "w-10 h-10 text-warm-gray-400" %>
-      </div>
-      <h3 class="text-lg font-medium text-warm-gray-800 mb-2">아직 사진이 없어요</h3>
-      <p class="text-warm-gray-500 mb-6">소중한 순간을 가족과 공유해보세요</p>
-      <%= link_to new_family_photo_path(@family), class: "btn-primary" do %>
-        <%= lucide_icon "plus", class: "w-5 h-5 mr-2" %>
-        첫 사진 업로드
-      <% end %>
-    </div>
+    <%= render Sketch::EmptyStateComponent.new(
+      icon: "image",
+      title: "아직 사진이 없어요",
+      description: "소중한 순간을 가족과 공유해보세요",
+      action_text: "첫 사진 업로드",
+      action_href: new_family_photo_path(@family),
+      size: :md
+    ) %>
   <% end %>
-</div>
+<% end %>

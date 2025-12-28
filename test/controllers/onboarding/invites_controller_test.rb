@@ -75,7 +75,7 @@ module Onboarding
       delete logout_path
       get onboarding_invite_path
 
-      assert_redirected_to root_path
+      assert_redirected_to login_path
     end
 
     test "should redirect when user has no family" do
@@ -110,7 +110,7 @@ module Onboarding
 
       assert_redirected_to root_path
       follow_redirect!
-      assert_select ".alert-success", text: /온보딩이 완료되었습니다/
+      assert_select ".sketch-alert", text: /온보딩이 완료되었습니다/
     end
   end
 end

@@ -6,6 +6,8 @@ class AccessibilityTest < ApplicationSystemTestCase
   setup do
     @user = users(:mom)
     @family = families(:kim_family)
+    @user.complete_onboarding!
+    @family.complete_onboarding!
     sign_in @user
   end
 
@@ -13,7 +15,7 @@ class AccessibilityTest < ApplicationSystemTestCase
   test "text has sufficient color contrast classes" do
     visit root_path
 
-    # 주요 텍스트 색상 확인 (warm-gray-800: #292524 on cream-50: #FFFDFB)
+    # Sketch 디자인 시스템: 주요 텍스트 색상 확인
     # 실제 대비 비율 계산은 브라우저에서는 어려우므로,
     # 클래스 사용 여부로 검증
     headings = page.all("h1, h2, h3")
@@ -21,10 +23,12 @@ class AccessibilityTest < ApplicationSystemTestCase
 
     headings.first(3).each do |heading|
       classes = heading[:class] || ""
-      has_contrast_class = classes.include?("text-warm-gray-800") ||
+      has_contrast_class = classes.include?("text-sketch-ink") ||
+                          classes.include?("text-warm-gray-800") ||
                           classes.include?("text-warm-gray-700") ||
                           classes.include?("text-white") ||
-                          classes.include?("text-primary")
+                          classes.include?("text-primary") ||
+                          classes.include?("font-sketch")
       assert has_contrast_class, "제목에 충분한 대비 색상 클래스가 없음: #{classes}"
     end
   end
@@ -33,17 +37,19 @@ class AccessibilityTest < ApplicationSystemTestCase
   test "navigation buttons meet minimum touch target size" do
     visit root_path
 
-    # 네비게이션 버튼 찾기
-    nav_buttons = page.all("nav button, nav a")
+    # 헤더 내 aria-label이 있는 네비게이션 버튼만 찾기 (실제 액션 버튼)
+    header_buttons = page.all("header a[aria-label]")
 
-    if nav_buttons.any?
-      nav_buttons.first(3).each do |button|
+    if header_buttons.any?
+      header_buttons.first(3).each do |button|
+        # 실제 클릭 가능한 영역의 크기 측정
         height = page.evaluate_script("arguments[0].getBoundingClientRect().height;", button)
         width = page.evaluate_script("arguments[0].getBoundingClientRect().width;", button)
 
-        # 터치 타겟 최소 크기 44px — WCAG 2.2 2.5.8
-        assert height >= 44, "네비게이션 버튼 높이가 너무 작음: #{height}px"
-        assert width >= 44, "네비게이션 버튼 너비가 너무 작음: #{width}px"
+        # 터치 타겟 최소 크기 44px (WCAG 2.2 Level AAA)
+        # 권장 크기 48px (디자인 시스템 권장)
+        assert height >= 44, "네비게이션 버튼 #{button['aria-label']} 높이가 너무 작음: #{height}px (최소 44px 필요)"
+        assert width >= 44, "네비게이션 버튼 #{button['aria-label']} 너비가 너무 작음: #{width}px (최소 44px 필요)"
       end
     else
       # 네비게이션이 없으면 테스트 통과

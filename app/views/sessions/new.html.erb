@@ -1,0 +1,55 @@
+<%# 로그인 화면 - Sketch 디자인 %>
+<div class="min-h-screen bg-sketch-paper flex flex-col">
+  <!-- 상단 여백 -->
+  <div class="flex-1 flex flex-col items-center justify-center px-6 pt-20">
+    <!-- 로고/일러스트 영역 -->
+    <%= render Sketch::AvatarComponent.new(size: :xl, border: true, class: "mb-8") do %>
+      <span class="text-6xl">🌸</span>
+    <% end %>
+
+    <!-- 타이틀 -->
+    <h1 class="text-2xl font-sketch font-bold text-sketch-ink text-center mb-2">
+      우리 아이의 소중한 순간,
+    </h1>
+    <p class="text-lg font-hand text-sketch-gray text-center mb-12">
+      가족과 함께 모아봄
+    </p>
+  </div>
+
+  <!-- 로그인 버튼 영역 -->
+  <div class="px-6 pb-12 space-y-3">
+    <!-- 카카오 로그인 -->
+    <%= button_to "/auth/kakao",
+        method: :post,
+        class: "w-full inline-flex items-center justify-center gap-2 py-3 px-6 font-sketch font-medium border-2 rounded-sketch-md bg-[#FEE500] text-[#3C1E1E] border-[#FEE500] hover:bg-[#FDD800] focus:outline-none focus:ring-2 focus:ring-sketch-ink focus:ring-offset-2 active:translate-y-px" do %>
+      💬 카카오로 계속하기
+    <% end %>
+
+    <!-- Apple 로그인 (준비 중) -->
+    <button disabled
+            class="w-full inline-flex items-center justify-center gap-2 py-3 px-6 font-sketch font-medium border-2 rounded-sketch-md bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed">
+       Apple로 계속하기 (준비 중)
+    </button>
+
+    <!-- Google 로그인 (준비 중) -->
+    <button disabled
+            class="w-full inline-flex items-center justify-center gap-2 py-3 px-6 font-sketch font-medium border-2 rounded-sketch-md bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed">
+      Google로 계속하기 (준비 중)
+    </button>
+
+    <!-- 약관 -->
+    <p class="text-xs font-hand text-sketch-gray text-center pt-4">
+      로그인 시 <a href="#" class="underline">이용약관</a> 및
+      <a href="#" class="underline">개인정보 처리방침</a>에 동의하게 됩니다.
+    </p>
+
+    <% if Rails.env.development? %>
+      <%= render Sketch::DividerComponent.new(class: "my-4") %>
+      <%= button_to dev_login_path,
+          method: :post,
+          class: "w-full inline-flex items-center justify-center gap-2 py-3 px-6 font-sketch font-medium border-2 rounded-sketch-md bg-purple-600 border-purple-600 text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2" do %>
+        🚀 개발 모드로 빠른 진입
+      <% end %>
+    <% end %>
+  </div>
+</div>

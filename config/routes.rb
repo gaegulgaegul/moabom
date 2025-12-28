@@ -6,12 +6,11 @@ Rails.application.routes.draw do
   get "auth/failure", to: "oauth_callbacks#failure"
 
   # Sessions
+  get "login", to: "sessions#new", as: :login
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
   post "dev_login", to: "sessions#dev_login" if Rails.env.development?
 
-  # Dashboard (protected)
-  get "dashboard", to: "dashboard#index"
 
   # Families
   resources :families, only: [ :show, :update ] do
@@ -56,6 +55,7 @@ Rails.application.routes.draw do
   # Notifications
   resources :notifications, only: [ :index, :update ]
 
+
   # Sketch Design System Demo (development only)
   get "sketch-demo", to: "sketch_demo#index" if Rails.env.development?
 
@@ -66,8 +66,8 @@ Rails.application.routes.draw do
   match "/404", to: "errors#not_found", via: :all
   match "/500", to: "errors#internal_server_error", via: :all
 
-  # Root
-  root "home#index"
+  # Root (새 대시보드)
+  root "home2#index"
 
   # Catch-all for 404 (must be last)
   match "*path", to: "errors#not_found", via: :all

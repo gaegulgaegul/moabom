@@ -384,6 +384,37 @@
 }
 
 /* ============================================
+   16. sketch-rough-line - Hand-drawn rough line/border
+   ============================================ */
+.sketch-rough-line {
+  position: relative;
+  border: 2px solid var(--sketch-ink, #1A1A1A);
+  border-radius: 2px;
+}
+
+.sketch-rough-line::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: 2px solid var(--sketch-ink, #1A1A1A);
+  border-radius: 3px;
+  opacity: 0.3;
+  transform: rotate(-0.5deg);
+  pointer-events: none;
+}
+
+.sketch-rough-line::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--sketch-ink, #1A1A1A);
+  border-radius: 2px;
+  opacity: 0.2;
+  transform: rotate(0.5deg);
+  pointer-events: none;
+}
+
+/* ============================================
    Additional Utility Helpers
    ============================================ */
 

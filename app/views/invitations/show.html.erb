@@ -1,15 +1,32 @@
-<div class="invitation-page">
-  <h1><%= @invitation.family.name %> 가족에 초대되었습니다</h1>
+<%# Frame0 Sketch Design System - Invitation Accept %>
+<%= render Sketch::ContainerComponent.new(padding: :lg, variant: :paper, class: "min-h-screen flex flex-col items-center justify-center") do %>
+  <div class="max-w-md w-full text-center">
+    <%= render Sketch::AvatarComponent.new(size: :xl, initials: "👨‍👩‍👧‍👦", border: true, class: "mx-auto mb-6") %>
 
-  <p>
-    <strong><%= @invitation.inviter.nickname %></strong>님이
-    <%= @invitation.family.name %> 가족에 초대했습니다.
-  </p>
+    <h1 class="text-2xl font-sketch font-bold text-sketch-ink mb-2">
+      <%= @invitation.family.name %> 가족에 초대되었습니다
+    </h1>
 
-  <% if logged_in? %>
-    <%= button_to "가족에 참여하기", accept_invitation_path(@invitation.token), method: :post, class: "btn btn-primary" %>
-  <% else %>
-    <p>가족에 참여하려면 먼저 로그인해주세요.</p>
-    <%= button_to "로그인 후 참여하기", accept_invitation_path(@invitation.token), method: :post, class: "btn btn-primary" %>
-  <% end %>
-</div>
+    <p class="font-hand text-sketch-gray mb-8">
+      <strong class="text-sketch-ink"><%= @invitation.inviter.nickname %></strong>님이
+      <%= @invitation.family.name %> 가족에 초대했습니다.
+    </p>
+
+    <% if logged_in? %>
+      <%= button_to accept_invitation_path(@invitation.token), method: :post, class: "w-full" do %>
+        <%= render Sketch::ButtonComponent.new(variant: :primary, full_width: true, size: :lg, type: :submit) do %>
+          가족에 참여하기
+        <% end %>
+      <% end %>
+    <% else %>
+      <%= render Sketch::AlertComponent.new(variant: :info, dismissible: false, class: "mb-4") do %>
+        가족에 참여하려면 먼저 로그인해주세요.
+      <% end %>
+      <%= button_to accept_invitation_path(@invitation.token), method: :post, class: "w-full" do %>
+        <%= render Sketch::ButtonComponent.new(variant: :primary, full_width: true, size: :lg, type: :submit) do %>
+          로그인 후 참여하기
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

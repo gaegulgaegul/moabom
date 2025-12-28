@@ -36,8 +36,8 @@ module Settings
       }
 
       assert_response :unprocessable_entity
-      # 에러 메시지 확인
-      assert_select "div.alert-error"
+      # 에러 메시지 확인 - Sketch AlertComponent
+      assert_select ".sketch-alert"
       assert_select "p", /닉네임/
     end
 
@@ -45,7 +45,7 @@ module Settings
       delete logout_path
       get settings_profile_path
 
-      assert_redirected_to root_path
+      assert_redirected_to login_path
       assert_equal "로그인이 필요합니다.", flash[:alert]
     end
   end

@@ -1,31 +1,31 @@
-<%# 설정 아이템 partial
-    locals:
-      - icon: heroicon 이름 (예: "user-circle")
-      - title: 아이템 제목 (예: "프로필 설정")
-      - url: 링크 URL (선택사항, 없으면 div)
-      - value: 오른쪽에 표시할 값 (선택사항)
+<%# Frame0 Sketch Design System - Setting Item %>
+<%# locals:
+    - icon: lucide icon 이름 (예: "user-circle")
+    - title: 아이템 제목 (예: "프로필 설정")
+    - url: 링크 URL (선택사항, 없으면 div)
+    - value: 오른쪽에 표시할 값 (선택사항)
 %>
 
 <% if local_assigns[:url].present? %>
-  <%= link_to url, class: "flex items-center justify-between py-4 tap-highlight-none" do %>
+  <%= link_to url, class: "flex items-center justify-between py-4 tap-highlight-none hover:bg-sketch-cream transition-colors px-4 -mx-4" do %>
     <div class="flex items-center gap-3">
-      <%= lucide_icon icon, class: "w-6 h-6 text-warm-gray-500" %>
-      <span class="text-warm-gray-800"><%= title %></span>
+      <%= lucide_icon icon, class: "w-6 h-6 text-sketch-gray" %>
+      <span class="font-hand text-sketch-ink"><%= title %></span>
     </div>
     <% if local_assigns[:value].present? %>
-      <span class="text-sm text-warm-gray-400"><%= value %></span>
+      <span class="text-sm font-hand text-sketch-gray"><%= value %></span>
     <% else %>
-      <%= lucide_icon "chevron-right", class: "w-5 h-5 text-warm-gray-400" %>
+      <%= lucide_icon "chevron-right", class: "w-5 h-5 text-sketch-gray" %>
     <% end %>
   <% end %>
 <% else %>
   <div class="flex items-center justify-between py-4">
     <div class="flex items-center gap-3">
-      <%= lucide_icon icon, class: "w-6 h-6 text-warm-gray-500" %>
-      <span class="text-warm-gray-800"><%= title %></span>
+      <%= lucide_icon icon, class: "w-6 h-6 text-sketch-gray" %>
+      <span class="font-hand text-sketch-ink"><%= title %></span>
     </div>
     <% if local_assigns[:value].present? %>
-      <span class="text-sm text-warm-gray-400"><%= value %></span>
+      <span class="text-sm font-hand text-sketch-gray"><%= value %></span>
     <% elsif block_given? %>
       <%= yield %>
     <% end %>

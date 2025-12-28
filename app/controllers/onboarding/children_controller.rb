@@ -16,6 +16,9 @@ module Onboarding
 
         if @child.valid?
           @child.save!
+          # 아이 추가 시 가족 온보딩 자동 완료 처리
+          @family.complete_onboarding!
+          current_user.complete_onboarding! unless current_user.onboarding_completed?
           redirect_to onboarding_invite_path
         else
           raise ActiveRecord::Rollback

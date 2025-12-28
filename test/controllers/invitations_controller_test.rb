@@ -40,7 +40,7 @@ class InvitationsControllerTest < ActionDispatch::IntegrationTest
       post accept_invitation_path(@active_invite.token)
     end
 
-    assert_redirected_to dashboard_path
+    assert_redirected_to root_path
     assert_equal "가족에 참여했습니다!", flash[:notice]
 
     # 온보딩 완료 확인
@@ -60,7 +60,7 @@ class InvitationsControllerTest < ActionDispatch::IntegrationTest
       post accept_invitation_path(@active_invite.token)
     end
 
-    assert_redirected_to dashboard_path
+    assert_redirected_to root_path
     assert_equal "이미 가족 구성원입니다.", flash[:alert]
   end
 
