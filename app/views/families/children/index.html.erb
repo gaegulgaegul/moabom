@@ -1,5 +1,6 @@
-<div class="px-4 py-6">
-  <h1 class="text-xl font-bold text-warm-gray-800 mb-6">우리 아이들</h1>
+<%# Frame0 Sketch Design System - Children List %>
+<%= render Sketch::ContainerComponent.new(padding: :md, variant: :paper) do %>
+  <h1 class="text-xl font-sketch font-bold text-sketch-ink mb-6">우리 아이들</h1>
 
   <% if @children.any? %>
     <div class="space-y-4 mb-6">
@@ -10,20 +11,22 @@
       <% end %>
     </div>
   <% else %>
-    <div class="empty-state mb-6">
-      <div class="w-16 h-16 bg-cream-100 rounded-full flex items-center justify-center mb-4">
-        <%= lucide_icon "smile", class: "w-8 h-8 text-warm-gray-400" %>
-      </div>
-      <h3 class="text-lg font-medium text-warm-gray-800 mb-2">등록된 아이가 없어요</h3>
-      <p class="text-warm-gray-500">아이를 등록하고 성장 기록을 시작하세요</p>
-    </div>
+    <%= render Sketch::EmptyStateComponent.new(
+      icon: "smile",
+      title: "등록된 아이가 없어요",
+      description: "아이를 등록하고 성장 기록을 시작하세요",
+      size: :sm,
+      class: "mb-6"
+    ) %>
   <% end %>
 
   <!-- 아이 추가 버튼 -->
   <% if can_manage_members? %>
-    <%= link_to new_family_child_path(@family), class: "btn-outline w-full" do %>
-      <%= lucide_icon "plus", class: "w-5 h-5 mr-2" %>
-      아이 추가하기
+    <%= link_to new_family_child_path(@family), class: "block" do %>
+      <%= render Sketch::ButtonComponent.new(variant: :secondary, full_width: true) do %>
+        <%= lucide_icon "plus", class: "w-5 h-5 mr-2 inline" %>
+        아이 추가하기
+      <% end %>
     <% end %>
   <% end %>
-</div>
+<% end %>

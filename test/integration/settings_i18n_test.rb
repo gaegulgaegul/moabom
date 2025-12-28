@@ -33,7 +33,7 @@ class SettingsI18nTest < ActionDispatch::IntegrationTest
     get settings_profile_path
 
     assert_response :success
-    assert_select "input[type=submit][value=?]", I18n.t("helpers.submit.save")
+    assert_select "button[type=submit]", I18n.t("helpers.submit.save")
   end
 
   test "notifications page title should use i18n" do

@@ -1,17 +1,18 @@
 <% unless logged_in? %>
-  <div class="min-h-screen bg-gradient-warm flex flex-col">
+  <%# 로그인 화면 - Sketch 디자인 %>
+  <div class="min-h-screen bg-sketch-paper flex flex-col">
     <!-- 상단 여백 -->
     <div class="flex-1 flex flex-col items-center justify-center px-6 pt-20">
       <!-- 로고/일러스트 영역 -->
-      <div class="w-32 h-32 mb-8 bg-primary-100 rounded-full flex items-center justify-center">
+      <%= render Sketch::AvatarComponent.new(size: :xl, border: true, class: "mb-8") do %>
         <span class="text-6xl">🌸</span>
-      </div>
+      <% end %>
 
       <!-- 타이틀 -->
-      <h1 class="text-2xl font-bold text-warm-gray-800 text-center mb-2">
+      <h1 class="text-2xl font-sketch font-bold text-sketch-ink text-center mb-2">
         우리 아이의 소중한 순간,
       </h1>
-      <p class="text-lg text-warm-gray-600 text-center mb-12">
+      <p class="text-lg font-hand text-sketch-gray text-center mb-12">
         가족과 함께 모아봄
       </p>
     </div>
@@ -19,70 +20,77 @@
     <!-- 로그인 버튼 영역 -->
     <div class="px-6 pb-12 space-y-3">
       <!-- Apple 로그인 -->
-      <a href="#" class="btn-apple">
-        Apple로 계속하기
-      </a>
+      <%= render Sketch::ButtonComponent.new(variant: :secondary, full_width: true, size: :lg, class: "bg-black text-white border-black hover:bg-gray-800") do %>
+         Apple로 계속하기
+      <% end %>
 
       <!-- 카카오 로그인 -->
-      <%= link_to "/auth/kakao", class: "btn-kakao" do %>
-        💬 카카오로 계속하기
+      <%= link_to "/auth/kakao", class: "block" do %>
+        <%= render Sketch::ButtonComponent.new(variant: :secondary, full_width: true, size: :lg, class: "bg-[#FEE500] text-[#3C1E1E] border-[#FEE500] hover:bg-[#FDD800]") do %>
+          💬 카카오로 계속하기
+        <% end %>
       <% end %>
 
       <!-- Google 로그인 -->
-      <a href="#" class="btn-google">
+      <%= render Sketch::ButtonComponent.new(variant: :secondary, full_width: true, size: :lg) do %>
         Google로 계속하기
-      </a>
+      <% end %>
 
       <!-- 약관 -->
-      <p class="text-xs text-warm-gray-400 text-center pt-4">
+      <p class="text-xs font-hand text-sketch-gray text-center pt-4">
         로그인 시 <a href="#" class="underline">이용약관</a> 및
         <a href="#" class="underline">개인정보 처리방침</a>에 동의하게 됩니다.
       </p>
 
       <% if Rails.env.development? %>
-        <div class="pt-4 border-t border-warm-gray-200">
-          <%= button_to "🚀 개발 모드로 빠른 진입", dev_login_path, method: :post,
-              class: "w-full bg-purple-600 text-white py-3 rounded-2xl font-medium hover:bg-purple-700" %>
-        </div>
+        <%= render Sketch::DividerComponent.new(class: "my-4") %>
+        <%= button_to dev_login_path, method: :post, class: "w-full" do %>
+          <%= render Sketch::ButtonComponent.new(variant: :primary, full_width: true, size: :lg, class: "bg-purple-600 border-purple-600 hover:bg-purple-700") do %>
+            🚀 개발 모드로 빠른 진입
+          <% end %>
+        <% end %>
       <% end %>
     </div>
   </div>
 <% else %>
-  <div class="px-4 py-6 space-y-6">
-    <!-- 인사 -->
-    <div>
-      <h1 class="text-xl font-bold text-warm-gray-800">
-        안녕하세요, <%= current_user.nickname %>님! 👋
-      </h1>
-    </div>
+  <%# 로그인 후 홈 화면 %>
+  <%= render Sketch::ContainerComponent.new(variant: :paper, padding: :md) do %>
+    <div class="space-y-6">
+      <!-- 인사 -->
+      <div>
+        <h1 class="text-xl font-sketch font-bold text-sketch-ink">
+          안녕하세요, <%= current_user.nickname %>님! 👋
+        </h1>
+      </div>
 
-    <% if @family.present? %>
-      <%= render "child_card", child: @child %>
-      <%= render "quick_menu", family: @family %>
+      <% if @family.present? %>
+        <%= render "child_card", child: @child %>
+        <%= render "quick_menu", family: @family %>
 
-      <!-- 타임라인 (무한 스크롤) -->
-      <div data-controller="infinite-scroll"
-           data-infinite-scroll-url-value="<%= root_path %>"
-           data-infinite-scroll-has-more-value="<%= @has_more %>">
+        <!-- 타임라인 (무한 스크롤) -->
+        <div data-controller="infinite-scroll"
+             data-infinite-scroll-url-value="<%= root_path %>"
+             data-infinite-scroll-has-more-value="<%= @has_more %>">
 
-        <%= render "has_more_flag", has_more: @has_more %>
+          <%= render "has_more_flag", has_more: @has_more %>
 
-        <div id="timeline-entries" data-infinite-scroll-target="entries">
-          <% if @timeline.present? %>
-            <%= render "timeline" %>
-          <% else %>
-            <%= render "empty_state" %>
+          <div id="timeline-entries" data-infinite-scroll-target="entries">
+            <% if @timeline.present? %>
+              <%= render "timeline" %>
+            <% else %>
+              <%= render "empty_state" %>
+            <% end %>
+          </div>
+
+          <% if @has_more %>
+            <div data-infinite-scroll-target="pagination"
+                 class="h-20 flex items-center justify-center">
+              <div class="animate-spin w-6 h-6 border-2 border-sketch-ink
+                          border-t-transparent rounded-full"></div>
+            </div>
           <% end %>
         </div>
-
-        <% if @has_more %>
-          <div data-infinite-scroll-target="pagination"
-               class="h-20 flex items-center justify-center">
-            <div class="animate-spin w-6 h-6 border-2 border-primary-500
-                        border-t-transparent rounded-full"></div>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>

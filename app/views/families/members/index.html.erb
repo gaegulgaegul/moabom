@@ -1,8 +1,11 @@
-<div class="px-4 py-6">
-  <h1 class="text-xl font-bold text-warm-gray-800 mb-6">가족 구성원</h1>
+<%# Frame0 Sketch Design System - Family Members %>
+<%= render Sketch::ContainerComponent.new(padding: :md, variant: :paper) do %>
+  <h1 class="text-xl font-sketch font-bold text-sketch-ink mb-6">가족 구성원</h1>
 
   <!-- 구성원 목록 -->
-  <div class="card-solid divide-y divide-warm-gray-100 mb-6">
-    <%= render partial: "families/members/member", collection: @memberships, as: :membership %>
-  </div>
-</div>
+  <%= render Sketch::CardComponent.new(variant: :default, padding: :none) do %>
+    <div class="divide-y-2 divide-sketch-cream">
+      <%= render partial: "families/members/member", collection: @memberships, as: :membership %>
+    </div>
+  <% end %>
+<% end %>

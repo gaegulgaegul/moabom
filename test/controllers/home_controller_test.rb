@@ -35,7 +35,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
 
     get root_path
     assert_response :success
-    assert_select ".card-glass" do
+    assert_select "[class*='bg-sketch-paper']" do
       assert_select "p", text: /#{child.name}의 D\+/
     end
   end
@@ -183,7 +183,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get root_path
 
     assert_response :success
-    assert_select ".empty-state", text: /아직 사진이 없어요/
+    assert_select ".sketch-empty-state", text: /아직 사진이 없어요/
   end
 
   private

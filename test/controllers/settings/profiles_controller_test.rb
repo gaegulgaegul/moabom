@@ -36,8 +36,8 @@ module Settings
       }
 
       assert_response :unprocessable_entity
-      # 에러 메시지 확인
-      assert_select "div.alert-error"
+      # 에러 메시지 확인 - Sketch AlertComponent
+      assert_select ".sketch-alert"
       assert_select "p", /닉네임/
     end
 

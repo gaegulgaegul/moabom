@@ -58,7 +58,7 @@ module Onboarding
       }
 
       assert_response :unprocessable_entity
-      assert_select ".alert-error", /이름/
+      assert_select ".sketch-alert", /이름/
     end
 
     test "should show error when birthdate is blank" do
@@ -71,7 +71,7 @@ module Onboarding
       }
 
       assert_response :unprocessable_entity
-      assert_select ".alert-error", /생년월일/
+      assert_select ".sketch-alert", /생년월일/
     end
 
     test "should require authentication" do

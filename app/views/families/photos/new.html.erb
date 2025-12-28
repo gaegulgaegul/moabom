@@ -1,11 +1,12 @@
-<div class="min-h-screen bg-cream-50">
+<%# Frame0 Sketch Design System - Photo Upload %>
+<div class="min-h-screen bg-sketch-paper">
   <!-- 헤더 -->
-  <header class="flex items-center justify-between px-4 h-14 bg-white border-b border-warm-gray-100">
-    <%= link_to family_photos_path(@family), class: "text-warm-gray-600" do %>
+  <header class="flex items-center justify-between px-4 h-14 bg-sketch-paper border-b-2 border-sketch-ink">
+    <%= link_to family_photos_path(@family), class: "font-hand text-sketch-gray hover:text-sketch-ink" do %>
       취소
     <% end %>
-    <span class="font-semibold text-warm-gray-800">사진 업로드</span>
-    <button form="photo_form" type="submit" class="text-primary-500 font-semibold">완료</button>
+    <span class="font-sketch font-semibold text-sketch-ink">사진 업로드</span>
+    <button form="photo_form" type="submit" class="font-sketch font-semibold text-sketch-ink hover:underline">완료</button>
   </header>
 
   <%= render partial: "form", locals: { photo: @photo } %>

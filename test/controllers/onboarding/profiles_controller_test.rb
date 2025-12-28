@@ -33,7 +33,7 @@ module Onboarding
       }
 
       assert_response :unprocessable_entity
-      assert_select ".alert-error", /닉네임/
+      assert_select ".sketch-alert", /닉네임/
     end
 
     test "should require authentication" do

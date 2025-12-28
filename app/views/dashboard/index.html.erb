@@ -1,2 +1,5 @@
-<h1>대시보드</h1>
-<p>환영합니다, <%= current_user.nickname %>님!</p>
+<%# Frame0 Sketch Design System - Dashboard %>
+<%= render Sketch::ContainerComponent.new(padding: :lg, variant: :paper) do %>
+  <h1 class="text-2xl font-sketch font-bold text-sketch-ink mb-2">대시보드</h1>
+  <p class="font-hand text-sketch-gray">환영합니다, <%= current_user.nickname %>님!</p>
+<% end %>

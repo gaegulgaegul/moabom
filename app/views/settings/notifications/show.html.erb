@@ -1,60 +1,63 @@
-<div class="px-4 py-6 space-y-6">
+<%# Frame0 Sketch Design System - Notification Settings %>
+<%= render Sketch::ContainerComponent.new(padding: :md, variant: :paper) do %>
   <!-- 헤더 -->
-  <div class="flex items-center gap-4">
-    <button onclick="history.back()" class="p-2 -ml-2">
-      <%= lucide_icon "arrow-left", class: "w-6 h-6 text-warm-gray-700" %>
+  <div class="flex items-center gap-4 mb-6">
+    <button onclick="history.back()" class="p-2 -ml-2 hover:bg-sketch-cream rounded-full transition-colors">
+      <%= lucide_icon "arrow-left", class: "w-6 h-6 text-sketch-ink" %>
     </button>
-    <h1 class="text-xl font-bold text-warm-gray-800"><%= t('.title') %></h1>
+    <h1 class="text-xl font-sketch font-bold text-sketch-ink"><%= t('.title') %></h1>
   </div>
 
   <!-- 알림 설정 목록 -->
-  <div class="card-solid divide-y divide-warm-gray-100">
-    <div class="flex items-center justify-between py-4">
-      <div>
-        <label class="text-warm-gray-800 font-medium"><%= t('.notify_on_new_photo') %></label>
-        <p class="text-sm text-warm-gray-500"><%= t('.notify_on_new_photo_help') %></p>
+  <%= render Sketch::CardComponent.new(variant: :default, padding: :md) do %>
+    <div class="divide-y-2 divide-dashed divide-sketch-cream">
+      <div class="flex items-center justify-between py-4">
+        <div>
+          <label class="font-sketch font-medium text-sketch-ink"><%= t('.notify_on_new_photo') %></label>
+          <p class="text-sm font-hand text-sketch-gray"><%= t('.notify_on_new_photo_help') %></p>
+        </div>
+        <button class="w-12 h-7 bg-sketch-ink rounded-full relative transition-colors border-2 border-sketch-ink"
+                data-controller="toggle" data-toggle-active="true">
+          <span class="absolute right-1 top-0.5 w-5 h-5 bg-sketch-paper rounded-full shadow transition-transform"
+                data-toggle-target="knob"></span>
+        </button>
       </div>
-      <button class="w-12 h-7 bg-primary-500 rounded-full relative transition-colors"
-              data-controller="toggle" data-toggle-active="true">
-        <span class="absolute right-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
-              data-toggle-target="knob"></span>
-      </button>
-    </div>
 
-    <div class="flex items-center justify-between py-4">
-      <div>
-        <label class="text-warm-gray-800 font-medium"><%= t('.notify_on_comment') %></label>
-        <p class="text-sm text-warm-gray-500"><%= t('.notify_on_comment_help') %></p>
+      <div class="flex items-center justify-between py-4">
+        <div>
+          <label class="font-sketch font-medium text-sketch-ink"><%= t('.notify_on_comment') %></label>
+          <p class="text-sm font-hand text-sketch-gray"><%= t('.notify_on_comment_help') %></p>
+        </div>
+        <button class="w-12 h-7 bg-sketch-ink rounded-full relative transition-colors border-2 border-sketch-ink"
+                data-controller="toggle" data-toggle-active="true">
+          <span class="absolute right-1 top-0.5 w-5 h-5 bg-sketch-paper rounded-full shadow transition-transform"
+                data-toggle-target="knob"></span>
+        </button>
       </div>
-      <button class="w-12 h-7 bg-primary-500 rounded-full relative transition-colors"
-              data-controller="toggle" data-toggle-active="true">
-        <span class="absolute right-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
-              data-toggle-target="knob"></span>
-      </button>
-    </div>
 
-    <div class="flex items-center justify-between py-4">
-      <div>
-        <label class="text-warm-gray-800 font-medium"><%= t('.notify_on_reaction') %></label>
-        <p class="text-sm text-warm-gray-500"><%= t('.notify_on_reaction_help') %></p>
+      <div class="flex items-center justify-between py-4">
+        <div>
+          <label class="font-sketch font-medium text-sketch-ink"><%= t('.notify_on_reaction') %></label>
+          <p class="text-sm font-hand text-sketch-gray"><%= t('.notify_on_reaction_help') %></p>
+        </div>
+        <button class="w-12 h-7 bg-sketch-cream rounded-full relative transition-colors border-2 border-sketch-gray"
+                data-controller="toggle">
+          <span class="absolute left-1 top-0.5 w-5 h-5 bg-sketch-paper rounded-full shadow transition-transform"
+                data-toggle-target="knob"></span>
+        </button>
       </div>
-      <button class="w-12 h-7 bg-warm-gray-200 rounded-full relative transition-colors"
-              data-controller="toggle">
-        <span class="absolute left-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
-              data-toggle-target="knob"></span>
-      </button>
-    </div>
 
-    <div class="flex items-center justify-between py-4">
-      <div>
-        <label class="text-warm-gray-800 font-medium"><%= t('.notify_on_invite') %></label>
-        <p class="text-sm text-warm-gray-500"><%= t('.notify_on_invite_help') %></p>
+      <div class="flex items-center justify-between py-4">
+        <div>
+          <label class="font-sketch font-medium text-sketch-ink"><%= t('.notify_on_invite') %></label>
+          <p class="text-sm font-hand text-sketch-gray"><%= t('.notify_on_invite_help') %></p>
+        </div>
+        <button class="w-12 h-7 bg-sketch-ink rounded-full relative transition-colors border-2 border-sketch-ink"
+                data-controller="toggle" data-toggle-active="true">
+          <span class="absolute right-1 top-0.5 w-5 h-5 bg-sketch-paper rounded-full shadow transition-transform"
+                data-toggle-target="knob"></span>
+        </button>
       </div>
-      <button class="w-12 h-7 bg-primary-500 rounded-full relative transition-colors"
-              data-controller="toggle" data-toggle-active="true">
-        <span class="absolute right-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
-              data-toggle-target="knob"></span>
-      </button>
     </div>
-  </div>
-</div>
+  <% end %>
+<% end %>

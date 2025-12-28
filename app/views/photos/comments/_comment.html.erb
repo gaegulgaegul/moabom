@@ -1,9 +1,11 @@
+<%# Frame0 Sketch Design System - Comment %>
 <%= turbo_frame_tag dom_id(comment) do %>
-  <div class="comment py-2 border-b">
+  <div class="comment py-3 border-b-2 border-dashed border-sketch-cream">
     <div class="flex items-center gap-2">
-      <span class="font-medium"><%= comment.user.nickname %></span>
-      <span class="text-gray-500 text-sm"><%= l(comment.created_at, format: :short) %></span>
+      <%= render Sketch::AvatarComponent.new(size: :sm, initials: comment.user.nickname.to_s.first, border: false, class: "bg-sketch-cream") %>
+      <span class="font-sketch font-medium text-sketch-ink"><%= comment.user.nickname %></span>
+      <span class="font-hand text-sketch-gray text-sm"><%= l(comment.created_at, format: :short) %></span>
     </div>
-    <p class="mt-1"><%= comment.body %></p>
+    <p class="mt-2 font-hand text-sketch-ink pl-8"><%= comment.body %></p>
   </div>
 <% end %>

@@ -1,35 +1,42 @@
+<%# Frame0 Sketch Design System - Timeline %>
 <div class="space-y-6">
   <% @timeline.each do |group| %>
     <section class="timeline-date">
       <%# 날짜 헤더 %>
-      <div class="flex items-center justify-between px-4 mb-3">
-        <h2 class="text-lg font-semibold text-warm-gray-800">
+      <div class="flex items-center justify-between px-2 mb-3">
+        <h2 class="text-lg font-sketch font-semibold text-sketch-ink">
           <%= group[:date_label] %>
         </h2>
-        <span class="text-sm text-warm-gray-500">
+        <%= render Sketch::BadgeComponent.new(variant: :secondary, size: :sm) do %>
           <%= group[:count] %>장
-        </span>
+        <% end %>
       </div>
 
       <%# 사진 그리드 (3열) %>
-      <div class="photo-grid grid grid-cols-3 gap-0.5">
+      <div class="photo-grid grid grid-cols-3 gap-1">
         <% group[:photos].each do |photo| %>
           <%= link_to family_photo_path(@family, photo),
                       class: "photo-item block aspect-square overflow-hidden
-                              bg-cream-200 hover:opacity-90 transition-opacity" do %>
+                              bg-sketch-cream border-2 border-sketch-gray rounded-lg
+                              hover:opacity-90 hover:shadow-lg transition-all" do %>
             <% if photo.image.attached? && photo.image.variable? %>
               <%= image_tag photo.image.variant(resize_to_limit: [300, 300]),
                             loading: "lazy",
                             alt: photo.caption || "사진",
                             class: "w-full h-full object-cover" %>
             <% else %>
-              <div class="w-full h-full bg-cream-200 flex items-center justify-center">
-                <span class="text-warm-gray-400 text-xs">No image</span>
+              <div class="w-full h-full bg-sketch-cream flex items-center justify-center">
+                <span class="text-sketch-gray text-xs font-hand">No image</span>
               </div>
             <% end %>
           <% end %>
         <% end %>
       </div>
     </section>
+
+    <%# 날짜 섹션 사이 구분선 %>
+    <% unless group == @timeline.last %>
+      <%= render Sketch::DividerComponent.new(variant: :dashed) %>
+    <% end %>
   <% end %>
 </div>

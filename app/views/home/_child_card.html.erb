@@ -1,15 +1,16 @@
+<%# Frame0 Sketch Design System - Child Card %>
 <% if child.present? %>
-  <div class="card-glass">
+  <%= render Sketch::CardComponent.new(variant: :default, padding: :md) do %>
     <div class="flex items-center gap-4">
-      <div class="avatar avatar-lg bg-primary-100">
-        <%= lucide_icon "smile", class: "w-8 h-8 text-primary-500" %>
-      </div>
-      <div>
-        <p class="font-semibold text-warm-gray-800">
+      <%= render Sketch::AvatarComponent.new(size: :lg, border: true) do %>
+        <%= lucide_icon "smile", class: "w-8 h-8 text-sketch-ink" %>
+      <% end %>
+      <div class="flex-1">
+        <p class="font-sketch font-semibold text-sketch-ink">
           <%= child.name %>의 D+<%= child.days_since_birth %>
         </p>
-        <p class="text-sm text-warm-gray-500">오늘도 예쁜 하루 보내세요</p>
+        <p class="text-sm font-hand text-sketch-gray">오늘도 예쁜 하루 보내세요</p>
       </div>
     </div>
-  </div>
+  <% end %>
 <% end %>
