@@ -55,7 +55,7 @@
       <%= render "shared/header" %>
     <% end %>
 
-    <main class="<%= logged_in? ? (show_bottom_tabbar? ? 'pt-14 pb-20' : 'pt-14') : '' %> min-h-screen">
+    <main class="<%= logged_in? ? 'pt-14' : '' %> min-h-screen">
       <% if flash[:notice] %>
         <div class="mx-4 mt-4">
           <%= render Sketch::AlertComponent.new(variant: :success, dismissible: true) do %>
@@ -74,7 +74,5 @@
 
       <%= yield %>
     </main>
-
-    <%= render "shared/tabbar" if show_bottom_tabbar? %>
   </body>
 </html>
