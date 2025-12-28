@@ -71,8 +71,7 @@ class LayoutTest < ApplicationSystemTestCase
 
     # 헤더 내에 알림 링크 확인
     within "header" do
-      assert_selector "a[href='#{notifications_path}']",
-        message: "헤더 내에 알림 링크가 없습니다"
+      assert_selector "a[href='#{notifications_path}']"
     end
   end
 
@@ -94,18 +93,18 @@ class LayoutTest < ApplicationSystemTestCase
   test "카카오 로그인 버튼이 실제 OAuth URL로 연결" do
     visit login_path
 
-    # 카카오 로그인 버튼 찾기
-    kakao_button = find("a[href='/auth/kakao']")
+    # 카카오 로그인 버튼이 존재하는지 확인 (button_to를 사용하므로 form/button)
+    assert_button "💬 카카오로 계속하기"
 
-    # /auth/kakao 경로로 연결되는지 확인
-    assert_equal "/auth/kakao", kakao_button[:href].gsub(%r{^https?://[^/]+}, "")
+    # form이 /auth/kakao로 submit하는지 확인
+    assert_selector "form[action='/auth/kakao']"
   end
 
   test "로그인 버튼에 '#' 하드코딩이 없음" do
     visit login_path
 
-    # 카카오 버튼은 실제 경로를 가져야 함
-    kakao_button = find("a[href='/auth/kakao']")
-    refute_equal "#", kakao_button[:href]
+    # 카카오 버튼 form이 실제 경로를 가져야 함
+    form = find("form[action='/auth/kakao']")
+    refute_equal "#", form[:action]
   end
 end

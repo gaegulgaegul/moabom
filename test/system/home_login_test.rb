@@ -14,14 +14,14 @@ class HomeLoginTest < ApplicationSystemTestCase
     assert_text "가족과 함께 모아봄"
 
     # 로그인 버튼 확인
-    # Apple 로그인
-    assert_text "Apple로 계속하기"
+    # 카카오 로그인 (활성)
+    assert_button "💬 카카오로 계속하기"
 
-    # 카카오 로그인
-    assert_selector "a[href='/auth/kakao']", text: "카카오로 계속하기"
+    # Apple 로그인 (준비 중)
+    assert_button "Apple로 계속하기 (준비 중)", disabled: true
 
-    # Google 로그인
-    assert_text "Google로 계속하기"
+    # Google 로그인 (준비 중)
+    assert_button "Google로 계속하기 (준비 중)", disabled: true
 
     # 약관 텍스트
     assert_text "로그인 시 이용약관 및 개인정보 처리방침에 동의하게 됩니다."

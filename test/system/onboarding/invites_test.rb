@@ -37,7 +37,7 @@ module Onboarding
 
       # 하단 버튼
       assert_button "시작하기"
-      assert_button "나중에 초대할게요"
+      assert_button "건너뛰기"
     end
 
     test "초대 링크가 표시됨" do
@@ -61,11 +61,11 @@ module Onboarding
       assert_current_path root_path
     end
 
-    test "나중에 초대 버튼으로 홈으로 이동" do
+    test "건너뛰기 버튼으로 홈으로 이동" do
       visit onboarding_invite_path
 
       # fixed 레이아웃에서는 scroll_to가 작동하지 않으므로 JavaScript 사용
-      button = find_button("나중에 초대할게요")
+      button = find_button("건너뛰기")
       execute_script("arguments[0].scrollIntoView({block: 'center'})", button)
       execute_script("arguments[0].click()", button)
 

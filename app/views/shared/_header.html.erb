@@ -9,7 +9,7 @@
       <% if logged_in? %>
         <%# 알림 %>
         <%= link_to notifications_path,
-                    class: "relative p-2 rounded-full hover:bg-sketch-cream tap-highlight-none",
+                    class: "relative p-2.5 rounded-full hover:bg-sketch-cream tap-highlight-none",
                     "aria-label": "알림" do %>
           <%= lucide_icon "bell", class: "w-6 h-6 text-sketch-ink" %>
           <% if unread_notifications_count > 0 %>
@@ -21,7 +21,7 @@
 
         <%# 설정 %>
         <%= link_to settings_profile_path,
-                    class: "p-2 rounded-full hover:bg-sketch-cream tap-highlight-none",
+                    class: "p-2.5 rounded-full hover:bg-sketch-cream tap-highlight-none",
                     "aria-label": "설정" do %>
           <%= lucide_icon "settings", class: "w-6 h-6 text-sketch-ink" %>
         <% end %>
