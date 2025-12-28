@@ -46,6 +46,15 @@ module Onboarding
       child = Child.last
       assert_equal family, child.family
       assert_equal "우리아기", child.name
+
+      # Family onboarding should be completed automatically
+      assert family.onboarding_completed?, "Family onboarding should be completed after child creation"
+      assert_not_nil family.onboarding_completed_at
+
+      # User onboarding should also be completed
+      @user.reload
+      assert @user.onboarding_completed?, "User onboarding should be completed after child creation"
+      assert_not_nil @user.onboarding_completed_at
     end
 
     test "should show error when child name is blank" do

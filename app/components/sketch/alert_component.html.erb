@@ -1,6 +1,6 @@
 <%# Frame0 Sketch Alert Component %>
 <div class="<%= alert_classes %>" role="<%= aria_role %>"
-     data-controller="sketch-alert">
+     <% if dismissible? %>data-controller="sketch-alert"<% end %>>
   <%# Icon %>
   <div class="flex-shrink-0">
     <%= helpers.lucide_icon icon_name, class: icon_classes %>
@@ -18,7 +18,7 @@
   <% if dismissible? %>
     <button type="button"
             class="<%= close_button_classes %>"
-            data-action="click->sketch-alert#dismiss"
+            data-action="sketch-alert#dismiss"
             aria-label="닫기">
       <%= helpers.lucide_icon "x", class: "w-4 h-4" %>
     </button>
