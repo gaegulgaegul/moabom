@@ -10,8 +10,8 @@
     <%= description.html_safe %>
   </p>
 
-  <%= link_to root_path do %>
-    <%= render Sketch::ButtonComponent.new(variant: :primary, size: :lg) do %>
+  <%= button_to root_path, method: :get do %>
+    <%= render Sketch::ButtonComponent.new(variant: :primary, size: :lg, type: :submit) do %>
       <%= lucide_icon "home", class: "w-5 h-5 mr-2 inline" %>
       홈으로 돌아가기
     <% end %>

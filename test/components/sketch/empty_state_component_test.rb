@@ -59,7 +59,9 @@ class Sketch::EmptyStateComponentTest < ViewComponent::TestCase
   test "renders without action button when no action_text" do
     render_inline(Sketch::EmptyStateComponent.new(title: "Empty"))
 
-    assert_no_selector "a.sketch-btn"
+    # Should not render any action link when action_text is not provided
+    assert_no_selector "a[href]"
+    refute page.has_link?
   end
 
   # ==========================================

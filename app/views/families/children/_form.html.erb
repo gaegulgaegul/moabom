@@ -41,8 +41,8 @@
 
   <%# 버튼 그룹 %>
   <div class="flex gap-3 pt-4">
-    <%= link_to family_children_path(@family), class: "flex-1" do %>
-      <%= render Sketch::ButtonComponent.new(variant: :secondary, full_width: true) do %>
+    <%= button_to family_children_path(@family), method: :get, class: "flex-1" do %>
+      <%= render Sketch::ButtonComponent.new(variant: :secondary, full_width: true, type: :submit) do %>
         취소
       <% end %>
     <% end %>

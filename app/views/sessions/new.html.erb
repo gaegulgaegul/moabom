@@ -19,20 +19,24 @@
   <!-- 로그인 버튼 영역 -->
   <div class="px-6 pb-12 space-y-3">
     <!-- Apple 로그인 -->
-    <%= render Sketch::ButtonComponent.new(variant: :secondary, full_width: true, size: :lg, class: "bg-black text-white border-black hover:bg-gray-800") do %>
-       Apple로 계속하기
+    <%= button_to "/auth/apple", method: :post do %>
+      <%= render Sketch::ButtonComponent.new(variant: :secondary, full_width: true, size: :lg, type: :submit, class: "bg-black text-white border-black hover:bg-gray-800") do %>
+         Apple로 계속하기
+      <% end %>
     <% end %>
 
     <!-- 카카오 로그인 -->
-    <%= link_to "/auth/kakao", class: "block" do %>
-      <%= render Sketch::ButtonComponent.new(variant: :secondary, full_width: true, size: :lg, class: "bg-[#FEE500] text-[#3C1E1E] border-[#FEE500] hover:bg-[#FDD800]") do %>
+    <%= button_to "/auth/kakao", method: :post do %>
+      <%= render Sketch::ButtonComponent.new(variant: :secondary, full_width: true, size: :lg, type: :submit, class: "bg-[#FEE500] text-[#3C1E1E] border-[#FEE500] hover:bg-[#FDD800]") do %>
         💬 카카오로 계속하기
       <% end %>
     <% end %>
 
     <!-- Google 로그인 -->
-    <%= render Sketch::ButtonComponent.new(variant: :secondary, full_width: true, size: :lg) do %>
-      Google로 계속하기
+    <%= button_to "/auth/google", method: :post do %>
+      <%= render Sketch::ButtonComponent.new(variant: :secondary, full_width: true, size: :lg, type: :submit) do %>
+        Google로 계속하기
+      <% end %>
     <% end %>
 
     <!-- 약관 -->

@@ -31,7 +31,7 @@
   <% if photo.child.present? %>
     <div class="absolute bottom-1 left-1">
       <%= render Sketch::BadgeComponent.new(variant: :default, size: :sm) do %>
-        <%= photo.child.name.truncate(4, omission: "") %>
+        <%= photo.child&.name.to_s.truncate(4, omission: "") %>
       <% end %>
     </div>
   <% end %>

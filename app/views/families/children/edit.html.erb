@@ -1,6 +1,6 @@
 <%# Frame0 Sketch Design System - Edit Child %>
 <%= render Sketch::ContainerComponent.new(padding: :lg, variant: :paper) do %>
-  <h1 class="text-2xl font-sketch font-bold text-sketch-ink mb-6"><%= @child.name %> 수정</h1>
+  <h1 class="text-2xl font-sketch font-bold text-sketch-ink mb-6"><%= @child&.name %> 수정</h1>
 
   <%= render "form" %>
 <% end %>

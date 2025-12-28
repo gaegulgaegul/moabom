@@ -9,7 +9,7 @@ module Families
     before_action :authorize_manage!, only: [ :new, :create, :edit, :update, :destroy ]
 
     def index
-      @children = @family.children
+      @children = @family.children.includes(:photos)
     end
 
     def show

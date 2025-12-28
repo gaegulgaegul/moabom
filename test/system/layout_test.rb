@@ -66,18 +66,20 @@ class LayoutTest < ApplicationSystemTestCase
     sign_in user
     visit root_path
 
-    # 알림 링크 확인
-    if has_selector?("header")
-      within "header" do
-        assert_selector "a[href='#{notifications_path}']"
-      end
+    # 헤더가 반드시 있어야 함
+    assert_selector "header", count: 1
+
+    # 헤더 내에 알림 링크 확인
+    within "header" do
+      assert_selector "a[href='#{notifications_path}']",
+        message: "헤더 내에 알림 링크가 없습니다"
     end
   end
 
   # 탭바 테스트 - 탭바가 제거됨 (e535a7e 커밋)
   # 향후 탭바 재도입 시 테스트 활성화 필요
 
-  test "플래시 메시지 표시" do
+  test "로그인 후 메인 페이지 정상 로드" do
     user = users(:mom)
     sign_in user
 
@@ -86,6 +88,7 @@ class LayoutTest < ApplicationSystemTestCase
 
     # 정상적으로 페이지가 로드되는지 확인
     assert_selector "main"
+    assert_current_path root_path
   end
 
   test "카카오 로그인 버튼이 실제 OAuth URL로 연결" do

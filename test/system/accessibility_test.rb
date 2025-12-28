@@ -45,10 +45,10 @@ class AccessibilityTest < ApplicationSystemTestCase
         height = page.evaluate_script("arguments[0].getBoundingClientRect().height;", button)
         width = page.evaluate_script("arguments[0].getBoundingClientRect().width;", button)
 
-        # 터치 타겟 최소 크기 40px (p-2 = 8px * 2 + 아이콘 24px = 40px)
-        # 완화된 기준 적용 (Sketch 디자인 시스템 고려)
-        assert height >= 32, "네비게이션 버튼 높이가 너무 작음: #{height}px"
-        assert width >= 32, "네비게이션 버튼 너비가 너무 작음: #{width}px"
+        # 터치 타겟 최소 크기 44px (WCAG 2.2 Level AAA)
+        # 권장 크기 48px (디자인 시스템 권장)
+        assert height >= 44, "네비게이션 버튼 높이가 너무 작음: #{height}px (최소 44px 필요)"
+        assert width >= 44, "네비게이션 버튼 너비가 너무 작음: #{width}px (최소 44px 필요)"
       end
     else
       # 네비게이션이 없으면 테스트 통과

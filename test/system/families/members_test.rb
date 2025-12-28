@@ -109,8 +109,11 @@ module Families
       assert_text @mom.nickname
       assert_text @dad.nickname
 
-      # 액션 메뉴 없음
-      assert_no_selector "button[aria-label]", text: "관리"
+      # 액션 메뉴 없음 - aria-label에 "관리"가 포함된 버튼이 없어야 함
+      @family.family_memberships.each do |membership|
+        next if membership.user == @grandma # 자기 자신은 제외
+        assert_no_selector "button[aria-label*='관리']"
+      end
     end
 
     test "admin can see action menus" do

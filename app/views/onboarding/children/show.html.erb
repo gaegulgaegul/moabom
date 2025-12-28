@@ -80,7 +80,11 @@
         full_width: true,
         size: :md,
         class: "text-sketch-gray",
-        data: { action: "click->navigation#goToInvite" }
+        data: {
+          controller: "navigation",
+          action: "click->navigation#goToInvite",
+          navigation_invite_path_value: onboarding_invite_path
+        }
       ) do %>
         나중에 할게요
       <% end %>
@@ -88,35 +92,7 @@
   <% end %>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const femaleBtn = document.querySelector('[data-gender-select-target="female"]');
-  const maleBtn = document.querySelector('[data-gender-select-target="male"]');
-  const input = document.querySelector('[data-gender-select-target="input"]');
-
-  if (femaleBtn && maleBtn && input) {
-    femaleBtn.addEventListener('click', () => {
-      input.value = 'female';
-      femaleBtn.classList.remove('border-sketch-gray', 'bg-transparent', 'text-sketch-gray');
-      femaleBtn.classList.add('border-sketch-ink', 'bg-sketch-cream', 'text-sketch-ink');
-      maleBtn.classList.remove('border-sketch-ink', 'bg-sketch-cream', 'text-sketch-ink');
-      maleBtn.classList.add('border-sketch-gray', 'bg-transparent', 'text-sketch-gray');
-    });
-
-    maleBtn.addEventListener('click', () => {
-      input.value = 'male';
-      maleBtn.classList.remove('border-sketch-gray', 'bg-transparent', 'text-sketch-gray');
-      maleBtn.classList.add('border-sketch-ink', 'bg-sketch-cream', 'text-sketch-ink');
-      femaleBtn.classList.remove('border-sketch-ink', 'bg-sketch-cream', 'text-sketch-ink');
-      femaleBtn.classList.add('border-sketch-gray', 'bg-transparent', 'text-sketch-gray');
-    });
-  }
-
-  // 나중에 할게요 버튼
-  document.querySelectorAll('[data-action*="navigation#goToInvite"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      window.location.href = '<%= onboarding_invite_path %>';
-    });
-  });
-});
-</script>
+<%# Inline script removed - functionality now handled by Stimulus controllers:
+    - gender_select_controller.js
+    - navigation_controller.js
+%>
