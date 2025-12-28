@@ -1,0 +1,26 @@
+<%# Frame0 Sketch Alert Component %>
+<div class="<%= alert_classes %>" role="<%= aria_role %>"
+     data-controller="sketch-alert">
+  <%# Icon %>
+  <div class="flex-shrink-0">
+    <%= helpers.lucide_icon icon_name, class: icon_classes %>
+  </div>
+
+  <%# Content %>
+  <div class="flex-1 min-w-0">
+    <% if has_title? %>
+      <p class="<%= title_classes %>"><%= title_text %></p>
+    <% end %>
+    <p class="<%= text_classes %>"><%= message_text || content %></p>
+  </div>
+
+  <%# Dismiss button %>
+  <% if dismissible? %>
+    <button type="button"
+            class="<%= close_button_classes %>"
+            data-action="click->sketch-alert#dismiss"
+            aria-label="닫기">
+      <%= helpers.lucide_icon "x", class: "w-4 h-4" %>
+    </button>
+  <% end %>
+</div>

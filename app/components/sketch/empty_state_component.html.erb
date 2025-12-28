@@ -1,0 +1,29 @@
+<%# Frame0 Sketch Empty State Component %>
+<div class="<%= container_classes %>">
+  <%# Icon %>
+  <% if has_icon? %>
+    <div class="mb-4">
+      <%= helpers.lucide_icon icon_name, class: icon_classes %>
+    </div>
+  <% end %>
+
+  <%# Title %>
+  <h3 class="<%= title_classes %>"><%= title_text %></h3>
+
+  <%# Description %>
+  <% if has_description? %>
+    <p class="<%= description_classes %> mt-2 max-w-sm"><%= description_text %></p>
+  <% end %>
+
+  <%# Action %>
+  <% if action? %>
+    <div class="mt-6">
+      <%= action %>
+    </div>
+  <% elsif has_action? %>
+    <div class="mt-6">
+      <%= link_to action_text, action_href,
+          class: "inline-flex items-center justify-center gap-2 py-3 px-6 bg-sketch-paper text-sketch-ink border-2 border-sketch-ink rounded-sketch-md font-sketch font-medium hover:bg-sketch-cream transition-colors" %>
+    </div>
+  <% end %>
+</div>

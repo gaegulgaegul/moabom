@@ -606,11 +606,209 @@
       </div>
     </section>
 
-    <%# ==================== HELPERS ==================== %>
+    <%# ==================== NEW COMPONENTS ==================== %>
+    <section id="new-components" class="space-y-6">
+      <h2 class="font-sketch text-3xl text-sketch-ink border-b-2 border-dashed border-sketch-ink/30 pb-2">
+        New Components (ViewComponent)
+      </h2>
+
+      <%# AvatarComponent %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">AvatarComponent</h3>
+        <div class="space-y-4">
+          <p class="font-hand text-sm text-sketch-gray">크기별 (xs, sm, md, lg, xl)</p>
+          <div class="flex flex-wrap gap-4 items-end">
+            <%= render Sketch::AvatarComponent.new(initials: "AB", size: :xs) %>
+            <%= render Sketch::AvatarComponent.new(initials: "CD", size: :sm) %>
+            <%= render Sketch::AvatarComponent.new(initials: "EF", size: :md) %>
+            <%= render Sketch::AvatarComponent.new(initials: "GH", size: :lg) %>
+            <%= render Sketch::AvatarComponent.new(initials: "IJ", size: :xl) %>
+          </div>
+          <p class="font-hand text-sm text-sketch-gray mt-4">상태 표시 (online, offline, away, busy)</p>
+          <div class="flex flex-wrap gap-4 items-center">
+            <%= render Sketch::AvatarComponent.new(initials: "ON", size: :md, status: :online) %>
+            <%= render Sketch::AvatarComponent.new(initials: "OF", size: :md, status: :offline) %>
+            <%= render Sketch::AvatarComponent.new(initials: "AW", size: :md, status: :away) %>
+            <%= render Sketch::AvatarComponent.new(initials: "BS", size: :md, status: :busy) %>
+          </div>
+          <p class="font-hand text-sm text-sketch-gray mt-4">기본 아이콘 (이니셜 없이)</p>
+          <div class="flex flex-wrap gap-4 items-center">
+            <%= render Sketch::AvatarComponent.new(size: :md) %>
+            <%= render Sketch::AvatarComponent.new(size: :lg) %>
+          </div>
+        </div>
+      </div>
+
+      <%# BadgeComponent %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">BadgeComponent</h3>
+        <div class="space-y-4">
+          <p class="font-hand text-sm text-sketch-gray">Variants</p>
+          <div class="flex flex-wrap gap-3">
+            <%= render Sketch::BadgeComponent.new(text: "Default") %>
+            <%= render Sketch::BadgeComponent.new(text: "Primary", variant: :primary) %>
+            <%= render Sketch::BadgeComponent.new(text: "Success", variant: :success) %>
+            <%= render Sketch::BadgeComponent.new(text: "Warning", variant: :warning) %>
+            <%= render Sketch::BadgeComponent.new(text: "Danger", variant: :danger) %>
+            <%= render Sketch::BadgeComponent.new(text: "Info", variant: :info) %>
+          </div>
+          <p class="font-hand text-sm text-sketch-gray mt-4">Sizes</p>
+          <div class="flex flex-wrap gap-3 items-center">
+            <%= render Sketch::BadgeComponent.new(text: "Small", size: :sm) %>
+            <%= render Sketch::BadgeComponent.new(text: "Medium", size: :md) %>
+            <%= render Sketch::BadgeComponent.new(text: "Large", size: :lg) %>
+          </div>
+          <p class="font-hand text-sm text-sketch-gray mt-4">With Icon</p>
+          <div class="flex flex-wrap gap-3">
+            <%= render Sketch::BadgeComponent.new(text: "Photos", icon: "image", variant: :primary) %>
+            <%= render Sketch::BadgeComponent.new(text: "New", icon: "sparkles", variant: :success) %>
+          </div>
+        </div>
+      </div>
+
+      <%# AlertComponent %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">AlertComponent</h3>
+        <div class="space-y-4 max-w-xl">
+          <%= render Sketch::AlertComponent.new(message: "정보 메시지입니다.", variant: :info) %>
+          <%= render Sketch::AlertComponent.new(message: "성공적으로 저장되었습니다.", variant: :success) %>
+          <%= render Sketch::AlertComponent.new(message: "주의가 필요한 내용입니다.", variant: :warning) %>
+          <%= render Sketch::AlertComponent.new(message: "오류가 발생했습니다.", variant: :error) %>
+          <%= render Sketch::AlertComponent.new(title: "제목이 있는 알림", message: "상세 설명 텍스트입니다.", variant: :info) %>
+          <%= render Sketch::AlertComponent.new(message: "닫기 버튼이 있는 알림", variant: :success, dismissible: true) %>
+        </div>
+      </div>
+
+      <%# ContainerComponent %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">ContainerComponent</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <%= render Sketch::ContainerComponent.new(variant: :default, class: "p-4") do %>
+            <p class="font-hand text-sketch-gray">Default</p>
+          <% end %>
+          <%= render Sketch::ContainerComponent.new(variant: :paper, class: "p-4") do %>
+            <p class="font-hand text-sketch-gray">Paper</p>
+          <% end %>
+          <%= render Sketch::ContainerComponent.new(variant: :cream, class: "p-4") do %>
+            <p class="font-hand text-sketch-gray">Cream</p>
+          <% end %>
+          <%= render Sketch::ContainerComponent.new(variant: :glass, class: "p-4") do %>
+            <p class="font-hand text-sketch-gray">Glass</p>
+          <% end %>
+          <%= render Sketch::ContainerComponent.new(variant: :card, class: "p-4") do %>
+            <p class="font-hand text-sketch-gray">Card</p>
+          <% end %>
+        </div>
+      </div>
+
+      <%# DividerComponent %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">DividerComponent</h3>
+        <div class="max-w-md space-y-6">
+          <div>
+            <p class="font-hand text-sm text-sketch-gray mb-2">Solid (default)</p>
+            <%= render Sketch::DividerComponent.new %>
+          </div>
+          <div>
+            <p class="font-hand text-sm text-sketch-gray mb-2">Dashed</p>
+            <%= render Sketch::DividerComponent.new(variant: :dashed) %>
+          </div>
+          <div>
+            <p class="font-hand text-sm text-sketch-gray mb-2">Dotted</p>
+            <%= render Sketch::DividerComponent.new(variant: :dotted) %>
+          </div>
+          <div>
+            <p class="font-hand text-sm text-sketch-gray mb-2">With Label</p>
+            <%= render Sketch::DividerComponent.new(label: "또는") %>
+          </div>
+        </div>
+        <div class="flex gap-8 h-24 mt-4">
+          <p class="font-hand text-sm text-sketch-gray">Vertical:</p>
+          <%= render Sketch::DividerComponent.new(orientation: :vertical) %>
+          <%= render Sketch::DividerComponent.new(orientation: :vertical, variant: :dashed) %>
+          <%= render Sketch::DividerComponent.new(orientation: :vertical, variant: :dotted) %>
+        </div>
+      </div>
+
+      <%# ListItemComponent %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">ListItemComponent</h3>
+        <div class="max-w-md">
+          <%= render Sketch::ContainerComponent.new(variant: :card) do %>
+            <div class="divide-y divide-sketch-ink/10">
+              <%= render Sketch::ListItemComponent.new(
+                title: "프로필 설정",
+                icon: "user",
+                show_chevron: true,
+                variant: :setting
+              ) %>
+              <%= render Sketch::ListItemComponent.new(
+                title: "알림 설정",
+                description: "푸시 알림을 관리합니다",
+                icon: "bell",
+                show_chevron: true,
+                variant: :setting
+              ) %>
+              <%= render Sketch::ListItemComponent.new(
+                title: "멤버 이름",
+                description: "member@example.com",
+                variant: :member
+              ) do |item| %>
+                <% item.with_leading do %>
+                  <%= render Sketch::AvatarComponent.new(initials: "AB", size: :sm) %>
+                <% end %>
+                <% item.with_trailing do %>
+                  <%= render Sketch::BadgeComponent.new(text: "관리자", variant: :primary, size: :sm) %>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <%# EmptyStateComponent %>
+      <div class="space-y-4">
+        <h3 class="font-hand text-xl text-sketch-gray">EmptyStateComponent</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <%= render Sketch::EmptyStateComponent.new(
+            icon: "image",
+            title: "아직 사진이 없어요",
+            description: "소중한 순간을 가족과 공유해보세요.",
+            size: :md
+          ) %>
+          <%= render Sketch::EmptyStateComponent.new(
+            icon: "bell",
+            title: "알림이 없습니다",
+            description: "새로운 소식이 있으면 알려드릴게요.",
+            action_text: "새로고침",
+            action_href: "#",
+            size: :md
+          ) %>
+        </div>
+        <div class="mt-6">
+          <%= render Sketch::EmptyStateComponent.new(
+            icon: "users",
+            title: "가족을 초대해보세요",
+            description: "함께 추억을 공유할 가족을 초대하세요.",
+            size: :lg
+          ) do %>
+            <%= render Sketch::ButtonComponent.new(variant: :primary) do %>
+              <%= lucide_icon "plus", class: "w-4 h-4 mr-2" %>
+              가족 초대하기
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <%# ==================== HELPERS (Legacy) ==================== %>
     <section id="helpers" class="space-y-6">
       <h2 class="font-sketch text-3xl text-sketch-ink border-b-2 border-dashed border-sketch-ink/30 pb-2">
-        Helper Methods
+        Helper Methods (Legacy)
       </h2>
+      <p class="font-hand text-sketch-gray">
+        아래 헬퍼들은 위의 ViewComponent로 마이그레이션되었습니다. 기존 호환성을 위해 유지됩니다.
+      </p>
 
       <%# sketch_container %>
       <div class="space-y-4">

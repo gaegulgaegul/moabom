@@ -1,0 +1,7 @@
+<%# Frame0 Sketch Badge Component %>
+<span class="<%= badge_classes %>">
+  <% if has_icon? %>
+    <%= helpers.lucide_icon icon_name, class: icon_classes %>
+  <% end %>
+  <%= badge_text || content %>
+</span>

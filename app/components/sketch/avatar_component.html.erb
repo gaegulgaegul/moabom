@@ -1,0 +1,14 @@
+<%# Frame0 Sketch Avatar Component %>
+<div class="<%= avatar_classes %>">
+  <% if has_image? %>
+    <%= image_tag image_src, alt: image_alt, class: "w-full h-full rounded-full object-cover" %>
+  <% elsif has_initials? %>
+    <span class="select-none"><%= displayed_initials %></span>
+  <% else %>
+    <%= helpers.lucide_icon "user", class: icon_classes %>
+  <% end %>
+
+  <% if has_status? %>
+    <span class="<%= status_classes %>"></span>
+  <% end %>
+</div>
