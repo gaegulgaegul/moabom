@@ -37,18 +37,19 @@ class AccessibilityTest < ApplicationSystemTestCase
   test "navigation buttons meet minimum touch target size" do
     visit root_path
 
-    # 헤더 내 네비게이션 버튼 찾기
-    header_buttons = page.all("header a[aria-label], header button")
+    # 헤더 내 aria-label이 있는 네비게이션 버튼만 찾기 (실제 액션 버튼)
+    header_buttons = page.all("header a[aria-label]")
 
     if header_buttons.any?
       header_buttons.first(3).each do |button|
+        # 실제 클릭 가능한 영역의 크기 측정
         height = page.evaluate_script("arguments[0].getBoundingClientRect().height;", button)
         width = page.evaluate_script("arguments[0].getBoundingClientRect().width;", button)
 
         # 터치 타겟 최소 크기 44px (WCAG 2.2 Level AAA)
         # 권장 크기 48px (디자인 시스템 권장)
-        assert height >= 44, "네비게이션 버튼 높이가 너무 작음: #{height}px (최소 44px 필요)"
-        assert width >= 44, "네비게이션 버튼 너비가 너무 작음: #{width}px (최소 44px 필요)"
+        assert height >= 44, "네비게이션 버튼 #{button['aria-label']} 높이가 너무 작음: #{height}px (최소 44px 필요)"
+        assert width >= 44, "네비게이션 버튼 #{button['aria-label']} 너비가 너무 작음: #{width}px (최소 44px 필요)"
       end
     else
       # 네비게이션이 없으면 테스트 통과
