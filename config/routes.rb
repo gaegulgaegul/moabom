@@ -56,6 +56,9 @@ Rails.application.routes.draw do
   # Notifications
   resources :notifications, only: [ :index, :update ]
 
+  # Home2 (new dashboard design)
+  get "home2", to: "home2#index"
+
   # Sketch Design System Demo (development only)
   get "sketch-demo", to: "sketch_demo#index" if Rails.env.development?
 

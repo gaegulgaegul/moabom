@@ -15,4 +15,21 @@ module ApplicationHelper
 
     user.notifications.unread.count
   end
+
+  # 상대 날짜 표시 (오늘, 어제, n일 전, 날짜)
+  def relative_date(date)
+    today = Date.current
+    days_ago = (today - date).to_i
+
+    case days_ago
+    when 0
+      "오늘"
+    when 1
+      "어제"
+    when 2..6
+      "#{days_ago}일 전"
+    else
+      I18n.l(date, format: :long)
+    end
+  end
 end

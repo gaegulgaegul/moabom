@@ -801,3 +801,43 @@
   }
 }
 */
+
+/* --------------------------------------------
+   6. 반응형 커스텀 클래스 (@layer 외부)
+   -------------------------------------------- */
+
+/* Timeline Container - 반응형 너비 */
+.timeline-container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .timeline-container {
+    width: 45%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .timeline-container {
+    width: 35%;
+  }
+}
+
+/* Gallery Card Grid - 반응형 높이 */
+.gallery-card-grid {
+  height: 13rem; /* 모바일 기본 */
+}
+
+@media (min-width: 768px) {
+  .gallery-card-grid {
+    height: 19rem; /* 태블릿: 304px (+5%) */
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery-card-grid {
+    height: 23rem; /* 데스크톱: 368px (+5%) */
+  }
+}

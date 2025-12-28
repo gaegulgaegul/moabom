@@ -1,0 +1,35 @@
+<%# Home2 - 새로운 대시보드 디자인 %>
+<%# 인스타 스토리 스타일 아이 필터 + 날짜별 사진 타임라인 %>
+
+<%= render Sketch::ContainerComponent.new(variant: :paper, padding: :none) do %>
+  <div class="min-h-screen">
+    <%# 인사 헤더 %>
+    <div class="px-4 pt-4 pb-2">
+      <h1 class="text-xl font-sketch font-bold text-sketch-ink">
+        안녕하세요, <%= current_user.nickname %>님! 👋
+      </h1>
+    </div>
+
+    <%# 스토리 스타일 아이 프로필 필터 %>
+    <%= render "story_filter" %>
+
+    <%# 타임라인 컨테이너 - 모바일: 전체 너비, 태블릿/데스크톱: 60% 너비 중앙 정렬 %>
+    <div class="timeline-container">
+      <%= turbo_frame_tag "timeline" do %>
+        <div class="px-4 pt-4 pb-20">
+        <% if @has_photos %>
+          <% if @photos_by_date.present? %>
+            <%= render "timeline", photos_by_date: @photos_by_date %>
+          <% else %>
+            <%# 필터링 결과 없음 %>
+            <%= render "filter_empty_state" %>
+          <% end %>
+        <% else %>
+          <%# 사진이 아예 없음 %>
+          <%= render "empty_state" %>
+        <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

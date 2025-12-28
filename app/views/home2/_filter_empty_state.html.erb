@@ -1,0 +1,10 @@
+<%# 필터링 결과 없음 - 선택한 아이의 사진이 없을 때 %>
+<% selected_child = @children.find { |c| c.id == @selected_child_id } %>
+
+<%= render Sketch::EmptyStateComponent.new(
+  icon: :image,
+  title: "#{selected_child&.name || '선택한 아이'}의 사진이 없어요",
+  description: "사진을 업로드할 때 아이를 태그해보세요.",
+  action_text: "사진 업로드",
+  action_href: new_family_photo_path(@family)
+) %>

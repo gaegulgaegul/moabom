@@ -1,0 +1,16 @@
+<%# Turbo Stream 응답 - 아이 필터 선택 시 타임라인만 업데이트 %>
+<%= turbo_stream.replace "timeline" do %>
+  <%= turbo_frame_tag "timeline" do %>
+    <div class="px-4 pb-20">
+      <% if @has_photos %>
+        <% if @photos_by_date.present? %>
+          <%= render "timeline", photos_by_date: @photos_by_date %>
+        <% else %>
+          <%= render "filter_empty_state" %>
+        <% end %>
+      <% else %>
+        <%= render "empty_state" %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
