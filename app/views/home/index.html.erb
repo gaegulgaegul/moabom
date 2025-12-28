@@ -44,10 +44,10 @@
 
       <% if Rails.env.development? %>
         <%= render Sketch::DividerComponent.new(class: "my-4") %>
-        <%= button_to dev_login_path, method: :post, class: "w-full" do %>
-          <%= render Sketch::ButtonComponent.new(variant: :primary, full_width: true, size: :lg, class: "bg-purple-600 border-purple-600 hover:bg-purple-700") do %>
-            🚀 개발 모드로 빠른 진입
-          <% end %>
+        <%= button_to dev_login_path,
+            method: :post,
+            class: "w-full inline-flex items-center justify-center gap-2 py-3 px-6 font-sketch font-medium border-2 rounded-sketch-md bg-purple-600 border-purple-600 text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2" do %>
+          🚀 개발 모드로 빠른 진입
         <% end %>
       <% end %>
     </div>
