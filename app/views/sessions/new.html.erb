@@ -18,26 +18,24 @@
 
   <!-- 로그인 버튼 영역 -->
   <div class="px-6 pb-12 space-y-3">
-    <!-- Apple 로그인 -->
-    <%= button_to "/auth/apple", method: :post do %>
-      <%= render Sketch::ButtonComponent.new(variant: :secondary, full_width: true, size: :lg, type: :submit, class: "bg-black text-white border-black hover:bg-gray-800") do %>
-         Apple로 계속하기
-      <% end %>
-    <% end %>
-
     <!-- 카카오 로그인 -->
-    <%= button_to "/auth/kakao", method: :post do %>
-      <%= render Sketch::ButtonComponent.new(variant: :secondary, full_width: true, size: :lg, type: :submit, class: "bg-[#FEE500] text-[#3C1E1E] border-[#FEE500] hover:bg-[#FDD800]") do %>
-        💬 카카오로 계속하기
-      <% end %>
+    <%= button_to "/auth/kakao",
+        method: :post,
+        class: "w-full inline-flex items-center justify-center gap-2 py-3 px-6 font-sketch font-medium border-2 rounded-sketch-md bg-[#FEE500] text-[#3C1E1E] border-[#FEE500] hover:bg-[#FDD800] focus:outline-none focus:ring-2 focus:ring-sketch-ink focus:ring-offset-2 active:translate-y-px" do %>
+      💬 카카오로 계속하기
     <% end %>
 
-    <!-- Google 로그인 -->
-    <%= button_to "/auth/google", method: :post do %>
-      <%= render Sketch::ButtonComponent.new(variant: :secondary, full_width: true, size: :lg, type: :submit) do %>
-        Google로 계속하기
-      <% end %>
-    <% end %>
+    <!-- Apple 로그인 (준비 중) -->
+    <button disabled
+            class="w-full inline-flex items-center justify-center gap-2 py-3 px-6 font-sketch font-medium border-2 rounded-sketch-md bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed">
+       Apple로 계속하기 (준비 중)
+    </button>
+
+    <!-- Google 로그인 (준비 중) -->
+    <button disabled
+            class="w-full inline-flex items-center justify-center gap-2 py-3 px-6 font-sketch font-medium border-2 rounded-sketch-md bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed">
+      Google로 계속하기 (준비 중)
+    </button>
 
     <!-- 약관 -->
     <p class="text-xs font-hand text-sketch-gray text-center pt-4">
