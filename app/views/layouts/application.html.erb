@@ -55,16 +55,18 @@
 
     <main class="<%= show_bottom_tabbar? ? 'pt-14 pb-20' : 'pt-14' %> min-h-screen">
       <% if flash[:notice] %>
-        <div class="alert-success flex items-center gap-3 mx-4 mt-4">
-          <%= lucide_icon "check-circle-2", class: "w-5 h-5 text-emerald-600 shrink-0" %>
-          <p class="text-sm"><%= flash[:notice] %></p>
+        <div class="mx-4 mt-4">
+          <%= render Sketch::AlertComponent.new(variant: :success, dismissible: true) do %>
+            <%= flash[:notice] %>
+          <% end %>
         </div>
       <% end %>
 
       <% if flash[:alert] %>
-        <div class="alert-error flex items-center gap-3 mx-4 mt-4">
-          <%= lucide_icon "alert-circle", class: "w-5 h-5 text-red-600 shrink-0" %>
-          <p class="text-sm"><%= flash[:alert] %></p>
+        <div class="mx-4 mt-4">
+          <%= render Sketch::AlertComponent.new(variant: :error, dismissible: true) do %>
+            <%= flash[:alert] %>
+          <% end %>
         </div>
       <% end %>
 

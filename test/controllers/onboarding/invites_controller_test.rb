@@ -110,7 +110,7 @@ module Onboarding
 
       assert_redirected_to root_path
       follow_redirect!
-      assert_select ".alert-success", text: /온보딩이 완료되었습니다/
+      assert_select ".sketch-alert", text: /온보딩이 완료되었습니다/
     end
   end
 end
