@@ -35,7 +35,7 @@ class Home2Controller < ApplicationController
 
   def set_family
     @family = current_user.families.first
-    redirect_to root_path, alert: "가족이 없습니다." unless @family
+    redirect_to onboarding_profile_path, alert: "가족 설정이 필요합니다." unless @family
   end
 
   # 개발용 임시 사진 데이터 (picsum.photos 사용)

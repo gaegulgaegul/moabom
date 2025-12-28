@@ -155,7 +155,7 @@ module Photos
         reaction: { emoji: "❤️" }
       }
 
-      assert_redirected_to root_path
+      assert_redirected_to login_path
     end
 
     test "should require authentication for delete" do
@@ -164,7 +164,7 @@ module Photos
 
       delete family_photo_reaction_path(@family, @photo, reaction)
 
-      assert_redirected_to root_path
+      assert_redirected_to login_path
     end
 
     private

@@ -4,7 +4,7 @@ require "test_helper"
 
 class AuthenticationTest < ActionDispatch::IntegrationTest
   test "current_user is nil when not logged in" do
-    get root_path
+    get login_path
 
     assert_response :success
     assert_nil controller.send(:current_user)
@@ -21,7 +21,7 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
   end
 
   test "logged_in? returns false when not logged in" do
-    get root_path
+    get login_path
 
     assert_response :success
     assert_not controller.send(:logged_in?)
@@ -38,10 +38,10 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
   end
 
   # Authentication filter tests
-  test "unauthenticated user should be redirected to root with alert" do
-    get dashboard_path
+  test "unauthenticated user should be redirected to login" do
+    get root_path
 
-    assert_redirected_to root_path
+    assert_redirected_to login_path
     assert_equal "로그인이 필요합니다.", flash[:alert]
   end
 
@@ -49,7 +49,7 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
     user = users(:mom)
     post login_path, params: { user_id: user.id }
 
-    get dashboard_path
+    get root_path
 
     assert_response :success
   end
@@ -59,17 +59,17 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
     user = users(:incomplete_onboarding_user)
     post login_path, params: { user_id: user.id }
 
-    get dashboard_path
+    get root_path
 
     assert_redirected_to onboarding_profile_path
-    assert_equal "온보딩을 완료해주세요.", flash[:alert]
+    assert_equal "가족 설정이 필요합니다.", flash[:alert]
   end
 
-  test "user with completed onboarding should access dashboard" do
+  test "user with completed onboarding should access home" do
     user = users(:mom)  # mom fixture has completed onboarding
     post login_path, params: { user_id: user.id }
 
-    get dashboard_path
+    get root_path
 
     assert_response :success
   end

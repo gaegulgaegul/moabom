@@ -64,7 +64,7 @@ module Families
       delete logout_path
       get family_photos_path(@family)
 
-      assert_redirected_to root_path
+      assert_redirected_to login_path
     end
 
     test "should not allow access to other family photos" do
@@ -267,7 +267,7 @@ module Families
       delete logout_path
       post batch_family_photos_path(@family), params: { photos: [] }
 
-      assert_redirected_to root_path
+      assert_redirected_to login_path
     end
 
     # ========================================

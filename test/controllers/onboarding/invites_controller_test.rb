@@ -75,7 +75,7 @@ module Onboarding
       delete logout_path
       get onboarding_invite_path
 
-      assert_redirected_to root_path
+      assert_redirected_to login_path
     end
 
     test "should redirect when user has no family" do

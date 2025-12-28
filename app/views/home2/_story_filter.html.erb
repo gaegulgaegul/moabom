@@ -6,7 +6,7 @@
       name: "전체",
       is_all: true,
       selected: @selected_child_id.nil?,
-      href: home2_path,
+      href: root_path,
       turbo_frame: "timeline"
     ) %>
 
@@ -16,7 +16,7 @@
         name: child.name,
         src: child.profile_photo.attached? ? url_for(child.profile_photo.variant(:thumbnail)) : nil,
         selected: @selected_child_id == child.id,
-        href: home2_path(child_id: child.id),
+        href: root_path(child_id: child.id),
         turbo_frame: "timeline"
       ) %>
     <% end %>

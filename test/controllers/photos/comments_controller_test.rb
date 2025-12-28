@@ -163,7 +163,7 @@ module Photos
 
       get family_photo_comments_path(@family, @photo)
 
-      assert_redirected_to root_path
+      assert_redirected_to login_path
     end
 
     test "should require authentication for create" do
@@ -173,7 +173,7 @@ module Photos
         comment: { body: "인증 없는 댓글" }
       }
 
-      assert_redirected_to root_path
+      assert_redirected_to login_path
     end
 
     test "should require authentication for delete" do
@@ -182,7 +182,7 @@ module Photos
 
       delete family_photo_comment_path(@family, @photo, comment)
 
-      assert_redirected_to root_path
+      assert_redirected_to login_path
     end
 
     private

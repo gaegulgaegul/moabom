@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
   def authenticate_user!
     return if logged_in?
 
-    redirect_to root_path, alert: "로그인이 필요합니다."
+    redirect_to login_path, alert: "로그인이 필요합니다."
   end
 
   def require_onboarding!

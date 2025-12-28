@@ -41,7 +41,7 @@ class FamiliesControllerTest < ActionDispatch::IntegrationTest
   test "guest should be redirected to login" do
     get family_path(@family)
 
-    assert_redirected_to root_path
+    assert_redirected_to login_path
   end
 
   # update 테스트

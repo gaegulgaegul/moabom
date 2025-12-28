@@ -3,6 +3,11 @@
 class SessionsController < ApplicationController
   # Skip CSRF verification for test login endpoint
   skip_before_action :verify_authenticity_token, only: [ :create ], if: -> { Rails.env.test? }
+  skip_before_action :check_onboarding, only: [ :new, :create, :destroy, :dev_login ]
+
+  def new
+    redirect_to root_path if logged_in?
+  end
 
   # For testing purposes - allows direct login
   def create
@@ -40,6 +45,6 @@ class SessionsController < ApplicationController
     end
 
     session[:user_id] = user.id
-    redirect_to dashboard_path, notice: "개발 모드로 진입했습니다."
+    redirect_to root_path, notice: "개발 모드로 진입했습니다."
   end
 end
