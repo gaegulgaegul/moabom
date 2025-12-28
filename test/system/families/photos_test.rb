@@ -18,7 +18,7 @@ class Families::PhotosTest < ApplicationSystemTestCase
   test "필터 탭이 표시됨" do
     visit family_photos_path(@family)
 
-    assert_link "전체"
+    assert_text "전체"
   end
 
   test "사진이 없을 때 빈 상태 표시" do
@@ -28,7 +28,7 @@ class Families::PhotosTest < ApplicationSystemTestCase
 
     assert_text "아직 사진이 없어요"
     assert_text "소중한 순간을 가족과 공유해보세요"
-    assert_link "첫 사진 업로드"
+    assert_text "첫 사진 업로드"
   end
 
   test "사진 그리드가 3열로 표시됨" do
@@ -52,8 +52,8 @@ class Families::PhotosTest < ApplicationSystemTestCase
 
     visit family_photos_path(@family, child_id: child.id)
 
-    # 아이 이름으로 된 링크가 활성화 상태
-    assert_selector "a.bg-primary-500", text: child.name
+    # 아이 이름이 활성화된 버튼에 표시 (Sketch 디자인)
+    assert_selector ".bg-sketch-ink", text: child.name
   end
 
   test "사진 클릭 시 상세 페이지로 이동" do

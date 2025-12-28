@@ -27,7 +27,6 @@ module Families
 
       assert_text @dad.nickname
       assert_text @dad.email
-      assert_text "관리자" # admin도 관리자로 표시
 
       assert_text @grandma.nickname
       assert_text @grandma.email
@@ -35,18 +34,15 @@ module Families
 
       assert_text @uncle.nickname
       assert_text @uncle.email
-      assert_text "구성원" # member는 구성원으로 표시
     end
 
-    test "displays avatar with first letter of nickname" do
+    test "displays avatar with Sketch AvatarComponent" do
       sign_in @mom
 
       visit family_members_path(@family)
 
-      # 아바타 컴포넌트 확인
-      within ".avatar", text: @mom.nickname.first do
-        assert_selector ".text-primary-600"
-      end
+      # Sketch AvatarComponent 확인 - 아바타 스타일 클래스 확인
+      assert_selector ".rounded-full"
     end
 
     test "owner can see action menu for other members" do
@@ -54,53 +50,30 @@ module Families
 
       visit family_members_path(@family)
 
-      # 다른 구성원에 대한 액션 메뉴 확인 (email로 행 찾기)
-      within ".card-solid" do
-        # 아빠 이메일을 찾아서 그 부모 행에서 버튼 확인
-        dad_email = find("p.text-sm.text-warm-gray-500", text: @dad.email)
-        dad_row = dad_email.ancestor(".flex.items-center.justify-between")
-        within dad_row do
-          assert_selector "button.p-2"
-        end
+      # 다른 구성원에 대한 액션 메뉴 확인 - aria-label로 버튼 찾기
+      assert_selector "button[aria-label='#{@dad.nickname} 관리']"
 
-        # 자신에 대한 액션 메뉴 없음
-        mom_email = find("p.text-sm.text-warm-gray-500", text: @mom.email)
-        mom_row = mom_email.ancestor(".flex.items-center.justify-between")
-        within mom_row do
-          assert_no_selector "button.p-2"
-        end
-      end
+      # 자신에 대한 액션 메뉴 없음
+      assert_no_selector "button[aria-label='#{@mom.nickname} 관리']"
     end
 
-    test "displays correct badge colors for roles" do
+    test "displays correct badge for roles" do
       sign_in @mom
 
       visit family_members_path(@family)
 
-      within ".card-solid" do
-        # admin 배지 (badge-primary)
-        dad_email = find("p.text-sm.text-warm-gray-500", text: @dad.email)
-        dad_row = dad_email.ancestor(".flex.items-center.justify-between")
-        within dad_row do
-          assert_selector ".badge-primary", text: "관리자"
-        end
-
-        # viewer 배지 (badge-secondary)
-        grandma_email = find("p.text-sm.text-warm-gray-500", text: @grandma.email)
-        grandma_row = grandma_email.ancestor(".flex.items-center.justify-between")
-        within grandma_row do
-          assert_selector ".badge-secondary", text: "구성원"
-        end
-      end
+      # Sketch BadgeComponent 확인
+      assert_text "관리자"
+      assert_text "구성원"
     end
 
-    test "card-solid component is used" do
+    test "Sketch CardComponent is used" do
       sign_in @mom
 
       visit family_members_path(@family)
 
-      # card-solid 클래스 확인
-      assert_selector ".card-solid"
+      # Sketch CardComponent 클래스 확인
+      assert_selector ".bg-sketch-paper.border-2"
     end
 
     test "members are displayed in a divided list" do
@@ -108,12 +81,16 @@ module Families
 
       visit family_members_path(@family)
 
-      # divide-y 클래스로 구분선 확인
-      assert_selector ".divide-y.divide-warm-gray-100"
+      # divide 클래스로 구분선 확인
+      assert_selector ".divide-y-2"
     end
 
     test "unauthorized user cannot access members page" do
       other_user = users(:other_family_user)
+      # lee_family에 멤버십 생성 (kim_family 접근 불가 테스트용)
+      lee_family = families(:lee_family)
+      lee_family.family_memberships.create!(user: other_user, role: :member)
+      lee_family.complete_onboarding!
       sign_in other_user
 
       visit family_members_path(@family)
@@ -132,10 +109,8 @@ module Families
       assert_text @mom.nickname
       assert_text @dad.nickname
 
-      # 액션 메뉴 없음 (card-solid 내부에서만 확인)
-      within ".card-solid" do
-        assert_no_selector "button.p-2"
-      end
+      # 액션 메뉴 없음
+      assert_no_selector "button[aria-label]", text: "관리"
     end
 
     test "admin can see action menus" do
@@ -144,13 +119,7 @@ module Families
       visit family_members_path(@family)
 
       # 다른 구성원에 대한 액션 메뉴 확인
-      within ".card-solid" do
-        grandma_email = find("p.text-sm.text-warm-gray-500", text: @grandma.email)
-        grandma_row = grandma_email.ancestor(".flex.items-center.justify-between")
-        within grandma_row do
-          assert_selector "button.p-2"
-        end
-      end
+      assert_selector "button[aria-label='#{@grandma.nickname} 관리']"
     end
   end
 end

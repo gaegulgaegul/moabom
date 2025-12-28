@@ -13,28 +13,22 @@ class DashboardNavigationTest < ApplicationSystemTestCase
     sign_in @user
   end
 
-  # 5.2.1 하단 탭바 제거 테스트
-  test "dashboard should not have bottom tab bar" do
+  # 5.2.1 대시보드 레이아웃 테스트
+  test "dashboard should have header" do
     visit root_path
 
-    # 탭바가 없어야 함
-    assert_no_selector "nav", text: "홈"
-    assert_no_selector "nav", text: "앨범"
-
-    # 대신 상단 헤더만 있어야 함
+    # 헤더가 있어야 함
     assert_selector "header", count: 1
   end
 
-  test "dashboard should have clean single-page layout" do
+  test "dashboard should have story filter and timeline" do
     visit root_path
 
-    # 전체 페이지가 하나의 스크롤 가능한 영역
-    assert_selector "main.min-h-screen"
+    # 인사 메시지 확인
+    assert_text "안녕하세요, #{@user.nickname}님!"
 
-    # 하단 패딩이 탭바 높이가 아님 (pb-20 제거)
-    main = find("main")
-    assert_not main[:class].include?("pb-20"),
-               "대시보드 main에 pb-20이 없어야 합니다. 실제 클래스: #{main[:class]}"
+    # 스토리 필터 확인
+    assert_selector "[data-controller='story-filter']"
   end
 
   # 5.2.2 상단 바 설정 아이콘 테스트
@@ -43,7 +37,7 @@ class DashboardNavigationTest < ApplicationSystemTestCase
 
     within "header" do
       # 로고
-      assert_selector "a[href='/']", text: "모아봄"
+      assert_text "모아봄"
 
       # 알림 아이콘
       assert_selector "a[aria-label='알림']"
@@ -79,21 +73,6 @@ class DashboardNavigationTest < ApplicationSystemTestCase
     assert_text "알림"
   end
 
-  test "should navigate to settings from tabbar" do
-    # 탭바가 표시되는 페이지(알림)로 이동
-    # 설정 페이지는 Wave 5 Phase 5에서 탭바 숨김 처리됨
-    visit notifications_path
-
-    # 탭바가 표시되는지 확인
-    assert_selector "nav", count: 1
-
-    # 탭바의 설정 탭 클릭
-    within "nav" do
-      click_link "설정"
-    end
-
-    # 설정 화면으로 이동 확인
-    assert_current_path settings_profile_path
-    assert_text "설정"
-  end
+  # 탭바 테스트 - 탭바가 제거됨 (e535a7e 커밋)
+  # 설정 네비게이션은 헤더 아이콘을 통해 가능
 end

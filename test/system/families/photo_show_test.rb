@@ -13,7 +13,8 @@ class Families::PhotoShowTest < ApplicationSystemTestCase
   test "사진 상세 페이지 방문" do
     visit family_photo_path(@family, @photo)
 
-    assert_selector ".min-h-screen.bg-warm-gray-900"
+    # Sketch 디자인: bg-sketch-ink (검정 배경)
+    assert_selector ".min-h-screen.bg-sketch-ink"
   end
 
   test "투명 헤더가 표시됨" do

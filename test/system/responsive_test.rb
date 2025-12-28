@@ -6,6 +6,8 @@ class ResponsiveTest < ApplicationSystemTestCase
   setup do
     @user = users(:mom)
     @family = families(:kim_family)
+    @user.complete_onboarding!
+    @family.complete_onboarding!
     sign_in @user
   end
 
