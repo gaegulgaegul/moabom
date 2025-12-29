@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 
+# NotificationService
+#
+# 역할: 인앱 알림 생성 서비스
+#
+# 주요 기능:
+# - 반응 알림 생성 (notify_reaction_created) - 사진 업로더에게 알림
+# - 댓글 알림 생성 (notify_comment_created) - 사진 업로더에게 알림
+# - 본인 액션에 대한 알림 제외
+# - 반응 알림 중복 방지 (동일 사용자의 반복 반응)
+#
+# 연관 클래스: Notification, Reaction, Comment, Photo, User
 class NotificationService
   class << self
     def notify_reaction_created(reaction)

@@ -1,29 +1,30 @@
 # frozen_string_literal: true
 
 module Sketch
-  # Frame0 Sketch-style List Item Component
+  # Sketch 스타일 리스트 아이템 컴포넌트
   #
-  # @example Basic list item
-  #   <%= render Sketch::ListItemComponent.new(title: "Settings", icon: "settings") %>
+  # 역할: Frame0 디자인 시스템의 스케치 스타일 리스트 항목
   #
-  # @example With description and link
-  #   <%= render Sketch::ListItemComponent.new(
-  #     title: "Profile",
-  #     description: "Edit your profile",
-  #     href: "/settings/profile",
-  #     show_chevron: true
-  #   ) %>
+  # 주요 기능:
+  # - 제목 및 설명 텍스트 표시
+  # - 아이콘 또는 커스텀 leading 슬롯
+  # - 뱃지 또는 커스텀 trailing 슬롯
+  # - 링크 또는 일반 div로 렌더링
+  # - 화살표 표시 (show_chevron)
+  # - 다양한 스타일 변형 (default, setting, member)
   #
-  # @example With custom slots
-  #   <%= render Sketch::ListItemComponent.new(title: "Custom") do |item| %>
-  #     <% item.with_leading do %>
-  #       <%= render Sketch::AvatarComponent.new(initials: "JD") %>
-  #     <% end %>
-  #     <% item.with_trailing do %>
-  #       <%= render Sketch::BadgeComponent.new(text: "New") %>
-  #     <% end %>
-  #   <% end %>
+  # @param title [String] 제목 텍스트 (필수)
+  # @param description [String] 설명 텍스트
+  # @param href [String] 링크 URL
+  # @param icon [String] 왼쪽 아이콘 이름
+  # @param show_chevron [Boolean] 오른쪽 화살표 표시 여부
+  # @param variant [Symbol] 스타일 변형 (:default, :setting, :member)
   #
+  # @example 기본 리스트 아이템
+  #   render Sketch::ListItemComponent.new(title: "설정", icon: "settings")
+  #
+  # @example 링크 및 화살표 포함
+  #   render Sketch::ListItemComponent.new(title: "프로필", description: "프로필 편집", href: "/settings/profile", show_chevron: true)
   class ListItemComponent < BaseComponent
     renders_one :leading
     renders_one :trailing

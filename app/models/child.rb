@@ -1,5 +1,23 @@
 # frozen_string_literal: true
 
+# Child
+#
+# 역할: 아이 프로필 정보를 관리하는 모델
+#
+# 주요 기능:
+# - 아이의 기본 정보 관리 (이름, 생년월일, 성별)
+# - 프로필 사진 첨부 및 썸네일 생성
+# - 나이 계산 메서드 제공 (월령, 연령, 일령)
+# - 사진과의 연관 관계 관리 (태그)
+#
+# 연관 클래스: Family, Photo
+#
+# @!attribute [rw] name
+#   @return [String] 아이 이름
+# @!attribute [rw] birthdate
+#   @return [Date] 생년월일
+# @!attribute [rw] gender
+#   @return [Integer] 성별 (0: male, 1: female)
 class Child < ApplicationRecord
   belongs_to :family
   has_many :photos, dependent: :nullify

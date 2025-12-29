@@ -2,6 +2,16 @@
 
 module Api
   module Native
+    # Api::Native::SyncsController
+    #
+    # 역할: 모바일 앱 초기 데이터 동기화 API
+    #
+    # 주요 기능:
+    # - 사용자/가족/아이 데이터 한번에 조회 (show)
+    # - 앱 시작 시 또는 백그라운드 복귀 시 호출
+    # - 가족 멤버 목록 포함
+    #
+    # 연관 클래스: User, Family, FamilyMembership, Child
     class SyncsController < Api::BaseController
       def show
         render json: {

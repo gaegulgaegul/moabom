@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
 module Api
+  # Api::BaseController
+  #
+  # 역할: API 컨트롤러의 기본 클래스
+  #
+  # 주요 기능:
+  # - CSRF 보호 비활성화 (API용)
+  # - Origin 헤더 검증 (capacitor://localhost, localhost 허용)
+  # - 세션 기반 사용자 인증 (current_user, authenticate_user!)
+  # - JSON 형식 에러 응답
+  #
+  # 연관 클래스: Api::Native::* 컨트롤러들이 상속
   class BaseController < ActionController::Base
     # Skip CSRF protection for API endpoints
     skip_before_action :verify_authenticity_token

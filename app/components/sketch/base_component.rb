@@ -1,8 +1,20 @@
 # frozen_string_literal: true
 
 module Sketch
-  # Base class for all Sketch-style ViewComponents
-  # Provides common functionality for Frame0 sketch UI elements
+  # Sketch 스타일 ViewComponent 기본 클래스
+  #
+  # 역할: Frame0 스케치 UI 요소를 위한 공통 기능 제공
+  #
+  # 주요 기능:
+  # - 거칠기(roughness) 수준 관리 (smooth, normal, rough, sketchy)
+  # - 컴포넌트 크기 관리 (xs, sm, md, lg, xl)
+  # - 비활성화/로딩 상태 처리
+  # - Stimulus 컨트롤러 데이터 생성
+  #
+  # @param roughness [Symbol] 스케치 거칠기 수준
+  # @param size [Symbol] 컴포넌트 크기
+  # @param disabled [Boolean] 비활성화 상태
+  # @param loading [Boolean] 로딩 상태
   class BaseComponent < ViewComponent::Base
     ROUGHNESS_LEVELS = {
       smooth: 0.5,

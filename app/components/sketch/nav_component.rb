@@ -1,22 +1,31 @@
 # frozen_string_literal: true
 
 module Sketch
-  # Frame0 Sketch-style Navigation Component
+  # Sketch 스타일 네비게이션 컴포넌트
   #
-  # @example Header navigation
-  #   <%= render Sketch::NavComponent.new(variant: :header) do |nav| %>
-  #     <% nav.with_brand(href: "/") do %>Logo<% end %>
-  #     <% nav.with_item(href: "/photos", active: true) do %>Photos<% end %>
-  #     <% nav.with_item(href: "/albums") do %>Albums<% end %>
-  #   <% end %>
+  # 역할: Frame0 디자인 시스템의 스케치 스타일 네비게이션 바
   #
-  # @example Tab bar navigation
-  #   <%= render Sketch::NavComponent.new(variant: :tabbar) do |nav| %>
-  #     <% nav.with_tab(href: "/", icon: "home", label: "Home", active: true) %>
-  #     <% nav.with_tab(href: "/photos", icon: "photo", label: "Photos") %>
-  #     <% nav.with_tab(href: "/settings", icon: "cog-6-tooth", label: "Settings") %>
-  #   <% end %>
+  # 주요 기능:
+  # - 다양한 네비게이션 형태 지원 (header, tabbar, sidebar, inline)
+  # - 브랜드 로고 슬롯
+  # - 네비게이션 아이템/탭 관리
+  # - 활성 상태 표시
+  # - 알림 뱃지 지원
+  # - Safe Area Inset 대응 (iOS)
   #
+  # @param variant [Symbol] 네비게이션 형태 (:header, :tabbar, :sidebar, :inline)
+  #
+  # @example 헤더 네비게이션
+  #   render Sketch::NavComponent.new(variant: :header) do |nav|
+  #     nav.with_brand(href: "/") { "로고" }
+  #     nav.with_item(href: "/photos", active: true) { "사진" }
+  #   end
+  #
+  # @example 탭바 네비게이션
+  #   render Sketch::NavComponent.new(variant: :tabbar) do |nav|
+  #     nav.with_tab(href: "/", icon: "home", label: "홈", active: true)
+  #     nav.with_tab(href: "/photos", icon: "image", label: "사진")
+  #   end
   class NavComponent < BaseComponent
     VARIANTS = {
       header: {

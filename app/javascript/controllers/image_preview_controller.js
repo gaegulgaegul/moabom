@@ -1,6 +1,21 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="image-preview"
+/**
+ * Image Preview Controller
+ * 이미지 미리보기 컨트롤러 - 파일 선택 시 이미지 미리보기 표시
+ *
+ * 주요 기능:
+ * - 파일 선택 시 FileReader로 이미지 로드
+ * - 이미지 파일 타입 검증
+ * - placeholder와 preview 토글 표시
+ *
+ * Usage:
+ *   <div data-controller="image-preview">
+ *     <input type="file" data-action="change->image-preview#preview" accept="image/*">
+ *     <div data-image-preview-target="placeholder">이미지를 선택하세요</div>
+ *     <img data-image-preview-target="preview" class="hidden">
+ *   </div>
+ */
 export default class extends Controller {
   static targets = ["placeholder", "preview"]
 

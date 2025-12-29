@@ -1,27 +1,31 @@
 # frozen_string_literal: true
 
 module Sketch
-  # Frame0 Sketch-style Input Component
+  # Sketch 스타일 입력 컴포넌트
   #
-  # @example Basic text input
-  #   <%= render Sketch::InputComponent.new(name: "email", type: :email, placeholder: "Enter email") %>
+  # 역할: Frame0 디자인 시스템의 스케치 스타일 폼 입력 필드
   #
-  # @example With label and helper text
-  #   <%= render Sketch::InputComponent.new(
-  #     name: "username",
-  #     label: "Username",
-  #     helper: "Choose a unique username",
-  #     required: true
-  #   ) %>
+  # 주요 기능:
+  # - 다양한 입력 타입 지원 (text, email, password, textarea, select 등)
+  # - 입력 스타일 변형 (default, filled, underline)
+  # - 라벨, 도움말, 에러 메시지 표시
+  # - 필수 입력 표시 및 ARIA 접근성 지원
+  # - RoughJS 기반 스케치 테두리
   #
-  # @example Textarea
-  #   <%= render Sketch::InputComponent.new(
-  #     name: "bio",
-  #     type: :textarea,
-  #     rows: 4,
-  #     label: "Bio"
-  #   ) %>
+  # @param name [String] 입력 필드 name 속성
+  # @param type [Symbol] 입력 타입 (:text, :email, :password, :textarea, :select 등)
+  # @param variant [Symbol] 입력 스타일 (:default, :filled, :underline)
+  # @param label [String] 라벨 텍스트
+  # @param placeholder [String] 플레이스홀더 텍스트
+  # @param helper [String] 도움말 텍스트
+  # @param error [String] 에러 메시지
+  # @param required [Boolean] 필수 입력 여부
   #
+  # @example 기본 텍스트 입력
+  #   render Sketch::InputComponent.new(name: "email", type: :email, placeholder: "이메일 입력")
+  #
+  # @example 라벨과 도움말 포함
+  #   render Sketch::InputComponent.new(name: "username", label: "사용자명", helper: "고유한 이름을 선택하세요", required: true)
   class InputComponent < BaseComponent
     TYPES = %i[text email password tel url number date textarea select].freeze
 

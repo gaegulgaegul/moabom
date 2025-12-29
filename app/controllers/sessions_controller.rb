@@ -1,5 +1,15 @@
 # frozen_string_literal: true
 
+# SessionsController
+#
+# 역할: 사용자 로그인/로그아웃 처리
+#
+# 주요 기능:
+# - 테스트 환경용 직접 로그인 (create)
+# - 개발 환경용 빠른 로그인 (dev_login)
+# - 세션 생성/삭제
+#
+# 연관 클래스: User
 class SessionsController < ApplicationController
   # Skip CSRF verification for test login endpoint
   skip_before_action :verify_authenticity_token, only: [ :create ], if: -> { Rails.env.test? }

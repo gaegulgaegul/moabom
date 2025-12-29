@@ -1,18 +1,24 @@
 # frozen_string_literal: true
 
 module Sketch
-  # Frame0 Sketch-style Button Component
+  # Sketch 스타일 버튼 컴포넌트
   #
-  # @example Basic usage
-  #   <%= render Sketch::ButtonComponent.new(variant: :primary) do %>
-  #     Click me
-  #   <% end %>
+  # 역할: Frame0 디자인 시스템의 스케치 스타일 버튼
   #
-  # @example With icon and loading state
-  #   <%= render Sketch::ButtonComponent.new(variant: :secondary, loading: true, icon: "plus") do %>
-  #     Add Item
-  #   <% end %>
+  # 주요 기능:
+  # - 다양한 버튼 스타일 (primary, secondary, ghost, danger)
+  # - 아이콘 지원 (좌/우 위치)
+  # - 로딩/비활성화 상태
+  # - RoughJS 기반 스케치 테두리
   #
+  # @param variant [Symbol] 버튼 스타일 (:primary, :secondary, :ghost, :danger)
+  # @param type [Symbol] 버튼 타입 (:button, :submit, :reset)
+  # @param icon [String] 아이콘 이름
+  # @param icon_position [Symbol] 아이콘 위치 (:left, :right)
+  # @param full_width [Boolean] 전체 너비 사용 여부
+  #
+  # @example 기본 사용
+  #   render Sketch::ButtonComponent.new(variant: :primary) { "클릭" }
   class ButtonComponent < BaseComponent
     VARIANTS = {
       primary: {

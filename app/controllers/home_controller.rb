@@ -2,7 +2,18 @@
 
 require "ostruct"
 
-class Home2Controller < ApplicationController
+# HomeController
+#
+# 역할: 메인 대시보드 (타임라인) 표시
+#
+# 주요 기능:
+# - 가족 사진 타임라인 날짜별 그룹화 (index)
+# - 아이별 필터링 (child_id 파라미터)
+# - 개발 환경용 데모 데이터 표시 (?demo=true)
+# - Turbo Stream 지원
+#
+# 연관 클래스: Family, Photo, Child
+class HomeController < ApplicationController
   before_action :authenticate_user!
   before_action :set_family
 

@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class Home2ControllerTest < ActionDispatch::IntegrationTest
+class HomeControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:mom)
     @family = families(:kim_family)

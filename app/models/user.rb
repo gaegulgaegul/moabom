@@ -1,5 +1,30 @@
 # frozen_string_literal: true
 
+# User
+#
+# 역할: 사용자 계정 및 인증 정보를 관리하는 모델
+#
+# 주요 기능:
+# - OAuth 인증 (Kakao, Apple, Google) 지원
+# - 닉네임 관리 및 검증 (2-20자, 특수문자 제한, 금지어)
+# - 아바타 업로드 및 검증 (JPEG, PNG, WebP / 최대 5MB)
+# - 가족 멤버십 관리 (FamilyMembership through 연관)
+# - 디바이스 푸시 토큰 관리
+# - 알림 수신/발송 관리
+# - 온보딩 상태 관리
+#
+# 연관 클래스: Family (through FamilyMembership), Device, Notification
+#
+# @!attribute [rw] email
+#   @return [String] 이메일 주소
+# @!attribute [rw] nickname
+#   @return [String] 닉네임 (2-20자)
+# @!attribute [rw] provider
+#   @return [String] OAuth 제공자 (kakao/apple/google)
+# @!attribute [rw] uid
+#   @return [String] OAuth 고유 식별자
+# @!attribute [rw] onboarding_completed_at
+#   @return [DateTime] 온보딩 완료 시각
 class User < ApplicationRecord
   # 닉네임 상수
   NICKNAME_REGEX = /\A[가-힣a-zA-Z0-9_]+\z/

@@ -1,18 +1,34 @@
 # frozen_string_literal: true
 
 module Sketch
-  # Frame0 Sketch-style Story Avatar Component
-  # Instagram story-style avatar with selection ring
+  # Sketch 스타일 스토리 아바타 컴포넌트
   #
-  # @example Basic usage
-  #   <%= render Sketch::StoryAvatarComponent.new(name: "민준", src: child.avatar_url) %>
+  # 역할: Frame0 디자인 시스템의 인스타그램 스토리 스타일 아바타
   #
-  # @example Selected state
-  #   <%= render Sketch::StoryAvatarComponent.new(name: "민준", selected: true) %>
+  # 주요 기능:
+  # - 선택 상태 링 애니메이션
+  # - 다양한 크기 지원 (sm, md, lg)
+  # - 이미지 또는 이니셜 표시
+  # - '전체' 옵션을 위한 특별 스타일
+  # - 이름 표시 (자동 말줄임)
+  # - 링크 및 Turbo Frame 지원
   #
-  # @example All option
-  #   <%= render Sketch::StoryAvatarComponent.new(name: "전체", is_all: true, selected: true) %>
+  # @param name [String] 표시 이름 (필수)
+  # @param src [String] 아바타 이미지 URL
+  # @param selected [Boolean] 선택 상태
+  # @param is_all [Boolean] '전체' 옵션 여부
+  # @param size [Symbol] 크기 (:sm, :md, :lg)
+  # @param href [String] 링크 URL
+  # @param turbo_frame [String] Turbo Frame 타겟
   #
+  # @example 기본 사용
+  #   render Sketch::StoryAvatarComponent.new(name: "민준", src: child.avatar_url)
+  #
+  # @example 선택된 상태
+  #   render Sketch::StoryAvatarComponent.new(name: "민준", selected: true)
+  #
+  # @example 전체 옵션
+  #   render Sketch::StoryAvatarComponent.new(name: "전체", is_all: true, selected: true)
   class StoryAvatarComponent < BaseComponent
     SIZES = {
       sm: { container: "w-14", avatar: "w-12 h-12", text: "text-xs", ring: "p-0.5" },

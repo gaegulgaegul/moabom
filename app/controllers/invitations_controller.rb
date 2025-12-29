@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 
+# InvitationsController
+#
+# 역할: 가족 초대 수락 처리
+#
+# 주요 기능:
+# - 초대 토큰 검증 (show)
+# - 초대 만료 확인
+# - 미로그인 사용자 초대 보류 처리
+# - 가족 구성원 추가 및 온보딩 완료 (accept)
+#
+# 연관 클래스: Invitation, Family, FamilyMembership
 class InvitationsController < ApplicationController
   before_action :set_invitation
 

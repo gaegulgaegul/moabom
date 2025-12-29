@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
-module Home2Helper
+# HomeHelper
+#
+# 역할: 메인 대시보드(타임라인) 뷰 헬퍼
+#
+# 주요 기능:
+# - 사진 썸네일 URL 조회 (photo_image_url)
+# - 이미지 미첨부 시 picsum 플레이스홀더 반환
+#
+# 연관 클래스: Photo, HomeController
+module HomeHelper
   # 사진의 이미지 URL을 반환
   def photo_image_url(photo)
     return url_for(photo.image.variant(:thumbnail)) if photo.image&.attached?

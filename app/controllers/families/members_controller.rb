@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
 module Families
+  # Families::MembersController
+  #
+  # 역할: 가족 구성원 목록 조회 및 관리
+  #
+  # 주요 기능:
+  # - 구성원 목록 조회 (index)
+  # - 구성원 역할 변경 (update) - owner/admin만 가능
+  # - 구성원 제거 (destroy) - owner/admin만 가능, 자기 자신 제외
+  # - 역할 검증: owner는 변경 불가, admin 역할은 owner만 부여 가능
+  #
+  # 연관 클래스: FamilyMembership, Family, User
   class MembersController < ApplicationController
     before_action :authenticate_user!
     before_action :require_onboarding!

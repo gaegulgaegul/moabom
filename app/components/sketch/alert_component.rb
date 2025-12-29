@@ -1,19 +1,27 @@
 # frozen_string_literal: true
 
 module Sketch
-  # Frame0 Sketch-style Alert Component
+  # Sketch 스타일 알림 컴포넌트
   #
-  # @example Basic alert
-  #   <%= render Sketch::AlertComponent.new(message: "Operation successful", variant: :success) %>
+  # 역할: Frame0 디자인 시스템의 스케치 스타일 알림/경고 메시지
   #
-  # @example With title and dismissible
-  #   <%= render Sketch::AlertComponent.new(
-  #     title: "Warning",
-  #     message: "Please check your input",
-  #     variant: :warning,
-  #     dismissible: true
-  #   ) %>
+  # 주요 기능:
+  # - 다양한 알림 타입 (info, success, warning, error)
+  # - 제목 및 메시지 표시
+  # - 닫기 버튼 (dismissible)
+  # - 타입별 아이콘 및 색상 자동 적용
+  # - ARIA role 자동 설정 (alert/status)
   #
+  # @param message [String] 알림 메시지
+  # @param variant [Symbol] 알림 타입 (:info, :success, :warning, :error)
+  # @param title [String] 알림 제목 (선택)
+  # @param dismissible [Boolean] 닫기 버튼 표시 여부
+  #
+  # @example 기본 알림
+  #   render Sketch::AlertComponent.new(message: "저장되었습니다", variant: :success)
+  #
+  # @example 제목과 닫기 버튼 포함
+  #   render Sketch::AlertComponent.new(title: "주의", message: "입력값을 확인하세요", variant: :warning, dismissible: true)
   class AlertComponent < BaseComponent
     VARIANTS = {
       info: {
