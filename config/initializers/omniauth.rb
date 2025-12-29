@@ -17,6 +17,6 @@ kakao_client_id = Rails.application.credentials.dig(:kakao, :client_id)
 kakao_client_secret = Rails.application.credentials.dig(:kakao, :client_secret)
 
 # Register OmniAuth providers
-Rails.application.middleware.use OmniAuth::Builder do
+Rails.application.config.middleware.use OmniAuth::Builder do
   provider :kakao, kakao_client_id, kakao_client_secret
 end
