@@ -1,24 +1,28 @@
 # frozen_string_literal: true
 
 module Sketch
-  # Frame0 Sketch-style Empty State Component
+  # Sketch 스타일 빈 상태 컴포넌트
   #
-  # @example Basic empty state
-  #   <%= render Sketch::EmptyStateComponent.new(
-  #     icon: "image",
-  #     title: "No photos yet",
-  #     description: "Start uploading your memories"
-  #   ) %>
+  # 역할: Frame0 디자인 시스템의 스케치 스타일 빈 데이터 상태 표시
   #
-  # @example With action button
-  #   <%= render Sketch::EmptyStateComponent.new(
-  #     icon: "image",
-  #     title: "No photos yet",
-  #     description: "Start uploading your memories",
-  #     action_text: "Upload Photo",
-  #     action_href: "/photos/new"
-  #   ) %>
+  # 주요 기능:
+  # - 아이콘, 제목, 설명 텍스트 표시
+  # - 액션 버튼 링크 지원
+  # - 다양한 크기 (sm, md, lg)
+  # - 커스텀 액션 슬롯 지원
   #
+  # @param title [String] 제목 텍스트 (필수)
+  # @param description [String] 설명 텍스트
+  # @param icon [String] 아이콘 이름
+  # @param action_text [String] 액션 버튼 텍스트
+  # @param action_href [String] 액션 버튼 링크 URL
+  # @param size [Symbol] 크기 (:sm, :md, :lg)
+  #
+  # @example 기본 빈 상태
+  #   render Sketch::EmptyStateComponent.new(icon: "image", title: "아직 사진이 없어요", description: "추억을 업로드해보세요")
+  #
+  # @example 액션 버튼 포함
+  #   render Sketch::EmptyStateComponent.new(icon: "image", title: "아직 사진이 없어요", action_text: "사진 업로드", action_href: "/photos/new")
   class EmptyStateComponent < BaseComponent
     renders_one :action
 

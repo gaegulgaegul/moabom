@@ -1,14 +1,27 @@
 # frozen_string_literal: true
 
 module Sketch
-  # Frame0 Sketch-style Badge Component
+  # Sketch 스타일 뱃지 컴포넌트
   #
-  # @example Basic badge
-  #   <%= render Sketch::BadgeComponent.new(text: "New") %>
+  # 역할: Frame0 디자인 시스템의 스케치 스타일 라벨/뱃지
   #
-  # @example With variant and icon
-  #   <%= render Sketch::BadgeComponent.new(text: "3 photos", variant: :primary, icon: "photo") %>
+  # 주요 기능:
+  # - 다양한 색상 변형 (default, primary, secondary, success, warning, danger, info)
+  # - 다양한 크기 지원 (sm, md, lg)
+  # - 아이콘 포함 가능
+  # - 둥근 또는 각진 모서리 선택
   #
+  # @param text [String] 뱃지 텍스트
+  # @param variant [Symbol] 색상 변형 (:default, :primary, :secondary, :success, :warning, :danger, :info)
+  # @param size [Symbol] 뱃지 크기 (:sm, :md, :lg)
+  # @param rounded [Boolean] 완전 둥근 모서리 여부
+  # @param icon [String] 아이콘 이름
+  #
+  # @example 기본 뱃지
+  #   render Sketch::BadgeComponent.new(text: "새로운")
+  #
+  # @example 아이콘과 색상 포함
+  #   render Sketch::BadgeComponent.new(text: "3장", variant: :primary, icon: "image")
   class BadgeComponent < BaseComponent
     VARIANTS = {
       default: "bg-sketch-cream text-sketch-ink border-sketch-gray",

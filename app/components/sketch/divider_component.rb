@@ -1,14 +1,25 @@
 # frozen_string_literal: true
 
 module Sketch
-  # Frame0 Sketch-style Divider Component
+  # Sketch 스타일 구분선 컴포넌트
   #
-  # @example Horizontal divider
-  #   <%= render Sketch::DividerComponent.new %>
+  # 역할: Frame0 디자인 시스템의 스케치 스타일 콘텐츠 구분선
   #
-  # @example Vertical dashed divider
-  #   <%= render Sketch::DividerComponent.new(direction: :vertical, variant: :dashed) %>
+  # 주요 기능:
+  # - 가로/세로 방향 지원
+  # - 다양한 선 스타일 (solid, dashed, dotted, rough)
+  # - 다양한 두께 (thin, normal, thick)
+  # - ARIA orientation 속성 자동 설정
   #
+  # @param direction [Symbol] 방향 (:horizontal, :vertical)
+  # @param variant [Symbol] 선 스타일 (:solid, :dashed, :dotted, :rough)
+  # @param thickness [Symbol] 두께 (:thin, :normal, :thick)
+  #
+  # @example 가로 구분선
+  #   render Sketch::DividerComponent.new
+  #
+  # @example 세로 점선 구분선
+  #   render Sketch::DividerComponent.new(direction: :vertical, variant: :dashed)
   class DividerComponent < BaseComponent
     THICKNESS = {
       thin: 1,

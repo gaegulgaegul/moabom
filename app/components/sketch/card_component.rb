@@ -1,20 +1,24 @@
 # frozen_string_literal: true
 
 module Sketch
-  # Frame0 Sketch-style Card Component
+  # Sketch 스타일 카드 컴포넌트
   #
-  # @example Basic usage
-  #   <%= render Sketch::CardComponent.new do %>
-  #     <p>Card content here</p>
-  #   <% end %>
+  # 역할: Frame0 디자인 시스템의 스케치 스타일 카드
   #
-  # @example With header and footer
-  #   <%= render Sketch::CardComponent.new(variant: :elevated) do |card| %>
-  #     <% card.with_header do %>Card Title<% end %>
-  #     <p>Card content</p>
-  #     <% card.with_footer do %>Footer actions<% end %>
-  #   <% end %>
+  # 주요 기능:
+  # - 다양한 카드 스타일 (default, elevated, flat, glass)
+  # - 헤더/푸터/이미지 슬롯 지원
+  # - 호버/클릭 인터랙션
+  # - RoughJS 기반 스케치 테두리
   #
+  # @param variant [Symbol] 카드 스타일 (:default, :elevated, :flat, :glass)
+  # @param padding [Symbol] 내부 여백 (:none, :sm, :md, :lg)
+  # @param hoverable [Boolean] 호버 효과 활성화
+  # @param clickable [Boolean] 클릭 가능 상태
+  # @param href [String] 링크 URL
+  #
+  # @example 기본 사용
+  #   render Sketch::CardComponent.new { "카드 내용" }
   class CardComponent < BaseComponent
     VARIANTS = {
       default: {

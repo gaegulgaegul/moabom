@@ -1,17 +1,28 @@
 # frozen_string_literal: true
 
 module Sketch
-  # Frame0 Sketch-style Avatar Component
+  # Sketch 스타일 아바타 컴포넌트
   #
-  # @example With image
-  #   <%= render Sketch::AvatarComponent.new(src: user.avatar_url, alt: user.name) %>
+  # 역할: Frame0 디자인 시스템의 스케치 스타일 사용자 아바타
   #
-  # @example With initials
-  #   <%= render Sketch::AvatarComponent.new(initials: "JD", size: :lg) %>
+  # 주요 기능:
+  # - 이미지 또는 이니셜 표시
+  # - 다양한 크기 지원 (xs, sm, md, lg, xl)
+  # - 온라인 상태 표시기 (online, offline, away, busy)
+  # - 스케치 스타일 테두리
   #
-  # @example With status indicator
-  #   <%= render Sketch::AvatarComponent.new(initials: "AB", status: :online) %>
+  # @param src [String] 아바타 이미지 URL
+  # @param alt [String] 이미지 대체 텍스트
+  # @param size [Symbol] 아바타 크기 (:xs, :sm, :md, :lg, :xl)
+  # @param initials [String] 이니셜 (이미지 없을 때 표시)
+  # @param border [Boolean] 테두리 표시 여부
+  # @param status [Symbol] 상태 표시 (:online, :offline, :away, :busy)
   #
+  # @example 이미지 아바타
+  #   render Sketch::AvatarComponent.new(src: user.avatar_url, alt: user.name)
+  #
+  # @example 이니셜 아바타 (상태 표시 포함)
+  #   render Sketch::AvatarComponent.new(initials: "MJ", size: :lg, status: :online)
   class AvatarComponent < BaseComponent
     SIZES = {
       xs: { container: "w-6 h-6", text: "text-xs", icon: "w-3 h-3", status: "w-2 h-2" },

@@ -1,24 +1,34 @@
 # frozen_string_literal: true
 
 module Sketch
-  # Frame0 Sketch-style Modal Component
+  # Sketch 스타일 모달 컴포넌트
   #
-  # @example Basic modal
-  #   <%= render Sketch::ModalComponent.new(id: "confirm-modal", title: "Confirm Action") do %>
-  #     <p>Are you sure you want to proceed?</p>
-  #   <% end %>
+  # 역할: Frame0 디자인 시스템의 스케치 스타일 모달/다이얼로그
   #
-  # @example Modal with footer actions
-  #   <%= render Sketch::ModalComponent.new(id: "edit-modal", title: "Edit Item", size: :lg) do |modal| %>
-  #     <% modal.with_body do %>
-  #       <p>Modal content here</p>
-  #     <% end %>
-  #     <% modal.with_footer do %>
-  #       <%= render Sketch::ButtonComponent.new(variant: :ghost) do %>Cancel<% end %>
-  #       <%= render Sketch::ButtonComponent.new(variant: :primary) do %>Save<% end %>
-  #     <% end %>
-  #   <% end %>
+  # 주요 기능:
+  # - 다양한 모달 크기 지원 (sm, md, lg, xl, full)
+  # - 헤더/바디/푸터 슬롯 지원
+  # - 닫기 버튼 및 배경 클릭으로 닫기
+  # - ESC 키로 닫기 지원
+  # - 백드롭 블러 효과
+  # - RoughJS 기반 스케치 테두리
   #
+  # @param id [String] 모달 DOM ID (필수)
+  # @param title [String] 모달 제목
+  # @param size [Symbol] 모달 크기 (:sm, :md, :lg, :xl, :full)
+  # @param closable [Boolean] 닫기 버튼 표시 여부
+  # @param backdrop_close [Boolean] 배경 클릭으로 닫기 허용 여부
+  #
+  # @example 기본 모달
+  #   render Sketch::ModalComponent.new(id: "confirm-modal", title: "확인") do
+  #     "진행하시겠습니까?"
+  #   end
+  #
+  # @example 푸터 액션 포함 모달
+  #   render Sketch::ModalComponent.new(id: "edit-modal", title: "수정", size: :lg) do |modal|
+  #     modal.with_body { "모달 내용" }
+  #     modal.with_footer { "취소/저장 버튼" }
+  #   end
   class ModalComponent < BaseComponent
     SIZES = {
       sm: "max-w-sm",
