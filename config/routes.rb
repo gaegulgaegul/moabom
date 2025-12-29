@@ -66,8 +66,8 @@ Rails.application.routes.draw do
   match "/404", to: "errors#not_found", via: :all
   match "/500", to: "errors#internal_server_error", via: :all
 
-  # Root (새 대시보드)
-  root "home2#index"
+  # Root (메인 대시보드)
+  root "home#index"
 
   # Catch-all for 404 (must be last)
   match "*path", to: "errors#not_found", via: :all
