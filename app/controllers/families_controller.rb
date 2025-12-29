@@ -1,5 +1,14 @@
 # frozen_string_literal: true
 
+# FamiliesController
+#
+# 역할: 가족 그룹 정보 조회 및 수정
+#
+# 주요 기능:
+# - 가족 정보 조회 (show)
+# - 가족 정보 수정 (update) - owner/admin만 가능
+#
+# 연관 클래스: Family, FamilyMembership
 class FamiliesController < ApplicationController
   before_action :authenticate_user!
   before_action :require_onboarding!

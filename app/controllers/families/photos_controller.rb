@@ -1,6 +1,18 @@
 # frozen_string_literal: true
 
 module Families
+  # Families::PhotosController
+  #
+  # 역할: 가족 사진 CRUD 및 배치 업로드
+  #
+  # 주요 기능:
+  # - 사진 목록 조회 (index) - 아이별/월별 필터링, 페이지네이션
+  # - 사진 상세 조회 (show)
+  # - 사진 업로드 (create) - 업로드 권한 필요
+  # - 배치 업로드 (batch) - 최대 100개, JSON 응답
+  # - 사진 수정/삭제 (update, destroy) - 삭제 권한 필요
+  #
+  # 연관 클래스: Photo, Family, Child, FamilyAccessible concern
   class PhotosController < ApplicationController
     include FamilyAccessible
 

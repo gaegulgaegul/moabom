@@ -57,17 +57,6 @@
           }
         ]
       }
-    ],
-    "SessionEnd": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "cd \"$CLAUDE_PROJECT_DIR\" && CLAUDE_PROJECT_DIR=\"$CLAUDE_PROJECT_DIR\" CLAUDE_SESSION_ID=\"$CLAUDE_SESSION_ID\" ruby scripts/session_to_md.rb 2>&1 || true"
-          }
-        ]
-      }
     ]
   }
 }

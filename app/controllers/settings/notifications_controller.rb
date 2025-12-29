@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 module Settings
+  # Settings::NotificationsController
+  #
+  # 역할: 알림 설정 관리
+  #
+  # 주요 기능:
+  # - 알림 설정 페이지 표시 (show)
+  # - 알림 설정 수정 (update) - 새 사진/댓글/반응 알림 on/off
+  #
+  # 연관 클래스: User
   class NotificationsController < ApplicationController
     before_action :authenticate_user!
 

@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 module Onboarding
+  # Onboarding::ChildrenController
+  #
+  # 역할: 온보딩 2단계 - 가족 생성 및 첫 아이 등록
+  #
+  # 주요 기능:
+  # - 아이 등록 폼 표시 (show)
+  # - 트랜잭션으로 가족 생성 + 아이 등록 + 온보딩 완료 처리 (create)
+  # - 가족 생성 시 현재 사용자를 owner로 설정
+  #
+  # 연관 클래스: Family, Child, FamilyMembership, User
   class ChildrenController < ApplicationController
     before_action :authenticate_user!
     skip_before_action :check_onboarding

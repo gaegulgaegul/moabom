@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 
+# ApplicationController
+#
+# 역할: 모든 컨트롤러의 기본 클래스, 공통 인증 및 에러 처리
+#
+# 주요 기능:
+# - 현재 사용자 및 현재 가족 조회 (current_user, current_family)
+# - 로그인 및 온보딩 체크 (authenticate_user!, check_onboarding)
+# - 전역 에러 핸들러 (404, 400, CSRF, JSON 파싱 에러)
+# - 최신 브라우저 지원 체크
+#
+# 연관 클래스: 모든 컨트롤러가 상속
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern

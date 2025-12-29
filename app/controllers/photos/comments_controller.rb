@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
 module Photos
+  # Photos::CommentsController
+  #
+  # 역할: 사진에 대한 댓글 CRUD
+  #
+  # 주요 기능:
+  # - 댓글 목록 조회 (index) - JSON 응답
+  # - 댓글 작성 (create) - Turbo Stream 실시간 추가
+  # - 댓글 삭제 (destroy) - 본인 댓글만 삭제 가능
+  # - 댓글 생성 시 NotificationService로 알림 발송
+  #
+  # 연관 클래스: Comment, Photo, NotificationService, FamilyAccessible concern
   class CommentsController < ApplicationController
     include ActionView::RecordIdentifier
     include FamilyAccessible

@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
 module Photos
+  # Photos::ReactionsController
+  #
+  # 역할: 사진에 대한 이모지 반응 추가/삭제
+  #
+  # 주요 기능:
+  # - 반응 추가 (create) - 기존 반응 있으면 이모지 변경, Turbo Stream 지원
+  # - 반응 삭제 (destroy) - 본인 반응만 삭제 가능
+  # - 반응 생성 시 NotificationService로 알림 발송
+  # - HTML/JSON/Turbo Stream 멀티포맷 응답
+  #
+  # 연관 클래스: Reaction, Photo, NotificationService, FamilyAccessible concern
   class ReactionsController < ApplicationController
     include ActionView::RecordIdentifier
     include FamilyAccessible

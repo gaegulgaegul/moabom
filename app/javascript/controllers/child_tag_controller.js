@@ -1,6 +1,23 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="child-tag"
+/**
+ * Child Tag Controller
+ * 아이 태그 선택 컨트롤러 - 사진 업로드 시 아이 선택 UI
+ *
+ * 주요 기능:
+ * - 라디오 버튼 스타일의 단일 선택 UI
+ * - 키보드 접근성 지원 (화살표 키, Enter, Space)
+ * - ARIA 속성 자동 관리
+ *
+ * Usage:
+ *   <div data-controller="child-tag">
+ *     <button data-child-tag-target="button" data-child-id="1"
+ *             data-action="click->child-tag#select keydown->child-tag#handleKeydown">
+ *       아이 이름
+ *     </button>
+ *     <input type="hidden" data-child-tag-target="input" name="photo[child_id]">
+ *   </div>
+ */
 export default class extends Controller {
   static targets = ["button", "input"]
 

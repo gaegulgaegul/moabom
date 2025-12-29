@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 
+# ApplicationHelper
+#
+# 역할: 전역 뷰 헬퍼 메서드 모음
+#
+# 주요 기능:
+# - 가족 구성원 관리 권한 확인 (can_manage_members?)
+# - 읽지 않은 알림 개수 조회 (unread_notifications_count)
+# - 상대 날짜 표시 (relative_date) - 오늘, 어제, n일 전
+# - Lucide 아이콘 헬퍼 포함 (LucideRails::RailsHelper)
+#
+# 연관 클래스: User, Family, FamilyMembership, Notification
 module ApplicationHelper
   include LucideRails::RailsHelper
   def can_manage_members?

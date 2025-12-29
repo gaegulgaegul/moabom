@@ -2,6 +2,16 @@
 
 module Api
   module Native
+    # Api::Native::PushTokensController
+    #
+    # 역할: 모바일 앱 푸시 토큰 관리 API
+    #
+    # 주요 기능:
+    # - 푸시 토큰 등록/갱신 (create) - device_id 기준 find_or_create
+    # - 푸시 토큰 삭제 (destroy) - 로그아웃 시 호출
+    # - 플랫폼(iOS/Android), 앱 버전, OS 버전 정보 저장
+    #
+    # 연관 클래스: Device, User
     class PushTokensController < Api::BaseController
       def create
         device = current_user.devices.find_or_initialize_by(device_id: device_params[:device_id])

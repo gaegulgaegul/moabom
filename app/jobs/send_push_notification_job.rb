@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
-# SendPushNotificationJob - 푸시 알림 전송 백그라운드 작업
+# SendPushNotificationJob
+#
+# 역할: 푸시 알림 전송 백그라운드 작업
+#
+# 주요 기능:
+# - Device ID로 디바이스 조회 후 푸시 알림 전송
+# - PushNotificationService를 통해 APNs/FCM 전송
+# - 디바이스 미존재 또는 전송 실패 시 로그 기록
+#
+# 연관 클래스: Device, PushNotificationService
 class SendPushNotificationJob < ApplicationJob
   queue_as :default
 

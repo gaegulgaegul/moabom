@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
 module Families
+  # Families::ChildrenController
+  #
+  # 역할: 가족 내 아이 프로필 CRUD
+  #
+  # 주요 기능:
+  # - 아이 목록 조회 (index)
+  # - 아이 상세 정보 조회 (show)
+  # - 아이 등록/수정/삭제 (create, update, destroy) - owner/admin만 가능
+  # - 이름, 생년월일, 성별 정보 관리
+  #
+  # 연관 클래스: Child, Family, FamilyMembership
   class ChildrenController < ApplicationController
     before_action :authenticate_user!
     before_action :require_onboarding!
