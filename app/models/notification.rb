@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 
+# Notification
+#
+# 역할: 사용자 알림을 관리하는 모델
+#
+# 주요 기능:
+# - 반응, 댓글 생성 시 알림 발송
+# - 읽음/읽지 않음 상태 관리
+# - 다형성 연관 관계 (notifiable: Reaction, Comment)
+# - 알림 메시지 국제화 지원
+#
+# 연관 클래스: User (recipient, actor), Reaction, Comment (notifiable)
 class Notification < ApplicationRecord
   # 연관관계
   belongs_to :recipient, class_name: "User", inverse_of: :notifications

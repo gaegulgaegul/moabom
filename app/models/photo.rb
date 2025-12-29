@@ -1,5 +1,23 @@
 # frozen_string_literal: true
 
+# Photo
+#
+# 역할: 가족 사진을 관리하는 모델
+#
+# 주요 기능:
+# - 사진 업로드 및 저장 (Active Storage)
+# - 다양한 크기의 이미지 variant 생성 (thumbnail, medium, large)
+# - 사진 파일 형식 및 크기 검증 (JPEG, PNG, HEIC, WebP / 최대 50MB)
+# - 타임라인용 최적화 쿼리 제공 (N+1 방지)
+# - 날짜별 그룹화 및 정렬
+# - 반응(Reaction) 및 댓글(Comment) 관리
+#
+# 연관 클래스: Family, User (uploader), Child, Reaction, Comment
+#
+# @!attribute [rw] taken_at
+#   @return [DateTime] 사진 촬영 일시
+# @!attribute [rw] caption
+#   @return [String] 사진 설명
 class Photo < ApplicationRecord
   MAX_FILE_SIZE = 50.megabytes
   ALLOWED_CONTENT_TYPES = %w[image/jpeg image/png image/heic image/webp].freeze
